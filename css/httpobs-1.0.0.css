@@ -1,0 +1,18 @@
+body {
+    line-height: 1.5em;
+    padding-bottom: 4em;
+    padding-top: 6.5em;
+}
+
+.footer {
+    background-color: #ffffff;
+    bottom: 0;
+    font-size: 16px;
+    height: 32px;
+    line-height: 29px;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
