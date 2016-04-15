@@ -10,5 +10,8 @@ help:
 devserver:
 	$(PY) devserver.py
 
+deploy:
+	git subtree push --prefix dist origin gh-pages
+
 publish:
 	$(PY) render.py
