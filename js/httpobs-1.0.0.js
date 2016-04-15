@@ -1,4 +1,4 @@
-var GRADES = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'E', 'F'];
+var GRADES = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'E', 'F'];
 
 
 function insertResultTable(data, title, id, alert) {
@@ -50,9 +50,9 @@ function pageLoad() {
     $('#scantron-form').on('submit', submitScanForAnalysis);
 
     retrieveResultTable('Overall Results', 'https://http-observatory.security.mozilla.org/api/v1/getGradeDistribution', 'totalresults', 'info');
-    retrieveResultTable('Recent Scans', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?num=13', 'recentresults', 'warning');
-    retrieveResultTable('Hall of Fame', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?min=90&num=13', 'goodresults', 'success');
-    retrieveResultTable('Hall of Shame', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?max=20&num=13', 'badresults', 'danger');
+    retrieveResultTable('Recent Scans', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?num=15', 'recentresults', 'warning');
+    retrieveResultTable('Hall of Fame', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?min=90&num=15', 'goodresults', 'success');
+    retrieveResultTable('Hall of Shame', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?max=20&num=15', 'badresults', 'danger');
 }
 
 /* load all the recent result stuff on page load */
