@@ -1,11 +1,8 @@
 var GRADES = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'E', 'F'];
 
-function insertResultTable(title, url, id, alert) {
-    'use strict';
 
-    $.ajax({
-        url: url
-    }).done(function(data) {
+function insertResultTable(data, title, id, alert) {
+    'use strict';
         // create the table and table header
         var table = $('<table></table>').addClass('table table-bordered table-striped table-condensed')
             .append('<thead><tr><th class="alert-' + alert + ' h5" colspan="2">' + title + '</th></tr></thead>');
@@ -27,10 +24,19 @@ function insertResultTable(title, url, id, alert) {
 
         // insert the table into the dom, replacing the hidden div
         $('#' + id).html(table);
+}
+
+function retrieveResultTable(title, url, id, alert) {
+    'use strict';
+
+    $.ajax({
+        url: url
+    }).done(function(data) {
+        insertResultTable(data, title, id, alert)
     });
 }
 
-function submitForAnalysis() {
+function submitScanForAnalysis() {
     'use strict';
 
     // first, let's munge the data
@@ -41,12 +47,12 @@ function pageLoad() {
     'use strict';
 
     // bind an event to the Scan Me button
-    $('#scantron-form').on('submit', submitForAnalysis);
+    $('#scantron-form').on('submit', submitScanForAnalysis);
 
-    insertResultTable('Overall Results', 'https://http-observatory.security.mozilla.org/api/v1/getGradeDistribution', 'totalresults', 'info');
-    insertResultTable('Recent Scans', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?num=13', 'recentresults', 'warning');
-    insertResultTable('Hall of Fame', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?min=90&num=13', 'goodresults', 'success');
-    insertResultTable('Hall of Shame', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?max=20&num=13', 'badresults', 'danger');
+    retrieveResultTable('Overall Results', 'https://http-observatory.security.mozilla.org/api/v1/getGradeDistribution', 'totalresults', 'info');
+    retrieveResultTable('Recent Scans', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?num=13', 'recentresults', 'warning');
+    retrieveResultTable('Hall of Fame', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?min=90&num=13', 'goodresults', 'success');
+    retrieveResultTable('Hall of Shame', 'https://http-observatory.security.mozilla.org/api/v1/getRecentScans?max=20&num=13', 'badresults', 'danger');
 }
 
 /* load all the recent result stuff on page load */

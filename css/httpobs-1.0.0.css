@@ -1,15 +1,16 @@
 body {
     line-height: 1.5em;
-    padding-bottom: 4em;
+    /*padding-bottom: 4em;*/
     padding-top: 6.5em;
 }
 
 .footer {
     background-color: #ffffff;
-    bottom: 0;
+    /*bottom: 0;*/
     font-size: 16px;
     height: 32px;
     line-height: 29px;
+    margin-top: 2em;
     overflow: hidden;
     position: absolute;
     text-overflow: ellipsis;

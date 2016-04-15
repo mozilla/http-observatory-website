@@ -42,59 +42,61 @@
 
     <!-- main content -->
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                
-    <div class="col-md-8 col-md-offset-2" style="margin-bottom: 2em;">
-        <h5 style="margin-bottom: 2em;">
-            The HTTP Observatory is a <a href="https://www.mozilla.org/">Mozilla</a> project designed to help developers, system administrators, and security professionals configure their sites safely and securely.
-        </h5>
+        
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2" style="margin-bottom: 2em;">
+            <h5 style="margin-bottom: 2em;">
+                The HTTP Observatory is a <a href="https://www.mozilla.org/">Mozilla</a> project designed to help developers, system administrators, and security professionals configure their sites safely and securely.
+            </h5>
 
-        <div class="panel panel-primary">
-            <div class="panel-heading"><span class="h3">Scan your site</span></div>
-            <div class="panel-body" style="padding: 2em;">
-                <form id="scantron-form">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" id="form-hostname" placeholder="enter your website's url">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><span class="h3">Scan your site</span></div>
+                <div class="panel-body" style="padding: 2em;">
+                    <form id="scantron-form">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="form-hostname" placeholder="enter your website's url">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-default pull-right">Scan Me</button>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-default pull-right">Scan Me</button>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">Don't include my site in the public results
+                            </label>
                         </div>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">Don't include my site in the public results
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">Force a rescan instead of returning cached results
-                        </label>
-                    </div>
-                </form>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">Force a rescan instead of returning cached results
+                            </label>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-3" id="totalresults"></div>
+    <div class="row">
+        <div class="col-md-3" id="totalresults"></div>
 
-    <div class="col-md-3" id="recentresults"></div>
+        <div class="col-md-3" id="recentresults"></div>
 
-    <div class="col-md-3" id="goodresults"></div>
+        <div class="col-md-3" id="goodresults"></div>
 
-    <div class="col-md-3" id="badresults"></div>
+        <div class="col-md-3" id="badresults"></div>
+    </div>
 
-            </div>
-        </div>
     </div>
 
     <!-- footer -->
+    <!--
     <footer class="footer text-center">
         <div class="container">
             Licensed under the Mozilla Public License. Contribute on <a href="https://github.com/mozilla/http-observatory">GitHub</a>.
         </div>
     </footer>
+    -->
 
     <script src="js/jquery-2.2.3.min.js"></script>
     <script src="js/bootstrap-3.3.6.min.js"></script>
