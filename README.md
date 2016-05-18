@@ -5,7 +5,7 @@ The Mozilla HTTP Observatory is a set of tools to analyze your website and infor
 ### See also:
 
 * [HTTP Observatory CLI](https://github.com/mozilla/http-observatory-cli)
-* [HTTP Observatory Scanner](https://github.com/mozilla/http-observatory-website)
+* [HTTP Observatory Scanner](https://github.com/mozilla/http-observatory)
 
 ## Authors
 
