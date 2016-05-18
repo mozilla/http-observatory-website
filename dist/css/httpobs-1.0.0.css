@@ -4,6 +4,10 @@ body {
     padding-top: 6.5em;
 }
 
+.panel-body {
+    padding: 2em;
+}
+
 .footer {
     background-color: #ffffff;
     /*bottom: 0;*/
@@ -16,4 +20,25 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
+}
+
+.table-bordered > tbody > tr > td.grade {
+    /*padding-left: .8em;*/
+    width: 2em;
+}
+
+.alert-hidden {
+    display: none;
+}
+
+.hostname {
+    border: none;
+	max-width: 13.5em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.table-bordered > tbody > tr > td.hostname > a {
+    color: #436ece;
 }

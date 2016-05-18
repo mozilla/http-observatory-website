@@ -51,7 +51,11 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading"><span class="h3">Scan your site</span></div>
-                <div class="panel-body" style="padding: 2em;">
+                <div class="panel-body">
+                    <div class="alert alert-danger alert-hidden" id="scan-alert" role="alert">
+                        <strong>Error: </strong>
+                        <span id="scan-alert-text"></span>
+                    </div>
                     <form id="scantron-form">
                         <div class="row">
                             <div class="col-md-10">
