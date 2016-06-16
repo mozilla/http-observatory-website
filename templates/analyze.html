@@ -1,1 +1,76 @@
 {% extends "base.html" %}
+
+{% block content %}
+    <div class="row" id="scan-progress">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="h3">HTTP Observatory</span>
+            </div>
+
+            <div class="alert-hidden" id="scan-alert" role="alert">
+                <strong>Error: </strong>
+                <span id="scan-alert-text"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 row">
+                    <div class="progress" id="scan-progress-bar">
+                        <div class="progress-bar progress-bar-striped active" id="scan-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%;">
+                            Loading Results
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="scan-results">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="h3">Scan Summary</span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="text-center" id="grade">
+                            <span id="grade-letter"></span>
+                            <sup id="grade-modifier"></sup>
+                        </span>
+                    </div>
+                    <div class="col-md-10">
+                        <table class="table table-striped table-condensed pull-left scan-summary-table">
+                            <tr>
+                                <td>Host:</td>
+                                <td id="scan-hostname"></td>
+                            </tr>
+                            <tr>
+                                <td>Start Time:</td>
+                                <td id="scan-start_time"></td>
+                            </tr>
+                            <tr>
+                                <td>End Time:</td>
+                                <td id="scan-end_time"></td>
+                            </tr>
+                            <tr>
+                                <td>Scan ID #:</td>
+                                <td><span id="scan-scan_id"></span></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>Score:</td>
+                                <td><span id="scan-score"></span>/100</td>
+                            </tr>
+                            <tr>
+                                <td>Tests Passed:</td>
+                                <td><span id="scan-tests_passed"></span>/<span id="scan-tests_quantity"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
