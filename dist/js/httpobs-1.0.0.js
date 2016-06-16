@@ -193,7 +193,7 @@ function submitScanForAnalysis() {
         }
 
         // if it succeeds, redirect to the analyze page
-        window.location.href = window.location.origin + '/analyze.html?host=' + hostname;
+        window.location.href = window.location + 'analyze.html?host=' + hostname;
     };
 
     // TODO: implement hidden and rescan
