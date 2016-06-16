@@ -206,7 +206,9 @@ function submitScanForAnalysis() {
 function onPageLoad() {
     'use strict';
 
-    if (window.location.pathname == '/') {
+    if (window.location.pathname.indexOf('/analyze.html') !== -1) {
+        loadScanResults();
+    } else {
         // bind an event to the Scan Me button
         $('#scantron-form').on('submit', submitScanForAnalysis);
 
@@ -215,8 +217,6 @@ function onPageLoad() {
         retrieveResultTable('Recent Scans', HTTPObs.api_url + 'getRecentScans?num=15', 'recentresults', 'warning');
         retrieveResultTable('Hall of Fame', HTTPObs.api_url + 'getRecentScans?min=90&num=15', 'goodresults', 'success');
         retrieveResultTable('Hall of Shame', HTTPObs.api_url + 'getRecentScans?max=20&num=15', 'badresults', 'danger');
-    } else if (window.location.pathname == '/analyze.html') {
-        loadScanResults();
     }
 }
 
