@@ -4,6 +4,100 @@ var HTTPObs = {
 };
 
 
+/*
+    analyze.html stuff, loading scan results
+*/
+
+function handleScanResults(scan) {
+    var retry = false;
+    var text = '';
+
+    /* catch any scanning errors like invalid hostname */
+    if (scan.error) {
+        displayError(scan.error);
+        return false;
+    }
+
+    switch(scan.state) {
+        case 'STARTING':
+            text = 'Scan started';
+            retry = true;
+            break;
+        case 'PENDING':
+            text = 'Awaiting scanner instance';
+            retry = true;
+            break;
+        case 'RUNNING':
+            text = 'Scan in progress';
+            retry = true;
+            break;
+        case 'ABORTED':
+            text = 'Scan aborted';
+            break;
+        case 'FAILED':
+            text = 'Scan failed';
+            break;
+    }
+
+    if (retry) {
+        // update the progress bar text
+        $('#scan-text').text(text);
+        setTimeout(loadScanResults, 1000);
+        return;
+    } else {
+        // retrieve the test results if the scan is finished, otherwise display error text (TODO)
+        if (scan.state === 'FINISHED') {
+            // retrieve the scan results
+            $.ajax({
+                dataType: 'json',
+                method: 'GET',
+                scan: scan,
+                success: function(data, textStatus, jqXHR) {
+                    insertScanResults(this.scan, data);
+                },
+                url: HTTPObs.api_url + 'getScanResults?scan=' + scan.scan_id.toString()
+            });
+        }
+    }
+}
+
+// display the scan results
+function insertScanResults(scan, results) {
+    var hostname = window.location.href.split('=')[1];
+
+    // stick the hostname into scan, so it shows up
+    scan['hostname'] = hostname;
+
+    // set the grade
+    var letter = scan.grade.substr(0, 1);
+    $('#grade').toggleClass('grade-' + letter.toLowerCase()); // set the background color for the grade
+    $('#grade-letter').text(letter);
+    if (scan.grade.length === 2) {
+        $('#grade').toggleClass('grade-with-modifier');
+        $('#grade-modifier').text(scan.grade.substr(1, 1));
+    }
+
+    // Write all the various important parts of the scan into the page
+    keys = Object.keys(scan);
+    for (var i in keys) {
+        var key = keys[i];
+        var id = '#scan-' + key;
+        $(id).text(scan[key]);
+    }
+
+    // show the scan results and remove the progress bar
+    $('#scan-progress').hide();
+    $('#scan-results').show();
+
+}
+
+function loadScanResults() {
+     // Get the hostname in the GET parameters
+    var hostname = window.location.href.split('=')[1];
+
+    submitScanForAnalysisXHR(hostname, handleScanResults, displayError);
+}
+
 function insertResultTable(data, title, id, alert) {
     'use strict';
     // create the table and table header
@@ -65,7 +159,14 @@ function submitScanForAnalysisXHR(hostname, successCallback, errorCallback, meth
 function displayError(text, statusText) {
     if (statusText) {  // jquery callback
         text = 'HTTP Observatory is down';
+    } else {
+        text = text.replace(/-/g, ' ');
+        text = text.charAt(0).toUpperCase() + text.slice(1); // capitalize
     }
+
+    // hide the scan progress bar
+    $('#scan-progress').hide();
+
 
     $('#scan-alert-text').text(text);
     $('#scan-alert').removeClass('alert-hidden');
@@ -105,14 +206,18 @@ function submitScanForAnalysis() {
 function onPageLoad() {
     'use strict';
 
-    // bind an event to the Scan Me button
-    $('#scantron-form').on('submit', submitScanForAnalysis);
+    if (window.location.pathname == '/') {
+        // bind an event to the Scan Me button
+        $('#scantron-form').on('submit', submitScanForAnalysis);
 
-    // load all the grade and totals tables
-    retrieveResultTable('Overall Results', HTTPObs.api_url + 'getGradeDistribution', 'totalresults', 'info');
-    retrieveResultTable('Recent Scans', HTTPObs.api_url + 'getRecentScans?num=15', 'recentresults', 'warning');
-    retrieveResultTable('Hall of Fame', HTTPObs.api_url + 'getRecentScans?min=90&num=15', 'goodresults', 'success');
-    retrieveResultTable('Hall of Shame', HTTPObs.api_url + 'getRecentScans?max=20&num=15', 'badresults', 'danger');
+        // load all the grade and totals tables
+        retrieveResultTable('Overall Results', HTTPObs.api_url + 'getGradeDistribution', 'totalresults', 'info');
+        retrieveResultTable('Recent Scans', HTTPObs.api_url + 'getRecentScans?num=15', 'recentresults', 'warning');
+        retrieveResultTable('Hall of Fame', HTTPObs.api_url + 'getRecentScans?min=90&num=15', 'goodresults', 'success');
+        retrieveResultTable('Hall of Shame', HTTPObs.api_url + 'getRecentScans?max=20&num=15', 'badresults', 'danger');
+    } else if (window.location.pathname == '/analyze.html') {
+        loadScanResults();
+    }
 }
 
 /* load all the recent result stuff on page load */
