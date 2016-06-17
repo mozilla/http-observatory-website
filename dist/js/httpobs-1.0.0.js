@@ -9,11 +9,21 @@ var HTTPObs = {
 */
 
 function handleScanResults(scan) {
+    var hostname = window.location.href.split('=')[1];
     var retry = false;
     var text = '';
 
     /* catch any scanning errors like invalid hostname */
     if (scan.error) {
+        /* if it's recent-scan-not-found, start a (hidden) scan and refresh the page */
+        if (scan.error === 'recent-scan-not-found') {
+            var success = function() { location.reload(); };
+            var failure = function() { displayError(scan.error); };
+
+            submitScanForAnalysisXHR(hostname, success, failure, 'POST', false, true);
+            return false;
+        }
+
         displayError(scan.error);
         return false;
     }
@@ -78,11 +88,26 @@ function insertScanResults(scan, results) {
     }
 
     // Write all the various important parts of the scan into the page
-    keys = Object.keys(scan);
+    var keys = Object.keys(scan);
     for (var i in keys) {
         var key = keys[i];
         var id = '#scan-' + key;
         $(id).text(scan[key]);
+    }
+    
+    // Write all the various important parts of the results into the page
+    var keys = Object.keys(results);
+    for (var i in keys) {
+        var key = keys[i];
+
+        // score modifier
+        var id = '#tests-' + key + '-score';
+        var score = results[key]['score_modifier'];
+        if (score > 0) { score = '+' + score.toString(); }
+        $(id).text(score);
+
+        var id = '#tests-' + key + '-score-description';
+        $(id).text(results[key]['score_description']);
     }
 
     // show the scan results and remove the progress bar
@@ -137,14 +162,14 @@ function retrieveResultTable(title, url, id, alert) {
 
 // poll the HTTP Observatory
 function submitScanForAnalysisXHR(hostname, successCallback, errorCallback, method, rescan, hidden) {
-    var hidden = typeof hidden !== 'undefined' ? hidden : 'false';
     var method = typeof method !== 'undefined' ? method : 'GET';
-    var rescan = typeof rescan !== 'undefined' ? rescan : 'false';
+    var rescan = typeof rescan !== 'undefined' ? rescan : false;
+    var hidden = typeof hidden !== 'undefined' ? hidden : false;
 
     var config = {
         data: {
-            hidden: hidden,
-            rescan: rescan
+            hidden: hidden.toString(),
+            rescan: rescan.toString()
         },
         dataType: 'json',
         error: errorCallback,
@@ -163,10 +188,10 @@ function displayError(text, statusText) {
         text = text.replace(/-/g, ' ');
         text = text.charAt(0).toUpperCase() + text.slice(1); // capitalize
     }
+    console.log(text);
 
     // hide the scan progress bar
-    $('#scan-progress').hide();
-
+    $('#scan-progress-bar').hide();
 
     $('#scan-alert-text').text(text);
     $('#scan-alert').removeClass('alert-hidden');
