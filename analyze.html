@@ -67,7 +67,7 @@
     </div>
 
     <div class="row" id="scan-results">
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" id="scan-summary">
             <div class="panel-heading">
                 <span class="h3">Scan Summary</span>
             </div>
@@ -86,16 +86,16 @@
                                 <td id="scan-hostname"></td>
                             </tr>
                             <tr>
+                                <td>Scan ID #:</td>
+                                <td><span id="scan-scan_id"></span></td>
+                            </tr>
+                            <tr>
                                 <td>Start Time:</td>
                                 <td id="scan-start_time"></td>
                             </tr>
                             <tr>
                                 <td>End Time:</td>
                                 <td id="scan-end_time"></td>
-                            </tr>
-                            <tr>
-                                <td>Scan ID #:</td>
-                                <td><span id="scan-scan_id"></span></td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
@@ -114,6 +114,80 @@
                 </div>
             </div>
         </div>
+
+        <div class="panel panel-primary" id="test-scores">
+            <div class="panel-heading">
+                <span class="h3">Test Scores</span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <table class="table table-striped table-condensed pull-left scan-summary-table">
+                        <tr>
+                            <th>Test</th>
+                            <th>Score</th>
+                            <th>Explanation</th>
+                        </tr>
+                        <tr>
+                            <td>Content Security Policy</td>
+                            <td id="tests-content-security-policy-score"></td>
+                            <td id="tests-content-security-policy-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>Contribute.json</td>
+                            <td id="tests-contribute-score"></td>
+                            <td id="tests-contribute-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>Cookies</td>
+                            <td id="tests-cookies-score"></td>
+                            <td id="tests-cookies-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>Cross-origin Resource Sharing</td>
+                            <td id="tests-cross-origin-resource-sharing-score"></td>
+                            <td id="tests-cross-origin-resource-sharing-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>HTTP Public Key Pinning</td>
+                            <td id="tests-public-key-pinning-score"></td>
+                            <td id="tests-public-key-pinning-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>HTTP Strict Transport Security</td>
+                            <td id="tests-strict-transport-security-score"></td>
+                            <td id="tests-strict-transport-security-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>Redirection</td>
+                            <td id="tests-redirection-score"></td>
+                            <td id="tests-redirection-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>Subresource Integrity</td>
+                            <td id="tests-subresource-integrity-score"></td>
+                            <td id="tests-subresource-integrity-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>X-Content-Type-Options</td>
+                            <td id="tests-x-content-type-options-score"></td>
+                            <td id="tests-x-content-type-options-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>X-Frame-Options</td>
+                            <td id="tests-x-frame-options-score"></td>
+                            <td id="tests-x-frame-options-score-description"></td>
+                        </tr>
+                        <tr>
+                            <td>X-XSS-Protection</td>
+                            <td id="tests-x-xss-protection-score"></td>
+                            <td id="tests-x-xss-protection-score-description"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     </div>

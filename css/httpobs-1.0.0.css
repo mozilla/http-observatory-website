@@ -102,17 +102,17 @@ body {
     display: none; /* hide on initial page load */
 }
 
-#scan-results tr td:nth-child(1) {
+#scan-summary tr td:nth-child(1) {
     font-weight: 600;
     padding-right: 1.5em;
     white-space: nowrap;
 }
 
-#scan-results tr td:nth-child(2) {
+#scan-summary tr td:nth-child(2) {
     width: 100%;
 }
 
-.scan-summary-table {
+#scan-summary table, #test-scores table {
     margin-bottom: 0;
 }
 
@@ -121,6 +121,23 @@ body {
     font-weight: 800;
     line-height: 44px;
     text-transform: uppercase;
+}
+
+#test-scores tr td:nth-child(1) {
+    font-weight: 600;
+    padding-right: 1.5em;
+    white-space: nowrap;
+}
+
+/* score modifier */
+#test-scores tr td:nth-child(2) {
+    padding-right: 1.5em;
+    text-align: right;
+    white-space: nowrap;
+}
+
+#test-scores tr td:nth-child(3) {
+    width: 100%;
 }
 
 sup, sub {
