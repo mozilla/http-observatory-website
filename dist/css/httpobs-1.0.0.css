@@ -140,6 +140,16 @@ body {
     width: 100%;
 }
 
+/* third party results */
+#third-party-test-scores tr td:nth-child(1) {
+    padding-right: 2.5em;
+    white-space: nowrap;
+}
+
+#third-party-test-scores tr td:nth-child(2) {
+    width: 100%;
+}
+
 sup, sub {
   vertical-align: baseline;
   position: relative;
