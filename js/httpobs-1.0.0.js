@@ -1,17 +1,29 @@
 var HTTPObs = {
     api_url: 'https://http-observatory.security.mozilla.org/api/v1/',
-    grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'E', 'F']
+    grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'E', 'F'],
+    safebrowsing: {
+        'api_url': 'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=...'
+    },
+    securityheaders_api_url: 'https://securityheaders.io/?followRedirects=on&hide=on&q=',
+    tlsobs_api_url: 'https://tls-observatory.services.mozilla.com/api/v1/',
+    state: {}
 };
 
 
 /*
-    analyze.html stuff, loading scan results
-*/
+ *
+ *
+ *    analyze.html, loading scan results
+ *
+ *
+ */
 
 function handleScanResults(scan) {
-    var hostname = window.location.href.split('=')[1];
     var retry = false;
     var text = '';
+
+    // stuff the scan into HTTPObs, to make things easier to debug
+    HTTPObs.state.scan = scan;
 
     /* catch any scanning errors like invalid hostname */
     if (scan.error) {
@@ -20,7 +32,7 @@ function handleScanResults(scan) {
             var success = function() { location.reload(); };
             var failure = function() { displayError(scan.error); };
 
-            submitScanForAnalysisXHR(hostname, success, failure, 'POST', false, true);
+            submitScanForAnalysisXHR(HTTPObs.state.hostname, success, failure, 'POST', false, true);
             return false;
         }
 
@@ -73,11 +85,13 @@ function handleScanResults(scan) {
 
 // display the scan results
 function insertScanResults(scan, results) {
-    var hostname = window.location.href.split('=')[1];
-
     // stick the hostname into scan, so it shows up
-    scan['hostname'] = hostname;
+    scan['hostname'] = HTTPObs.state.hostname;
 
+    // stuff both scan and state into the HTTPObs object
+    HTTPObs.state.scan = scan;
+    HTTPObs.state.results = results;
+    
     // set the grade
     var letter = scan.grade.substr(0, 1);
     $('#grade').toggleClass('grade-' + letter.toLowerCase()); // set the background color for the grade
@@ -118,10 +132,101 @@ function insertScanResults(scan, results) {
 
 function loadScanResults() {
      // Get the hostname in the GET parameters
-    var hostname = window.location.href.split('=')[1];
+    HTTPObs.state.hostname = window.location.href.split('=')[1];
 
-    submitScanForAnalysisXHR(hostname, handleScanResults, displayError);
+    submitScanForAnalysisXHR(HTTPObs.state.hostname, handleScanResults, displayError);
 }
+
+
+/*
+ *
+ *
+ *    analyze.html, loading third party results
+ *
+ *
+ */
+function loadSafeBrowsingResults() {
+    'use strict';
+
+    var errorCallback = function() {
+        console.log('query to safe browsing failed');
+    };
+
+    var successCallback = function(data, textStatus, jqXHR) {
+        HTTPObs.state.safebrowsing.data = data;
+        HTTPObs.state.safebrowsing.textStatus = textStatus;
+        HTTPObs.state.safebrowsing.jqXHR = jqXHR;
+    };
+
+    var request_body = {
+        'client': {
+            'clientId':      'Mozilla HTTP Observatory',
+            'clientVersion': '1.0.0'
+        },
+        'threatInfo': {
+            'threatTypes':      ['MALWARE', 'POTENTIALLY_HARMFUL_APPLICATION', 'SOCIAL_ENGINEERING', 'UNWANTED_SOFTWARE'],
+            'platformTypes':    ['ANY_PLATFORM'],
+            'threatEntryTypes': ['URL'],
+            'threatEntries': [
+                {'url': 'http://' + HTTPObs.hostname + '/'},
+                {'url': 'https://' + HTTPObs.hostname + '/'}
+            ]
+        }
+    };
+
+    $.ajax({
+        method: 'GET',
+        //contentType: 'application/json; charset=utf-8',
+        //data: JSON.stringify(request_body),
+        //dataType: 'json',
+        error: errorCallback,
+        success: successCallback,
+        url: 'https://safebrowsing.googleapis.com/v4/threatLists?key=AIzaSyBaMfyXIljLGvLTA8n-qKb4C8vl4mfhhMw'
+    });
+}
+
+
+
+function loadSecurityHeadersResults() {
+    'use strict';
+
+    var errorCallback = function() {
+        $('#third-party-test-scores-securityheaders-score').text('ERROR');
+    };
+
+    var successCallback = function(data, textStatus, jqXHR) {
+        // store the response headers for debugging
+        HTTPObs.state.securityheaders.headers = jqXHR.getAllResponseHeaders();
+
+        var grade = jqXHR.getResponseHeader('X-Grade');
+
+        if (grade === undefined) {
+            errorCallback();
+        } else {
+            // create a link to the actual results
+            var a = document.createElement('a');
+            a.href = HTTPObs.state.securityheaders.url;
+            a.appendChild(document.createTextNode('securityheaders.io'));
+
+            $('#third-party-test-scores-securityheaders').html(a);
+            $('#third-party-test-scores-securityheaders-score').text(grade);
+        }
+    };
+
+    HTTPObs.state.securityheaders = {
+        url: HTTPObs.securityheaders_api_url + HTTPObs.state.hostname
+    };
+
+    $.ajax({
+        method: 'HEAD',
+        error: errorCallback,
+        success: successCallback,
+        url: HTTPObs.securityheaders_api_url + HTTPObs.state.hostname
+    });
+}
+
+
+
 
 function insertResultTable(data, title, id, alert) {
     'use strict';
@@ -233,6 +338,8 @@ function onPageLoad() {
 
     if (window.location.pathname.indexOf('/analyze.html') !== -1) {
         loadScanResults();
+        // loadSafeBrowsingResults();
+        loadSecurityHeadersResults();
     } else {
         // bind an event to the Scan Me button
         $('#scantron-form').on('submit', submitScanForAnalysis);
