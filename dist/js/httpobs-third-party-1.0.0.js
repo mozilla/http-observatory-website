@@ -88,7 +88,7 @@ function insertHSTSPreloadResults() {
         if (errors.length === 0 && warnings.length === 0) {
             text = 'Preloaded, HSTS header continues to meet preloading requirements.';
         } else {
-            text = 'Preloaded, but existing HSTS header no longer meets preloading requirements. Note that these requirements only apply to domains preloaded after February 29, 2016.';
+            text = 'Preloaded, but existing HSTS header no longer meets preloading requirements.<br><br>Note that these requirements only apply to domains preloaded after February 29, 2016.';
         }
     } else if (status === 'unknown') {
         if (errors) {
