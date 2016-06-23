@@ -86,9 +86,9 @@ function insertHSTSPreloadResults() {
     // If it's already preloaded, then we're set to go
     if (status === 'preloaded') {
         if (errors.length === 0 && warnings.length === 0) {
-            text = 'Preloaded, HSTS header continues to meet requirements.';
+            text = 'Preloaded, HSTS header continues to meet preloading requirements.';
         } else {
-            text = 'Preloaded, but existing HSTS header doesn\'t meet requirements.';
+            text = 'Preloaded, but existing HSTS header no longer meets preloading requirements.';
         }
     } else if (status === 'unknown') {
         if (errors) {
