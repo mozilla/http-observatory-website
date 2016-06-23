@@ -1,12 +1,18 @@
-var HTTPObs = {
+var Observatory = {
     api_url: 'https://http-observatory.security.mozilla.org/api/v1/',
     grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'E', 'F'],
+    htbridge_api_url: 'https://www.htbridge.com/ssl/chssl/',
     safebrowsing: {
         'api_url': 'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=...'
     },
-    securityheaders_api_url: 'https://securityheaders.io/?followRedirects=on&hide=on&q=',
     tlsobs_api_url: 'https://tls-observatory.services.mozilla.com/api/v1/',
-    state: {}
+    tlsimirhil_fr_api_url: 'https://tls.imirhil.fr/https/',
+    state: {
+        third_party: {
+            hstspreload: {},
+            securityheaders: {}
+        }
+    }
 };
 
 
@@ -23,7 +29,7 @@ function handleScanResults(scan) {
     var text = '';
 
     // stuff the scan into HTTPObs, to make things easier to debug
-    HTTPObs.state.scan = scan;
+    Observatory.state.scan = scan;
 
     /* catch any scanning errors like invalid hostname */
     if (scan.error) {
@@ -32,7 +38,7 @@ function handleScanResults(scan) {
             var success = function() { location.reload(); };
             var failure = function() { displayError(scan.error); };
 
-            submitScanForAnalysisXHR(HTTPObs.state.hostname, success, failure, 'POST', false, true);
+            submitScanForAnalysisXHR(Observatory.hostname, success, failure, 'POST', false, true);
             return false;
         }
 
@@ -77,7 +83,7 @@ function handleScanResults(scan) {
                 success: function(data, textStatus, jqXHR) {
                     insertScanResults(this.scan, data);
                 },
-                url: HTTPObs.api_url + 'getScanResults?scan=' + scan.scan_id.toString()
+                url: Observatory.api_url + 'getScanResults?scan=' + scan.scan_id.toString()
             });
         }
     }
@@ -86,11 +92,11 @@ function handleScanResults(scan) {
 // display the scan results
 function insertScanResults(scan, results) {
     // stick the hostname into scan, so it shows up
-    scan['hostname'] = HTTPObs.state.hostname;
+    scan['hostname'] = Observatory.hostname;
 
     // stuff both scan and state into the HTTPObs object
-    HTTPObs.state.scan = scan;
-    HTTPObs.state.results = results;
+    Observatory.state.scan = scan;
+    Observatory.state.results = results;
     
     // set the grade
     var letter = scan.grade.substr(0, 1);
@@ -99,7 +105,19 @@ function insertScanResults(scan, results) {
     if (scan.grade.length === 2) {
         $('#grade').toggleClass('grade-with-modifier');
         $('#grade-modifier').text(scan.grade.substr(1, 1));
+
+        // CSS is the literal worst
+        switch(letter) {
+            case 'A':
+                $('#grade-modifier').toggleClass('grade-with-modifier-narrow');
+                break;
+            case 'C':
+                $('#grade-modifier').toggleClass('grade-with-modifier-wide');
+
+        }
     }
+
+    // Grades A
 
     // Write all the various important parts of the scan into the page
     var keys = Object.keys(scan);
@@ -131,101 +149,8 @@ function insertScanResults(scan, results) {
 }
 
 function loadScanResults() {
-     // Get the hostname in the GET parameters
-    HTTPObs.state.hostname = window.location.href.split('=')[1];
-
-    submitScanForAnalysisXHR(HTTPObs.state.hostname, handleScanResults, displayError);
+    submitScanForAnalysisXHR(Observatory.hostname, handleScanResults, displayError);
 }
-
-
-/*
- *
- *
- *    analyze.html, loading third party results
- *
- *
- */
-function loadSafeBrowsingResults() {
-    'use strict';
-
-    var errorCallback = function() {
-        console.log('query to safe browsing failed');
-    };
-
-    var successCallback = function(data, textStatus, jqXHR) {
-        HTTPObs.state.safebrowsing.data = data;
-        HTTPObs.state.safebrowsing.textStatus = textStatus;
-        HTTPObs.state.safebrowsing.jqXHR = jqXHR;
-    };
-
-    var request_body = {
-        'client': {
-            'clientId':      'Mozilla HTTP Observatory',
-            'clientVersion': '1.0.0'
-        },
-        'threatInfo': {
-            'threatTypes':      ['MALWARE', 'POTENTIALLY_HARMFUL_APPLICATION', 'SOCIAL_ENGINEERING', 'UNWANTED_SOFTWARE'],
-            'platformTypes':    ['ANY_PLATFORM'],
-            'threatEntryTypes': ['URL'],
-            'threatEntries': [
-                {'url': 'http://' + HTTPObs.hostname + '/'},
-                {'url': 'https://' + HTTPObs.hostname + '/'}
-            ]
-        }
-    };
-
-    $.ajax({
-        method: 'GET',
-        //contentType: 'application/json; charset=utf-8',
-        //data: JSON.stringify(request_body),
-        //dataType: 'json',
-        error: errorCallback,
-        success: successCallback,
-        url: 'https://safebrowsing.googleapis.com/v4/threatLists?key=AIzaSyBaMfyXIljLGvLTA8n-qKb4C8vl4mfhhMw'
-    });
-}
-
-
-
-function loadSecurityHeadersResults() {
-    'use strict';
-
-    var errorCallback = function() {
-        $('#third-party-test-scores-securityheaders-score').text('ERROR');
-    };
-
-    var successCallback = function(data, textStatus, jqXHR) {
-        // store the response headers for debugging
-        HTTPObs.state.securityheaders.headers = jqXHR.getAllResponseHeaders();
-
-        var grade = jqXHR.getResponseHeader('X-Grade');
-
-        if (grade === undefined) {
-            errorCallback();
-        } else {
-            // create a link to the actual results
-            var a = document.createElement('a');
-            a.href = HTTPObs.state.securityheaders.url;
-            a.appendChild(document.createTextNode('securityheaders.io'));
-
-            $('#third-party-test-scores-securityheaders').html(a);
-            $('#third-party-test-scores-securityheaders-score').text(grade);
-        }
-    };
-
-    HTTPObs.state.securityheaders = {
-        url: HTTPObs.securityheaders_api_url + HTTPObs.state.hostname
-    };
-
-    $.ajax({
-        method: 'HEAD',
-        error: errorCallback,
-        success: successCallback,
-        url: HTTPObs.securityheaders_api_url + HTTPObs.state.hostname
-    });
-}
-
-
 
 
 function insertResultTable(data, title, id, alert) {
@@ -238,9 +163,9 @@ function insertResultTable(data, title, id, alert) {
     // the total results are in an array of grade: total mappings, everything else is site: grade
     if (id === 'totalresults') {
         var sum = 0;
-        for (var i = 0; i < HTTPObs.grades.length; i++) {
-            tbody.append('<tr><td>' + HTTPObs.grades[i] + '</td><td class="text-right">' + data[HTTPObs.grades[i]] + '</td>');
-            sum += data[HTTPObs.grades[i]];
+        for (var i = 0; i < Observatory.grades.length; i++) {
+            tbody.append('<tr><td>' + Observatory.grades[i] + '</td><td class="text-right">' + data[Observatory.grades[i]] + '</td>');
+            sum += data[Observatory.grades[i]];
         }
         tbody.append('<tr><td>Totals</td><td class="text-right">' + sum + '</td>');
     } else {
@@ -280,7 +205,7 @@ function submitScanForAnalysisXHR(hostname, successCallback, errorCallback, meth
         error: errorCallback,
         method: method,
         success: successCallback,
-        url: HTTPObs.api_url + 'analyze?host=' + hostname
+        url: Observatory.api_url + 'analyze?host=' + hostname
     };
 
     $.ajax(config);
@@ -337,18 +262,22 @@ function onPageLoad() {
     'use strict';
 
     if (window.location.pathname.indexOf('/analyze.html') !== -1) {
+        // Get the hostname in the GET parameters
+        Observatory.hostname = window.location.href.split('=')[1];
+        
         loadScanResults();
         // loadSafeBrowsingResults();
-        loadSecurityHeadersResults();
+        loadHSTSPreloadResults();
+        loadSecurityHeadersIOResults();
     } else {
         // bind an event to the Scan Me button
         $('#scantron-form').on('submit', submitScanForAnalysis);
 
         // load all the grade and totals tables
-        retrieveResultTable('Overall Results', HTTPObs.api_url + 'getGradeDistribution', 'totalresults', 'info');
-        retrieveResultTable('Recent Scans', HTTPObs.api_url + 'getRecentScans?num=15', 'recentresults', 'warning');
-        retrieveResultTable('Hall of Fame', HTTPObs.api_url + 'getRecentScans?min=90&num=15', 'goodresults', 'success');
-        retrieveResultTable('Hall of Shame', HTTPObs.api_url + 'getRecentScans?max=20&num=15', 'badresults', 'danger');
+        retrieveResultTable('Overall Results', Observatory.api_url + 'getGradeDistribution', 'totalresults', 'info');
+        retrieveResultTable('Recent Scans', Observatory.api_url + 'getRecentScans?num=15', 'recentresults', 'warning');
+        retrieveResultTable('Hall of Fame', Observatory.api_url + 'getRecentScans?min=90&num=15', 'goodresults', 'success');
+        retrieveResultTable('Hall of Shame', Observatory.api_url + 'getRecentScans?max=20&num=15', 'badresults', 'danger');
     }
 }
 
