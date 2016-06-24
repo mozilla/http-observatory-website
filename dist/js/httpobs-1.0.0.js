@@ -6,15 +6,31 @@ var Observatory = {
         'api_url': 'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=...'
     },
     tlsobs_api_url: 'https://tls-observatory.services.mozilla.com/api/v1/',
-    tlsimirhil_fr_api_url: 'https://tls.imirhil.fr/https/',
     state: {
         third_party: {
             hstspreload: {},
-            securityheaders: {}
+            securityheaders: {},
+            tlsimirhilfr: {}
         }
     }
 };
 
+/*
+ * Utility functions
+ */
+function listify(list) {  // take an array and turn it into an unordered list
+    ul = document.createElement('ul');
+
+    for (var i = 0; i < list.length; i++) {
+        var li = document.createElement('li');
+        var text = document.createTextNode(list[i]);
+
+        li.appendChild(text);
+        ul.appendChild(li);
+    }
+
+    return(ul);
+}
 
 /*
  *
@@ -107,13 +123,17 @@ function insertScanResults(scan, results) {
         $('#grade-modifier').text(scan.grade.substr(1, 1));
 
         // CSS is the literal worst
-        switch(letter) {
-            case 'A':
-                $('#grade-modifier').toggleClass('grade-with-modifier-narrow');
-                break;
-            case 'C':
-                $('#grade-modifier').toggleClass('grade-with-modifier-wide');
+        if (scan.grade[1] === '+') {
+            switch (letter) {
+                case 'A':
+                    $('#grade-modifier').addClass('grade-with-modifier-narrow');
+                    break;
+                case 'C':
+                    $('#grade-modifier').addClass('grade-with-modifier-wide');
 
+            }
+        } else {
+            $('#grade-modifier').addClass('grade-with-modifier-narrow'); // C-, B-, etc.
         }
     }
 
@@ -269,6 +289,7 @@ function onPageLoad() {
         // loadSafeBrowsingResults();
         loadHSTSPreloadResults();
         loadSecurityHeadersIOResults();
+        loadTLSImirhilFrResults();
     } else {
         // bind an event to the Scan Me button
         $('#scantron-form').on('submit', submitScanForAnalysis);
