@@ -93,7 +93,7 @@ function insertHSTSPreloadResults() {
     } else if (status === 'unknown') {
         if (errors) {
             text = [];
-            for (var i=0; i < errors.length; i++) {
+            for (var i = 0; i < errors.length; i++) {
                 if (errors[i].code in errcodes) {
                     text.push(errcodes[errors[i].code]);
                 } else {
@@ -105,7 +105,7 @@ function insertHSTSPreloadResults() {
 
         // join all the errors together
         text.sort();
-        text = '• ' + text.join('<br>• ');
+        text = listify(text);
     } else {
         text = 'Unknown error';
         console.log('Unknown status for HSTS Preload: ', status);
@@ -172,4 +172,91 @@ function loadSecurityHeadersIOResults() {
         success: successCallback,
         url: API_URL
     });
+}
+
+function insertTLSImirHilFrResults() {
+    'use strict';
+
+    // we'll maybe look at more hosts later, but for now let's just look at one
+    var json_hosts = Observatory.state.third_party.tlsimirhilfr.json.hosts;
+
+    // loop through every host
+    var hosts = [];
+    var results = [];
+
+    for (var i = 0; i < json_hosts.length; i++) {
+        var host = json_hosts[i];
+        var text = [];
+        var subtext = [];
+
+        // the hostname and IP address
+        hosts.push(host.host.name + ' [' + host.host.ip + ']');
+
+        if (host.error === undefined) {
+            // if there's no error, let's gather all the results into a list
+            text.push('Grade: ' + host.grade.rank);
+            text.push('Score: ' + host.grade.details.score.toString());
+
+            subtext.push('Cipher Strength: ' + host.grade.details.cipher_strengths.toString());
+            subtext.push('Key Exchange: ' + host.grade.details.key_exchange.toString());
+            subtext.push('Protocol: ' + host.grade.details.protocol.toString());
+
+            // subtext = [ subtext.join(', ') ];
+
+            text = listify(text);
+            subtext = listify(subtext);
+            text.appendChild(subtext);
+
+        } else {
+            text.push('Error: ' + host.error);
+            text = listify(text)
+        }
+
+        // push all the results
+        results.push(text);
+    }
+
+    // Each entry in hosts corresponds to an entry in results
+    hosts = listify(hosts);
+    for (i = 0; i < hosts.childNodes.length; i++) {
+        hosts.childNodes[i].appendChild(results[i]);
+    }
+
+    $('#third-party-test-scores-tlsimirhilfr-score').html(hosts);
+}
+
+function loadTLSImirhilFrResults() {
+    'use strict';
+    var API_URL = 'https://tls.imirhil.fr/https/' + Observatory.hostname + '.json';
+    var WEB_URL = 'https://tls.imirhil.fr/https/' + Observatory.hostname;
+
+    // create a link to the actual results
+    var a = document.createElement('a');
+    a.href = WEB_URL;
+    a.appendChild(document.createTextNode('tls.imirhil.fr'));
+    $('#third-party-test-scores-tlsimirhilfr').html(a);
+
+    var errorCallback = function() {
+        $('#third-party-test-scores-tlsimirhilfr-score').text('ERROR');
+    };
+
+    var successCallback = function (data, textStatus, jqXHR) {
+        // store the response headers for debugging
+        Observatory.state.third_party.tlsimirhilfr.json = data;
+
+        // it returns "pending", which is invalid JSON, if it's pending
+        if (data === 'pending') {
+            setTimeout(loadTLSImirhilFrResults, 5000);
+        } else {
+            insertTLSImirHilFrResults();
+        }
+    };
+
+    $.ajax({
+        dataType: 'json',
+        method: 'GET',
+        error: errorCallback,
+        success: successCallback,
+        url: API_URL
+    })
 }

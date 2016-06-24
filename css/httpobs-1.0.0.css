@@ -148,6 +148,10 @@ body {
 }
 
 /* third party results */
+#third-party-test-scores .panel-body {
+    padding-bottom: 1em;
+}
+
 #third-party-test-scores tr td:nth-child(1) {
     padding-right: 2.5em;
     white-space: nowrap;
@@ -155,6 +159,19 @@ body {
 
 #third-party-test-scores tr td:nth-child(2) {
     width: 100%;
+}
+
+#third-party-test-scores ul {
+    margin-bottom: 0;
+    padding-left: 1em;
+}
+
+#third-party-test-scores-tlsimirhilfr-score > ul > li:first-child {
+    margin-top: 0;
+}
+
+#third-party-test-scores-tlsimirhilfr-score > ul > li {
+    margin-top: 1em;
 }
 
 #third-party-test-scores .progress {
