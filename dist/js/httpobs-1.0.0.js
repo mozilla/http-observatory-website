@@ -5,12 +5,17 @@ var Observatory = {
     safebrowsing: {
         'api_url': 'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=...'
     },
-    tlsobs_api_url: 'https://tls-observatory.services.mozilla.com/api/v1/',
     state: {
         third_party: {
             hstspreload: {},
+            htbridge: {
+                nonce: Date.now().toString()
+            },
             securityheaders: {},
-            tlsimirhilfr: {}
+            tlsimirhilfr: {},
+            tlsobservatory: {
+                initiated: false
+            }
         }
     }
 };
@@ -288,8 +293,10 @@ function onPageLoad() {
         loadScanResults();
         // loadSafeBrowsingResults();
         loadHSTSPreloadResults();
+        loadHTBridgeResults();
         loadSecurityHeadersIOResults();
         loadTLSImirhilFrResults();
+        // loadTLSObservatoryResults();
     } else {
         // bind an event to the Scan Me button
         $('#scantron-form').on('submit', submitScanForAnalysis);

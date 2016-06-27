@@ -79,7 +79,7 @@ function insertHSTSPreloadResults() {
         'redirects.insecure.subsequent': 'Redirects to an insecure page.',
         'redirects.http.no_redirect': 'HTTP page does not redirect to an HTTPS page.',
         'redirects.too_many': 'Site redirects too many times.',
-        'response.multiple_headers': 'HSTS contains multiple "max-age" directives.',
+        'response.multiple_headers': 'HSTS header contains multiple "max-age" directives.',
         'response.no_header': 'Site doesn\'t issue an HSTS header.'
     };
 
@@ -138,6 +138,98 @@ function loadHSTSPreloadResults() {
 }
 
 
+function insertHTBridgeResults() {
+    'use strict';
+    var results = Observatory.state.third_party.htbridge.results;
+    var text = [];
+    var subtext = [];
+    var general_text = [];
+    var tls_text = [];
+
+    // create a link to the actual results
+    var a = document.createElement('a');
+    a.href = 'https://www.htbridge.com/ssl/?id=' + results.ID;
+    a.appendChild(document.createTextNode('htbridge.com'));
+    $('#third-party-test-scores-htbridge').html(a);
+
+    // get the hostname and IP address
+    text.push(Observatory.hostname + ' [' + results.VALUE.SERVER_IP.split(':')[0] + ']');
+
+    // get the grades for the SSL test and header test
+    subtext.push('General Information');
+    subtext.push('HTTP Header Grade: ' + results.VALUE.httpHeaders.GRADE);
+    subtext.push('TLS Grade: ' + results.VALUE.FINAL_GRADE);
+
+    // get the general server information
+    general_text.push('Geographical Location: ' + results.VALUE.httpHeaders.SERVER_LOCATION +
+        ' (' + parseFloat(results.VALUE.httpHeaders.LAT).toFixed(2).toString() + ', ' +
+              parseFloat(results.VALUE.httpHeaders.LNG).toFixed(2).toString() + ')');
+    general_text.push('Reverse DNS: ' + results.VALUE.httpHeaders.REVERSE_DNS);
+
+    // get the compliance with NIST and PCI
+    tls_text.push('NIST Compliant: ' + ('NIST_COMPLIANT' in results.VALUE ? 'Yes' : 'No'));
+    tls_text.push('PCI-DSS Compliant: ' + ('PCI_COMPLIANT' in results.VALUE ? 'Yes' : 'No'));
+
+    // roll this whole thing up
+    text = listify(text);
+    subtext = listify(subtext);
+    general_text = listify(general_text);
+    tls_text = listify(tls_text);
+
+    subtext.childNodes[0].appendChild(general_text);
+    subtext.childNodes[2].appendChild(tls_text);
+    text.childNodes[0].appendChild(subtext);
+
+    // insert in the results
+    $('#third-party-test-scores-htbridge-score').html(text);
+}
+
+
+function loadHTBridgeResults() {
+    var API_URL = 'https://www.htbridge.com/ssl/chssl/' + Observatory.state.third_party.htbridge.nonce + '.html';
+
+    var post_data = {
+        domain: Observatory.hostname + ':443',
+        dnsr: 'off',
+        recheck: 'false'
+    };
+
+    if (Observatory.state.third_party.htbridge.ip !== undefined) {
+        post_data['choosen_ip'] = Observatory.state.third_party.htbridge.ip;  // sic
+        post_data['token'] = Observatory.state.third_party.htbridge.token;
+    }
+
+    var errorCallback = function() {
+        $('#third-party-test-scores-htbridge-score').text('ERROR');
+    };
+
+    var successCallback = function(data) {
+        // use the first IP address and token and resubmit the request
+        if (data.MULTIPLE_IPS !== undefined) {
+            Observatory.state.third_party.htbridge.ip = data.MULTIPLE_IPS[0];  // just use the first IP
+            Observatory.state.third_party.htbridge.token = data.TOKEN;
+
+            loadHTBridgeResults();
+            return;
+        } else if (data.ERROR !== undefined) {
+            errorCallback();
+        }
+
+        // if everything works, save the data and lets throw it into the page
+        Observatory.state.third_party.htbridge.results = data;
+        insertHTBridgeResults();
+    };
+
+    $.ajax({
+        data: post_data,
+        method: 'POST',
+        error: errorCallback,
+        success: successCallback,
+        url: API_URL
+    });
+}
+
+
 function loadSecurityHeadersIOResults() {
     'use strict';
     var API_URL = 'https://securityheaders.io/?followRedirects=on&hide=on&q=' + Observatory.hostname;
@@ -173,6 +265,7 @@ function loadSecurityHeadersIOResults() {
         url: API_URL
     });
 }
+
 
 function insertTLSImirHilFrResults() {
     'use strict';
@@ -225,6 +318,7 @@ function insertTLSImirHilFrResults() {
     $('#third-party-test-scores-tlsimirhilfr-score').html(hosts);
 }
 
+
 function loadTLSImirhilFrResults() {
     'use strict';
     var API_URL = 'https://tls.imirhil.fr/https/' + Observatory.hostname + '.json';
@@ -259,4 +353,44 @@ function loadTLSImirhilFrResults() {
         success: successCallback,
         url: API_URL
     })
+}
+
+
+function loadTLSObservatoryResults() {
+    'use strict';
+
+    var SCAN_URL = 'https://tls-observatory.services.mozilla.com/api/v1/scan';
+    var RESULTS_URL = 'https://tls-observatory.services.mozilla.com/api/v1/results';
+
+
+    // if it's the first scan through, we need to do a post
+    if (Observatory.state.third_party.tlsobservatory.scan_id === undefined) {
+        var errorCallback = function () {
+            $('#third-party-test-scores-tlsobservatory-score').text('Error initiating scan');
+        };
+
+        var successCallback = function (data) {
+            if (data.scan_id) {
+                Observatory.state.third_party.tlsobservatory.scan_id = data.scan_id;
+                loadTLSObservatoryResults();  // reload the function to pull the results
+            } else {
+                errorCallback();
+            }
+        };
+
+        // make a POST to initiate the scan
+        $.ajax({
+            data: {
+                target: Observatory.hostname
+            },
+            dataType: 'json',
+            method: 'POST',
+            error: errorCallback,
+            success: successCallback,
+            url: SCAN_URL
+        })
+
+    } else {
+        // retrieve results
+    }
 }
