@@ -43,7 +43,7 @@ body {
     color: #436ece;
 }
 
-#grade {
+.grade-container {
     border-radius: 12px;
     color: #ffffff;
     display: inline-block;
@@ -54,8 +54,7 @@ body {
     padding-right: 4px;
     width: 128px;
 }
-
-#grade sup {
+.grade-container sup {
     float: right;
     font-size: 52px;
     position: relative;
@@ -100,22 +99,39 @@ body {
     right: -2px;
 }
 
-#scan-progress-bar {
+.large-progress-bar {
     height: 44px;
     margin: 22px 0;
+}
+
+.large-progress-bar-condensed {
+    margin: 0;
+}
+
+.large-progress-bar-text {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 44px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+/* hide all results while the progress bar is in the DOM before it */
+div.large-progress-bar-condensed + div.row {
+    display: none;
 }
 
 #scan-results {
     display: none; /* hide on initial page load */
 }
 
-#scan-summary tr td:nth-child(1) {
+.summary tr td:nth-child(1) {
     font-weight: 600;
     padding-right: 1.5em;
     white-space: nowrap;
 }
 
-#scan-summary tr td:nth-child(2) {
+.summary tr td:nth-child(2) {
     width: 100%;
 }
 
@@ -123,27 +139,34 @@ body {
     margin-bottom: 0;
 }
 
-#scan-text {
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 44px;
-    text-transform: uppercase;
+
+#test-scores .glyphicon {
+    display: table-cell;  /* override inline-block */
 }
 
+/* test name */
 #test-scores tr td:nth-child(1) {
     font-weight: 600;
-    padding-right: 1.5em;
+    padding-right: 1em;
+    white-space: nowrap;
+}
+
+/* pass fail */
+#test-scores tr td:nth-child(2) {
+    margin-right: 3em;
+    text-align: center;
     white-space: nowrap;
 }
 
 /* score modifier */
-#test-scores tr td:nth-child(2) {
+#test-scores tr td:nth-child(3) {
     padding-right: 1.5em;
     text-align: right;
     white-space: nowrap;
 }
 
-#test-scores tr td:nth-child(3) {
+/* pxplanation */
+#test-scores tr td:nth-child(4) {
     width: 100%;
 }
 
@@ -161,7 +184,7 @@ body {
     width: 100%;
 }
 
-#third-party-test-scores ul {
+#third-party-test-scores ul, .summary ul {
     margin-bottom: 0;
     padding-left: 1em;
 }
