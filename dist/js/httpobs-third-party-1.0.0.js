@@ -323,7 +323,7 @@ function insertTLSImirHilFrResults() {
     }
 
     // Each entry in hosts corresponds to an entry in results
-    hosts = listify(hosts);
+    hosts = listify(hosts, true);
     for (i = 0; i < hosts.childNodes.length; i++) {
         hosts.childNodes[i].appendChild(results[i]);
     }
