@@ -21,23 +21,6 @@ var Observatory = {
 };
 
 /*
- * Utility functions
- */
-function listify(list) {  // take an array and turn it into an unordered list
-    ul = document.createElement('ul');
-
-    for (var i = 0; i < list.length; i++) {
-        var li = document.createElement('li');
-        var text = document.createTextNode(list[i]);
-
-        li.appendChild(text);
-        ul.appendChild(li);
-    }
-
-    return(ul);
-}
-
-/*
  *
  *
  *    analyze.html, loading scan results
@@ -118,53 +101,29 @@ function insertScanResults(scan, results) {
     // stuff both scan and state into the HTTPObs object
     Observatory.state.scan = scan;
     Observatory.state.results = results;
+
+    // insert in the grade and summary results
+    insertGrade(scan.grade, 'scan');
+    insertResults(scan, 'scan');
     
-    // set the grade
-    var letter = scan.grade.substr(0, 1);
-    $('#grade').toggleClass('grade-' + letter.toLowerCase()); // set the background color for the grade
-    $('#grade-letter').text(letter);
-    if (scan.grade.length === 2) {
-        $('#grade').toggleClass('grade-with-modifier');
-        $('#grade-modifier').text(scan.grade.substr(1, 1));
-
-        // CSS is the literal worst
-        if (scan.grade[1] === '+') {
-            switch (letter) {
-                case 'A':
-                    $('#grade-modifier').addClass('grade-with-modifier-narrow');
-                    break;
-                case 'C':
-                    $('#grade-modifier').addClass('grade-with-modifier-wide');
-
-            }
-        } else {
-            $('#grade-modifier').addClass('grade-with-modifier-narrow'); // C-, B-, etc.
-        }
-    }
-
-    // Grades A
-
-    // Write all the various important parts of the scan into the page
-    var keys = Object.keys(scan);
-    for (var i in keys) {
-        var key = keys[i];
-        var id = '#scan-' + key;
-        $(id).text(scan[key]);
-    }
-    
-    // Write all the various important parts of the results into the page
+    // Write the test results onto the page
     var keys = Object.keys(results);
     for (var i in keys) {
         var key = keys[i];
 
+        // pass or fail
+        var pass = results[key]['pass'] ? '&#x2705' : '&#x274c';
+        var pass = results[key]['pass'] ? 'glyphicon-ok' : 'glyphicon-remove';
+
         // score modifier
-        var id = '#tests-' + key + '-score';
         var score = results[key]['score_modifier'];
         if (score > 0) { score = '+' + score.toString(); }
-        $(id).text(score);
 
-        var id = '#tests-' + key + '-score-description';
-        $(id).text(results[key]['score_description']);
+//        $('#tests-' + key + '-pass').html(pass);
+
+        $('#tests-' + key + '-pass').toggleClass(pass);
+        $('#tests-' + key + '-score').text(score);
+        $('#tests-' + key + '-score-description').text(results[key]['score_description']);
     }
 
     // show the scan results and remove the progress bar

@@ -51,7 +51,7 @@ function loadSafeBrowsingResults() {
  */
 function insertHSTSPreloadResults() {
     'use strict';
-    var text;
+    var grade, text;
 
     // convenience variables
     var status = Observatory.state.third_party.hstspreload.status.status;
@@ -85,12 +85,22 @@ function insertHSTSPreloadResults() {
 
     // If it's already preloaded, then we're set to go
     if (status === 'preloaded') {
+        grade = 'check-mark';
+        Observatory.state.third_party.hstspreload.preloaded = 'Yes';
+
         if (errors.length === 0 && warnings.length === 0) {
-            text = 'Preloaded, HSTS header continues to meet preloading requirements.';
+            text = 'HSTS header continues to meet preloading requirements.';
         } else {
-            text = 'Preloaded, but existing HSTS header no longer meets preloading requirements.<br><br>Note that these requirements only apply to domains preloaded after February 29, 2016.';
+            text = document.createElement('span');
+            text.appendChild(document.createTextNode('Existing HSTS header no longer meets preloading requirements.'));
+            text.appendChild(document.createElement('br'));
+            text.appendChild(document.createElement('br'));
+            text.appendChild(document.createTextNode('Note that these requirements only apply to domains preloaded after February 29, 2016.'));
         }
     } else if (status === 'unknown') {
+        grade = 'x-mark';
+        Observatory.state.third_party.hstspreload.preloaded = 'No';
+
         if (errors) {
             text = [];
             for (var i = 0; i < errors.length; i++) {
@@ -111,14 +121,23 @@ function insertHSTSPreloadResults() {
         console.log('Unknown status for HSTS Preload: ', status);
     }
 
-    $('#third-party-test-scores-hstspreload-score').html(text);
+    // store the text as notes
+    Observatory.state.third_party.hstspreload.notes = text;
+
+    // insert in the status of the site
+    insertGrade(grade, 'hstspreload');
+    insertResults(Observatory.state.third_party.hstspreload, 'hstspreload');
+    showResults('hstspreload');
 }
 
 
 function loadHSTSPreloadResults() {
     'use strict';
-    var API_URL = 'https://hstspreload.appspot.com/';
-    Observatory.state.third_party.hstspreload.url = API_URL + '?domain=' + Observatory.hostname;
+    var API_URL = 'https://hstspreload.appspot.com/api/v2/';
+
+    // Store the host and url
+    Observatory.state.third_party.hstspreload.hostname = Observatory.hostname;
+    Observatory.state.third_party.hstspreload.url = linkify('https://hstspreload.appspot.com/' + '?domain=' + Observatory.hostname);
 
     // create a link to the actual results
     var a = document.createElement('a');
@@ -171,10 +190,10 @@ function insertHTBridgeResults() {
     tls_text.push('PCI-DSS Compliant: ' + ('PCI_COMPLIANT' in results.VALUE ? 'Yes' : 'No'));
 
     // roll this whole thing up
-    text = listify(text);
-    subtext = listify(subtext);
-    general_text = listify(general_text);
-    tls_text = listify(tls_text);
+    text = listify(text, true);
+    subtext = listify(subtext, true);
+    general_text = listify(general_text, true);
+    tls_text = listify(tls_text, true);
 
     subtext.childNodes[0].appendChild(general_text);
     subtext.childNodes[2].appendChild(tls_text);
@@ -233,34 +252,30 @@ function loadHTBridgeResults() {
 function loadSecurityHeadersIOResults() {
     'use strict';
     var API_URL = 'https://securityheaders.io/?followRedirects=on&hide=on&q=' + Observatory.hostname;
-    Observatory.state.third_party.securityheaders.url = API_URL;
 
-    // create a link to the actual results
-    var a = document.createElement('a');
-    a.href = Observatory.state.third_party.securityheaders.url;
-    a.appendChild(document.createTextNode('securityheaders.io'));
-    $('#third-party-test-scores-securityheaders').html(a);
-
-    var errorCallback = function() {
-        $('#third-party-test-scores-securityheaders-score').text('ERROR');
-    };
+    Observatory.state.third_party.securityheaders.url = linkify(API_URL);
 
     var successCallback = function(data, textStatus, jqXHR) {
         // store the response headers for debugging
-        var grade = 'Grade: ' + jqXHR.getResponseHeader('X-Grade');
+        var grade = jqXHR.getResponseHeader('X-Grade');
         Observatory.state.third_party.securityheaders.headers = jqXHR.getAllResponseHeaders();
         Observatory.state.third_party.securityheaders.grade = grade;
 
+        // also store the hostname in the object
+        Observatory.state.third_party.securityheaders.hostname = Observatory.hostname;
+
         if (grade === undefined) {
-            errorCallback();
+            errorResults('Unknown error');
         } else {
-            $('#third-party-test-scores-securityheaders-score').text(grade);
+            insertGrade(grade, 'securityheaders');
+            insertResults(Observatory.state.third_party.securityheaders, 'securityheaders');
+            showResults('securityheaders');
         }
     };
 
     $.ajax({
         method: 'HEAD',
-        error: errorCallback,
+        error: function() { errorResults('Unable to connect', 'securityheaders') },
         success: successCallback,
         url: API_URL
     });
@@ -294,15 +309,13 @@ function insertTLSImirHilFrResults() {
             subtext.push('Key Exchange: ' + host.grade.details.key_exchange.toString());
             subtext.push('Protocol: ' + host.grade.details.protocol.toString());
 
-            // subtext = [ subtext.join(', ') ];
-
-            text = listify(text);
-            subtext = listify(subtext);
+            text = listify(text, true);
+            subtext = listify(subtext, true);
             text.appendChild(subtext);
 
         } else {
             text.push('Error: ' + host.error);
-            text = listify(text)
+            text = listify(text, true)
         }
 
         // push all the results
