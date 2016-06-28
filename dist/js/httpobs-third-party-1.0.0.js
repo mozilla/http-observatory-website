@@ -84,9 +84,9 @@ function insertHSTSPreloadResults() {
     };
 
     // If it's already preloaded, then we're set to go
-    if (status === 'preloaded') {
+    if (status === 'preloaded' || status === 'pending') {
         grade = 'check-mark';
-        Observatory.state.third_party.hstspreload.preloaded = 'Yes';
+        Observatory.state.third_party.hstspreload.preloaded = status === 'preloaded' ? 'Yes' : 'Pending';
 
         if (errors.length === 0 && warnings.length === 0) {
             text = 'HSTS header continues to meet preloading requirements.';
