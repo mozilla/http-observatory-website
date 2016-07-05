@@ -287,7 +287,78 @@
             </div>
         </div>
 
-        <div class="panel panel-primary" id="third-party-test-scores">
+        <!-- tls.imirhil.fr -->
+        <div class="panel panel-primary summary" id="tlsimirhilfr-summary">
+            <div class="panel-heading">
+                <span class="h3">tls.imirhil.fr</span>
+            </div>
+            <div class="panel-body">
+                <div class="progress large-progress-bar large-progress-bar-condensed" id="tlsimirhilfr-progress-bar">
+                    <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="tlsimirhilfr-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                        PENDING (This may take several minutes)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <span class="grade-container text-center" id="tlsimirhilfr-grade-container">
+                            <span class="grade-letter" id="tlsimirhilfr-grade-letter"></span>
+                            <sup class="grade-letter-modifier" id="tlsimirhilfr-grade-modifier"></sup>
+                        </span>
+                    </div>
+                    <div class="col-md-10">
+                        <table class="table table-striped table-condensed pull-left tlsimirhilfr-summary-table">
+                            <tr>
+                                <td>Host:</td>
+                                <td id="tlsimirhilfr-hostname"></td>
+                            </tr>
+                            <tr>
+                                <td>IP addresses:</td>
+                                <td id="tlsimirhilfr-addresses"></td>
+                            </tr>
+                            <tr id="tlsimirhilfr-failing_addresses-row">
+                                <td>Failing addresses:</td>
+                                <td id="tlsimirhilfr-failing_addresses"></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>Cipher score:</td>
+                                <td><span id="tlsimirhilfr-cipher_score"></span>/100</td>
+                            </tr>
+                            <tr>
+                                <td>Key exchange score:</td>
+                                <td><span id="tlsimirhilfr-key_exchange_score"></span>/100</td>
+                            </tr>
+                            <tr>
+                                <td>Protocol score:</td>
+                                <td><span id="tlsimirhilfr-protocol_score"></span>/100</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>Overall score:</td>
+                                <td><span id="tlsimirhilfr-overall_score"></span>/100</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>Complete Results:</td>
+                                <td id="tlsimirhilfr-url"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--        <div class="panel panel-primary" id="third-party-test-scores">
             <div class="panel-heading">
                 <span class="h3">Additional Scanners</span>
             </div>
@@ -308,31 +379,11 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td id="third-party-test-scores-tlsimirhilfr">tls.imirhil.fr</td>
-                            <td id="third-party-test-scores-tlsimirhilfr-score">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%;">
-                                        PENDING (This may take several minutes)
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-<!--                        <tr>
-                            <td id="third-party-test-scores-tlsobservatory">TLS Observatory</td>
-                            <td id="third-party-test-scores-tlsobservatory-score">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%;">
-                                        PENDING (This may take several minutes)
-                                    </div>
-                                </div>
-                            </td>
-                        </tr> -->
                     </table>
                 </div>
             </div>
         </div>
-
+-->
     </div>
 
     </div>

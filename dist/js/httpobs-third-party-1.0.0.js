@@ -91,11 +91,7 @@ function insertHSTSPreloadResults() {
         if (errors.length === 0 && warnings.length === 0) {
             text = 'HSTS header continues to meet preloading requirements.';
         } else {
-            text = document.createElement('span');
-            text.appendChild(document.createTextNode('Existing HSTS header no longer meets preloading requirements.'));
-            text.appendChild(document.createElement('br'));
-            text.appendChild(document.createElement('br'));
-            text.appendChild(document.createTextNode('Note that these requirements only apply to domains preloaded after February 29, 2016.'));
+            text = 'Existing HSTS header no longer meets preloading requirements.\n\nNote that these requirements only apply to domains preloaded after February 29, 2016.';
         }
     } else if (status === 'unknown') {
         grade = 'x-mark';
@@ -265,7 +261,7 @@ function loadSecurityHeadersIOResults() {
         Observatory.state.third_party.securityheaders.hostname = Observatory.hostname;
 
         if (grade === undefined) {
-            errorResults('Unknown error');
+            errorResults('Unknown error', 'securityheaders');
         } else {
             insertGrade(grade, 'securityheaders');
             insertResults(Observatory.state.third_party.securityheaders, 'securityheaders');
@@ -284,51 +280,81 @@ function loadSecurityHeadersIOResults() {
 
 function insertTLSImirHilFrResults() {
     'use strict';
+    var grade;
 
     // we'll maybe look at more hosts later, but for now let's just look at one
     var json_hosts = Observatory.state.third_party.tlsimirhilfr.json.hosts;
 
     // loop through every host
+    var addresses = [];
+    var cipher_scores = [];
+    var errors = [];
+    var failing_addresses = [];
+    var grades = [];
     var hosts = [];
-    var results = [];
+    var key_exchange_scores = [];
+    var overall_scores = [];
+    var protocol_scores = [];
 
     for (var i = 0; i < json_hosts.length; i++) {
         var host = json_hosts[i];
-        var text = [];
-        var subtext = [];
 
         // the hostname and IP address
         hosts.push(host.host.name + ' [' + host.host.ip + ']');
 
         if (host.error === undefined) {
-            // if there's no error, let's gather all the results into a list
-            text.push('Grade: ' + host.grade.rank);
-            text.push('Score: ' + host.grade.details.score.toString());
-
-            subtext.push('Cipher Strength: ' + host.grade.details.cipher_strengths.toString());
-            subtext.push('Key Exchange: ' + host.grade.details.key_exchange.toString());
-            subtext.push('Protocol: ' + host.grade.details.protocol.toString());
-
-            text = listify(text, true);
-            subtext = listify(subtext, true);
-            text.appendChild(subtext);
-
+            addresses.push(host.host.ip);
+            cipher_scores.push(host.grade.details.cipher_strengths);
+            grades.push(host.grade.rank);
+            key_exchange_scores.push(host.grade.details.key_exchange);
+            protocol_scores.push(host.grade.details.protocol);
+            overall_scores.push(host.grade.details.score);
         } else {
-            text.push('Error: ' + host.error);
-            text = listify(text, true)
+            failing_addresses.push(host.host.ip);
+
+            // the error for timing out is ugly
+            if (host.error.indexOf('Too long analysis') !== -1) {
+                errors.push('Scan timed out');
+            } else {
+                errors.push(host.error);
+            }
         }
-
-        // push all the results
-        results.push(text);
     }
 
-    // Each entry in hosts corresponds to an entry in results
-    hosts = listify(hosts, true);
-    for (i = 0; i < hosts.childNodes.length; i++) {
-        hosts.childNodes[i].appendChild(results[i]);
+    // if we don't get any successful scans, mark the error
+    if (addresses.length === 0) {
+        errorResults(errors[0], 'tlsimirhilfr');
     }
 
-    $('#third-party-test-scores-tlsimirhilfr-score').html(hosts);
+    // if we don't have any failing scans, kill that row
+    if (failing_addresses.length === 0) {
+        $(' #tlsimirhilfr-failing_addresses-row ').remove();
+    }
+
+    // set the averages for various things
+    Observatory.state.third_party.tlsimirhilfr.results.cipher_score = parseInt(average(cipher_scores)).toString();
+    Observatory.state.third_party.tlsimirhilfr.results.key_exchange_score = parseInt(average(key_exchange_scores)).toString();
+    Observatory.state.third_party.tlsimirhilfr.results.overall_score = parseInt(average(overall_scores)).toString();
+    Observatory.state.third_party.tlsimirhilfr.results.protocol_score = parseInt(average(protocol_scores)).toString();
+
+    // put all the addresses into the list
+    Observatory.state.third_party.tlsimirhilfr.results.addresses = addresses.join('\n');
+    Observatory.state.third_party.tlsimirhilfr.results.failing_addresses = failing_addresses.join('\n');
+
+    // find the minimum grade
+    grades = grades.map(function (e) { return Observatory.grades.indexOf(e); });
+    grade = Observatory.grades.indexOf(Math.min.apply(Math, grades));
+
+    // if the grade isn't in Observatory.grades, then it's an unknown grade
+    if (grade !== -1) {
+        displayError('Unknown grade value', 'tlsimirhilfr');
+        return;
+    }
+
+    // insert the overall grade
+    insertGrade(host.grade.rank, 'tlsimirhilfr');
+    insertResults(Observatory.state.third_party.tlsimirhilfr.results, 'tlsimirhilfr');
+    showResults('tlsimirhilfr');
 }
 
 
@@ -336,6 +362,11 @@ function loadTLSImirhilFrResults() {
     'use strict';
     var API_URL = 'https://tls.imirhil.fr/https/' + Observatory.hostname + '.json';
     var WEB_URL = 'https://tls.imirhil.fr/https/' + Observatory.hostname;
+    
+    Observatory.state.third_party.tlsimirhilfr.results = {
+        hostname: Observatory.hostname,
+        url: linkify(WEB_URL)
+    };
 
     // create a link to the actual results
     var a = document.createElement('a');
