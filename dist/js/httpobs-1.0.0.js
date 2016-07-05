@@ -13,9 +13,7 @@ var Observatory = {
             },
             securityheaders: {},
             tlsimirhilfr: {},
-            tlsobservatory: {
-                initiated: false
-            }
+            tlsobservatory: {}
         }
     }
 };

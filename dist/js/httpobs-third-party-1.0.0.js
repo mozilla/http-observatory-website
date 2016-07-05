@@ -153,6 +153,7 @@ function loadHSTSPreloadResults() {
 }
 
 
+// TODO: completely rewrite once API is more mature
 function insertHTBridgeResults() {
     'use strict';
     var results = Observatory.state.third_party.htbridge.results;
@@ -315,6 +316,8 @@ function insertTLSImirHilFrResults() {
             // the error for timing out is ugly
             if (host.error.indexOf('Too long analysis') !== -1) {
                 errors.push('Scan timed out');
+            } else if (host.error.indexOf('Connection refused') !== -1) {
+                errors.push('Site does not support HTTPS');
             } else {
                 errors.push(host.error);
             }
@@ -343,16 +346,16 @@ function insertTLSImirHilFrResults() {
 
     // find the minimum grade
     grades = grades.map(function (e) { return Observatory.grades.indexOf(e); });
-    grade = Observatory.grades.indexOf(Math.min.apply(Math, grades));
+    grade = Observatory.grades[Math.min.apply(Math, grades)];
 
     // if the grade isn't in Observatory.grades, then it's an unknown grade
-    if (grade !== -1) {
-        displayError('Unknown grade value', 'tlsimirhilfr');
+    if (grade === -1) {
+        errorResults('Unknown grade value', 'tlsimirhilfr');
         return;
     }
 
     // insert the overall grade
-    insertGrade(host.grade.rank, 'tlsimirhilfr');
+    insertGrade(grade, 'tlsimirhilfr');
     insertResults(Observatory.state.third_party.tlsimirhilfr.results, 'tlsimirhilfr');
     showResults('tlsimirhilfr');
 }
@@ -400,28 +403,23 @@ function loadTLSImirhilFrResults() {
 }
 
 
+function insertTLSObservatoryResults() {
+    'use strict';
+
+    console.log(Observatory.state.third_party.tlsobservatory);
+}
+
+
 function loadTLSObservatoryResults() {
     'use strict';
 
     var SCAN_URL = 'https://tls-observatory.services.mozilla.com/api/v1/scan';
     var RESULTS_URL = 'https://tls-observatory.services.mozilla.com/api/v1/results';
+    var CERTIFICATE_URL = 'https://tls-observatory.services.mozilla.com/api/v1/certificate';
 
 
     // if it's the first scan through, we need to do a post
     if (Observatory.state.third_party.tlsobservatory.scan_id === undefined) {
-        var errorCallback = function () {
-            $('#third-party-test-scores-tlsobservatory-score').text('Error initiating scan');
-        };
-
-        var successCallback = function (data) {
-            if (data.scan_id) {
-                Observatory.state.third_party.tlsobservatory.scan_id = data.scan_id;
-                loadTLSObservatoryResults();  // reload the function to pull the results
-            } else {
-                errorCallback();
-            }
-        };
-
         // make a POST to initiate the scan
         $.ajax({
             data: {
@@ -429,12 +427,48 @@ function loadTLSObservatoryResults() {
             },
             dataType: 'json',
             method: 'POST',
-            error: errorCallback,
-            success: successCallback,
+            error: errorResults('ugh', 'tlsobservatory'),
+            success: function (data) {
+                Observatory.state.third_party.tlsobservatory.scan_id = data.scan_id;
+                loadTLSObservatoryResults();  // retrieve the results
+            },
             url: SCAN_URL
-        })
+        });
 
-    } else {
+    // scan initiated, but we don't have the results
+    } else if (Observatory.state.third_party.tlsobservatory.results === undefined) {
         // retrieve results
+        $.ajax({
+            data: {
+                id: Observatory.state.third_party.tlsobservatory.scan_id
+            },
+            dataType: 'json',
+            method: 'GET',
+            error: errorResults('Ugh', 'tlsobservatory'),
+            success: function (data) {
+                // not yet completed
+                if (data.completion_perc !== 100) {
+                    setTimeout(loadTLSObservatoryResults, 2000);
+                } else {
+                    Observatory.state.third_party.tlsobservatory.results = data;
+                    loadTLSObservatoryResults();  // retrieve the cert
+                }
+            },
+            url: RESULTS_URL
+        })
+    } else {
+        $.ajax({
+            data: {
+                id: Observatory.state.third_party.tlsobservatory.results.cert_id
+            },
+            dataType: 'json',
+            method: 'GET',
+            error: errorResults('ugh', 'tlsobservatory'),
+            success: function (data) {
+                Observatory.state.third_party.tlsobservatory.certificate = data;
+                insertTLSObservatoryResults();  // put things into the page
+            },
+            url: CERTIFICATE_URL
+        });
     }
 }
