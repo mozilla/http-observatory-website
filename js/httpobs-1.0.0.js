@@ -119,8 +119,6 @@ function insertScanResults(scan, results) {
         var score = results[key]['score_modifier'];
         if (score > 0) { score = '+' + score.toString(); }
 
-//        $('#tests-' + key + '-pass').html(pass);
-
         $('#tests-' + key + '-pass').toggleClass(pass);
         $('#tests-' + key + '-score').text(score);
         $('#tests-' + key + '-score-description').text(results[key]['score_description']);
@@ -202,7 +200,6 @@ function displayError(text, statusText) {
         text = text.replace(/-/g, ' ');
         text = text.charAt(0).toUpperCase() + text.slice(1); // capitalize
     }
-    console.log(text);
 
     // hide the scan progress bar
     $('#scan-progress-bar').hide();
@@ -252,10 +249,10 @@ function onPageLoad() {
         loadScanResults();
         // loadSafeBrowsingResults();
         loadHSTSPreloadResults();
-        loadHTBridgeResults();
+        // loadHTBridgeResults();
         loadSecurityHeadersIOResults();
         loadTLSImirhilFrResults();
-        // loadTLSObservatoryResults();
+        loadTLSObservatoryResults();
     } else {
         // bind an event to the Scan Me button
         $('#scantron-form').on('submit', submitScanForAnalysis);

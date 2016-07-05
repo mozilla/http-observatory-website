@@ -1,3 +1,20 @@
+// add a prototype to get the average value of an array
+function average(list) {
+    var sum = 0;
+
+    // let's not divide by zero
+    if (list.length === 0) {
+        return undefined;
+    }
+
+    for (var i = 0; i < list.length; i++) {
+        sum += parseInt(list[i], 10);
+    }
+
+    return sum / list.length;
+}
+
+
 function insertGrade(grade, id) {
     'use strict';
     var letter;

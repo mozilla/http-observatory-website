@@ -132,6 +132,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 .summary tr td:nth-child(2) {
+    white-space: pre-wrap;
     width: 100%;
 }
 
