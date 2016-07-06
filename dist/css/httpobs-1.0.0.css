@@ -146,7 +146,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* test name */
-#test-scores tr td:nth-child(1) {
+#test-scores tr td:nth-child(1), #server-headers-table tr td:nth-child(1) {
     font-weight: 600;
     padding-right: 1em;
     white-space: nowrap;
@@ -166,8 +166,8 @@ div.large-progress-bar-condensed + div.row {
     white-space: nowrap;
 }
 
-/* pxplanation */
-#test-scores tr td:nth-child(4) {
+/* explanation */
+#test-scores tr td:nth-child(4), #server-headers tr td:nth-child(2) {
     width: 100%;
 }
 
