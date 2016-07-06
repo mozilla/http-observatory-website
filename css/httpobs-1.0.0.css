@@ -167,7 +167,9 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* explanation */
-#test-scores tr td:nth-child(4), #server-headers tr td:nth-child(2) {
+#test-scores tr td:last-child, #server-headers tr td:last-child {
+    hyphens: auto;
+    white-space: pre-wrap;
     width: 100%;
     word-break: break-all;
 }
