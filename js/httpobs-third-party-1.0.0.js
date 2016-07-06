@@ -406,7 +406,7 @@ function loadTLSImirhilFrResults() {
 function insertTLSObservatoryResults() {
     'use strict';
 
-    console.log(Observatory.state.third_party.tlsobservatory);
+    // console.log(Observatory.state.third_party.tlsobservatory);
 }
 
 
