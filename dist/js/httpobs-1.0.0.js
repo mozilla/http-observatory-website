@@ -91,6 +91,7 @@ function handleScanResults(scan) {
     }
 }
 
+
 // display the scan results
 function insertScanResults(scan, results) {
     // stick the hostname into scan, so it shows up
@@ -147,7 +148,7 @@ function loadScanResults() {
 function insertResultTable(data, title, id, alert) {
     'use strict';
     // create the table and table header
-    var table = $('<table></table>').addClass('table table-bordered table-striped table-condensed')
+    var table = $('<table></table>').addClass('table table-bordered table-striped table-condensed table-recent-results')
         .append('<thead><tr><th class="alert-' + alert + ' h5" colspan="2">' + title + '</th></tr></thead>');
     var tbody = table.append('<tbody></tbody>');
 
@@ -171,6 +172,7 @@ function insertResultTable(data, title, id, alert) {
     $('#' + id).html(table);
 }
 
+
 function retrieveResultTable(title, url, id, alert) {
     'use strict';
 
@@ -180,6 +182,7 @@ function retrieveResultTable(title, url, id, alert) {
         insertResultTable(data, title, id, alert);
     });
 }
+
 
 // poll the HTTP Observatory
 function submitScanForAnalysisXHR(hostname, successCallback, errorCallback, method, rescan, hidden) {
@@ -202,6 +205,7 @@ function submitScanForAnalysisXHR(hostname, successCallback, errorCallback, meth
     $.ajax(config);
 }
 
+
 function displayError(text, statusText) {
     if (statusText) {  // jquery callback
         text = 'HTTP Observatory is down';
@@ -216,6 +220,7 @@ function displayError(text, statusText) {
     $('#scan-alert-text').text(text);
     $('#scan-alert').removeClass('alert-hidden');
 }
+
 
 function submitScanForAnalysis() {
     'use strict';
@@ -273,6 +278,7 @@ function onPageLoad() {
         retrieveResultTable('Hall of Shame', Observatory.api_url + 'getRecentScans?max=20&num=15', 'badresults', 'danger');
     }
 }
+
 
 /* load all the recent result stuff on page load */
 $( document ).ready(function() {

@@ -51,9 +51,14 @@ function loadSafeBrowsingResults() {
  */
 function insertHSTSPreloadResults() {
     'use strict';
-    var grade, text;
 
-    // convenience variables
+    // the observatory scan needs to finish first, so that we can check to see if a parent domain is preloaded
+    if (Observatory.state.results === undefined) {
+        setTimeout(insertHSTSPreloadResults, 250);
+        return
+    }
+
+    var grade, text;
     var status = Observatory.state.third_party.hstspreload.status.status;
     var errors = Observatory.state.third_party.hstspreload.preloadable.errors;
     var warnings = Observatory.state.third_party.hstspreload.preloadable.warnings;
@@ -94,9 +99,17 @@ function insertHSTSPreloadResults() {
             text = 'Existing HSTS header no longer meets preloading requirements.\n\nNote that these requirements only apply to domains preloaded after February 29, 2016.';
         }
     } else if (status === 'unknown') {
-        grade = 'x-mark';
-        Observatory.state.third_party.hstspreload.preloaded = 'No';
 
+        // use the HTTP Observatory's ability to see if it's preloaded via a parent domain
+        if (Observatory.state.results['strict-transport-security'].output.preloaded === true) {
+            grade = 'up-arrow';
+            Observatory.state.third_party.hstspreload.preloaded = 'Yes, via parent domain'
+        } else {
+            grade = 'x-mark';
+            Observatory.state.third_party.hstspreload.preloaded = 'No';
+        }
+
+        // gather together all the errors that the hstspreload
         if (errors) {
             text = [];
             for (var i = 0; i < errors.length; i++) {
@@ -314,7 +327,7 @@ function insertTLSImirHilFrResults() {
             failing_addresses.push(host.host.ip);
 
             // the error for timing out is ugly
-            if (host.error.indexOf('Too long analysis') !== -1) {
+            if (host.error.indexOf('Too long analysis') !== -1 || host.error.indexOf('Timeout when TLS') !== -1) {
                 errors.push('Scan timed out');
             } else if (host.error.indexOf('Connection refused') !== -1) {
                 errors.push('Site does not support HTTPS');
@@ -324,9 +337,10 @@ function insertTLSImirHilFrResults() {
         }
     }
 
-    // if we don't get any successful scans, mark the error
+    // if we don't get any successful scans, mark the error and bail
     if (addresses.length === 0) {
         errorResults(errors[0], 'tlsimirhilfr');
+        return;
     }
 
     // if we don't have any failing scans, kill that row
@@ -377,10 +391,6 @@ function loadTLSImirhilFrResults() {
     a.appendChild(document.createTextNode('tls.imirhil.fr'));
     $('#third-party-test-scores-tlsimirhilfr').html(a);
 
-    var errorCallback = function() {
-        $('#third-party-test-scores-tlsimirhilfr-score').text('ERROR');
-    };
-
     var successCallback = function (data, textStatus, jqXHR) {
         // store the response headers for debugging
         Observatory.state.third_party.tlsimirhilfr.json = data;
@@ -396,7 +406,7 @@ function loadTLSImirhilFrResults() {
     $.ajax({
         dataType: 'json',
         method: 'GET',
-        error: errorCallback,
+        error: errorResults('Scanner unavailable', 'tlsimirhilfr'),
         success: successCallback,
         url: API_URL
     })
