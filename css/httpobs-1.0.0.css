@@ -89,6 +89,10 @@ body {
     border: solid 6px #801515;
 }
 
+.grade-i {  /* intermediate is a weird font that needs to be bigger */
+    font-size: 102px;
+}
+
 /* that is, A+ or A- */
 .grade-with-modifier {
     padding-right: 4px;
