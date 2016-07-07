@@ -17,7 +17,7 @@ function average(list) {
 
 function insertGrade(grade, id) {
     'use strict';
-    var letter;
+    var letter = grade.substr(0, 1);  // default case
 
     // locate the elements on the page
     var dom_container = $('#' + id + '-grade-container');
@@ -38,8 +38,21 @@ function insertGrade(grade, id) {
             letter = '&#x2717;';
             dom_container.toggleClass('grade-f');
             break;
+        case 'Old':
+            dom_container.toggleClass('grade-f');
+            break;
+        case 'Intermediate':
+            letter = '&#x1d5a8';  // latin capital letter i
+            dom_container.toggleClass('grade-c');
+            break;
+        case 'Modern':
+            dom_container.toggleClass('grade-a');
+            break;
+        case 'Non-compliant':
+            letter = '?';
+            dom_container.toggleClass('grade-e');
+            break;
         default:
-            letter = grade.substr(0, 1);
             dom_container.toggleClass('grade-' + letter.toLowerCase()); // set the background color for the grade
     }
 
@@ -117,7 +130,7 @@ function listify(list, force) {  // take an array and turn it into an unordered 
     if (list.length === 0) {
         return '';
     }
-    
+
     // a single item list, without forcing it to return a list, will simply return the text
     if (list.length === 1 && !force) {
         return list[0];
