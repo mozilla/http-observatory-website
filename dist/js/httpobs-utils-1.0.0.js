@@ -113,6 +113,12 @@ function listify(list, force) {  // take an array and turn it into an unordered 
     'use strict';
     var force = typeof force !== 'undefined' ? force : false;
 
+    // an empty list simple returns an empty string
+    if (list.length === 0) {
+        return '';
+    }
+    
+    // a single item list, without forcing it to return a list, will simply return the text
     if (list.length === 1 && !force) {
         return list[0];
     }

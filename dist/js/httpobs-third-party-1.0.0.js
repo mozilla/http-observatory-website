@@ -99,27 +99,32 @@ function insertHSTSPreloadResults() {
             text = 'Existing HSTS header no longer meets preloading requirements.\n\nNote that these requirements only apply to domains preloaded after February 29, 2016.';
         }
     } else if (status === 'unknown') {
-
-        // use the HTTP Observatory's ability to see if it's preloaded via a parent domain
-        if (Observatory.state.results['strict-transport-security'].output.preloaded === true) {
-            grade = 'up-arrow';
-            Observatory.state.third_party.hstspreload.preloaded = 'Yes, via parent domain'
-        } else {
-            grade = 'x-mark';
-            Observatory.state.third_party.hstspreload.preloaded = 'No';
-        }
+        grade = 'x-mark';
+        Observatory.state.third_party.hstspreload.preloaded = 'No';
 
         // gather together all the errors that the hstspreload
         if (errors) {
             text = [];
             for (var i = 0; i < errors.length; i++) {
                 if (errors[i].code in errcodes) {
-                    text.push(errcodes[errors[i].code]);
+                text.push(errcodes[errors[i].code]);
                 } else {
                     text.push('Unknown error.');
                     console.log('Unknown error for HSTS Preload: ', errors[i].code);
                 }
             }
+
+            // if there were errors and we're not preloaded, then let's change the label to errors and not Notes:
+            if (!Observatory.state.results['strict-transport-security'].output.preloaded) {
+                $('#hstspreload-notes-label').text('Errors:');
+            }
+        }
+
+        // use the HTTP Observatory's ability to see if it's preloaded via a parent domain, and domain.is_subdomain is the only error
+        if (Observatory.state.results['strict-transport-security'].output.preloaded === true &&
+            JSON.stringify(text) === JSON.stringify([errcodes['domain.is_subdomain']])) {
+            grade = 'up-arrow';
+            Observatory.state.third_party.hstspreload.preloaded = 'Yes, via parent domain';
         }
 
         // join all the errors together
@@ -129,6 +134,8 @@ function insertHSTSPreloadResults() {
         text = 'Unknown error';
         console.log('Unknown status for HSTS Preload: ', status);
     }
+
+    // todo: add warnings here
 
     // store the text as notes
     Observatory.state.third_party.hstspreload.notes = text;
