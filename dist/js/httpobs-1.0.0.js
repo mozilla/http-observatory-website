@@ -13,7 +13,13 @@ var Observatory = {
             },
             securityheaders: {},
             tlsimirhilfr: {},
-            tlsobservatory: {}
+            tlsobservatory: {
+                output: {
+                    summary: {},
+                    certificate: {},
+                    ciphers: {}
+                }
+            }
         }
     }
 };

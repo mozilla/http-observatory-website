@@ -8,6 +8,10 @@ body {
     padding: 2em;
 }
 
+.no-margin-top {
+    margin-top: 0;
+}
+
 .footer {
     background-color: #ffffff;
     /*bottom: 0;*/
@@ -135,7 +139,7 @@ div.large-progress-bar-condensed + div.row {
     width: 100%;
 }
 
-#scan-summary table, #server-headers table, #test-scores table, #third-party-test-scores table {
+#scan-summary table, #server-headers table, #test-scores table, #tlsobservatory table, #third-party-test-scores table {
     margin-bottom: 0;
 }
 
@@ -145,7 +149,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* test name */
-#test-scores tr td:nth-child(1), #server-headers-table tr td:nth-child(1) {
+#test-scores tr td:nth-child(1), #server-headers-table tr td:nth-child(1), #tlsobservatory-certificate-table tr td:nth-child(1) {
     font-weight: 600;
     padding-right: 1em;
     white-space: nowrap;
@@ -166,7 +170,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* explanation */
-#test-scores tr td:last-child, #server-headers tr td:last-child {
+#test-scores tr td:last-child, #server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child {
     hyphens: auto;
     white-space: pre-wrap;
     width: 100%;

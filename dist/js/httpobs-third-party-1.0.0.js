@@ -423,7 +423,45 @@ function loadTLSImirhilFrResults() {
 function insertTLSObservatoryResults() {
     'use strict';
 
-    // console.log(Observatory.state.third_party.tlsobservatory);
+    console.log(Observatory.state.third_party.tlsobservatory);
+
+    // convenience variables
+    var cert = Observatory.state.third_party.tlsobservatory.certificate;
+    var results = Observatory.state.third_party.tlsobservatory.results;
+
+
+    // let's load up the summary object
+    Observatory.state.third_party.tlsobservatory.output.summary.end_time = results.timestamp;
+    Observatory.state.third_party.tlsobservatory.output.summary.scan_id = results.id;
+    Observatory.state.third_party.tlsobservatory.output.summary.target = results.target;
+
+    // let's have slightly nicer looking terms for the compliance level
+    var compliance = {
+        'old': 'Old',
+        'intermediate': 'Intermediate',
+        'modern': 'Modern',
+        'non compliant': 'Non-compliant'
+    };
+    Observatory.state.third_party.tlsobservatory.output.summary.mozilla_compliance_level = compliance[results.analysis[0].result.level];
+
+    // insert the summary
+    insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_compliance_level, 'tlsobservatory-summary');
+    insertResults(Observatory.state.third_party.tlsobservatory.output.summary, 'tlsobservatory-summary');
+
+    // now let's handle the certificate stuff
+    Observatory.state.third_party.tlsobservatory.output.certificate = {
+        cert_id: cert.id,
+        first_seen: cert.firstSeenTimestamp.split('T')[0],
+        last_seen: cert.lastSeenTimestamp.split('T')[0],
+        subject: cert.subject.cn
+    };
+
+    // insert the summary
+    insertResults(Observatory.state.third_party.tlsobservatory.output.certificate, 'tlsobservatory-certificate');
+
+    // And display the TLS results table
+    showResults('tlsobservatory-summary');
+
 }
 
 
@@ -454,6 +492,10 @@ function loadTLSObservatoryResults() {
 
     // scan initiated, but we don't have the results
     } else if (Observatory.state.third_party.tlsobservatory.results === undefined) {
+
+        // set the results URL in the output summary
+        Observatory.state.third_party.tlsobservatory.output.summary.results_url = linkify(RESULTS_URL + '?id=' + Observatory.state.third_party.tlsobservatory.scan_id);
+        
         // retrieve results
         $.ajax({
             data: {
@@ -472,8 +514,18 @@ function loadTLSObservatoryResults() {
                 }
             },
             url: RESULTS_URL
-        })
+        });
+    // scan completed, results collected, now we need to fetch the certificate
     } else {
+        // stop here and error out if there is no TLS
+        if (Observatory.state.third_party.tlsobservatory.results.has_tls === false) {
+            errorResults('Site does not support HTTPS', 'tlsobservatory-summary');
+            return;
+        }
+
+        // set the certificate URL in the output summary
+        Observatory.state.third_party.tlsobservatory.output.summary.certificate_url = linkify(CERTIFICATE_URL + '?id=' + Observatory.state.third_party.tlsobservatory.results.cert_id);
+
         $.ajax({
             data: {
                 id: Observatory.state.third_party.tlsobservatory.results.cert_id

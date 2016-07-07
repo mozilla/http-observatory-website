@@ -2,7 +2,7 @@ from jinja2 import Environment, FileSystemLoader
 
 config = {
     'AUTHOR': 'April King',
-    'SITENAME': 'HTTP Observatory',
+    'SITENAME': 'Mozilla Observatory',
     'VERSION': '1.0.0',
 }
 
