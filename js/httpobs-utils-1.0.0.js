@@ -25,15 +25,22 @@ function insertGrade(grade, id) {
     var dom_modifier = $('#' + id + '-grade-modifier');
 
     // set the grade
-    if (grade === 'check-mark') {
-        letter = '&#x2713;';
-        dom_container.toggleClass('grade-a');
-    } else if (grade === 'x-mark') {
-        letter = '&#x2717;';
-        dom_container.toggleClass('grade-f');
-    } else {
-        letter = grade.substr(0, 1);
-        dom_container.toggleClass('grade-' + letter.toLowerCase()); // set the background color for the grade
+    switch (grade) {
+        case 'check-mark':
+            letter = '&#x2713;';
+            dom_container.toggleClass('grade-a');
+            break;
+        case 'up-arrow':
+            letter = '&#x2b06;';
+            dom_container.toggleClass('grade-a');
+            break;
+        case 'x-mark':
+            letter = '&#x2717;';
+            dom_container.toggleClass('grade-f');
+            break;
+        default:
+            letter = grade.substr(0, 1);
+            dom_container.toggleClass('grade-' + letter.toLowerCase()); // set the background color for the grade
     }
 
     dom_letter.html(letter);
@@ -79,7 +86,7 @@ function insertResults(results, id) {
 function errorResults(error, id) {
     'use strict';
     // Set the error text and make it a red bar and remove the stripes and swirlies
-    $('#' + id + '-progress-bar-text').text(error).toggleClass('active progress-bar-striped progress-bar-danger');
+    $('#' + id + '-progress-bar-text').text(error).removeClass('active progress-bar-striped').addClass('progress-bar-danger');
 }
 
 

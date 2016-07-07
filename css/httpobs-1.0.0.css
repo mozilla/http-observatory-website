@@ -22,9 +22,12 @@ body {
     width: 100%;
 }
 
-.table-bordered > tbody > tr > td.grade {
-    /*padding-left: .8em;*/
+.table-recent-results > tbody > tr > td.grade {
     width: 2em;
+}
+
+.table-recent-results > tbody > tr > td.hostname > a {
+    color: #436ece;
 }
 
 .alert-hidden {
@@ -37,10 +40,6 @@ body {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-}
-
-.table-bordered > tbody > tr > td.hostname > a {
-    color: #436ece;
 }
 
 .grade-container {
@@ -136,7 +135,7 @@ div.large-progress-bar-condensed + div.row {
     width: 100%;
 }
 
-#scan-summary table, #test-scores table, #third-party-test-scores table {
+#scan-summary table, #server-headers table, #test-scores table, #third-party-test-scores table {
     margin-bottom: 0;
 }
 
