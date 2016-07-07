@@ -435,17 +435,17 @@ function insertTLSObservatoryResults() {
     Observatory.state.third_party.tlsobservatory.output.summary.scan_id = results.id;
     Observatory.state.third_party.tlsobservatory.output.summary.target = results.target;
 
-    // let's have slightly nicer looking terms for the compliance level
-    var compliance = {
+    // let's have slightly nicer looking terms for the configuration level
+    var configuration = {
         'old': 'Old',
         'intermediate': 'Intermediate',
         'modern': 'Modern',
         'non compliant': 'Non-compliant'
     };
-    Observatory.state.third_party.tlsobservatory.output.summary.mozilla_compliance_level = compliance[results.analysis[0].result.level];
+    Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level = configuration[results.analysis[0].result.level];
 
     // insert the summary
-    insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_compliance_level, 'tlsobservatory-summary');
+    insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level, 'tlsobservatory-summary');
     insertResults(Observatory.state.third_party.tlsobservatory.output.summary, 'tlsobservatory-summary');
 
     // now let's handle the certificate stuff
