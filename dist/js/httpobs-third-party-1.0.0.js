@@ -456,8 +456,9 @@ function insertTLSObservatoryResults() {
         subject: cert.subject.cn
     };
 
-    // insert the summary
+    // insert the summary and show the results
     insertResults(Observatory.state.third_party.tlsobservatory.output.certificate, 'tlsobservatory-certificate');
+    $('#tlsobservatory-certificate').removeClass('hide');
 
     // And display the TLS results table
     showResults('tlsobservatory-summary');
