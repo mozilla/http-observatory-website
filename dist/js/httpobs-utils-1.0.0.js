@@ -43,7 +43,7 @@ function insertGrade(grade, id) {
             break;
         case 'Intermediate':
             letter = '&#x1d5a8';  // latin capital letter i
-            dom_container.toggleClass('grade-c').toggleClass('grade-i');
+            dom_container.toggleClass('grade-a').toggleClass('grade-i');
             break;
         case 'Modern':
             dom_container.toggleClass('grade-a');
