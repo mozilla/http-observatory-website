@@ -429,12 +429,6 @@ function insertTLSObservatoryResults() {
     var cert = Observatory.state.third_party.tlsobservatory.certificate;
     var results = Observatory.state.third_party.tlsobservatory.results;
 
-
-    // let's load up the summary object
-    Observatory.state.third_party.tlsobservatory.output.summary.end_time = results.timestamp;
-    Observatory.state.third_party.tlsobservatory.output.summary.scan_id = results.id;
-    Observatory.state.third_party.tlsobservatory.output.summary.target = results.target;
-
     // let's have slightly nicer looking terms for the configuration level
     var configuration = {
         'old': 'Old',
@@ -442,27 +436,94 @@ function insertTLSObservatoryResults() {
         'modern': 'Modern',
         'non compliant': 'Non-compliant'
     };
-    Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level = configuration[results.analysis[0].result.level];
 
-    // insert the summary
-    insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level, 'tlsobservatory-summary');
-    insertResults(Observatory.state.third_party.tlsobservatory.output.summary, 'tlsobservatory-summary');
+    // let's load up the summary object
+    Observatory.state.third_party.tlsobservatory.output.summary = {
+        certificate_url: Observatory.state.third_party.tlsobservatory.certificate_url,
+        end_time: results.timestamp,
+        ip: results.connection_info.scanIP,
+        mozilla_configuration_level: configuration[results.analysis[0].result.level],
+        results_url: Observatory.state.third_party.tlsobservatory.results_url,
+        scan_id: results.id,
+        target: results.target
+    };
 
     // now let's handle the certificate stuff
     Observatory.state.third_party.tlsobservatory.output.certificate = {
+        alt_names: _.without(cert.x509v3Extensions.subjectAlternativeName, cert.subject.cn).join(', '),
         cert_id: cert.id,
+        cn: cert.subject.cn,
         first_seen: cert.firstSeenTimestamp.split('T')[0],
-        last_seen: cert.lastSeenTimestamp.split('T')[0],
-        subject: cert.subject.cn
+        issuer: cert.issuer.cn,
+        key: cert.key.alg + ' ' + cert.key.size + ' bits',
+        sig_alg: cert.signatureAlgorithm,
+        valid_from: cert.validity.notBefore.split('T')[0],
+        valid_to: cert.validity.notAfter.split('T')[0]
     };
 
-    // insert the summary and show the results
+    // add the curve algorithm, if it's there
+    if (cert.key.curve !== undefined) {
+        Observatory.state.third_party.tlsobservatory.output.certificate.key += ', curve ' + cert.key.curve;
+    }
+
+    // now it's time for protocols
+    var protocol_names = ['TLS 1.2', 'TLS 1.1', 'TLS 1.0', 'SSL 3.0', 'SSL 2.0'];
+    var protocols = {
+        'TLS 1.2': 'No',
+        'TLS 1.1': 'No',
+        'TLS 1.0': 'No',
+        'SSL 3.0': 'No',
+        'SSL 2.0': 'No'
+    };
+
+    // see if any of the various protocols exist
+    for (var i = 0; i < results.connection_info.ciphersuite.length; i++) {
+        for (var j = 0; j < results.connection_info.ciphersuite[i].protocols.length; j++) {
+            var proto = results.connection_info.ciphersuite[i].protocols[j].replace('v', ' ');
+
+            // rename TLSv1 to TLSv1.0
+            if (proto === 'TLS 1') {
+                proto = 'TLS 1.0'
+            }
+
+            // if it's a supported protocol, then we can flip it to yes
+            if (protocols[proto] !== undefined) {
+                protocols[proto] = 'Yes';
+            } else {
+                console.log('Unknown protocol ', proto);
+            }
+        }
+    }
+
+    // create the table
+    var protocol_table = _.map(protocol_names, function(name) { return [name + ':', protocols[name]]});
+
+    // let's load up the misc object
+    Observatory.state.third_party.tlsobservatory.output.misc = {
+        chooser: results.connection_info.serverside === true ? 'Server' : 'Client',
+        ocsp_stapling: 'No'
+    };
+
+    // see if we have OCSP stapling
+    for (i = 0; i < results.connection_info.ciphersuite.length; i++) {
+        if (results.connection_info.ciphersuite[i].ocsp_stapling === true) {
+            Observatory.state.third_party.tlsobservatory.output.misc.ocsp_stapling = 'Yes';
+        }
+    }
+
+    // insert all the results
+    insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level, 'tlsobservatory-summary');
+    insertResults(Observatory.state.third_party.tlsobservatory.output.summary, 'tlsobservatory-summary');
     insertResults(Observatory.state.third_party.tlsobservatory.output.certificate, 'tlsobservatory-certificate');
-    $('#tlsobservatory-certificate').removeClass('hide');
+    insertResults(Observatory.state.third_party.tlsobservatory.output.misc, 'tlsobservatory-misc');
+
+    tableify(protocol_table, 'tlsobservatory-protocol-table');
+    $('#tlsobservatory-protocols').removeClass('hide');
 
     // And display the TLS results table
     showResults('tlsobservatory-summary');
-
+    $('#tlsobservatory-certificate').removeClass('hide');
+    $('#tlsobservatory-misc').removeClass('hide');
 }
 
 
@@ -495,7 +556,7 @@ function loadTLSObservatoryResults() {
     } else if (Observatory.state.third_party.tlsobservatory.results === undefined) {
 
         // set the results URL in the output summary
-        Observatory.state.third_party.tlsobservatory.output.summary.results_url = linkify(RESULTS_URL + '?id=' + Observatory.state.third_party.tlsobservatory.scan_id);
+        Observatory.state.third_party.tlsobservatory.results_url = linkify(RESULTS_URL + '?id=' + Observatory.state.third_party.tlsobservatory.scan_id);
         
         // retrieve results
         $.ajax({
@@ -525,7 +586,7 @@ function loadTLSObservatoryResults() {
         }
 
         // set the certificate URL in the output summary
-        Observatory.state.third_party.tlsobservatory.output.summary.certificate_url = linkify(CERTIFICATE_URL + '?id=' + Observatory.state.third_party.tlsobservatory.results.cert_id);
+        Observatory.state.third_party.tlsobservatory.certificate_url = linkify(CERTIFICATE_URL + '?id=' + Observatory.state.third_party.tlsobservatory.results.cert_id);
 
         $.ajax({
             data: {

@@ -148,3 +148,23 @@ function listify(list, force) {  // take an array and turn it into an unordered 
 
     return(ul);
 }
+
+
+function tableify(list, table_id) {  // take a list of lists and push it into an existing table
+    var table = document.getElementById(table_id);
+    var tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+
+    for (var row = 0; row < list.length; row++) {
+        var tr = document.createElement('tr');
+
+        for (var col = 0; col < list[row].length; col++) {
+            var td = document.createElement('td');
+            td.textContent = list[row][col];
+
+            tr.appendChild(td);
+        }
+
+        tbody.appendChild(tr);
+    }
+}
