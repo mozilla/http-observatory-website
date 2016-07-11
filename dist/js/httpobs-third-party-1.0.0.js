@@ -70,18 +70,21 @@ function insertHSTSPreloadResults() {
         'domain.tls.cannot_connect': 'Can\'t connect to domain over TLS.',
         'domain.tls.invalid_cert_chain': 'Site has an invalid certificate chain.',
         'domain.tls.sha1': 'Site uses a SHA-1 certificate.',
+        'domain.www.no_tls': 'Sites without HTTPS cannot enable HSTS',
         'header.parse.invalid.max_age.no_value': 'HSTS header\'s "max-age" attribute contains no value.',
         'header.parse.max_age.parse_int_error': 'HSTS header missing the "max-age" attribute.',
         'header.parse.max_age.non_digit_characters': 'HSTS header\'s "max-age" attribute contains non-integer values.',
         'header.preloadable.include_sub_domains.missing': 'HSTS header missing the "includeSubDomains" attribute.',
         'header.preloadable.max_age.too_low': 'HSTS header\'s "max-age" value less than 18 weeks (10886400).',
         'header.preloadable.preload.missing': 'HSTS header missing the "preload" attribute.',
+        'internal.redirects.http.first_probe_failed': 'Could not connect to site via HTTP',
         'internal.domain.name.cannot_compute_etld1': 'Could not compute eTLD+1.',
         'redirects.http.first_redirect.no_hsts': 'Site doesn\'t issue an HSTS header.',
         'redirects.http.first_redirect.insecure': 'Initial redirect is to an insecure page.',
         'redirects.http.www_first': 'Site redirects to www, instead of directly to HTTPS version of same URL.',
         'redirects.insecure.initial': 'Initial redirect is to an insecure page.',
         'redirects.insecure.subsequent': 'Redirects to an insecure page.',
+        'redirects.follow_error': 'Error following redirect',
         'redirects.http.no_redirect': 'HTTP page does not redirect to an HTTPS page.',
         'redirects.too_many': 'Site redirects too many times.',
         'response.multiple_headers': 'HSTS header contains multiple "max-age" directives.',
@@ -283,6 +286,10 @@ function loadSecurityHeadersIOResults() {
 
         if (grade === undefined) {
             errorResults('Unknown error', 'securityheaders');
+            return;
+        } else if (grade === null) {
+            errorResults('Site unavailable', 'securityheaders');
+            return;
         } else {
             insertGrade(grade, 'securityheaders');
             insertResults(Observatory.state.third_party.securityheaders, 'securityheaders');
@@ -413,7 +420,7 @@ function loadTLSImirhilFrResults() {
     $.ajax({
         dataType: 'json',
         method: 'GET',
-        error: errorResults('Scanner unavailable', 'tlsimirhilfr'),
+        error: function() { errorResults('Scanner unavailable', 'tlsimirhilfr'); },
         success: successCallback,
         url: API_URL
     })
@@ -466,59 +473,61 @@ function insertTLSObservatoryResults() {
         Observatory.state.third_party.tlsobservatory.output.certificate.key += ', curve ' + cert.key.curve;
     }
 
-    // now it's time for protocols
-    var protocol_names = ['TLS 1.2', 'TLS 1.1', 'TLS 1.0', 'SSL 3.0', 'SSL 2.0'];
-    var protocols = {
-        'TLS 1.2': 'No',
-        'TLS 1.1': 'No',
-        'TLS 1.0': 'No',
-        'SSL 3.0': 'No',
-        'SSL 2.0': 'No'
-    };
+    // now it's time for the ciphers table
+    var cipher_table = [];
+    var ocsp_stapling = 'No';
 
-    // see if any of the various protocols exist
     for (var i = 0; i < results.connection_info.ciphersuite.length; i++) {
+        var cipher = results.connection_info.ciphersuite[i].cipher;
+        var keysize = results.connection_info.ciphersuite[i].pubkey.toString();
+        var pfs = results.connection_info.ciphersuite[i].pfs === 'None' ? 'No' : 'Yes';
+        var protos = [];
+
+        // check ocsp stapling
+        if (results.connection_info.ciphersuite[i].ocsp_stapling === true) {
+            ocsp_stapling = 'Yes';
+        }
+
+        // for each supported protocol (TLS 1.0, etc.)
         for (var j = 0; j < results.connection_info.ciphersuite[i].protocols.length; j++) {
             var proto = results.connection_info.ciphersuite[i].protocols[j].replace('v', ' ');
 
             // rename TLSv1 to TLSv1.0
-            if (proto === 'TLS 1') {
-                proto = 'TLS 1.0'
+            if (/ \d$/.test(proto)) {
+                proto += '.0';
             }
-
-            // if it's a supported protocol, then we can flip it to yes
-            if (protocols[proto] !== undefined) {
-                protocols[proto] = 'Yes';
-            } else {
-                console.log('Unknown protocol ', proto);
-            }
+            
+            protos.push(proto);
         }
-    }
 
-    // create the table
-    var protocol_table = _.map(protocol_names, function(name) { return [name + ':', protocols[name]]});
+        protos.reverse();
+        protos = protos.join(', ');
+
+        // protocol name, perfect forward secrecy, protocols
+        cipher_table.push([(i+1).toString() + '.', cipher, keysize + ' bits', pfs, protos])
+    }
 
     // let's load up the misc object
     Observatory.state.third_party.tlsobservatory.output.misc = {
         chooser: results.connection_info.serverside === true ? 'Server' : 'Client',
-        ocsp_stapling: 'No'
+        ocsp_stapling: ocsp_stapling
     };
-
-    // see if we have OCSP stapling
-    for (i = 0; i < results.connection_info.ciphersuite.length; i++) {
-        if (results.connection_info.ciphersuite[i].ocsp_stapling === true) {
-            Observatory.state.third_party.tlsobservatory.output.misc.ocsp_stapling = 'Yes';
-        }
-    }
 
     // insert all the results
     insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level, 'tlsobservatory-summary');
     insertResults(Observatory.state.third_party.tlsobservatory.output.summary, 'tlsobservatory-summary');
     insertResults(Observatory.state.third_party.tlsobservatory.output.certificate, 'tlsobservatory-certificate');
     insertResults(Observatory.state.third_party.tlsobservatory.output.misc, 'tlsobservatory-misc');
+    tableify(cipher_table, 'tlsobservatory-ciphers-table');
 
-    tableify(protocol_table, 'tlsobservatory-protocol-table');
-    $('#tlsobservatory-protocols').removeClass('hide');
+    // clean up the protocol support table
+    $('#tlsobservatory-ciphers-table').find('td:nth-of-type(4)').each(function() {
+        if ($(this).text() == 'Yes') { $(this).addClass('glyphicon glyphicon-ok').text(''); }
+        else { $(this).addClass('glyphicon glyphicon-remove').text(''); }
+    });
+
+
+    $('#tlsobservatory-ciphers').removeClass('hide');
 
     // And display the TLS results table
     showResults('tlsobservatory-summary');
@@ -534,7 +543,6 @@ function loadTLSObservatoryResults() {
     var RESULTS_URL = 'https://tls-observatory.services.mozilla.com/api/v1/results';
     var CERTIFICATE_URL = 'https://tls-observatory.services.mozilla.com/api/v1/certificate';
 
-
     // if it's the first scan through, we need to do a post
     if (Observatory.state.third_party.tlsobservatory.scan_id === undefined) {
         // make a POST to initiate the scan
@@ -544,7 +552,7 @@ function loadTLSObservatoryResults() {
             },
             dataType: 'json',
             method: 'POST',
-            error: errorResults('ugh', 'tlsobservatory'),
+            error: function() { errorResults('Scanner unavailable', 'tlsobservatory') },
             success: function (data) {
                 Observatory.state.third_party.tlsobservatory.scan_id = data.scan_id;
                 loadTLSObservatoryResults();  // retrieve the results
@@ -565,7 +573,7 @@ function loadTLSObservatoryResults() {
             },
             dataType: 'json',
             method: 'GET',
-            error: errorResults('Ugh', 'tlsobservatory'),
+            error: function() { errorResults('Scanner unavailable', 'tlsobservatory') },
             success: function (data) {
                 // not yet completed
                 if (data.completion_perc !== 100) {
@@ -594,7 +602,7 @@ function loadTLSObservatoryResults() {
             },
             dataType: 'json',
             method: 'GET',
-            error: errorResults('ugh', 'tlsobservatory'),
+            error: function() { errorResults('Scanner unavailable', 'tlsobservatory') },
             success: function (data) {
                 Observatory.state.third_party.tlsobservatory.certificate = data;
                 insertTLSObservatoryResults();  // put things into the page

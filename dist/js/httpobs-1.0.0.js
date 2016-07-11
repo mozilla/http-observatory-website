@@ -17,6 +17,14 @@ var Observatory = {
                 output: {}
             }
         }
+    },
+    utils: {
+        character_mappings: {
+            checkmark: '&#x2713;',
+            latini: '&#x1d5a8',
+            uparrow: '&#x2b06;',
+            xmark: '&#x2717;'
+        }
     }
 };
 
@@ -113,7 +121,6 @@ function insertScanResults(scan, results) {
         var key = keys[i];
 
         // pass or fail
-        var pass = results[key]['pass'] ? '&#x2705' : '&#x274c';
         var pass = results[key]['pass'] ? 'glyphicon-ok' : 'glyphicon-remove';
 
         // score modifier
