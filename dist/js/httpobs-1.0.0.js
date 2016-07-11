@@ -1,6 +1,6 @@
 var Observatory = {
     api_url: 'https://http-observatory.security.mozilla.org/api/v1/',
-    grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'E', 'F'],
+    grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
     htbridge_api_url: 'https://www.htbridge.com/ssl/chssl/',
     safebrowsing: {
         'api_url': 'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=...'
@@ -275,9 +275,9 @@ function onPageLoad() {
 
         // load all the grade and totals tables
         retrieveResultTable('Overall Results', Observatory.api_url + 'getGradeDistribution', 'totalresults', 'info');
-        retrieveResultTable('Recent Scans', Observatory.api_url + 'getRecentScans?num=15', 'recentresults', 'warning');
-        retrieveResultTable('Hall of Fame', Observatory.api_url + 'getRecentScans?min=90&num=15', 'goodresults', 'success');
-        retrieveResultTable('Hall of Shame', Observatory.api_url + 'getRecentScans?max=20&num=15', 'badresults', 'danger');
+        retrieveResultTable('Recent Scans', Observatory.api_url + 'getRecentScans?num=14', 'recentresults', 'warning');
+        retrieveResultTable('Hall of Fame', Observatory.api_url + 'getRecentScans?min=90&num=14', 'goodresults', 'success');
+        retrieveResultTable('Hall of Shame', Observatory.api_url + 'getRecentScans?max=20&num=14', 'badresults', 'danger');
     }
 }
 
