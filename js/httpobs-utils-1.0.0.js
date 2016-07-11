@@ -27,22 +27,22 @@ function insertGrade(grade, id) {
     // set the grade
     switch (grade) {
         case 'check-mark':
-            letter = '&#x2713;';
+            letter = Observatory.utils.character_mappings.checkmark;
             dom_container.toggleClass('grade-a');
             break;
         case 'up-arrow':
-            letter = '&#x2b06;';
+            letter = Observatory.utils.character_mappings.uparrow;
             dom_container.toggleClass('grade-a');
             break;
         case 'x-mark':
-            letter = '&#x2717;';
+            letter = Observatory.utils.character_mappings.xmark;
             dom_container.toggleClass('grade-f');
             break;
         case 'Old':
             dom_container.toggleClass('grade-f');
             break;
         case 'Intermediate':
-            letter = '&#x1d5a8';  // latin capital letter i
+            letter = Observatory.utils.character_mappings.latini;  // latin capital letter i
             dom_container.toggleClass('grade-a').toggleClass('grade-i');
             break;
         case 'Modern':
