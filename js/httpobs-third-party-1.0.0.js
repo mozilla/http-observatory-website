@@ -447,7 +447,7 @@ function insertTLSObservatoryResults() {
     // let's load up the summary object
     Observatory.state.third_party.tlsobservatory.output.summary = {
         certificate_url: Observatory.state.third_party.tlsobservatory.certificate_url,
-        end_time: results.timestamp,
+        end_time: results.timestamp.replace('T', ' ').split('.')[0],
         ip: results.connection_info.scanIP,
         mozilla_configuration_level: configuration[results.analysis[0].result.level],
         results_url: Observatory.state.third_party.tlsobservatory.results_url,
@@ -479,6 +479,7 @@ function insertTLSObservatoryResults() {
 
     for (var i = 0; i < results.connection_info.ciphersuite.length; i++) {
         var cipher = results.connection_info.ciphersuite[i].cipher;
+        var aead = (cipher.indexOf('-GCM') !== -1 || cipher.indexOf('POLY1305') !== -1) ? 'Yes' : 'No';
         var keysize = results.connection_info.ciphersuite[i].pubkey.toString();
         var pfs = results.connection_info.ciphersuite[i].pfs === 'None' ? 'No' : 'Yes';
         var protos = [];
@@ -504,7 +505,7 @@ function insertTLSObservatoryResults() {
         protos = protos.join(', ');
 
         // protocol name, perfect forward secrecy, protocols
-        cipher_table.push([(i+1).toString() + '.', cipher, keysize + ' bits', pfs, protos])
+        cipher_table.push([(i+1).toString() + '.', cipher, keysize + ' bits', aead, pfs, protos])
     }
 
     // let's load up the misc object
@@ -521,9 +522,9 @@ function insertTLSObservatoryResults() {
     tableify(cipher_table, 'tlsobservatory-ciphers-table');
 
     // clean up the protocol support table
-    $('#tlsobservatory-ciphers-table').find('td:nth-of-type(4)').each(function() {
+    $('#tlsobservatory-ciphers-table').find('td').each(function() {
         if ($(this).text() == 'Yes') { $(this).addClass('glyphicon glyphicon-ok').text(''); }
-        else { $(this).addClass('glyphicon glyphicon-remove').text(''); }
+        else if ($(this).text() === 'No') { $(this).addClass('glyphicon glyphicon-remove').text(''); }
     });
 
 
