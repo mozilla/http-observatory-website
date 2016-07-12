@@ -192,8 +192,8 @@ div.large-progress-bar-condensed + div.row {
     white-space: nowrap;
 }
 
-/* key size and PFS */
-#tlsobservatory-ciphers-table tbody tr td:nth-child(n+3):nth-child(-n+4) {
+/* key size, AEAD, and PFS */
+#tlsobservatory-ciphers-table tbody tr td:nth-child(n+3):nth-child(-n+5) {
     text-align: center;
     white-space: nowrap;
 }
