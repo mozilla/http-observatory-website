@@ -444,12 +444,22 @@ function insertTLSObservatoryResults() {
         'non compliant': 'Non-compliant'
     };
 
+    // .  Please note that non-compliance isn\'t bad, it simply means that the server\'s configuration is either more-or-less strict than a pre-defined Mozilla configuration level.
+    var mozilla_configuration_level = configuration[results.analysis[0].result.level];
+    var mozilla_configuration_level_description;
+    if (results.analysis[0].result.level == 'non compliant') {
+        mozilla_configuration_level_description = 'Non-compliant\n\nPlease note that non-compliance simply means that the server\'s configuration is either more or less strict than a pre-defined Mozilla configuration level.';
+    } else {
+        mozilla_configuration_level_description = configuration[results.analysis[0].result.level];
+    }
+
     // let's load up the summary object
     Observatory.state.third_party.tlsobservatory.output.summary = {
         certificate_url: Observatory.state.third_party.tlsobservatory.certificate_url,
         end_time: results.timestamp.replace('T', ' ').split('.')[0],
         ip: results.connection_info.scanIP,
-        mozilla_configuration_level: configuration[results.analysis[0].result.level],
+        mozilla_configuration_level: mozilla_configuration_level,
+        mozilla_configuration_level_description: mozilla_configuration_level_description,
         results_url: Observatory.state.third_party.tlsobservatory.results_url,
         scan_id: results.id,
         target: results.target
@@ -513,6 +523,13 @@ function insertTLSObservatoryResults() {
         chooser: results.connection_info.serverside === true ? 'Server' : 'Client',
         ocsp_stapling: ocsp_stapling
     };
+
+    // And then the suggestions object
+    Observatory.state.third_party.tlsobservatory.output.suggestions = {
+        modern: undefined,
+        intermediate: undefined
+    };
+
 
     // insert all the results
     insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level, 'tlsobservatory-summary');
