@@ -256,8 +256,8 @@ function submitScanForAnalysis() {
     };
 
     // check the value of the hidden and rescan buttons
-    var hidden = $('#scan-btn-hidden').prop('checked').toString();
-    var rescan = $('#scan-btn-rescan').prop('checked').toString();
+    var hidden = $('#scan-btn-hidden').prop('checked');
+    var rescan = $('#scan-btn-rescan').prop('checked');
 
     submitScanForAnalysisXHR(hostname, successCallback, displayError, 'POST', rescan, hidden);
 
