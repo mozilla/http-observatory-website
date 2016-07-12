@@ -235,7 +235,7 @@ function submitScanForAnalysis() {
     'use strict';
 
     // get the hostname that was submitted -- if a api_url, extract the hostname
-    var hostname = $('#form-hostname').val().toLowerCase();
+    var hostname = $('#scan-input-hostname').val().toLowerCase();
     if (hostname === '') { // blank hostname
         displayError('Must enter hostname');
         return false;
@@ -255,8 +255,11 @@ function submitScanForAnalysis() {
         window.location.href = window.location + 'analyze.html?host=' + hostname;
     };
 
-    // TODO: implement hidden and rescan
-    submitScanForAnalysisXHR(hostname, successCallback, displayError, 'POST');
+    // check the value of the hidden and rescan buttons
+    var hidden = $('#scan-btn-hidden').prop('checked').toString();
+    var rescan = $('#scan-btn-rescan').prop('checked').toString();
+
+    submitScanForAnalysisXHR(hostname, successCallback, displayError, 'POST', rescan, hidden);
 
     return false;
 }

@@ -59,7 +59,7 @@
                     <form id="scantron-form">
                         <div class="row">
                             <div class="col-md-10">
-                                <input type="text" class="form-control" id="form-hostname" placeholder="enter domain name here"
+                                <input type="text" class="form-control" id="scan-input-hostname" placeholder="enter domain name here"
                                        autocorrect="off" autocapitalize="off" spellcheck="false">
                             </div>
                             <div class="col-md-2">
@@ -68,12 +68,12 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox">Don't include my site in the public results
+                                <input type="checkbox" id="scan-btn-hidden">Don't include my site in the public results
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox">Force a rescan instead of returning cached results
+                                <input type="checkbox" id="scan-btn-rescan">Force a rescan instead of returning cached results
                             </label>
                         </div>
                     </form>
