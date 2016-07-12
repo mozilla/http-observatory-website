@@ -38,14 +38,6 @@ body {
     display: none;
 }
 
-.hostname {
-    border: none;
-	max-width: 13.5em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
 .grade-container {
     border-radius: 12px;
     color: #ffffff;
@@ -106,6 +98,14 @@ body {
     right: -2px;
 }
 
+.hostname {
+    border: none;
+	max-width: 13.5em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .large-progress-bar {
     height: 44px;
     margin: 22px 0;
@@ -121,6 +121,10 @@ body {
     line-height: 44px;
     text-transform: uppercase;
     width: 100%;
+}
+
+.margin-bottom {
+    margin-bottom: 2em;
 }
 
 /* hide all results while the progress bar is in the DOM before it */
