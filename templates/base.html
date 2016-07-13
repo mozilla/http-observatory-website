@@ -8,8 +8,8 @@
 
     <title>{{ SITENAME }} (Beta)</title>
 
-    <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/httpobs-{{ VERSION }}.css" type="text/css" />
+    <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css" type="text/css" integrity="{{ hashes['css']['bootstrap'] }}" />
+    <link rel="stylesheet" href="css/httpobs-{{ VERSION }}.css" type="text/css" integrity="{{ hashes['css']['httpobs'] }}" />
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -53,11 +53,11 @@
     </footer>
     -->
 
-    <script src="js/jquery-2.2.3.min.js"></script>
-    <script src="js/bootstrap-3.3.6.min.js"></script>
-    <script src="js/lodash-4.13.1.min.js"></script>
-    <script src="js/httpobs-utils-{{ VERSION }}.js"></script>
-    <script src="js/httpobs-{{ VERSION }}.js"></script>
-    <script src="js/httpobs-third-party-{{ VERSION }}.js"></script>
+    <script src="js/jquery-2.2.3.min.js" integrity="{{ hashes['js']['jquery'] }}"></script>
+    <script src="js/bootstrap-3.3.6.min.js" integrity="{{ hashes['js']['bootstrap'] }}"></script>
+    <script src="js/lodash-4.13.1.min.js" integrity="{{ hashes['js']['lodash'] }}"></script>
+    <script src="js/httpobs-utils-{{ VERSION }}.js" integrity="{{ hashes['js']['httpobs-utils'] }}"></script>
+    <script src="js/httpobs-{{ VERSION }}.js" integrity="{{ hashes['js']['httpobs'] }}"></script>
+    <script src="js/httpobs-third-party-{{ VERSION }}.js" integrity="{{ hashes['js']['httpobs-third-party'] }}"></script>
 </body>
 </html>
