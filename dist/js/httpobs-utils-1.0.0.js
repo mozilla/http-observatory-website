@@ -38,6 +38,8 @@ function insertGrade(grade, id) {
             letter = Observatory.utils.character_mappings.xmark;
             dom_container.toggleClass('grade-f');
             break;
+        case 'Insecure':
+            letter = 'F';
         case 'Old':
             dom_container.toggleClass('grade-f');
             break;

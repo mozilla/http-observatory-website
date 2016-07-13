@@ -441,6 +441,7 @@ function insertTLSObservatoryResults() {
         'old': 'Old',
         'intermediate': 'Intermediate',
         'modern': 'Modern',
+        'bad': 'Insecure',
         'non compliant': 'Non-compliant'
     };
 
