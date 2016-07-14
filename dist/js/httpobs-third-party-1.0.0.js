@@ -430,8 +430,6 @@ function loadTLSImirhilFrResults() {
 function insertTLSObservatoryResults() {
     'use strict';
 
-    console.log(Observatory.state.third_party.tlsobservatory);
-
     // convenience variables
     var cert = Observatory.state.third_party.tlsobservatory.certificate;
     var results = Observatory.state.third_party.tlsobservatory.results;
@@ -526,17 +524,48 @@ function insertTLSObservatoryResults() {
     };
 
     // And then the suggestions object
+
+    // make things pretty; this is kind of a complicated mess
+    function prettify(a) {
+        a = _.map(a, _.capitalize)
+             .map(function (s) { return s.replace(/ecdsa/g, 'ECDSA') })
+             .map(function (s) { return s.replace(/ecdhe/g, 'ECDHE') })
+             .map(function (s) { return s.replace(/dhe/g, 'DHE') })
+             .map(function (s) { return s.replace(/tlsv/g, 'TLS ') })
+             .map(function (s) { return s.replace(/TLS 1,/g, 'TLS 1.0,') })
+             .map(function (s) { return s.replace(/sslv/g, 'SSL ') })
+             .map(function (s) { return s.replace(/ocsp/g, 'OCSP') })
+             .map(function (s) { return s.replace(/rsa/g, 'RSA') })
+             .map(function (s) { return s.replace(/-sha/g, '-SHA') })
+             .map(function (s) { return s.replace(/des-/g, 'DES-') })
+             .map(function (s) { return s.replace(/edh-/g, 'EDH-') })
+             .map(function (s) { return s.replace(/-cbc/g, '-CBC') })
+             .map(function (s) { return s.replace(/aes/g, 'AES') })
+             .map(function (s) { return s.replace(/-chacha20/g, '-CHACHA20') })
+             .map(function (s) { return s.replace(/-poly1305/g, '-POLY1305') })
+             .map(function (s) { return s.replace(/-gcm/g, '-GCM') });
+
+        return listify(a);
+    }
+
     Observatory.state.third_party.tlsobservatory.output.suggestions = {
-        modern: undefined,
-        intermediate: undefined
+        modern: prettify(results.analysis[0].result.failures.modern),
+        intermediate: prettify(results.analysis[0].result.failures.intermediate)
     };
 
+    // we only need the intermediate suggestions if it's not modern or intermediate
+    if (_.includes(['Modern', 'Intermediate'], mozilla_configuration_level)) {
+        $('#tlsobservatory-suggestions-intermediate-row').remove();
+    }
+
+    console.log(results);
 
     // insert all the results
     insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level, 'tlsobservatory-summary');
     insertResults(Observatory.state.third_party.tlsobservatory.output.summary, 'tlsobservatory-summary');
     insertResults(Observatory.state.third_party.tlsobservatory.output.certificate, 'tlsobservatory-certificate');
     insertResults(Observatory.state.third_party.tlsobservatory.output.misc, 'tlsobservatory-misc');
+    insertResults(Observatory.state.third_party.tlsobservatory.output.suggestions, 'tlsobservatory-suggestions');
     tableify(cipher_table, 'tlsobservatory-ciphers-table');
 
     // clean up the protocol support table
@@ -546,12 +575,12 @@ function insertTLSObservatoryResults() {
     });
 
 
-    $('#tlsobservatory-ciphers').removeClass('hide');
-
-    // And display the TLS results table
+   // And display the TLS results table
     showResults('tlsobservatory-summary');
     $('#tlsobservatory-certificate').removeClass('hide');
+    $('#tlsobservatory-ciphers').removeClass('hide');
     $('#tlsobservatory-misc').removeClass('hide');
+    $('#tlsobservatory-suggestions').removeClass('hide');
 }
 
 

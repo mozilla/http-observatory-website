@@ -177,7 +177,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* explanation, protocols */
-#test-scores tr td:last-child, #server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child, #tlsobservatory-misc-table tr td:last-child, #tlsobservatory-ciphers-table tr td:last-child {
+#test-scores tr td:last-child, #server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child, #tlsobservatory-ciphers-table tr td:last-child, #tlsobservatory-misc-table tr td:last-child {
     hyphens: auto;
     white-space: pre-wrap;
     width: 100%;
@@ -185,7 +185,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* tls observatory protocols table is a big crowded */
-#tlsobservatory-ciphers-table tr td:nth-of-type(1) {
+.bold-no-wrap, #tlsobservatory-ciphers-table tr td:nth-of-type(1) {
     font-weight: 600;
     white-space: nowrap;
 }
@@ -199,6 +199,14 @@ div.large-progress-bar-condensed + div.row {
 #tlsobservatory-ciphers-table tbody tr td:nth-child(n+3):nth-child(-n+5) {
     text-align: center;
     white-space: nowrap;
+}
+
+#tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer {
+    padding: 0 .75em;
+}
+
+#tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer p:last-child {
+    margin-bottom: 0;
 }
 
 sup, sub {
