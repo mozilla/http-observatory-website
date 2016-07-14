@@ -545,7 +545,7 @@ function insertTLSObservatoryResults() {
              .map(function (s) { return s.replace(/-poly1305/g, '-POLY1305') })
              .map(function (s) { return s.replace(/-gcm/g, '-GCM') });
 
-        return listify(a);
+        return listify(a, true);
     }
 
     Observatory.state.third_party.tlsobservatory.output.suggestions = {
