@@ -1,6 +1,6 @@
-# Mozilla HTTP Observatory :: Website
+# Mozilla HTTPS Observatory :: Website
 
-The Mozilla HTTP Observatory is a set of tools to analyze your website and inform you if you are utilizing the many available methods to secure it.
+The Mozilla HTTPS Observatory is a set of tools to analyze your website and inform you if you are utilizing the many available methods to secure it.
 
 It is split into three projects:
 

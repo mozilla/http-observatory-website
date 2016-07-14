@@ -1,7 +1,7 @@
 PY?=python3
 
 help:
-	@echo 'Makefile to create the HTTP Observatory website'
+	@echo 'Makefile to create the HTTPS Observatory website'
 	@echo ''
 	@echo 'Usage:'
 	@echo '    make publish                     (re)generate the site'
