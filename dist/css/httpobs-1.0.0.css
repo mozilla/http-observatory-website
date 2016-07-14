@@ -205,6 +205,10 @@ div.large-progress-bar-condensed + div.row {
     padding: 0 .75em;
 }
 
+#tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer p:first-child {
+    font-style: oblique;
+}
+
 #tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer p:last-child {
     margin-bottom: 0;
 }
