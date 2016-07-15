@@ -111,6 +111,13 @@ function insertScanResults(scan, results) {
     Observatory.state.scan = scan;
     Observatory.state.results = results;
 
+    // don't show the contribute.json line to non-mozilla sites
+    if (results.contribute.result === 'contribute-json-only-required-on-mozilla-properties') {
+        $('#tests-contribute-row').remove();
+        scan.tests_passed -= 1;
+        scan.tests_quantity -= 1;
+    }
+
     // insert in the grade and summary results
     insertGrade(scan.grade, 'scan');
     insertResults(scan, 'scan');
@@ -154,6 +161,7 @@ function loadScanResults() {
 }
 
 
+/* these are the tables on the home page, such as hall of shame, etc. */
 function insertResultTable(data, title, id, alert) {
     'use strict';
     // create the table and table header
@@ -271,6 +279,15 @@ function onPageLoad() {
     if (window.location.pathname.indexOf('/analyze.html') !== -1) {
         // Get the hostname in the GET parameters
         Observatory.hostname = window.location.href.split('=')[1];
+
+        // initialize all the popovers
+        $(function () { $('[data-toggle="popover"]').popover(
+            {
+                html: true,
+                placement: 'left',
+                trigger: 'hover'
+            }
+        ) });
         
         loadScanResults();
         // loadSafeBrowsingResults();
