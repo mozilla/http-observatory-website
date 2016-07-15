@@ -126,6 +126,11 @@ body {
     margin-bottom: 2em;
 }
 
+/* make the glyph icon tooltips align a bit nicer */
+.glyphicon-info-sign {
+    top: .25em;
+}
+
 /* hide all results while the progress bar is in the DOM before it */
 div.large-progress-bar-condensed + div.row {
     display: none;
@@ -177,7 +182,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* explanation, protocols */
-#test-scores tr td:last-child, #server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child, #tlsobservatory-ciphers-table tr td:last-child, #tlsobservatory-misc-table tr td:last-child {
+#test-scores tr td:nth-child(4), #server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child, #tlsobservatory-ciphers-table tr td:last-child, #tlsobservatory-misc-table tr td:nth-child(2) {
     hyphens: auto;
     white-space: pre-wrap;
     width: 100%;
