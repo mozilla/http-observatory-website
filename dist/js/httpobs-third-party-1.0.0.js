@@ -99,7 +99,7 @@ function insertHSTSPreloadResults() {
         if (errors.length === 0 && warnings.length === 0) {
             text = 'HSTS header continues to meet preloading requirements.';
         } else {
-            text = 'This site\'s HSTS header does not meet current preloading requirements.\n\nNote that these requirements may not apply if the domain was preloaded before February 29, 2016.';
+            text = 'This site\'s HSTS header does not meet current preloading requirements.\n\nNote that some of the current requirements did not apply to domains preloaded before February 29, 2016.';
         }
     } else if (status === 'unknown') {
         grade = 'x-mark';
