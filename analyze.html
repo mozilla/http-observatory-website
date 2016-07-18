@@ -277,19 +277,25 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Configuration Level:</a></td>
+                                    <td><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Compatibility Level:</a></td>
                                     <td id="tlsobservatory-summary-mozilla_configuration_level_description"></td>
                                 </tr>
+                                <!--
+                                <tr>
+                                    <td>Score:</td>
+                                    <td><span id="tlsobservatory-summary-score"></span>/100</td>
+                                </tr>
+                                -->
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td>Certificate Results:</td>
+                                    <td>Certificate Results (JSON):</td>
                                     <td id="tlsobservatory-summary-certificate_url"></td>
                                 </tr>
                                 <tr>
-                                    <td>Scan Results:</td>
+                                    <td>Scan Results (JSON):</td>
                                     <td id="tlsobservatory-summary-results_url"></td>
                                 </tr>
                             </table>
@@ -368,8 +374,8 @@
                                     <th>&nbsp;</th>
                                     <th>Cipher&nbsp;suite</th>
                                     <th>Key&nbsp;size</th>
-                                    <th><abbr title="Authenticated Encryption with Associated Data">AEAD</abbr></th>
-                                    <th><abbr title="Forward Secrecy">PFS</abbr></th>
+                                    <th><abbr title="Authenticated Encryption with Associated Data" data-toggle="popover" data-content="AEADs are a new way of using cryptographic ciphers that provide additional security guarantees while being less prone to implementation mistakes.">AEAD</abbr></th>
+                                    <th><abbr title="Forward Secrecy" data-toggle="popover" data-content="Forward secrecy protects your past communications from being decrypted if the server's private key is ever compromised.">PFS</abbr></th>
                                     <th>Protocols</th>
                                 </tr>
                             </thead>
@@ -639,8 +645,8 @@
     <script src="js/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="></script>
     <script src="js/bootstrap-3.3.6.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo="></script>
     <script src="js/lodash-4.13.1.min.js" integrity="sha256-1a172TVBZFNA/hUN2Bxg9FF7VtDWD6Oq8vhiuJ4G024="></script>
-    <script src="js/httpobs-utils-1.0.0.js" integrity="sha256-v3pZNZN1JA6QjiDIKM2dCtFcOimJIEC1Vss4KeJi8HM="></script>
+    <script src="js/httpobs-utils-1.0.0.js" integrity="sha256-CuEDiX2yL4UuWaOxmJPWdXLvPus543zE7OYff6kneBg="></script>
     <script src="js/httpobs-1.0.0.js" integrity="sha256-dYaQRMOKvpVtrHupGHOwECAi1/Kn1fbdcYUYor0bIAk="></script>
-    <script src="js/httpobs-third-party-1.0.0.js" integrity="sha256-/bicec2KbuMlOQkGdFN/+ufO8XsE06ps6OhnyQYBzpw="></script>
+    <script src="js/httpobs-third-party-1.0.0.js" integrity="sha256-AZN/J0aYxhLDbRxr6boac2hm/hwmPOaTQsBve/TeNyE="></script>
 </body>
 </html>
