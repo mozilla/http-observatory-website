@@ -38,9 +38,9 @@ function insertGrade(grade, id) {
             letter = Observatory.utils.character_mappings.xmark;
             dom_container.toggleClass('grade-f');
             break;
-        case 'Insecure':
+        case 'Insecure':  // TODO: kill all this once the TLS Observatory is returning a correct grade
             letter = 'F';
-        case 'Old':
+        case 'Old (Backwards Compatible)':
             dom_container.toggleClass('grade-f');
             break;
         case 'Intermediate':

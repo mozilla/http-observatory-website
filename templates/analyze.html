@@ -235,19 +235,25 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Configuration Level:</a></td>
+                                    <td><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Compatibility Level:</a></td>
                                     <td id="tlsobservatory-summary-mozilla_configuration_level_description"></td>
                                 </tr>
+                                <!--
+                                <tr>
+                                    <td>Score:</td>
+                                    <td><span id="tlsobservatory-summary-score"></span>/100</td>
+                                </tr>
+                                -->
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td>Certificate Results:</td>
+                                    <td>Certificate Results (JSON):</td>
                                     <td id="tlsobservatory-summary-certificate_url"></td>
                                 </tr>
                                 <tr>
-                                    <td>Scan Results:</td>
+                                    <td>Scan Results (JSON):</td>
                                     <td id="tlsobservatory-summary-results_url"></td>
                                 </tr>
                             </table>
@@ -326,8 +332,8 @@
                                     <th>&nbsp;</th>
                                     <th>Cipher&nbsp;suite</th>
                                     <th>Key&nbsp;size</th>
-                                    <th><abbr title="Authenticated Encryption with Associated Data">AEAD</abbr></th>
-                                    <th><abbr title="Forward Secrecy">PFS</abbr></th>
+                                    <th><abbr title="Authenticated Encryption with Associated Data" data-toggle="popover" data-content="AEADs are a new way of using cryptographic ciphers that provide additional security guarantees while being less prone to implementation mistakes.">AEAD</abbr></th>
+                                    <th><abbr title="Forward Secrecy" data-toggle="popover" data-content="Forward secrecy protects your past communications from being decrypted if the server's private key is ever compromised.">PFS</abbr></th>
                                     <th>Protocols</th>
                                 </tr>
                             </thead>

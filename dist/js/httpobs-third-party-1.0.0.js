@@ -436,21 +436,29 @@ function insertTLSObservatoryResults() {
 
     // let's have slightly nicer looking terms for the configuration level
     var configuration = {
-        'old': 'Old',
+        'old': 'Old (Backwards Compatible)',
         'intermediate': 'Intermediate',
         'modern': 'Modern',
         'bad': 'Insecure',
         'non compliant': 'Non-compliant'
     };
 
-    // .  Please note that non-compliance isn\'t bad, it simply means that the server\'s configuration is either more-or-less strict than a pre-defined Mozilla configuration level.
-    var mozilla_configuration_level = configuration[results.analysis[0].result.level];
+    // Loop through the analyzers and store to an object
+    Observatory.state.third_party.tlsobservatory.analyzers = {};
+    _.forEach(results.analysis, function(i) {
+        Observatory.state.third_party.tlsobservatory.analyzers[i.analyzer] = i.result;
+    });
+    var analyzers = Observatory.state.third_party.tlsobservatory.analyzers;
+    delete(Observatory.state.third_party.tlsobservatory.results.analysis);
+
+    var mozilla_configuration_level = configuration[analyzers.mozillaEvaluationWorker.level];
     var mozilla_configuration_level_description;
-    if (results.analysis[0].result.level == 'non compliant') {
+    if (mozilla_configuration_level == 'Non-compliant') {
         mozilla_configuration_level_description = 'Non-compliant\n\nPlease note that non-compliance simply means that the server\'s configuration is either more or less strict than a pre-defined Mozilla configuration level.';
     } else {
-        mozilla_configuration_level_description = configuration[results.analysis[0].result.level];
+        mozilla_configuration_level_description = configuration[analyzers.mozillaEvaluationWorker.level];
     }
+    console.log(mozilla_configuration_level);
 
     // let's load up the summary object
     Observatory.state.third_party.tlsobservatory.output.summary = {
@@ -461,6 +469,7 @@ function insertTLSObservatoryResults() {
         mozilla_configuration_level_description: mozilla_configuration_level_description,
         results_url: Observatory.state.third_party.tlsobservatory.results_url,
         scan_id: results.id,
+        score: _.round(analyzers.mozillaGradingWorker.grade),
         target: results.target
     };
 
@@ -549,8 +558,8 @@ function insertTLSObservatoryResults() {
     }
 
     Observatory.state.third_party.tlsobservatory.output.suggestions = {
-        modern: prettify(results.analysis[0].result.failures.modern),
-        intermediate: prettify(results.analysis[0].result.failures.intermediate)
+        modern: prettify(analyzers.mozillaEvaluationWorker.failures.modern),
+        intermediate: prettify(analyzers.mozillaEvaluationWorker.failures.intermediate)
     };
 
     // we only need the intermediate suggestions if it's not modern or intermediate
@@ -558,10 +567,11 @@ function insertTLSObservatoryResults() {
         $('#tlsobservatory-suggestions-intermediate-row').remove();
     }
 
-    console.log(results);
+    console.log(Observatory.state.third_party.tlsobservatory);
 
     // insert all the results
-    insertGrade(Observatory.state.third_party.tlsobservatory.output.summary.mozilla_configuration_level, 'tlsobservatory-summary');
+    // insertGrade(analyzers.mozillaGradingWorker.lettergrade, 'tlsobservatory-summary');
+    insertGrade(mozilla_configuration_level, 'tlsobservatory-summary');
     insertResults(Observatory.state.third_party.tlsobservatory.output.summary, 'tlsobservatory-summary');
     insertResults(Observatory.state.third_party.tlsobservatory.output.certificate, 'tlsobservatory-certificate');
     insertResults(Observatory.state.third_party.tlsobservatory.output.misc, 'tlsobservatory-misc');
