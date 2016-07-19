@@ -134,7 +134,7 @@ body {
 /* expandible panel butons, such as raw server headers */
 .expandy-panel-button {
     font-weight: 600;
-    padding: 4px;
+    padding: 4px 8px;
     white-space: nowrap;
 }
 
