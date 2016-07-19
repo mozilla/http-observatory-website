@@ -288,6 +288,13 @@ function onPageLoad() {
                 trigger: 'hover'
             }
         ) });
+
+        // make it so that when we click a collapsed element, it removes it from the DOM
+        $('[data-toggle="collapse"]').click(
+            function() {
+                $(this).remove();
+            }
+        );
         
         loadScanResults();
         // loadSafeBrowsingResults();
@@ -302,9 +309,9 @@ function onPageLoad() {
 
         // load all the grade and totals tables
         retrieveResultTable('Overall Results', Observatory.api_url + 'getGradeDistribution', 'totalresults', 'info');
-        retrieveResultTable('Recent Scans', Observatory.api_url + 'getRecentScans?num=14', 'recentresults', 'warning');
-        retrieveResultTable('Hall of Fame', Observatory.api_url + 'getRecentScans?min=90&num=14', 'goodresults', 'success');
-        retrieveResultTable('Hall of Shame', Observatory.api_url + 'getRecentScans?max=20&num=14', 'badresults', 'danger');
+        retrieveResultTable('Recently Scanned', Observatory.api_url + 'getRecentScans?num=14', 'recentresults', 'warning');
+        retrieveResultTable('Recent Best', Observatory.api_url + 'getRecentScans?min=90&num=14', 'goodresults', 'success');
+        retrieveResultTable('Recent Worst', Observatory.api_url + 'getRecentScans?max=20&num=14', 'badresults', 'danger');
     }
 }
 

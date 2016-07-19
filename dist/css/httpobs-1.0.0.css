@@ -131,6 +131,29 @@ body {
     top: .25em;
 }
 
+/* expandible panel butons, such as raw server headers */
+.expandy-panel-button {
+    font-weight: 600;
+    padding: 4px;
+    white-space: nowrap;
+}
+
+.p-l-2 {
+    padding-left: 2em;
+}
+
+.p-r-1 {
+    padding-right: 1em;
+}
+
+#server-headers {
+    margin-bottom: 5em;
+}
+
+.text-right {
+    text-align: right;
+}
+
 /* hide all results while the progress bar is in the DOM before it */
 div.large-progress-bar-condensed + div.row {
     display: none;
@@ -208,10 +231,6 @@ div.large-progress-bar-condensed + div.row {
 
 #tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer {
     padding: 0 .75em;
-}
-
-#tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer p:first-child {
-    font-style: oblique;
 }
 
 #tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer p:last-child {

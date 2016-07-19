@@ -9,7 +9,7 @@
     <title>Mozilla Observatory (Beta)</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css" type="text/css" integrity="sha256-WQn3gu4Wj3K13E5GRGp1rk6+j1ri8PLFMa+Ovcs0URE=" />
-    <link rel="stylesheet" href="css/httpobs-1.0.0.css" type="text/css" integrity="sha256-Y9EXaoIP0w2HKIYe6ZOyBvPUA07uleFsjP+w7yQeQsg=" />
+    <link rel="stylesheet" href="css/httpobs-1.0.0.css" type="text/css" integrity="sha256-crd33hPwl6GPdk/4MPu1PcIto1iToMxfmGWZZo+piHo=" />
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -182,7 +182,7 @@
                             <td class="glyphicon" id="tests-redirection-pass"></td>
                             <td id="tests-redirection-score"></td>
                             <td id="tests-redirection-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Redirection" data-content="Properly configured redirections from HTTP to HTTPS allow browsers to properly apply HTTP Strict Transport Security (HSTS) settings."></span></td>
+                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Redirection" data-content="Properly configured redirections from HTTP to HTTPS allow browsers to correctly apply HTTP Strict Transport Security (HSTS) settings."></span></td>
                         </tr>
                         <tr>
                             <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Subresource_Integrity">Subresource Integrity</a></td>
@@ -221,8 +221,9 @@
         <div class="panel panel-primary" id="server-headers">
             <div class="panel-heading">
                 <span class="h3">Raw Server Headers</span>
+                <button class="btn btn-primary pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#server-headers-panel-body" aria-expanded="false" aria-controls="server-headers-panel-body">Click to Expand</button>
             </div>
-            <div class="panel-body">
+            <div class="panel-body collapse" id="server-headers-panel-body">
                 <div class="row">
                     <table class="table table-striped table-condensed pull-left" id="server-headers-table">
                     </table>
@@ -395,12 +396,17 @@
                             <tr>
                                 <td>Cipher Preference:</td>
                                 <td><span id="tlsobservatory-misc-chooser"></span> selects preferred cipher</td>
-                                <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cipher Preference" data-content="Configuring your server to choose the preferred cipher can help force older clients to choose more secure ciphers than they would by default."></span></td>
+                                <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cipher Preference" data-content="Configuring your server to choose the preferred cipher can force older clients to choose more secure ciphers than they would by default."></span></td>
                             </tr>
                             <tr>
                                 <td>OCSP Stapling:</td>
                                 <td id="tlsobservatory-misc-ocsp_stapling"></td>
                                 <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="OCSP Stapling" data-content="OCSP Stapling allows clients to check for certificate revocation both quickly and privately."></span></td>
+                            </tr>
+                            <tr id="tlsobservatory-misc-oldest_clients-row">
+                                <td>Oldest Compatible Clients:</td>
+                                <td id="tlsobservatory-misc-oldest_clients"></td>
+                                <td></td>
                             </tr>
                         </table>
                     </div>
@@ -415,30 +421,22 @@
                 <div class="panel-body">
                     <div class="row">
                         <div id="tlsobservatory-suggestions-modern-row">
-                            <span class="bold-no-wrap">Complying with the modern compatibility level:</span><br><br>
-                            <span id="tlsobservatory-suggestions-modern"></span>
+                            <p><strong>Looking for improved security and have a user base of only modern clients?</strong></p>
+                            <p class="p-l-2 p-r-1" id="tlsobservatory-suggestions-modern-notes">Take a look at the <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility">Mozilla &ldquo;Modern&rdquo; TLS configuration</a>!  It provides an extremely high level of security and performance and is compatible with all clients released in the last couple years. It is not recommended for general purpose websites that may need to service older clients such as Android 4.x, Internet Explorer 10, or Java 6.x.</p>
+                            <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-modern" aria-expanded="false" aria-controls="tlsobservatory-suggestions-modern">Want the detailed technical nitty-gritty?</a></p>
+                            <p class="p-l-2 p-r-1 collapse" id="tlsobservatory-suggestions-modern"></p>
                         </div>
                         <div id="tlsobservatory-suggestions-intermediate-row">
                             <hr>
-                            <span class="bold-no-wrap">Complying with the intermediate compatibility level:</span><br><br>
-                            <span id="tlsobservatory-suggestions-intermediate"></span>
+                            <p><strong>Still want secure website, but need compatibility with those older clients?</strong></p>
+                            <p class="p-l-2 p-r-1" id="tlsobservatory-suggestions-intermediate-notes">No problem! The <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28default.29">Mozilla &ldquo;Intermediate&rdquo; TLS configuration</a> may be just right for you!  It provides the similar level of security to the &ldquo;Modern&rdquo; configuration when used with current clients, but still supports older versions of web browsers and tools.</p>
+                            <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-intermediate" aria-expanded="false" aria-controls="tlsobservatory-suggestions-intermediate">Want the detailed technical nitty-gritty?</a></p>
+                            <p class="p-l-2 p-r-1 collapse" id="tlsobservatory-suggestions-intermediate"></p>
                         </div>
                         <hr>
                         <div id="tlsobservatory-suggestions-disclaimer">
-                            <p>Please note that these suggestions may not be appropriate for your usage requirements.</p>
-                            <p>The <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28default.29">intermediate compatibility level</a> is designed for general purpose websites and has broad compatibility with almost all clients in active use. The <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility">modern compatibility level</a> is designed to provide a higher level of security and performance, but may not be compatible with legacy clients.</p>
-                            <p>Mozilla maintains a <a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">configuration generator</a>, to assist with the implementation of these suggestions.</p>
+                            <p>Please note that these suggestions may not be appropriate for your particular usage requirements!  If they do sound like something you're interested in, Mozilla maintains a <a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">configuration generator</a> to ease their implementation.</p>
                         </div>
-
-                        <!-- <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-suggestions-table">
-                            <tr>
-                                <td><span class="bold-no-wrap">Upgrading to Modern:</span><br><br> </span></td>
-                            </tr>
-                            <tr id="tlsobservatory-suggestions-intermediate-row">
-                                <td>Intermediate:</td>
-                                <td id="tlsobservatory-suggestions-intermediate"></td>
-                            </tr>
-                        </table> -->
                     </div>
                 </div>
             </div>
@@ -646,7 +644,7 @@
     <script src="js/bootstrap-3.3.6.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo="></script>
     <script src="js/lodash-4.13.1.min.js" integrity="sha256-1a172TVBZFNA/hUN2Bxg9FF7VtDWD6Oq8vhiuJ4G024="></script>
     <script src="js/httpobs-utils-1.0.0.js" integrity="sha256-CuEDiX2yL4UuWaOxmJPWdXLvPus543zE7OYff6kneBg="></script>
-    <script src="js/httpobs-1.0.0.js" integrity="sha256-dYaQRMOKvpVtrHupGHOwECAi1/Kn1fbdcYUYor0bIAk="></script>
-    <script src="js/httpobs-third-party-1.0.0.js" integrity="sha256-AZN/J0aYxhLDbRxr6boac2hm/hwmPOaTQsBve/TeNyE="></script>
+    <script src="js/httpobs-1.0.0.js" integrity="sha256-JvwLGJPSi+FNDigSHg/5BAXkwE2RA40LxLaCq8WB0Gk="></script>
+    <script src="js/httpobs-third-party-1.0.0.js" integrity="sha256-nj095E4MoYdFn1AqOV0Ab2S1KKyXePTZUzxIK0kPN5E="></script>
 </body>
 </html>

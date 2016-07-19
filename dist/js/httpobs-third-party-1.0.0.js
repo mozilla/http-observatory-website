@@ -436,11 +436,26 @@ function insertTLSObservatoryResults() {
 
     // let's have slightly nicer looking terms for the configuration level
     var configuration = {
-        'old': 'Old (Backwards Compatible)',
-        'intermediate': 'Intermediate',
-        'modern': 'Modern',
-        'bad': 'Insecure',
-        'non compliant': 'Non-compliant'
+        'old': {
+            description: 'Old (Backwards Compatible)',
+            oldest_clients: 'Firefox 1, Chrome 1, Windows XP IE6, Java 6'
+        },
+        'intermediate': {
+            description: 'Intermediate',
+            oldest_clients: 'Firefox 1, Chrome 1, IE 7, Opera 5, Safari 1, Windows XP IE8, Android 2.3, Java 7'
+        },
+        'modern': {
+            description: 'Modern',
+            oldest_clients: 'Firefox 27, Chrome 30, IE 11 on Windows 7, Edge, Opera 17, Safari 9, Android 5.0, Java 8'
+        },
+        'bad': {
+            description: 'Insecure',
+            oldest_clients: undefined
+        },
+        'non compliant': {
+            description: 'Non-compliant',
+            oldest_clients: undefined
+        }
     };
 
     // Loop through the analyzers and store to an object
@@ -451,14 +466,13 @@ function insertTLSObservatoryResults() {
     var analyzers = Observatory.state.third_party.tlsobservatory.analyzers;
     delete(Observatory.state.third_party.tlsobservatory.results.analysis);
 
-    var mozilla_configuration_level = configuration[analyzers.mozillaEvaluationWorker.level];
+    var mozilla_configuration_level = configuration[analyzers.mozillaEvaluationWorker.level].description;
     var mozilla_configuration_level_description;
     if (mozilla_configuration_level == 'Non-compliant') {
         mozilla_configuration_level_description = 'Non-compliant\n\nPlease note that non-compliance simply means that the server\'s configuration is either more or less strict than a pre-defined Mozilla configuration level.';
     } else {
-        mozilla_configuration_level_description = configuration[analyzers.mozillaEvaluationWorker.level];
+        mozilla_configuration_level_description = configuration[analyzers.mozillaEvaluationWorker.level].description;
     }
-    console.log(mozilla_configuration_level);
 
     // let's load up the summary object
     Observatory.state.third_party.tlsobservatory.output.summary = {
@@ -529,8 +543,14 @@ function insertTLSObservatoryResults() {
     // let's load up the misc object
     Observatory.state.third_party.tlsobservatory.output.misc = {
         chooser: results.connection_info.serverside === true ? 'Server' : 'Client',
-        ocsp_stapling: ocsp_stapling
+        ocsp_stapling: ocsp_stapling,
+        oldest_clients: configuration[analyzers.mozillaEvaluationWorker.level].oldest_clients
     };
+
+    // remove the oldest client row if it's undefined
+    if (Observatory.state.third_party.tlsobservatory.output.misc.oldest_clients === undefined) {
+        $('#tlsobservatory-misc-oldest_clients-row').remove();
+    }
 
     // And then the suggestions object
 
@@ -553,6 +573,7 @@ function insertTLSObservatoryResults() {
              .map(function (s) { return s.replace(/-chacha20/g, '-CHACHA20') })
              .map(function (s) { return s.replace(/-poly1305/g, '-POLY1305') })
              .map(function (s) { return s.replace(/-gcm/g, '-GCM') });
+        a.sort();
 
         return listify(a, true);
     }
@@ -562,10 +583,13 @@ function insertTLSObservatoryResults() {
         intermediate: prettify(analyzers.mozillaEvaluationWorker.failures.intermediate)
     };
 
-    // we only need the intermediate suggestions if it's not modern or intermediate
-    if (_.includes(['Modern', 'Intermediate'], mozilla_configuration_level)) {
+    // we only need the intermediate suggestions if it's not already intermediate
+    if (mozilla_configuration_level === 'Intermediate') {
         $('#tlsobservatory-suggestions-intermediate-row').remove();
+    } else if (mozilla_configuration_level === 'Modern') {  // no need for suggestions at all {
+        $('#tlsobservatory-suggestions').remove();
     }
+
 
     console.log(Observatory.state.third_party.tlsobservatory);
 
