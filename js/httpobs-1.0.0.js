@@ -111,6 +111,11 @@ function insertScanResults(scan, results) {
     Observatory.state.scan = scan;
     Observatory.state.results = results;
 
+    // note that HPKP is optional
+    if (results['public-key-pinning'].result === 'hpkp-not-implemented') {
+        results['public-key-pinning'].score_description += ' (optional)';
+    }
+
     // don't show the contribute.json line to non-mozilla sites
     if (results.contribute.result === 'contribute-json-only-required-on-mozilla-properties') {
         $('#tests-contribute-row').remove();
