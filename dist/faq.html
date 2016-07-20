@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width-device-width, initial-scale=1">
+    <meta name="author" content="April King">
+
+    <title>Mozilla Observatory (Beta)</title>
+
+    <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css" type="text/css" integrity="sha256-WQn3gu4Wj3K13E5GRGp1rk6+j1ri8PLFMa+Ovcs0URE=" />
+    <link rel="stylesheet" href="css/httpobs-1.0.0.css" type="text/css" integrity="sha256-sy7DffqjsxPa5IT1jp6HcFcYG19fbywOXcou+z4LAn0=" />
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="." class="title">Mozilla Observatory (Beta)</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://github.com/mozilla/http-observatory/blob/master/httpobs/docs/api.md">API Documentation</a></li>
+                            <li><a href="https://github.com/mozilla/http-observatory-website/">Contribute at GitHub</a></li>
+                            <li><a href="faq.html">Frequently Asked Questions</a></li>
+                            <li><a href="https://github.com/mozilla/http-observatory/blob/master/httpobs/docs/scoring.md">Scoring Methodology</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main content -->
+    <div class="container">
+        
+
+    <div>
+        <h1 class="no-margin-top">Frequently Asked Questions</h1>
+    </div>
+
+    <div id="faq">
+        <div class="page-header h3" id="faq-scoring">Scoring</div>
+
+        <div class="question">
+            <h4>What is the scoring methodology based on?</h4>
+
+            <p>It is extremely difficult to assign an objective value to a subjective question such as "How bad is not implementing HTTP Strict Transport Security?"  This is complicated by the fact that what may be unnecessary for for one site &mdash; such as implementing Content Security Policy (CSP) &mdash; may be much riskier for a different site.</p>
+            <p>The scores and grades offered by the Mozilla Observatory are based on the opinions of a wide variety of information security professionals, and largely reflect the relative importance written about in the official Mozilla <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security">web security guidelines</a> and <a href="https://wiki.mozilla.org/Security/Server_Side_TLS">server side TLS guidelines</a>.</p>
+        </div>
+
+        <div class="question">
+            <h4>What is the minimum and maximum possible score?</h4>
+
+            <p>The current maximum possible score is 130 out of 100.  The minimum score is always 0, regardless of how badly a site does.</p>
+            <p>For technical details, please see <a href="https://github.com/mozilla/http-observatory/blob/master/httpobs/scanner/grader/grade.py">grade.py</a>, and to see a list of the most recent "perfect" scoring websites, you can use the <a href="https://http-observatory.security.mozilla.org/api/v1/getRecentScans?min=130&num=25">getRecentScans API</a>.</p>
+        </div>
+
+        <div class="question">
+            <h4>Is the Mozilla Observatory useful for scanning non-websites, such as API endpoints?</h4>
+
+            <p>The HTTP Observatory is designed around scanning websites, not API endpoints. This is not to say that it <em>can't</em> be used for API endpoints, just that the results may not reflect the actual security posture of the API.</p>
+            <p>Nevertheless, the various security headers expected by the HTTP Observatory shouldn't cause any negative impact for APIs that return exclusively data, such as JSON or XML. The recommended configuration for API endpoints is:</p>
+            <pre>Content-Security-Policy: default-src 'none'; frame-ancestors 'none'
+Strict-Transport-Security: max-age=31536000
+X-Content-Type-Options: nosniff</pre>
+        </div>
+
+        <div class="question">
+            <h4>Why would I need to implement (CSP, HTTPS, etc.) on my personal blog?</h4>
+
+            <p>Unfortunately, there is no way to tell the risk level of any given site programmatically. While your site may not be at a high level of risk, the HTTP Observatory grades sites equally in an attempt to get site developers and operators familiar with these defensive security standards.</p>
+            <p>Note that while it may appear that some things &mdash; such as HTTPS or Subresource Integrity for sites that use CDNs &mdash; appear unnecessary, not including them puts users and the <a href="http://arstechnica.com/security/2015/04/ddos-attacks-that-crippled-github-linked-to-great-firewall-of-china/">internet at large</a> at risk.</p>
+
+        </div>
+
+
+        <div class="page-header h3">Test-specific Questions</div>
+
+        <div class="question">
+            <h4>(HTTP Public Key Pinning) I passed this test, but I didn't implement HPKP!</h4>
+
+            <p>HTTP Public Key Pinning is targeted specifically towards large and/or sensitive websites and implementing it is considered optional. The only way to fail this test is to return an invalid header, such as one that doesn't contain a sufficient number of pins. Sites that do HPKP will get a small bonus on their final grade.</p>
+        </div>
+        <div class="question">
+            <h4>(X-Frame-Options) What if I want to allow my site to be framed?</h4>
+
+            <p>No problem! As long as you are explicit about your preference by using Content Security Policy's <tt>frame-ancestors</tt> directive, you will pass the X-Frame-Options test. For example, to allow your site to be framed by any https site, the following policy should pass the X-Frame-Options test:</p>
+            <pre>Content-Security-Policy: frame-ancestors https:</pre>
+        </div>
+
+    </div>
+
+    <!--
+    <footer class="footer text-center">
+        <div class="container">
+            Licensed under the Mozilla Public License. Contribute on <a href="https://github.com/mozilla/http-observatory">GitHub</a>.
+        </div>
+    </footer>
+    -->
+
+    <script src="js/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="></script>
+    <script src="js/bootstrap-3.3.6.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo="></script>
+    <script src="js/lodash-4.13.1.min.js" integrity="sha256-1a172TVBZFNA/hUN2Bxg9FF7VtDWD6Oq8vhiuJ4G024="></script>
+    <script src="js/httpobs-utils-1.0.0.js" integrity="sha256-CuEDiX2yL4UuWaOxmJPWdXLvPus543zE7OYff6kneBg="></script>
+    <script src="js/httpobs-1.0.0.js" integrity="sha256-9M53H4UG26bUDaHrG3w7ZnjTmz0IIJrKWEuu+i97z98="></script>
+    <script src="js/httpobs-third-party-1.0.0.js" integrity="sha256-nj095E4MoYdFn1AqOV0Ab2S1KKyXePTZUzxIK0kPN5E="></script>
+</body>
+</html>

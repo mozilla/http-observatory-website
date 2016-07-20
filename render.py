@@ -19,8 +19,8 @@ config = {
 css_path = os.path.join('dist', 'css')
 js_path = os.path.join('dist', 'js')
 
-render_targets = ('index.html',
-                  'analyze.html')
+render_targets = os.listdir('templates')
+render_targets.remove('base.html')
 
 env = Environment(loader=FileSystemLoader('templates'))
 

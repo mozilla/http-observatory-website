@@ -127,7 +127,7 @@ body {
 }
 
 /* make the glyph icon tooltips align a bit nicer */
-.glyphicon-info-sign {
+.glyphicon-info-sign[data-toggle="popover"] {
     top: .25em;
 }
 
@@ -241,4 +241,23 @@ sup, sub {
   vertical-align: baseline;
   position: relative;
   top: -0.4em;
+}
+
+/* faq page */
+#faq {
+    max-width: 50em;
+    padding: 0 1em;
+}
+
+#faq .question {
+    margin-bottom: 2em;
+}
+
+#faq .question p {
+    padding: 0 1em;
+}
+
+#faq pre {
+    margin-left: 5%;
+    margin-top: 1.25em;
 }
