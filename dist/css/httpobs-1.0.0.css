@@ -197,6 +197,18 @@ div.large-progress-bar-condensed + div.row {
     white-space: nowrap;
 }
 
+.glyphicon-ok {
+    color: #2d882d;
+}
+
+.glyphicon-remove {
+    color: #aa3939;
+}
+
+.glyphicon-minus {
+    color: #888888;
+}
+
 /* score modifier */
 #test-scores tr td:nth-child(3) {
     padding-right: 1.5em;
