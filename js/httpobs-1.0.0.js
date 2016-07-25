@@ -111,10 +111,6 @@ function insertScanResults(scan, results) {
     Observatory.state.scan = scan;
     Observatory.state.results = results;
 
-    // note that HPKP is optional
-    if (results['public-key-pinning'].result === 'hpkp-not-implemented') {
-        results['public-key-pinning'].score_description += ' (optional)';
-    }
 
     // don't show the contribute.json line to non-mozilla sites
     if (results.contribute.result === 'contribute-json-only-required-on-mozilla-properties') {
@@ -142,6 +138,25 @@ function insertScanResults(scan, results) {
         $('#tests-' + key + '-pass').toggleClass(pass);
         $('#tests-' + key + '-score').text(score);
         $('#tests-' + key + '-score-description').text(results[key]['score_description']);
+    }
+
+    // note that HPKP is optional
+    if (results['public-key-pinning'].result === 'hpkp-not-implemented') {
+        results['public-key-pinning'].score_description += ' (optional)';
+        $('#tests-public-key-pinning-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+    }
+
+    // SRI is optional for sites that use local script and/or don't have script
+    if (_.includes(['sri-not-implemented-response-not-html',
+                    'sri-not-implemented-but-no-scripts-loaded',
+                    'sri-not-implemented-but-all-scripts-loaded-from-secure-origin'],
+            results['subresource-integrity'].result)) {
+        $('#tests-subresource-integrity-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+    }
+
+    // cookies gets the dash if they're not detected
+    if (results['cookies'].result === 'cookies-not-found') {
+        $('#tests-cookies-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
     }
 
     // write the server headers into the page
