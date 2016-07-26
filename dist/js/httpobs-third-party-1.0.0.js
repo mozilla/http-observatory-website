@@ -478,6 +478,7 @@ function insertTLSObservatoryResults() {
     Observatory.state.third_party.tlsobservatory.output.summary = {
         certificate_url: Observatory.state.third_party.tlsobservatory.certificate_url,
         end_time: results.timestamp.replace('T', ' ').split('.')[0],
+        end_time_l: toLocalTime(results.timestamp, 'YYYY-MM-DDTHH:mm:ss.SSSSZ'),
         ip: results.connection_info.scanIP,
         mozilla_configuration_level: mozilla_configuration_level,
         mozilla_configuration_level_description: mozilla_configuration_level_description,
