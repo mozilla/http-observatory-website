@@ -110,7 +110,15 @@ function insertScanResults(scan, results) {
     // stuff both scan and state into the HTTPObs object
     Observatory.state.scan = scan;
     Observatory.state.results = results;
+    
+    // add a test duration
+    Observatory.state.scan.test_duration = (
+        moment.utc(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz') -
+        moment.utc(Observatory.state.scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz')) / 1000;
 
+    // convert things to local time
+    Observatory.state.scan.start_time_l = toLocalTime(Observatory.state.scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
+    Observatory.state.scan.end_time_l = toLocalTime(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
 
     // don't show the contribute.json line to non-mozilla sites
     if (results.contribute.result === 'contribute-json-only-required-on-mozilla-properties') {

@@ -170,3 +170,9 @@ function tableify(list, table_id) {  // take a list of lists and push it into an
         tbody.appendChild(tr);
     }
 }
+
+function toLocalTime(timeString, format) {
+    var localtime = moment.utc(timeString, format).toDate();
+
+    return moment(localtime).format('LLL');
+}
