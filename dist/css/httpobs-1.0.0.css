@@ -143,6 +143,7 @@ body {
     white-space: nowrap;
 }
 
+
 .p-l-2 {
     padding-left: 2em;
 }
@@ -166,6 +167,11 @@ div.large-progress-bar-condensed + div.row {
 
 #scan-results {
     display: none; /* hide on initial page load */
+}
+
+/* bootstrap is so dumb here */
+#force-rescan+div.popover {
+    color: black;
 }
 
 .summary tr td:nth-child(1) {
