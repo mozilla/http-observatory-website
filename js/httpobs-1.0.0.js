@@ -120,6 +120,14 @@ function insertScanResults(scan, results) {
     Observatory.state.scan.start_time_l = toLocalTime(Observatory.state.scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
     Observatory.state.scan.end_time_l = toLocalTime(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
 
+    // enable the rescan button if the test was over 315 seconds ago, otherwise enable it at that point
+    var lastScanDelta = moment() - moment.utc(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
+    if (lastScanDelta > 315000) {
+        enableInitiateRescanButton();
+    } else {
+        setTimeout(enableInitiateRescanButton, 315000 - lastScanDelta);
+    }
+
     // don't show the contribute.json line to non-mozilla sites
     if (results.contribute.result === 'contribute-json-only-required-on-mozilla-properties') {
         $('#tests-contribute-row').remove();
@@ -185,7 +193,22 @@ function insertScanResults(scan, results) {
 }
 
 function loadScanResults() {
+    'use strict';
+
     submitScanForAnalysisXHR(Observatory.hostname, handleScanResults, displayError);
+}
+
+
+/* enable the initiate rescan button, and let it start a new site scan */
+function enableInitiateRescanButton() {
+    'use strict';
+
+    $('#force-rescan').removeClass('disabled').on('click', function() {
+        function reload() { window.location.reload(true); }
+
+        submitScanForAnalysisXHR(Observatory.hostname, reload, reload, 'POST', true, true);
+        return false;
+    });
 }
 
 

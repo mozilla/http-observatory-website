@@ -590,10 +590,7 @@ function insertTLSObservatoryResults() {
     } else if (mozilla_configuration_level === 'Modern') {  // no need for suggestions at all {
         $('#tlsobservatory-suggestions').remove();
     }
-
-
-    console.log(Observatory.state.third_party.tlsobservatory);
-
+    
     // insert all the results
     // insertGrade(analyzers.mozillaGradingWorker.lettergrade, 'tlsobservatory-summary');
     insertGrade(mozilla_configuration_level, 'tlsobservatory-summary');
