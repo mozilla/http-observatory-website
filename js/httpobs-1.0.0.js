@@ -328,18 +328,19 @@ function submitScanForAnalysis() {
 function onPageLoad() {
     'use strict';
 
+    // initialize all the popovers
+    $(function () { $('[data-toggle="popover"]').popover(
+        {
+            html: true,
+            placement: 'left',
+            trigger: 'hover'
+        }
+    ) });
+
     if (window.location.pathname.indexOf('/analyze.html') !== -1) {
         // Get the hostname in the GET parameters
         Observatory.hostname = getQueryParameter('host');
 
-        // initialize all the popovers
-        $(function () { $('[data-toggle="popover"]').popover(
-            {
-                html: true,
-                placement: 'left',
-                trigger: 'hover'
-            }
-        ) });
 
         // make it so that when we click a collapsed element, it removes it from the DOM
         $('[data-toggle="collapse"]').click(
