@@ -206,6 +206,7 @@ function enableInitiateRescanButton() {
     $('#force-rescan').removeClass('disabled').on('click', function() {
         function reload() { window.location.reload(true); }
 
+        loadTLSObservatoryResults(true);
         submitScanForAnalysisXHR(Observatory.hostname, reload, reload, 'POST', true, true);
         return false;
     });
