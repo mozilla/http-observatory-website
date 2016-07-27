@@ -590,7 +590,7 @@ function insertTLSObservatoryResults() {
     } else if (mozilla_configuration_level === 'Modern') {  // no need for suggestions at all {
         $('#tlsobservatory-suggestions').remove();
     }
-    
+
     // insert all the results
     // insertGrade(analyzers.mozillaGradingWorker.lettergrade, 'tlsobservatory-summary');
     insertGrade(mozilla_configuration_level, 'tlsobservatory-summary');
@@ -616,18 +616,21 @@ function insertTLSObservatoryResults() {
 }
 
 
-function loadTLSObservatoryResults() {
+function loadTLSObservatoryResults(rescan) {
     'use strict';
+
+    var rescan = typeof rescan !== 'undefined' ? rescan : false;
 
     var SCAN_URL = 'https://tls-observatory.services.mozilla.com/api/v1/scan';
     var RESULTS_URL = 'https://tls-observatory.services.mozilla.com/api/v1/results';
     var CERTIFICATE_URL = 'https://tls-observatory.services.mozilla.com/api/v1/certificate';
 
     // if it's the first scan through, we need to do a post
-    if (Observatory.state.third_party.tlsobservatory.scan_id === undefined) {
+    if (Observatory.state.third_party.tlsobservatory.scan_id === undefined || rescan) {
         // make a POST to initiate the scan
         $.ajax({
             data: {
+                rescan: rescan,
                 target: Observatory.hostname
             },
             dataType: 'json',
