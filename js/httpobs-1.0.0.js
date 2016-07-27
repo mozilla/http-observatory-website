@@ -158,7 +158,7 @@ function insertScanResults(scan, results) {
 
     // note that HPKP is optional
     if (results['public-key-pinning'].result === 'hpkp-not-implemented') {
-        results['public-key-pinning'].score_description += ' (optional)';
+        $('#tests-public-key-pinning-score-description').text($('#tests-public-key-pinning-score-description').text() + ' (optional)');
         $('#tests-public-key-pinning-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
     }
 
