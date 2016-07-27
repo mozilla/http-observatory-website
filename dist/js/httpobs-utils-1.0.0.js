@@ -176,3 +176,17 @@ function toLocalTime(timeString, format) {
 
     return moment(localtime).format('LLL');
 }
+
+
+function getQueryParameter(param) {
+    var params = _.chain(location.search ? location.search.slice(1).split('&') : '')
+        .map(function(p) {
+            var kp = p.split('=');
+            return [decodeURI(kp[0]), decodeURI(kp[1])];
+        })
+        .fromPairs()
+        .omit(_.isEmpty)
+        .toJSON();
+
+    return params[param];
+}
