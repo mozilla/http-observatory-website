@@ -311,7 +311,8 @@ function submitScanForAnalysis() {
         }
 
         // if it succeeds, redirect to the analyze page
-        window.location.href = window.location + 'analyze.html?host=' + hostname;
+        var thirdParty = $('#scan-btn-third-party').prop('checked') ? '&third-party=false' : '';
+        window.location.href = window.location + 'analyze.html?host=' + hostname + thirdParty;
     };
 
     // check the value of the hidden and rescan buttons
@@ -329,7 +330,7 @@ function onPageLoad() {
 
     if (window.location.pathname.indexOf('/analyze.html') !== -1) {
         // Get the hostname in the GET parameters
-        Observatory.hostname = window.location.href.split('=')[1];
+        Observatory.hostname = getQueryParameter('host');
 
         // initialize all the popovers
         $(function () { $('[data-toggle="popover"]').popover(
@@ -348,12 +349,20 @@ function onPageLoad() {
         );
         
         loadScanResults();
-        // loadSafeBrowsingResults();
-        loadHSTSPreloadResults();
-        // loadHTBridgeResults();
-        loadSecurityHeadersIOResults();
-        loadTLSImirhilFrResults();
         loadTLSObservatoryResults();
+
+        // let's check the third parties if requested
+        if (getQueryParameter('third-party') !== 'false') {
+            // loadSafeBrowsingResults();
+            loadHSTSPreloadResults();
+            // loadHTBridgeResults();
+            loadSecurityHeadersIOResults();
+            loadTLSImirhilFrResults();
+        } else {  // otherwise remove them all
+            $('#third-party-tests').remove();
+            $('#third-party-tests-page-header').remove();
+        }
+
     } else {
         // bind an event to the Scan Me button
         $('#scantron-form').on('submit', submitScanForAnalysis);

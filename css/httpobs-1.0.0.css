@@ -37,7 +37,14 @@ body {
     display: none;
 }
 
+/* home page stuff */
+#scan-input-hostname {
+    margin-bottom: .5em;
+}
 
+#scantron-form div.checkbox:last-child {
+    margin-bottom: -.25em;
+}
 
 /* grades */
 .grade-container {
