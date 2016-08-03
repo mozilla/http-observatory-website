@@ -616,10 +616,11 @@ function insertTLSObservatoryResults() {
 }
 
 
-function loadTLSObservatoryResults(rescan) {
+function loadTLSObservatoryResults(rescan, initiateScanOnly) {
     'use strict';
 
     var rescan = typeof rescan !== 'undefined' ? rescan : false;
+    var initiateScanOnly = typeof initiateScanOnly !== 'undefined' ? initiateScanOnly : false;
 
     var SCAN_URL = 'https://tls-observatory.services.mozilla.com/api/v1/scan';
     var RESULTS_URL = 'https://tls-observatory.services.mozilla.com/api/v1/results';
@@ -633,11 +634,15 @@ function loadTLSObservatoryResults(rescan) {
                 rescan: rescan,
                 target: Observatory.hostname
             },
+            initiateScanOnly: initiateScanOnly,
             dataType: 'json',
             method: 'POST',
             error: function() { errorResults('Scanner unavailable', 'tlsobservatory') },
             success: function (data) {
                 Observatory.state.third_party.tlsobservatory.scan_id = data.scan_id;
+
+                if (this.initiateScanOnly) { return; }
+
                 loadTLSObservatoryResults();  // retrieve the results
             },
             url: SCAN_URL

@@ -88,7 +88,6 @@ X-Content-Type-Options: nosniff</pre>
 
             <p>Unfortunately, there is no way to tell the risk level of any given site programmatically. While your site may not be at a high level of risk, the HTTP Observatory grades sites equally in an attempt to get site developers and operators familiar with these defensive security standards.</p>
             <p>Note that while it may appear that some things &mdash; such as HTTPS or Subresource Integrity for sites that use CDNs &mdash; appear unnecessary, not including them puts users and the <a href="http://arstechnica.com/security/2015/04/ddos-attacks-that-crippled-github-linked-to-great-firewall-of-china/">internet at large</a> at risk.</p>
-
         </div>
 
 
@@ -107,6 +106,12 @@ X-Content-Type-Options: nosniff</pre>
         </div>
 
         <div class="page-header h3">Third-party Integration</div>
+
+        <div class="question">
+            <h4>When I initiated a rescan, the third-party results didn't update. What happened?</h4>
+
+            <p>To reduce load on our third-party providers, the Mozilla Observatory always returns cached results from them. However, if you follow a link to your results for a third-party, most of them will offer the option to scan again. Their updated results will then be reflected in the Observatory.</p>
+        </div>
 
         <div class="question">
             <h4>What is hstspreload.appspot.com?</h4>
@@ -143,7 +148,7 @@ X-Content-Type-Options: nosniff</pre>
     <script src="js/lodash-4.13.1.min.js" integrity="sha256-1a172TVBZFNA/hUN2Bxg9FF7VtDWD6Oq8vhiuJ4G024="></script>
     <script src="js/moment-2.14.1.min.js" integrity="sha256-De/cgZoAkgvqoxL9yJpJzPHyozUETFnSv7EQGfQWQ4o="></script>
     <script src="js/httpobs-utils-1.0.0.js" integrity="sha256-lN8sHq2SA8Q6yBCsgnVcl+NDQPLa7Yy05E4Kg5RSltc="></script>
-    <script src="js/httpobs-1.0.0.js" integrity="sha256-TslgRaFyq47K4A6rh6OsykRJgAP5vGQXc0WqnN1IA1A="></script>
-    <script src="js/httpobs-third-party-1.0.0.js" integrity="sha256-+PSGF7nxYudtX43/Z31TDrEDd+hK9ddXqApGZ89xVlc="></script>
+    <script src="js/httpobs-1.0.0.js" integrity="sha256-QZsL5EuijBH3aRiBRC2a7bIA7ksG5fmxBWTS20HChd4="></script>
+    <script src="js/httpobs-third-party-1.0.0.js" integrity="sha256-E654pIF9VEOtIkEUKZ+eWPCRNyFS/ExqUQSyMSGl6ac="></script>
 </body>
 </html>
