@@ -45,7 +45,6 @@ X-Content-Type-Options: nosniff</pre>
 
             <p>Unfortunately, there is no way to tell the risk level of any given site programmatically. While your site may not be at a high level of risk, the HTTP Observatory grades sites equally in an attempt to get site developers and operators familiar with these defensive security standards.</p>
             <p>Note that while it may appear that some things &mdash; such as HTTPS or Subresource Integrity for sites that use CDNs &mdash; appear unnecessary, not including them puts users and the <a href="http://arstechnica.com/security/2015/04/ddos-attacks-that-crippled-github-linked-to-great-firewall-of-china/">internet at large</a> at risk.</p>
-
         </div>
 
 
@@ -64,6 +63,12 @@ X-Content-Type-Options: nosniff</pre>
         </div>
 
         <div class="page-header h3">Third-party Integration</div>
+
+        <div class="question">
+            <h4>When I initiated a rescan, the third-party results didn't update. What happened?</h4>
+
+            <p>To reduce load on our third-party providers, the Mozilla Observatory always returns cached results from them. However, if you follow a link to your results for a third-party, most of them will offer the option to scan again. Their updated results will then be reflected in the Observatory.</p>
+        </div>
 
         <div class="question">
             <h4>What is hstspreload.appspot.com?</h4>

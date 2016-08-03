@@ -304,6 +304,7 @@ function submitScanForAnalysis() {
         a.href = hostname;
         hostname = a.hostname;
     }
+    Observatory.hostname = hostname;
 
     var successCallback = function(data) {
         if (data.error) {
@@ -319,6 +320,10 @@ function submitScanForAnalysis() {
     // check the value of the hidden and rescan buttons
     var hidden = $('#scan-btn-hidden').prop('checked');
     var rescan = $('#scan-btn-rescan').prop('checked');
+
+    if (rescan) {  // if they've set rescan, we'll poke the TLS Observatory now
+        loadTLSObservatoryResults(rescan, true);
+    }
 
     submitScanForAnalysisXHR(hostname, successCallback, displayError, 'POST', rescan, hidden);
 
@@ -349,7 +354,7 @@ function onPageLoad() {
                 $(this).remove();
             }
         );
-        
+
         loadScanResults();
         loadTLSObservatoryResults();
 
