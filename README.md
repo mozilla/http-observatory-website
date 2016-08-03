@@ -8,7 +8,7 @@ It is split into three projects:
 * [http-observatory-cli](https://github.com/mozilla/http-observatory-cli) - command line interface
 * [http-observatory-website](https://github.com/mozilla/http-observatory-website) - web interface
 
-TLS evaluation relies on external scanners, such as [Mozilla's TLS Observatory](https://github.com/mozilla/tls-observatory).
+TLS evaluation relies on external scanners, such as Mozilla's [TLS Observatory](https://github.com/mozilla/tls-observatory).
 
 ## Authors
 
