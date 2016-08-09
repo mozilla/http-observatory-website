@@ -1,0 +1,317 @@
+body {
+    line-height: 1.5em;
+    padding-top: 7.25em;
+}
+
+.panel-body {
+    padding: 2em;
+}
+
+.no-margin-top {
+    margin-top: 0;
+}
+
+.footer {
+    background-color: #ffffff;
+    /*bottom: 0;*/
+    font-size: 16px;
+    height: 32px;
+    line-height: 29px;
+    margin-top: 2em;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.table-recent-results > tbody > tr > td.grade {
+    width: 2em;
+}
+
+.table-recent-results > tbody > tr > td.hostname > a {
+    color: #436ece;
+}
+
+.alert-hidden {
+    display: none;
+}
+
+/* wordmark and nav stuff */
+#navbar-container {
+    margin: 6px auto 8px auto;
+}
+
+#observatory-wordmark {
+    height: 50px;
+}
+
+/* home page stuff */
+#scan-input-hostname {
+    margin-bottom: .5em;
+}
+
+#scantron-form div.checkbox:last-child {
+    margin-bottom: -.25em;
+}
+
+
+/* grades */
+.grade-container {
+    border-radius: 12px;
+    color: #ffffff;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 88px;
+    height: 128px;
+    line-height: 116px; /* height - total border */
+    padding-right: 4px;
+    width: 128px;
+}
+.grade-container sup {
+    float: right;
+    font-size: 52px;
+    position: relative;
+    top: 32px;
+}
+
+.grade-a {
+    background: #2d882d;
+    border: solid 6px #116611;
+}
+
+.grade-b {
+    background: #aaaa39;
+    border: solid 6px #808015;
+}
+
+.grade-c {
+    background: #aa7039;
+    border: solid 6px #804915;
+}
+
+.grade-d, .grade-e {
+    background: #652770;
+    border: solid 6px #4a1054;
+}
+
+.grade-f {
+    background: #aa3939;
+    border: solid 6px #801515;
+}
+
+.grade-i {  /* intermediate is a weird font that needs to be bigger */
+    font-size: 102px;
+}
+
+/* that is, A+ or A- */
+.grade-with-modifier {
+    padding-right: 4px;
+}
+
+.grade-with-modifier-narrow {
+    right: 10px;
+}
+
+.grade-with-modifier-wide {
+    right: -2px;
+}
+
+
+
+.hostname {
+    border: none;
+	max-width: 13.5em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.large-progress-bar {
+    height: 44px;
+    margin: 22px 0;
+}
+
+.large-progress-bar-condensed {
+    margin: 0;
+}
+
+.large-progress-bar-text {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 44px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.margin-bottom {
+    margin-bottom: 2em;
+}
+
+/* make the glyph icon tooltips align a bit nicer */
+.glyphicon-info-sign[data-toggle="popover"] {
+    top: .25em;
+}
+
+/* expandible panel butons, such as raw server headers */
+.expandy-panel-button {
+    font-weight: 600;
+    padding: 4px 8px;
+    white-space: nowrap;
+}
+
+
+.p-l-2 {
+    padding-left: 2em;
+}
+
+.p-r-1 {
+    padding-right: 1em;
+}
+
+#server-headers {
+    margin-bottom: 5em;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* hide all results while the progress bar is in the DOM before it */
+div.large-progress-bar-condensed + div.row {
+    display: none;
+}
+
+#scan-results {
+    display: none; /* hide on initial page load */
+}
+
+/* bootstrap is so dumb here */
+#force-rescan+div.popover {
+    color: black;
+}
+
+.summary tr td:nth-child(1) {
+    font-weight: 600;
+    padding-right: 1.5em;
+    white-space: nowrap;
+}
+
+.summary tr td:nth-child(2) {
+    white-space: pre-wrap;
+    width: 100%;
+}
+
+#scan-summary {
+    margin-top: 1em;
+}
+
+#scan-summary table, #server-headers table, #test-scores table, #tlsobservatory table, #third-party-tests table {
+    margin-bottom: 0;
+}
+
+
+#test-scores .glyphicon, #tlsobservatory-ciphers-table .glyphicon {
+    display: table-cell;  /* override inline-block */
+}
+
+/* test name */
+#test-scores tr td:nth-child(1), #server-headers-table tr td:nth-child(1), #tlsobservatory-certificate-table tr td:nth-child(1), #tlsobservatory-misc-table tr td:nth-child(1) {
+    font-weight: 600;
+    padding-right: 1em;
+    white-space: nowrap;
+}
+
+/* pass fail */
+#test-scores tr td:nth-child(2) {
+    margin-right: 3em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* explanations */
+#test-scores tr td:nth-child(4) {
+    width: 100%;
+}
+
+.glyphicon-ok {
+    color: #2d882d;
+}
+
+.glyphicon-remove {
+    color: #aa3939;
+}
+
+.glyphicon-minus, .deemphasize {
+    color: #888888;
+}
+
+/* score modifier */
+#test-scores tr td:nth-child(3) {
+    padding-right: 1.5em;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* server header values, protocols */
+#server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child, #tlsobservatory-ciphers-table tr td:last-child, #tlsobservatory-misc-table tr td:nth-child(2) {
+    hyphens: auto;
+    white-space: pre-wrap;
+    width: 100%;
+    word-break: break-all;
+}
+
+/* tls observatory protocols table is a big crowded */
+.bold-no-wrap, #tlsobservatory-ciphers-table tr td:nth-of-type(1) {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+#tlsobservatory-ciphers-table tr td:nth-of-type(2) {
+    padding-right: 1em;
+    white-space: nowrap;
+}
+
+/* key size, AEAD, and PFS */
+#tlsobservatory-ciphers-table tbody tr td:nth-child(n+3):nth-child(-n+5) {
+    text-align: center;
+    white-space: nowrap;
+}
+
+#tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer {
+    padding: 0 .75em;
+}
+
+#tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer p:last-child {
+    margin-bottom: 0;
+}
+
+#qualys-logo {
+    height: 1.6em;
+    margin: -.8em 0 -.7em 0;
+}
+
+sup, sub {
+  vertical-align: baseline;
+  position: relative;
+  top: -0.4em;
+}
+
+/* faq page */
+#faq {
+    max-width: 53em;
+    padding: 0 1em;
+}
+
+#faq .question {
+    margin-bottom: 2em;
+}
+
+#faq .question p {
+    padding: 0 1em;
+}
+
+#faq pre {
+    margin-left: 5%;
+    margin-top: 1.25em;
+}
