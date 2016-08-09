@@ -6,14 +6,14 @@
     <meta name="viewport" content="width-device-width, initial-scale=1">
     <meta name="author" content="April King">
 
-    <title>Mozilla Observatory (Beta)</title>
+    <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css" type="text/css" integrity="sha256-WQn3gu4Wj3K13E5GRGp1rk6+j1ri8PLFMa+Ovcs0URE=" />
-    <link rel="stylesheet" href="css/httpobs-1.0.0.css" type="text/css" integrity="sha256-pAs+RiBuWdlzd9uId+mQzRa/gOHrSr/JNYsmeYZoD08=" />
+    <link rel="stylesheet" href="css/httpobs-1.0.0.css" type="text/css" integrity="sha256-CWuwqvfMXbqABs7hMnVI3pAZ1QeE/OYMTJh3QkVgh9I=" />
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
+        <div id="navbar-container" class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle Navigation</span>
@@ -21,7 +21,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="." class="title">Mozilla Observatory (Beta)</a>
+                <a class="navbar-brand" href="." class="title"><img id="observatory-wordmark" src="images/observatory-wordmark.svg"></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -47,7 +47,7 @@
     <div class="row" id="scan-progress">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span class="h3">Mozilla Observatory</span>
+                <span class="h3">Observatory by Mozilla</span>
             </div>
 
             <div class="alert-hidden" id="scan-alert" role="alert">
@@ -69,14 +69,15 @@
 
     <!-- HTTP Observatory Scan Results -->
     <div class="row" id="scan-results">
+    <!--
         <div class="page-header no-margin-top">
             <h1 class="no-margin-top">HTTP Observatory</h1>
-        </div>
+        </div> -->
 
         <div class="panel panel-primary summary" id="scan-summary">
             <div class="panel-heading">
                 <span class="h3">Scan Summary</span>
-                <button class="btn btn-default pull-right expandy-panel-button disabled" type="button" id="force-rescan" data-toggle="popover" title="Make some improvements?" data-content="The Mozilla HTTP Observatory allows you to scan your site every five minutes.">Initiate Rescan</button>
+                <button class="btn btn-default pull-right expandy-panel-button disabled" type="button" id="force-rescan" data-toggle="popover" title="Make some improvements?" data-content="The HTTP Observatory allows you to scan your site every five minutes.">Initiate Rescan</button>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -261,11 +262,7 @@
                             <table class="table table-striped table-condensed pull-left tlsobservatory-summary-summary-table">
                                 <tr>
                                     <td>Host:</td>
-                                    <td id="tlsobservatory-summary-target"></td>
-                                </tr>
-                                <tr>
-                                    <td>IP Address:</td>
-                                    <td id="tlsobservatory-summary-ip"></td>
+                                    <td><span id="tlsobservatory-summary-target"></span> <span class="deemphasize">(<span id="tlsobservatory-summary-ip"></span>)</span></td>
                                 </tr>
                                 <tr>
                                     <td>Scan ID #:</td>
@@ -329,7 +326,7 @@
                             </tr>
                             <tr>
                                 <td>First Observed:</td>
-                                <td><span id="tlsobservatory-certificate-first_seen"></span> (certificate #<span id="tlsobservatory-certificate-cert_id"></span>)</td>
+                                <td><span id="tlsobservatory-certificate-first_seen"></span><span class="deemphasize"> (certificate #<span id="tlsobservatory-certificate-cert_id"></span>)</span></td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
@@ -450,8 +447,69 @@
             <h1>Third-party Scan Results</h1>
         </div>
 
-        <!-- hstspreload.appspot.com -->
         <div id="third-party-tests">
+            <!-- SSL Labs -->
+            <!--
+            <div class="panel panel-primary summary" id="ssllabs-summary">
+                <div class="panel-heading">
+                    <span class="h3"><img id="qualys-logo" src="images/qualys-ssl-labs-logo-all-white.svg"></span>
+                </div>
+                <div class="panel-body">
+                    <div class="progress large-progress-bar large-progress-bar-condensed" id="ssllabs-progress-bar">
+                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="ssllabs-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                            PENDING (This may take several minutes)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="grade-container text-center" id="ssllabs-grade-container">
+                                <span class="grade-letter" id="ssllabs-grade-letter"></span>
+                                <sup class="grade-letter-modifier" id="ssllabs-grade-modifier"></sup>
+                            </span>
+                        </div>
+                        <div class="col-md-10">
+                            <table class="table table-striped table-condensed pull-left ssllabs-summary-table">
+                                <tr>
+                                    <td>Host:</td>
+                                    <td><span id="ssllabs-hostname">pokeinthe.io <span class="deemphasize">(<span id="ssllabs-ip">45.55.203.36</span>)</span></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                 <tr>
+                                    <td>Certificate score:</td>
+                                    <td><span id="ssllabs-cipher_score">100</span>/100</td>
+                                </tr>
+                                <tr>
+                                    <td>Cipher score:</td>
+                                    <td><span id="ssllabs-cipher_score">90</span>/100</td>
+                                </tr>
+                                <tr>
+                                    <td>Key exchange score:</td>
+                                    <td><span id="ssllabs-key_exchange_score">100</span>/100</td>
+                                </tr>
+                                <tr>
+                                    <td>Protocol score:</td>
+                                    <td><span id="ssllabs-protocol_score">95</span>/100</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>Complete Results:</td>
+                                    <td id="ssllabs-url"><a href="https://www.ssllabs.com/ssltest/analyze.html?d=pokeinthe.io&s=45.55.203.36">https://www.ssllabs.com/ssltest/analyze.html?d=pokeinthe.io&s=45.55.203.36</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <!-- hstspreload.appspot.com -->
             <div class="panel panel-primary summary" id="hstspreload-summary">
                 <div class="panel-heading">
                     <span class="h3">hstspreload.appspot.com</span>
@@ -648,7 +706,7 @@
     <script src="js/lodash-4.13.1.min.js" integrity="sha256-1a172TVBZFNA/hUN2Bxg9FF7VtDWD6Oq8vhiuJ4G024="></script>
     <script src="js/moment-2.14.1.min.js" integrity="sha256-De/cgZoAkgvqoxL9yJpJzPHyozUETFnSv7EQGfQWQ4o="></script>
     <script src="js/httpobs-utils-1.0.0.js" integrity="sha256-lN8sHq2SA8Q6yBCsgnVcl+NDQPLa7Yy05E4Kg5RSltc="></script>
-    <script src="js/httpobs-1.0.0.js" integrity="sha256-QZsL5EuijBH3aRiBRC2a7bIA7ksG5fmxBWTS20HChd4="></script>
+    <script src="js/httpobs-1.0.0.js" integrity="sha256-Ngo1NSViS8qkZEVSq+GtP5sHg+NDUuhp63TXBzJiyoU="></script>
     <script src="js/httpobs-third-party-1.0.0.js" integrity="sha256-E654pIF9VEOtIkEUKZ+eWPCRNyFS/ExqUQSyMSGl6ac="></script>
 </body>
 </html>

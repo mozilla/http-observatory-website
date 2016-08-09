@@ -7,7 +7,7 @@ from jinja2 import Environment, FileSystemLoader
 
 config = {
     'AUTHOR': 'April King',
-    'SITENAME': 'Mozilla Observatory',
+    'SITENAME': 'Observatory by Mozilla',
     'VERSION': '1.0.0',
 
     'hashes': {
