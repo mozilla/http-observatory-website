@@ -1,6 +1,5 @@
 body {
     line-height: 1.5em;
-    padding-top: 7.25em;
 }
 
 .panel-body {
@@ -202,8 +201,8 @@ div.large-progress-bar-condensed + div.row {
     width: 100%;
 }
 
-#scan-summary {
-    margin-top: 1em;
+#scan-progress, #scan-summary {
+    margin-top: 1.2em;
 }
 
 #scan-summary table, #server-headers table, #test-scores table, #tlsobservatory table, #third-party-tests table {
