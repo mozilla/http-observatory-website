@@ -54,6 +54,10 @@ body {
     margin-bottom: -.25em;
 }
 
+#whatami {
+    margin-top: .8em;
+}
+
 
 /* grades */
 .grade-container {
