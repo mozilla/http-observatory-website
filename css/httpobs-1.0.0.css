@@ -1,6 +1,6 @@
 body {
     line-height: 1.5em;
-    padding-top: 6em;
+    padding-top: 7.25em;
 }
 
 .panel-body {
@@ -35,6 +35,15 @@ body {
 
 .alert-hidden {
     display: none;
+}
+
+/* wordmark and nav stuff */
+#navbar-container {
+    margin: 6px auto 8px auto;
+}
+
+#observatory-wordmark {
+    height: 50px;
 }
 
 /* home page stuff */
@@ -193,6 +202,10 @@ div.large-progress-bar-condensed + div.row {
     width: 100%;
 }
 
+#scan-summary {
+    margin-top: 1em;
+}
+
 #scan-summary table, #server-headers table, #test-scores table, #tlsobservatory table, #third-party-tests table {
     margin-bottom: 0;
 }
@@ -229,7 +242,7 @@ div.large-progress-bar-condensed + div.row {
     color: #aa3939;
 }
 
-.glyphicon-minus {
+.glyphicon-minus, .deemphasize {
     color: #888888;
 }
 
@@ -271,6 +284,11 @@ div.large-progress-bar-condensed + div.row {
 
 #tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer p:last-child {
     margin-bottom: 0;
+}
+
+#qualys-logo {
+    height: 1.6em;
+    margin: -.8em 0 -.7em 0;
 }
 
 sup, sub {
