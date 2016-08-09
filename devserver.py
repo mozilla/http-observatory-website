@@ -9,7 +9,7 @@ def regen():
 
 server = Server()
 server.watch('templates/*', regen, delay=1)
-server.watch('dist/js/*', regen, delay=1)
-server.watch('dist/css/*', regen, delay=1)
+server.watch('js/*', regen, delay=1)
+server.watch('css/*', regen, delay=1)
 
 server.serve(root='dist', port=5500, liveport=35729)

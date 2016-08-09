@@ -234,7 +234,7 @@ function insertResultTable(data, title, id, alert) {
     } else {
         for (var site in data) {
             tbody.append('<tr><td class="hostname">' +
-                '<a href="../dist/analyze.html?host=' + site + '">' + site + '</a>' +
+                '<a href="analyze.html?host=' + site + '">' + site + '</a>' +
                 '</td><td class="grade">' + data[site] + '</td>');
         }
     }
