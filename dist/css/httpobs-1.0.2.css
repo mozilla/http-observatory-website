@@ -42,7 +42,13 @@ body {
 }
 
 #observatory-wordmark {
-    height: 50px;
+    height: 2.2em;
+}
+
+@media only screen and (min-width: 768px) {
+    #observatory-wordmark {
+        height: 2.5em;
+    }
 }
 
 /* home page stuff */
