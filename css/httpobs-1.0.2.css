@@ -306,8 +306,8 @@ sup, sub {
   top: -0.4em;
 }
 
-/* faq page */
-#faq {
+/* faq and terms pages */
+#faq, #terms {
     max-width: 53em;
     padding: 0 1em;
 }
@@ -323,4 +323,8 @@ sup, sub {
 #faq pre {
     margin-left: 5%;
     margin-top: 1.25em;
+}
+
+.page-header-half-margin-top {
+    margin-top: 1em;
 }
