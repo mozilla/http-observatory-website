@@ -45,58 +45,22 @@
     <!-- main content -->
     <div class="container">
         
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2 margin-bottom">
-            <h5 id="whatami" class="margin-bottom">
-                Observatory by Mozilla is a project designed to help developers, system administrators, and security professionals configure their sites safely and securely.
-            </h5>
 
-            <div class="panel panel-primary">
-                <div class="panel-heading"><span class="h3">Scan your site</span></div>
-                <div class="panel-body">
-                    <div class="alert alert-danger alert-hidden" id="scan-alert" role="alert">
-                        <strong>Error: </strong>
-                        <span id="scan-alert-text"></span>
-                    </div>
-                    <form id="scantron-form">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" id="scan-input-hostname" placeholder="enter domain name here"
-                                       autocorrect="off" autocapitalize="off" spellcheck="false">
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-default pull-right">Scan Me</button>
-                            </div>
-                        </div>
-                        <div class="checkbox">
-                            <label title="Stealth scans" data-toggle="popover" data-content="Don't want your site to appear in the lists below? Not a problem!">
-                                <input type="checkbox" id="scan-btn-hidden">Don't include my site in the public results
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label title="Make some improvements?" data-toggle="popover" data-content="By default, any scan results from within the last 24 hours will be returned.<br><br>If you've made some changes, the Mozilla Observatory allows you to rescan your site up to every five minutes.">
-                                <input type="checkbox" id="scan-btn-rescan">Force a rescan instead of returning cached results
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label title="Third-party scanners" data-toggle="popover" data-content="The Mozilla Observatory integrates with a variety of third-party scanners to provide you additional security insights.<br><br>Information about these scanners can be found in our FAQ.">
-                                <input type="checkbox" id="scan-btn-third-party">Don't scan with third-party scanners
-                            </label>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="terms">
+        <div class="page-header h2 page-header-half-margin-top">Legal &amp; Privacy Terms</div>
 
-    <div class="row">
-        <div class="col-md-3" id="totalresults"></div>
+        <p><a href="/">Observatory by Mozilla</a> is an open-source developer tool.  Before using this tool, there are a few important things you should know:</p>
 
-        <div class="col-md-3" id="recentresults"></div>
+        <ol>
+            <li>You should only use the Observatory API to inspect websites whose owners have given you permission to do so.  Test scores and scan results are posted publicly unless you choose in advance to hide them from public view.  Your use of this tool is subject to our <a href="https://www.mozilla.org/en-US/about/legal/terms/mozilla/">Websites &amp; Communications Terms of Use</a>, including the <a href="https://www.mozilla.org/en-US/about/legal/acceptable-use/">Conditions of Use</a> and <a href="https://www.mozilla.org/en-US/privacy/websites">Privacy Notice</a> referenced therein.</li>
 
-        <div class="col-md-3" id="goodresults"></div>
+            <li>The Observatory API is made available under the <a href="https://www.mozilla.org/en-US/MPL/2.0/">Mozilla Public License 2.0</a>.  Unless otherwise specified, other content on the Observatory web page that is authored by Mozilla is available under the terms of the <a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution Share-Alike 3.0 Unported license (CC-BY-SA 3.0)</a>, or any later version.</li>
 
-        <div class="col-md-3" id="badresults"></div>
+            <li>Third party scanners are included on the Observatory web page for your convenience, and this does not imply an endorsement by Mozilla.  They are subject to different legal and privacy terms than ours and may be licensed under different terms.</li>
+
+            <li>This tool is available &ldquo;as is&rdquo; and Mozilla does not guarantee the accuracy of scan results.</li>
+        </ol>
+
     </div>
 
     </div>
