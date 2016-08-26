@@ -110,7 +110,7 @@ function insertScanResults(scan, results) {
     // stuff both scan and state into the HTTPObs object
     Observatory.state.scan = scan;
     Observatory.state.results = results;
-    
+
     // add a test duration
     Observatory.state.scan.test_duration = (
         moment.utc(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz') -
@@ -138,7 +138,7 @@ function insertScanResults(scan, results) {
     // insert in the grade and summary results
     insertGrade(scan.grade, 'scan');
     insertResults(scan, 'scan');
-    
+
     // Write the test results onto the page
     var keys = Object.keys(results);
     for (var i in keys) {
@@ -378,9 +378,11 @@ function onPageLoad() {
 
         // load all the grade and totals tables
         retrieveResultTable('Overall Results', Observatory.api_url + 'getGradeDistribution', 'totalresults', 'info');
+        /*
         retrieveResultTable('Recently Scanned', Observatory.api_url + 'getRecentScans?num=14', 'recentresults', 'warning');
         retrieveResultTable('Recent Best', Observatory.api_url + 'getRecentScans?min=90&num=14', 'goodresults', 'success');
         retrieveResultTable('Recent Worst', Observatory.api_url + 'getRecentScans?max=20&num=14', 'badresults', 'danger');
+        */
     }
 }
 
