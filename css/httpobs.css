@@ -166,7 +166,7 @@ body {
 .expandy-panel-button {
     font-weight: 600;
     padding: 4px 8px;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 
