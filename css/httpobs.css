@@ -328,3 +328,9 @@ sup, sub {
 .page-header-half-margin-top {
     margin-top: 1em;
 }
+
+/* redirection banner at the top */
+#redirect-banner a {
+    color: white;
+    text-decoration: dotted underline white;
+}
