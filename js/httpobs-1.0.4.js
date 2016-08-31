@@ -349,7 +349,7 @@ function onPageLoad() {
     if (document.domain !== 'observatory.mozilla.org') {
         $('#redirect-banner').removeClass('hidden');
         $('#redirect-banner-url').attr('href', 'https://observatory.mozilla.org' +
-            window.location.pathname +
+            window.location.pathname.replace('http-observatory-website/', '') +
             window.location.search +
             window.location.hash);
     }
