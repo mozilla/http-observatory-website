@@ -345,6 +345,15 @@ function onPageLoad() {
         }
     ) });
 
+    // Show the redirection banner, if you're not on the production site
+    if (document.domain !== 'observatory.mozilla.org') {
+        $('#redirect-banner').removeClass('hidden');
+        $('#redirect-banner-url').attr('href', 'https://observatory.mozilla.org' +
+            window.location.pathname +
+            window.location.search +
+            window.location.hash);
+    }
+
     if (window.location.pathname.indexOf('/analyze.html') !== -1) {
         // Get the hostname in the GET parameters
         Observatory.hostname = getQueryParameter('host');
