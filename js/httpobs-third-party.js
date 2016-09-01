@@ -165,8 +165,8 @@ function loadHSTSPreloadResults() {
     $('#third-party-test-scores-hstspreload').html(a);
 
     $.when(
-        $.getJSON(API_URL + 'status?domain=' + Observatory.hostname),
-        $.getJSON(API_URL + 'preloadable?domain=' + Observatory.hostname)
+        $.getJSON(API_URL + 'status?domain=' + Observatory.hostname.toLowerCase()),
+        $.getJSON(API_URL + 'preloadable?domain=' + Observatory.hostname.toLowerCase())
     ).then(function(status, preloadable) {
         Observatory.state.third_party.hstspreload.status = status[0];
         Observatory.state.third_party.hstspreload.preloadable = preloadable[0];
