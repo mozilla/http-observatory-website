@@ -306,6 +306,12 @@ sup, sub {
   top: -0.4em;
 }
 
+/* provide some order to the third party tests */
+#third-party-tests h3 {
+    margin-bottom: .5em;
+    margin-top: 1.5em;
+}
+
 /* faq and terms pages */
 #faq, #terms {
     max-width: 53em;

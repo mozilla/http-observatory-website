@@ -9,7 +9,7 @@
     <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css" type="text/css" integrity="sha256-WQn3gu4Wj3K13E5GRGp1rk6+j1ri8PLFMa+Ovcs0URE=" />
-    <link rel="stylesheet" href="css/httpobs-1.0.6.css" type="text/css" integrity="sha256-ghh4IixBPPxgpnDvSNF6BMe1NWGYQ7r5+P6GkvdCW5s=" />
+    <link rel="stylesheet" href="css/httpobs-1.0.7.css" type="text/css" integrity="sha256-5YovEZ/59wu6sPmku8eTRl2d2Vc0+xopZq2Mi4ql5HU=" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
@@ -453,8 +453,9 @@
         </div>
 
         <div id="third-party-tests">
-            <!-- SSL Labs -->
+            <h3>TLS/SSL Scanners</h3>
 
+            <!-- SSL Labs -->
             <div class="panel panel-primary summary" id="ssllabs-summary">
                 <div class="panel-heading">
                     <span class="h3">ssllabs.com</span>
@@ -487,90 +488,6 @@
                             <div class="row text-right">
                                 <img id="qualys-logo" src="images/qualys-ssl-labs-logo.svg">
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- hstspreload.appspot.com -->
-            <div class="panel panel-primary summary" id="hstspreload-summary">
-                <div class="panel-heading">
-                    <span class="h3">hstspreload.appspot.com</span>
-                </div>
-                <div class="panel-body">
-                    <div class="progress large-progress-bar large-progress-bar-condensed" id="hstspreload-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="hstspreload-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            PENDING
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <span class="grade-container text-center" id="hstspreload-grade-container">
-                                <span class="grade-letter" id="hstspreload-grade-letter"></span>
-                                <sup class="grade-letter-modifier" id="hstspreload-grade-modifier"></sup>
-                            </span>
-                        </div>
-                        <div class="col-md-10">
-                            <table class="table table-striped table-condensed pull-left hstspreload-summary-table">
-                                <tr>
-                                    <td>Host:</td>
-                                    <td id="hstspreload-hostname"></td>
-                                </tr>
-                                <tr>
-                                    <td>Preloaded:</td>
-                                    <td id="hstspreload-preloaded"></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td id="hstspreload-notes-label">Notes:</td>
-                                    <td id="hstspreload-notes"></td>
-                                </tr>
-                                <tr>
-                                    <td>Complete Results:</td>
-                                    <td id="hstspreload-url"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- securityheaders.io -->
-            <div class="panel panel-primary summary" id="securityheaders-summary">
-                <div class="panel-heading">
-                    <span class="h3">securityheaders.io</span>
-                </div>
-                <div class="panel-body">
-                    <div class="progress large-progress-bar large-progress-bar-condensed" id="securityheaders-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="securityheaders-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            PENDING
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <span class="grade-container text-center" id="securityheaders-grade-container">
-                                <span class="grade-letter" id="securityheaders-grade-letter"></span>
-                                <sup class="grade-letter-modifier" id="securityheaders-grade-modifier"></sup>
-                            </span>
-                        </div>
-                        <div class="col-md-10">
-                            <table class="table table-striped table-condensed pull-left securityheaders-summary-table">
-                                <tr>
-                                    <td>Host:</td>
-                                    <td id="securityheaders-hostname"></td>
-                                </tr>
-                                <tr>
-                                    <td>Complete Results:</td>
-                                    <td id="securityheaders-url"></td>
-                                </tr>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -647,8 +564,95 @@
                     </div>
                 </div>
             </div>
-        </div>
 
+
+            <h3>HTTP Headers &amp; Content Security</h3>
+
+            <!-- securityheaders.io -->
+            <div class="panel panel-primary summary" id="securityheaders-summary">
+                <div class="panel-heading">
+                    <span class="h3">securityheaders.io</span>
+                </div>
+                <div class="panel-body">
+                    <div class="progress large-progress-bar large-progress-bar-condensed" id="securityheaders-progress-bar">
+                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="securityheaders-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                            PENDING
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="grade-container text-center" id="securityheaders-grade-container">
+                                <span class="grade-letter" id="securityheaders-grade-letter"></span>
+                                <sup class="grade-letter-modifier" id="securityheaders-grade-modifier"></sup>
+                            </span>
+                        </div>
+                        <div class="col-md-10">
+                            <table class="table table-striped table-condensed pull-left securityheaders-summary-table">
+                                <tr>
+                                    <td>Host:</td>
+                                    <td id="securityheaders-hostname"></td>
+                                </tr>
+                                <tr>
+                                    <td>Complete Results:</td>
+                                    <td id="securityheaders-url"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Miscellaneous</h3>
+
+            <!-- hstspreload.appspot.com -->
+            <div class="panel panel-primary summary" id="hstspreload-summary">
+                <div class="panel-heading">
+                    <span class="h3">hstspreload.appspot.com</span>
+                </div>
+                <div class="panel-body">
+                    <div class="progress large-progress-bar large-progress-bar-condensed" id="hstspreload-progress-bar">
+                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="hstspreload-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                            PENDING
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="grade-container text-center" id="hstspreload-grade-container">
+                                <span class="grade-letter" id="hstspreload-grade-letter"></span>
+                                <sup class="grade-letter-modifier" id="hstspreload-grade-modifier"></sup>
+                            </span>
+                        </div>
+                        <div class="col-md-10">
+                            <table class="table table-striped table-condensed pull-left hstspreload-summary-table">
+                                <tr>
+                                    <td>Host:</td>
+                                    <td id="hstspreload-hostname"></td>
+                                </tr>
+                                <tr>
+                                    <td>Preloaded:</td>
+                                    <td id="hstspreload-preloaded"></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td id="hstspreload-notes-label">Notes:</td>
+                                    <td id="hstspreload-notes"></td>
+                                </tr>
+                                <tr>
+                                    <td>Complete Results:</td>
+                                    <td id="hstspreload-url"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 <!--        <div class="panel panel-primary" id="third-party-test-scores">
             <div class="panel-heading">
                 <span class="h3">Additional Scanners</span>
@@ -691,8 +695,8 @@
     <script src="js/bootstrap-3.3.6.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo="></script>
     <script src="js/lodash-4.13.1.min.js" integrity="sha256-1a172TVBZFNA/hUN2Bxg9FF7VtDWD6Oq8vhiuJ4G024="></script>
     <script src="js/moment-2.14.1.min.js" integrity="sha256-De/cgZoAkgvqoxL9yJpJzPHyozUETFnSv7EQGfQWQ4o="></script>
-    <script src="js/httpobs-utils-1.0.6.js" integrity="sha256-lN8sHq2SA8Q6yBCsgnVcl+NDQPLa7Yy05E4Kg5RSltc="></script>
-    <script src="js/httpobs-1.0.6.js" integrity="sha256-X00V3y6vzjpaXKz/sj8Kg3Kof/ilq5OOQ4SttvtK+XM="></script>
-    <script src="js/httpobs-third-party-1.0.6.js" integrity="sha256-/RXK1+cr4QdI00KCr7qXUDHbjzpsg4g+7GAR/CgM4n0="></script>
+    <script src="js/httpobs-utils-1.0.7.js" integrity="sha256-lN8sHq2SA8Q6yBCsgnVcl+NDQPLa7Yy05E4Kg5RSltc="></script>
+    <script src="js/httpobs-1.0.7.js" integrity="sha256-X00V3y6vzjpaXKz/sj8Kg3Kof/ilq5OOQ4SttvtK+XM="></script>
+    <script src="js/httpobs-third-party-1.0.7.js" integrity="sha256-/RXK1+cr4QdI00KCr7qXUDHbjzpsg4g+7GAR/CgM4n0="></script>
 </body>
 </html>
