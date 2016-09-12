@@ -334,8 +334,6 @@ function loadSSLLabsResults() {
     var API_URL = 'https://api.ssllabs.com/api/v2/analyze?publish=off&fromCache=on&maxAge=24&host=' + Observatory.hostname;
 
     var successCallback = function(data, textStatus, jqXHR) {
-        console.log(data);
-
         switch(data.status) {
             case 'READY':
                 Observatory.state.third_party.ssllabs = {
