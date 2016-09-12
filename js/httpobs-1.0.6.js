@@ -12,6 +12,7 @@ var Observatory = {
                 nonce: Date.now().toString()
             },
             securityheaders: {},
+            ssllabs: {},
             tlsimirhilfr: {},
             tlsobservatory: {
                 output: {}
@@ -375,6 +376,7 @@ function onPageLoad() {
             loadHSTSPreloadResults();
             // loadHTBridgeResults();
             loadSecurityHeadersIOResults();
+            loadSSLLabsResults();
             loadTLSImirhilFrResults();
         } else {  // otherwise remove them all
             $('#third-party-tests').remove();
