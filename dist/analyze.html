@@ -9,7 +9,7 @@
     <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css" type="text/css" integrity="sha256-WQn3gu4Wj3K13E5GRGp1rk6+j1ri8PLFMa+Ovcs0URE=" />
-    <link rel="stylesheet" href="css/httpobs-1.0.5.css" type="text/css" integrity="sha256-70KyK9JAjegwyLNGLdysN39l9Dx2/Z/kah5HBc3X0Qw=" />
+    <link rel="stylesheet" href="css/httpobs-1.0.6.css" type="text/css" integrity="sha256-ghh4IixBPPxgpnDvSNF6BMe1NWGYQ7r5+P6GkvdCW5s=" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
@@ -454,10 +454,10 @@
 
         <div id="third-party-tests">
             <!-- SSL Labs -->
-            <!--
+
             <div class="panel panel-primary summary" id="ssllabs-summary">
                 <div class="panel-heading">
-                    <span class="h3"><img id="qualys-logo" src="images/qualys-ssl-labs-logo-all-white.svg"></span>
+                    <span class="h3">ssllabs.com</span>
                 </div>
                 <div class="panel-body">
                     <div class="progress large-progress-bar large-progress-bar-condensed" id="ssllabs-progress-bar">
@@ -474,25 +474,24 @@
                             </span>
                         </div>
                         <div class="col-md-10">
-                            <table class="table table-striped table-condensed pull-left ssllabs-summary-table">
+                            <table class="table table-striped table-condensed ssllabs-summary-table">
                                 <tr>
                                     <td>Host:</td>
-                                    <td><span id="ssllabs-hostname">pokeinthe.io <span class="deemphasize">(<span id="ssllabs-ip">45.55.203.36</span>)</span></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td id="ssllabs-hostname"></td>
                                 </tr>
                                 <tr>
                                     <td>Complete Results:</td>
-                                    <td id="ssllabs-url"><a href="https://www.ssllabs.com/ssltest/analyze.html?d=pokeinthe.io&s=45.55.203.36">https://www.ssllabs.com/ssltest/analyze.html?d=pokeinthe.io</a></td>
+                                    <td id="ssllabs-url"></td>
                                 </tr>
                             </table>
+                            <div class="row text-right">
+                                <img id="qualys-logo" src="images/qualys-ssl-labs-logo.svg">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            -->
+
 
             <!-- hstspreload.appspot.com -->
             <div class="panel panel-primary summary" id="hstspreload-summary">
@@ -541,6 +540,7 @@
                 </div>
             </div>
 
+
             <!-- securityheaders.io -->
             <div class="panel panel-primary summary" id="securityheaders-summary">
                 <div class="panel-heading">
@@ -575,6 +575,7 @@
                     </div>
                 </div>
             </div>
+
 
             <!-- tls.imirhil.fr -->
             <div class="panel panel-primary summary" id="tlsimirhilfr-summary">
@@ -690,8 +691,8 @@
     <script src="js/bootstrap-3.3.6.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo="></script>
     <script src="js/lodash-4.13.1.min.js" integrity="sha256-1a172TVBZFNA/hUN2Bxg9FF7VtDWD6Oq8vhiuJ4G024="></script>
     <script src="js/moment-2.14.1.min.js" integrity="sha256-De/cgZoAkgvqoxL9yJpJzPHyozUETFnSv7EQGfQWQ4o="></script>
-    <script src="js/httpobs-utils-1.0.5.js" integrity="sha256-lN8sHq2SA8Q6yBCsgnVcl+NDQPLa7Yy05E4Kg5RSltc="></script>
-    <script src="js/httpobs-1.0.5.js" integrity="sha256-xCW7CeaHke+C3wmhy3XyNaA1jr2gW93S08TI4Jth1Zs="></script>
-    <script src="js/httpobs-third-party-1.0.5.js" integrity="sha256-aleEaB94kVAjRkIH4UnGE39p47snwPhFD1dIyd5/cns="></script>
+    <script src="js/httpobs-utils-1.0.6.js" integrity="sha256-lN8sHq2SA8Q6yBCsgnVcl+NDQPLa7Yy05E4Kg5RSltc="></script>
+    <script src="js/httpobs-1.0.6.js" integrity="sha256-X00V3y6vzjpaXKz/sj8Kg3Kof/ilq5OOQ4SttvtK+XM="></script>
+    <script src="js/httpobs-third-party-1.0.6.js" integrity="sha256-jf2/i4QprgfcWviSirykrjzY9Y1Q65rSbBvAdU9pCj4="></script>
 </body>
 </html>

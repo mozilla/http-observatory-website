@@ -215,10 +215,9 @@ div.large-progress-bar-condensed + div.row {
     margin-top: 1.2em;
 }
 
-#scan-summary table, #server-headers table, #test-scores table, #tlsobservatory table, #third-party-tests table {
+#scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
     margin-bottom: 0;
 }
-
 
 #test-scores .glyphicon, #tlsobservatory-ciphers-table .glyphicon {
     display: table-cell;  /* override inline-block */
@@ -295,9 +294,10 @@ div.large-progress-bar-condensed + div.row {
     margin-bottom: 0;
 }
 
+/* qualys third party test */
 #qualys-logo {
-    height: 1.6em;
-    margin: -.8em 0 -.7em 0;
+    margin: 1.5em .75em -1em 0;
+    width: 300px;
 }
 
 sup, sub {

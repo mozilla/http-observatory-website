@@ -306,6 +306,74 @@ function loadSecurityHeadersIOResults() {
 }
 
 
+function insertSSLLabsResults() {
+    'use strict';
+
+    // Convenience variables
+    var results = Observatory.state.third_party.ssllabs.results;
+
+    if (!_.has(results.endpoints[0], 'grade')) {
+        errorResults('Site does not support HTTPS', 'ssllabs');
+        return;
+    }
+
+    Observatory.state.third_party.ssllabs.output = {
+        grade: results.endpoints[0].grade,
+        hostname: Observatory.hostname,
+        url: linkify('https://www.ssllabs.com/ssltest/analyze?d=' + Observatory.hostname)
+    };
+
+    insertGrade(Observatory.state.third_party.ssllabs.output.grade, 'ssllabs');
+    insertResults(Observatory.state.third_party.ssllabs.output, 'ssllabs');
+    showResults('ssllabs');
+}
+
+
+function loadSSLLabsResults() {
+    'use strict';
+    var API_URL = 'https://api.ssllabs.com/api/v2/analyze?publish=off&fromCache=on&maxAge=24&host=' + Observatory.hostname;
+
+    var successCallback = function(data, textStatus, jqXHR) {
+        console.log(data);
+
+        switch(data.status) {
+            case 'READY':
+                Observatory.state.third_party.ssllabs = {
+                    results: data
+                };
+
+                insertSSLLabsResults();
+                break;
+            case 'IN_PROGRESS':
+                // We only need one endpoint to complete
+                if (_.has(data.endpoints[0], 'grade')) {
+                    Observatory.state.third_party.ssllabs = {
+                        results: data
+                    };
+                    insertSSLLabsResults();
+                } else {
+                    setTimeout(loadSSLLabsResults, 10000);
+                }
+
+                break;
+            case 'DNS':
+                setTimeout(loadSSLLabsResults, 5000);
+                break;
+            default:
+                errorResults('Error', 'ssllabs');
+                break;
+        }
+    };
+
+    $.ajax({
+        method: 'GET',
+        error: function() { errorResults('Unable to connect', 'ssllabs')},
+        success: successCallback,
+        url: API_URL
+    });
+}
+
+
 function insertTLSImirHilFrResults() {
     'use strict';
     var grade;

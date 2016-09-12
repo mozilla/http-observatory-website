@@ -406,10 +406,10 @@
 
         <div id="third-party-tests">
             <!-- SSL Labs -->
-            <!--
+
             <div class="panel panel-primary summary" id="ssllabs-summary">
                 <div class="panel-heading">
-                    <span class="h3"><img id="qualys-logo" src="images/qualys-ssl-labs-logo-all-white.svg"></span>
+                    <span class="h3">ssllabs.com</span>
                 </div>
                 <div class="panel-body">
                     <div class="progress large-progress-bar large-progress-bar-condensed" id="ssllabs-progress-bar">
@@ -426,25 +426,24 @@
                             </span>
                         </div>
                         <div class="col-md-10">
-                            <table class="table table-striped table-condensed pull-left ssllabs-summary-table">
+                            <table class="table table-striped table-condensed ssllabs-summary-table">
                                 <tr>
                                     <td>Host:</td>
-                                    <td><span id="ssllabs-hostname">pokeinthe.io <span class="deemphasize">(<span id="ssllabs-ip">45.55.203.36</span>)</span></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td id="ssllabs-hostname"></td>
                                 </tr>
                                 <tr>
                                     <td>Complete Results:</td>
-                                    <td id="ssllabs-url"><a href="https://www.ssllabs.com/ssltest/analyze.html?d=pokeinthe.io&s=45.55.203.36">https://www.ssllabs.com/ssltest/analyze.html?d=pokeinthe.io</a></td>
+                                    <td id="ssllabs-url"></td>
                                 </tr>
                             </table>
+                            <div class="row text-right">
+                                <img id="qualys-logo" src="images/qualys-ssl-labs-logo.svg">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            -->
+
 
             <!-- hstspreload.appspot.com -->
             <div class="panel panel-primary summary" id="hstspreload-summary">
@@ -493,6 +492,7 @@
                 </div>
             </div>
 
+
             <!-- securityheaders.io -->
             <div class="panel panel-primary summary" id="securityheaders-summary">
                 <div class="panel-heading">
@@ -527,6 +527,7 @@
                     </div>
                 </div>
             </div>
+
 
             <!-- tls.imirhil.fr -->
             <div class="panel panel-primary summary" id="tlsimirhilfr-summary">
