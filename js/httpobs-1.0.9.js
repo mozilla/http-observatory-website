@@ -193,6 +193,9 @@ function insertScanResults(scan, results) {
             score_description = score_description.replace(re, '<code>' + keyword + '</code>');
         });
 
+        // collapse <code>s next to each other
+        score_description = score_description.replace(/<\/code> <code>/g, ' ');
+
         // write it back with html
         $('#tests-' + key + '-score-description').html(score_description);
 
