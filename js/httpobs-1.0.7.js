@@ -142,6 +142,31 @@ function insertScanResults(scan, results) {
     
     // Write the test results onto the page
     var keys = Object.keys(results);
+
+    // set the list of monospaced keywords to escape
+    var monospaced_keywords = [
+        '\'unsafe-inline\'',
+        '\'unsafe-eval\'',
+        '\'unsafe\'',
+        '\'none\'',
+        'data:',
+        'default-src',
+        'frame-ancestors',
+        'object-src',
+        'script-src',
+        'style-src',
+        'HttpOnly',
+        'Secure',
+        'Access-Control-Allow-Origin',
+        '"nosniff"',
+        'ALLOW-FROM',
+        'DENY',
+        'SAMEORIGIN',
+        '"0"',
+        '"1"',
+        '"1; mode=block"'
+    ];
+
     for (var i in keys) {
         var key = keys[i];
 
@@ -155,6 +180,22 @@ function insertScanResults(scan, results) {
         $('#tests-' + key + '-pass').toggleClass(pass);
         $('#tests-' + key + '-score').text(score);
         $('#tests-' + key + '-score-description').text(results[key]['score_description']);
+
+        // now we read that back and do some formatting
+        var score_description = $('#tests-' + key + '-score-description').text();
+
+        // add newlines at each sentence (may change in the future
+        score_description = score_description.replace(/\. /g, '.<br><br>');
+
+        // monospace each codeword
+        _.forEach(monospaced_keywords, function (keyword) {
+            var re = new RegExp(keyword, 'g');
+            score_description = score_description.replace(re, '<code>' + keyword + '</code>');
+        });
+
+        // write it back with html
+        $('#tests-' + key + '-score-description').html(score_description);
+
     }
 
     // note that HPKP is optional

@@ -242,6 +242,12 @@ div.large-progress-bar-condensed + div.row {
     width: 100%;
 }
 
+/* change how code looks inside the test scores */
+#test-scores code {
+    color: #811833;
+    font-size: 80%;
+}
+
 .glyphicon-ok {
     color: #2d882d;
 }
