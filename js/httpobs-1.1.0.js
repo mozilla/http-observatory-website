@@ -94,6 +94,7 @@ function handleScanResults(scan) {
                 method: 'GET',
                 scan: scan,
                 success: function(data, textStatus, jqXHR) {
+                    loadHTTPObservatoryHostHistory();
                     insertScanResults(this.scan, data);
                 },
                 url: Observatory.api_url + 'getScanResults?scan=' + scan.scan_id.toString()
@@ -243,6 +244,39 @@ function loadScanResults() {
     'use strict';
 
     submitScanForAnalysisXHR(Observatory.hostname, handleScanResults, displayError);
+}
+
+
+function insertHTTPObservatoryHostHistory() {
+    // insert the table into the page
+    var rows = [];
+    _.forEach(Observatory.state.history, function(entry) {
+        rows.push([toLocalTime(entry.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz'),
+            entry.score.toString() + '/100',
+            entry.grade]);
+    });
+
+    tableify(rows, 'host-history-table');
+
+    // unhide the host history section
+    $('#host-history').removeClass('hidden');
+}
+
+
+function loadHTTPObservatoryHostHistory() {
+    'use strict';
+    var API_URL = 'https://http-observatory.security.mozilla.org/api/v1/getHostHistory?host=' + Observatory.hostname;
+
+    var successCallback = function(data, textStatus, jqXHR) {
+        Observatory.state.history = data;
+        insertHTTPObservatoryHostHistory();
+    };
+
+    $.ajax({
+        method: 'GET',
+        success: successCallback,
+        url: API_URL
+    });
 }
 
 
