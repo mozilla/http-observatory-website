@@ -215,7 +215,7 @@ div.large-progress-bar-condensed + div.row {
     margin-top: 1.2em;
 }
 
-#scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
+#host-history table, #scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
     margin-bottom: 0;
 }
 
@@ -265,6 +265,15 @@ div.large-progress-bar-condensed + div.row {
     padding-right: 1.5em;
     text-align: right;
     white-space: nowrap;
+}
+
+/* site history */
+#host-history-table tbody tr td:nth-child(2), #host-history-table thead tr th:nth-child(2) {
+    text-align: center;
+}
+
+#host-history-table tbody tr td:nth-child(3) {
+    padding-left: 1.5em;
 }
 
 /* server header values, protocols */
