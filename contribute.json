@@ -1,8 +1,8 @@
 {
-    "name": "Mozilla HTTP Observatory",
+    "name": "Observatory by Mozilla",
     "description": "A free scanner that helps website operators implement proper defensive security.",
     "repository": {
-        "url": "https://github.com/mozilla/http-observatory",
+        "url": "https://github.com/mozilla/http-observatory-website",
         "license": "MPL2",
         "tests": "https://travis-ci.org/mozilla/http-observatory"
     },
@@ -15,9 +15,9 @@
         ]
     },
     "bugs": {
-        "list": "https://github.com/mozilla/http-observatory/issues",
-        "report": "https://github.com/mozilla/http-observatory/issues/new",
-        "mentored": "https://github.com/mozilla/http-observatory/issues?q=is%3Aissue+is%3Aclosed"
+        "list": "https://github.com/mozilla/http-observatory-website/issues",
+        "report": "https://github.com/mozilla/http-observatory-website/issues/new",
+        "mentored": "https://github.com/mozilla/http-observatory-website/issues?q=is%3Aissue+is%3Aclosed"
     },
     "urls": {
         "prod": "https://observatory.mozilla.org/",
