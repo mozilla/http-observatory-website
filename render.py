@@ -9,7 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 config = {
     'AUTHOR': 'April King',
     'SITENAME': 'Observatory by Mozilla',
-    'VERSION': '1.1.0',
+    'VERSION': '1.1.1',
 
     'hashes': {
         'css': {},

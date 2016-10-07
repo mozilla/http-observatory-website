@@ -69,7 +69,10 @@ function handleScanResults(scan) {
             retry = true;
             break;
         case 'RUNNING':
-            text = 'Scan in progress';
+            if (Math.random() > .96 || $('#scan-text').text() === 'Reticulating splines') {
+                text = 'Reticulating splines'
+            }
+            else { text = 'Scan in progress' }
             retry = true;
             break;
         case 'ABORTED':
