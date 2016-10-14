@@ -53,7 +53,10 @@ for path in [css_paths, js_paths]:
 
         # copy the files into the distribution folder
         src_file = os.path.join(path['src'], file)
-        dest_file = os.path.join(path['dest'], versioned_name)
+        if ext in ('map'):
+            dest_file = os.path.join(path['dest'], file)
+        else:
+            dest_file = os.path.join(path['dest'], versioned_name)
         shutil.copyfile(src_file, dest_file)
 
 render_targets = os.listdir('templates')
