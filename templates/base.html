@@ -8,8 +8,8 @@
 
     <title>{{ SITENAME }}</title>
 
-    <link rel="stylesheet" href="css/bootstrap-3.3.6.min.css" type="text/css" integrity="{{ hashes['css']['bootstrap'] }}" />
-    <link rel="stylesheet" href="css/httpobs-{{ VERSION }}.css" type="text/css" integrity="{{ hashes['css']['httpobs'] }}" />
+    <link rel="stylesheet" href="css/{{ files['bootstrap-3.3.6.min.css']['name'] }}" type="text/css" integrity="{{ files['bootstrap-3.3.6.min.css']['hash'] }}" />
+    <link rel="stylesheet" href="css/{{ files['httpobs.css']['name'] }}" type="text/css" integrity="{{ files['httpobs.css']['hash'] }}" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
@@ -59,12 +59,12 @@
     </footer>
     -->
 
-    <script src="js/jquery-2.2.3.min.js" integrity="{{ hashes['js']['jquery'] }}"></script>
-    <script src="js/bootstrap-3.3.6.min.js" integrity="{{ hashes['js']['bootstrap'] }}"></script>
-    <script src="js/lodash-4.13.1.min.js" integrity="{{ hashes['js']['lodash'] }}"></script>
-    <script src="js/moment-2.14.1.min.js" integrity="{{ hashes['js']['moment'] }}"></script>
-    <script src="js/httpobs-utils-{{ VERSION }}.js" integrity="{{ hashes['js']['httpobs-utils'] }}"></script>
-    <script src="js/httpobs-{{ VERSION }}.js" integrity="{{ hashes['js']['httpobs'] }}"></script>
-    <script src="js/httpobs-third-party-{{ VERSION }}.js" integrity="{{ hashes['js']['httpobs-third-party'] }}"></script>
+    <script src="js/{{ files['jquery-2.2.3.min.js']['name'] }}" integrity="{{ files['jquery-2.2.3.min.js']['hash'] }}"></script>
+    <script src="js/{{ files['bootstrap-3.3.6.min.js']['name'] }}" integrity="{{ files['bootstrap-3.3.6.min.js']['hash'] }}"></script>
+    <script src="js/{{ files['lodash-4.13.1.min.js']['name'] }}" integrity="{{ files['lodash-4.13.1.min.js']['hash'] }}"></script>
+    <script src="js/{{ files['moment-2.14.1.min.js']['name'] }}" integrity="{{ files['moment-2.14.1.min.js']['hash'] }}"></script>
+    <script src="js/{{ files['httpobs-utils.js']['name'] }}" integrity="{{ files['httpobs-utils.js']['hash'] }}"></script>
+    <script src="js/{{ files['httpobs.js']['name'] }}" integrity="{{ files['httpobs.js']['hash'] }}"></script>
+    <script src="js/{{ files['httpobs-third-party.js']['name'] }}" integrity="{{ files['httpobs-third-party.js']['hash'] }}"></script>
 </body>
 </html>
