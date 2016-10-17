@@ -227,20 +227,15 @@ function insertScanResults(scan, results) {
     }
 
     // write the server headers into the page
-    keys = Object.keys(Observatory.state.scan.response_headers);
-    for (var i in keys) {
-        key = keys[i];
-
-        var tr = document.createElement('tr');
-        $('<td></td>').text(key).appendTo(tr);
-        $('<td></td>').text(Observatory.state.scan.response_headers[key]).appendTo(tr);
-        $(tr).appendTo($('#server-headers-table'));
-    }
+    var response_headers = [];
+    _.forEach(Observatory.state.scan.response_headers, function(value, key) {
+        response_headers.push([key, value]);
+    });
+    tableify(response_headers, 'server-headers-table');
 
     // show the scan results and remove the progress bar
     $('#scan-progress').hide();
     $('#scan-results').show();
-
 }
 
 function loadScanResults() {
