@@ -53,7 +53,7 @@ for path in [css_paths, js_paths]:
 
         # copy the files into the distribution folder
         src_file = os.path.join(path['src'], file)
-        if ext in ('map'):
+        if ext == 'map':
             dest_file = os.path.join(path['dest'], file)
         else:
             dest_file = os.path.join(path['dest'], versioned_name)
@@ -66,4 +66,3 @@ for target in render_targets:
     template = env.get_template(target)
     with open('dist/' + target, mode='w') as f:
         f.write(template.render(**config))
-
