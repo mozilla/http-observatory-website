@@ -227,32 +227,17 @@ function loadHTBridgeResults() {
     var API_URL = 'https://www.htbridge.com/ssl/api/v1/check/' + Observatory.state.third_party.htbridge.nonce + '.html';
 
     var post_data = {
+        choosen_ip: 'any',
         domain: Observatory.hostname + ':443',
         recheck: 'false',
         show_test_results: 'false'
     };
 
-    if (Observatory.state.third_party.htbridge.ip !== undefined) {
-        post_data['choosen_ip'] = Observatory.state.third_party.htbridge.ip;  // sic
-        post_data['token'] = Observatory.state.third_party.htbridge.token;
-    }
-
     var errorCallback = function() {
-        $('#third-party-test-scores-htbridge-score').text('ERROR');
+        errorResults('Error', 'htbridge');
     };
 
     var successCallback = function(data) {
-        // use the first IP address and token and resubmit the request
-        if (data.MULTIPLE_IPS !== undefined) {
-            Observatory.state.third_party.htbridge.ip = data.MULTIPLE_IPS[0];  // just use the first IP
-            Observatory.state.third_party.htbridge.token = data.TOKEN;
-
-            loadHTBridgeResults();
-            return;
-        } else if (data.ERROR !== undefined) {
-            errorCallback();
-        }
-
         // if everything works, save the data and lets throw it into the page
         Observatory.state.third_party.htbridge.results = data;
         insertHTBridgeResults();
