@@ -96,13 +96,19 @@ X-Content-Type-Options: nosniff</pre>
         <div class="question">
             <h3 class="h4">What is ssllabs.com?</h3>
 
-            <p><a href="https://www.ssllabs.com">ssllabs.com</a> is a TLS/SSL scanner by <a href="https://www.qualys.com/">Qualys</a> that analyzes your combination of cipher suites, handshake methods, supported protocols, and resistance against a variety of TLS attacks and produces a grade that reflects how secure those choices are.</p>
+            <p><a href="https://www.ssllabs.com/ssltest/">ssllabs.com</a> is a TLS/SSL scanner by <a href="https://www.qualys.com/">Qualys</a> that analyzes your combination of cipher suites, handshake methods, supported protocols, and resistance against a variety of TLS attacks and produces a grade that reflects how secure those choices are.</p>
         </div>
 
         <div class="question">
-            <h3 class="h4">What is hstspreload.appspot.com?</h3>
+            <h3 class="h4">What is htbridge.com?</h3>
 
-            <p><a href="https://hstspreload.appspot.com/">hstspreload.appspot.com</a> is the site run by <a href="https://twitter.com/lgarron">@lgarron</a> that manages the HTTP Strict Transport Security (HSTS) preload list. The preload list is a directory of sites that have opted into having browsers connect to their website only over HTTPS, even before they have ever seen an Strict-Transport-Security HTTP header. This helps solve the trust-on-first-use issue, where a man-in-the-middle could prevent a user from ever upgrading to HTTPS and seeing the HSTS header.</p>
+            <p><a href="https://www.htbridge.com/ssl/">htbridge.com</a> is a TLS/SSL scanner by <a href="https://www.htbridge.com/">High-Tech Bridge</a> that analyzes your combination of cipher suites, handshake methods, supported protocols, and resistance against a variety of TLS attacks and produces a grade that reflects how secure those choices are. For sites that need it, it also tests your configuration against requirements set by HIPAA, NIST, and PCI-DSS.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">What is tls.imirhil.fr?</h3>
+
+            <p><a href="https://tls.imirhil.fr">tls.imirhil.fr</a> is a TLS/SSL scanner by <a href="https://twitter.com/aeris22">@aeris22</a>. It is strongly forward-focused and tests for configurations that are not necessarily appropriate for general-purpose websites.</p>
         </div>
 
         <div class="question">
@@ -112,10 +118,11 @@ X-Content-Type-Options: nosniff</pre>
         </div>
 
         <div class="question">
-            <h3 class="h4">What is tls.imirhil.fr?</h3>
+            <h3 class="h4">What is hstspreload.appspot.com?</h3>
 
-            <p><a href="https://tls.imirhil.fr">tls.imirhil.fr</a> is a TLS/SSL scanner by <a href="https://twitter.com/aeris22">@aeris22</a> that analyzes your combination of cipher suites, handshake methods, and supported protocols and produces a grade that reflects how secure these choices are.</p>
+            <p><a href="https://hstspreload.appspot.com/">hstspreload.appspot.com</a> is the site run by <a href="https://twitter.com/lgarron">@lgarron</a> that manages the HTTP Strict Transport Security (HSTS) preload list. The preload list is a directory of sites that have opted into having browsers connect to their website only over HTTPS, even before they have ever seen an Strict-Transport-Security HTTP header. This helps solve the trust-on-first-use issue, where a man-in-the-middle could prevent a user from ever upgrading to HTTPS and seeing the HSTS header.</p>
         </div>
+
 
     </div>
 {% endblock %}

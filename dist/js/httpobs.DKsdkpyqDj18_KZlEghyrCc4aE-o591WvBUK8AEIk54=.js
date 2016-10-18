@@ -450,7 +450,7 @@ function onPageLoad() {
         if (getQueryParameter('third-party') !== 'false') {
             // loadSafeBrowsingResults();
             loadHSTSPreloadResults();
-            // loadHTBridgeResults();
+            loadHTBridgeResults();
             loadSecurityHeadersIOResults();
             loadSSLLabsResults();
             loadTLSImirhilFrResults();

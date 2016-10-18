@@ -169,13 +169,16 @@ body {
     white-space: normal;
 }
 
+.p-l-3 {
+    padding-left: 3em !important;
+}
 
 .p-l-2 {
-    padding-left: 2em;
+    padding-left: 2em !important;
 }
 
 .p-r-1 {
-    padding-right: 1em;
+    padding-right: 1em !important;
 }
 
 #server-headers {
@@ -313,6 +316,20 @@ div.large-progress-bar-condensed + div.row {
 #qualys-logo {
     margin: 1.5em .75em -1em 0;
     width: 300px;
+}
+
+/* htbridge third party result */
+#htbridge-logo {
+    margin: 1.5em .75em -1em 0;
+    width: 220px;
+}
+
+#htbridge-url {
+    display: inline-block;
+    max-width: 30em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 sup, sub {

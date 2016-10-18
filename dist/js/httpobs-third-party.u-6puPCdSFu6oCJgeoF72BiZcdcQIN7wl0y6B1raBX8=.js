@@ -180,57 +180,56 @@ function loadHSTSPreloadResults() {
 function insertHTBridgeResults() {
     'use strict';
     var results = Observatory.state.third_party.htbridge.results;
-    var text = [];
-    var subtext = [];
-    var general_text = [];
-    var tls_text = [];
 
-    // create a link to the actual results
-    var a = document.createElement('a');
-    a.href = 'https://www.htbridge.com/ssl/?id=' + results.ID;
-    a.appendChild(document.createTextNode('htbridge.com'));
-    $('#third-party-test-scores-htbridge').html(a);
+    // error out if the scan fails
+    if (results.error) {
+        errorResults('Scan failed');
+        return;
+    }
 
-    // get the hostname and IP address
-    text.push(Observatory.hostname + ' [' + results.VALUE.SERVER_IP.split(':')[0] + ']');
+    // error out if the site doesn't support https
+    if (!results.results.has_ssl_tls) {
+        errorResults('Site does not support HTTPS', 'htbridge');
+        return;
+    }
 
-    // get the grades for the SSL test and header test
-    subtext.push('General Information');
-    subtext.push('HTTP Header Grade: ' + results.VALUE.httpHeaders.GRADE);
-    subtext.push('TLS Grade: ' + results.VALUE.FINAL_GRADE);
+    // some of the CVE tests aren't true/false
+    var htbridge_error_mapping = ['Unknown', 'No', 'Yes', 'Possibly vulnerable'];
+    var output = {
+        'hostname': results.server_info.hostname.value,
+        'ip': results.server_info.ip.value,
+        'hipaa_compliant': results.hipaa.compliant.value ? 'Yes' : 'No',
+        'nist_compliant': results.nist.compliant.value ? 'Yes' : 'No',
+        'pci_dss_compliant': results.pci_dss.compliant.value ? 'Yes': 'No',
+        'url': linkify('https://www.htbridge.com/ssl/?id=' + results.internals.id),
+        'vulnerabilities': {
+            'cve_2014_0224': htbridge_error_mapping[results.pci_dss.cve_2014_0224.value + 1],
+            'cve_2016_2107': htbridge_error_mapping[results.pci_dss.cve_2016_2107.value + 1],
+            'drown': results.pci_dss.drown.value ? 'Yes' : 'No',
+            'heartbleed': results.pci_dss.heartbleed.value ? 'Yes' : 'No',
+            'insecure_reneg': results.pci_dss.supports_insecure_reneg.value ? 'Yes' : 'No',
+            'poodle_ssl': results.pci_dss.poodle_ssl.value ? 'Yes' : 'No',
+            'poodle_tls': results.pci_dss.poodle_tls.value ? 'Yes' : 'No'
+        }
+    };
 
-    // get the general server information
-    general_text.push('Geographical Location: ' + results.VALUE.httpHeaders.SERVER_LOCATION +
-        ' (' + parseFloat(results.VALUE.httpHeaders.LAT).toFixed(2).toString() + ', ' +
-              parseFloat(results.VALUE.httpHeaders.LNG).toFixed(2).toString() + ')');
-    general_text.push('Reverse DNS: ' + results.VALUE.httpHeaders.REVERSE_DNS);
+    // store it in the global object
+    Observatory.state.third_party.htbridge.output = output;
 
-    // get the compliance with NIST and PCI
-    tls_text.push('NIST Compliant: ' + ('NIST_COMPLIANT' in results.VALUE ? 'Yes' : 'No'));
-    tls_text.push('PCI-DSS Compliant: ' + ('PCI_COMPLIANT' in results.VALUE ? 'Yes' : 'No'));
-
-    // roll this whole thing up
-    text = listify(text, true);
-    subtext = listify(subtext, true);
-    general_text = listify(general_text, true);
-    tls_text = listify(tls_text, true);
-
-    subtext.childNodes[0].appendChild(general_text);
-    subtext.childNodes[2].appendChild(tls_text);
-    text.childNodes[0].appendChild(subtext);
-
-    // insert in the results
-    $('#third-party-test-scores-htbridge-score').html(text);
+    insertGrade(results.results.grade, 'htbridge');
+    insertResults(output, 'htbridge');
+    insertResults(output.vulnerabilities, 'htbridge');
+    showResults('htbridge');
 }
 
 
 function loadHTBridgeResults() {
-    var API_URL = 'https://www.htbridge.com/ssl/chssl/' + Observatory.state.third_party.htbridge.nonce + '.html';
+    var API_URL = 'https://www.htbridge.com/ssl/api/v1/check/' + Observatory.state.third_party.htbridge.nonce + '.html';
 
     var post_data = {
         domain: Observatory.hostname + ':443',
-        dnsr: 'off',
-        recheck: 'false'
+        recheck: 'false',
+        show_test_results: 'false'
     };
 
     if (Observatory.state.third_party.htbridge.ip !== undefined) {
