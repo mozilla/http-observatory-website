@@ -245,6 +245,10 @@ div.large-progress-bar-condensed + div.row {
     width: 100%;
 }
 
+#test-scores tr td {
+    vertical-align: middle;
+}
+
 /* change how code looks inside the test scores */
 #test-scores code {
     color: #811833;
