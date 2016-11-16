@@ -162,6 +162,14 @@ function insertScanResults(scan, results) {
         'HttpOnly',
         'Secure',
         'Access-Control-Allow-Origin',
+        '"no-referrer"',
+        '"same-origin"',
+        '"strict-origin"',
+        '"strict-origin-when-cross-origin"',
+        '"no-referrer-when-downgrade"',
+        '"origin"',
+        '"origin-when-cross-origin"',
+        '"unsafe-url"',
         '"nosniff"',
         'ALLOW-FROM',
         'DENY',
@@ -212,6 +220,19 @@ function insertScanResults(scan, results) {
             results['public-key-pinning'].result)) {
         $('#tests-public-key-pinning-score-description').text($('#tests-public-key-pinning-score-description').text() + ' (optional)');
         $('#tests-public-key-pinning-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+    }
+
+    // same for Referrer Policy
+    if (_.includes(['referrer-policy-not-implemented'],
+            results['referrer-policy'].result)) {
+        $('#tests-referrer-policy-score-description').text($('#tests-referrer-policy-score-description').text() + ' (optional)');
+    }
+
+    // give Referrer Policy a dash, if it's either not implemented or no-referrer-when-downgrade
+    if (_.includes(['referrer-policy-not-implemented',
+                    'referrer-policy-no-referrer-when-downgrade'],
+            results['referrer-policy'].result)) {
+        $('#tests-referrer-policy-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
     }
 
     // SRI is optional for sites that use local script and/or don't have script
