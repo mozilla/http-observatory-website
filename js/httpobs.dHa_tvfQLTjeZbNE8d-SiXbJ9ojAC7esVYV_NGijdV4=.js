@@ -223,16 +223,18 @@ function insertScanResults(scan, results) {
     }
 
     // same for Referrer Policy
-    if (_.includes(['referrer-policy-not-implemented'],
-            results['referrer-policy'].result)) {
-        $('#tests-referrer-policy-score-description').text($('#tests-referrer-policy-score-description').text() + ' (optional)');
-    }
+    if ('referrer-policy' in results) {
+        if (_.includes(['referrer-policy-not-implemented'],
+                results['referrer-policy'].result)) {
+            $('#tests-referrer-policy-score-description').text($('#tests-referrer-policy-score-description').text() + ' (optional)');
+        }
 
-    // give Referrer Policy a dash, if it's either not implemented or no-referrer-when-downgrade
-    if (_.includes(['referrer-policy-not-implemented',
+        // give Referrer Policy a dash, if it's either not implemented or no-referrer-when-downgrade
+        if (_.includes(['referrer-policy-not-implemented',
                     'referrer-policy-no-referrer-when-downgrade'],
-            results['referrer-policy'].result)) {
-        $('#tests-referrer-policy-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+                results['referrer-policy'].result)) {
+            $('#tests-referrer-policy-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+        }
     }
 
     // SRI is optional for sites that use local script and/or don't have script
