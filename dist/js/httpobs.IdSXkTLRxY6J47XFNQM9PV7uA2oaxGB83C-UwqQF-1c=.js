@@ -146,7 +146,7 @@ function insertScanResults(scan, results) {
     
     // Write the test results onto the page
     var keys = Object.keys(results);
-
+    
     // set the list of monospaced keywords to escape
     var monospaced_keywords = [
         '\'unsafe-inline\'',
