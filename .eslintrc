@@ -1,0 +1,15 @@
+{
+    "env":{
+        "browser":true
+    },
+    "extends":"airbnb-base/legacy",
+    "globals":{
+        "$":true,
+        "_":true,
+        "moment":true,
+        "Observatory":true
+    },
+    "rules":{
+        "no-param-reassign": 0
+    }
+}
