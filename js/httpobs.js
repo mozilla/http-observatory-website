@@ -97,21 +97,26 @@ var Observatory = {
     Observatory.state.results = results;
 
     // add a test duration
-    Observatory.state.scan.test_duration = (
-      moment.utc(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz') -
-      moment.utc(Observatory.state.scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz')) / 1000;
+    scan.test_duration = (
+      moment.utc(scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz') -
+      moment.utc(scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz')) / 1000;
 
     // convert things to local time
-    Observatory.state.scan.start_time_l = Observatory.utils.toLocalTime(Observatory.state.scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
-    Observatory.state.scan.end_time_l = Observatory.utils.toLocalTime(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
+    scan.start_time_l = Observatory.utils.toLocalTime(Observatory.state.scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
+    scan.end_time_l = Observatory.utils.toLocalTime(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
 
     // enable the rescan button if the test was over 315 seconds ago,
     // otherwise enable it at that point
-    lastScanDelta = moment() - moment.utc(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
+    lastScanDelta = moment() - moment.utc(scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
     if (lastScanDelta > 315000) {
       Observatory.enableInitiateRescanButton();
     } else {
       setTimeout(Observatory.enableInitiateRescanButton, 315000 - lastScanDelta);
+    }
+
+    // make it clear that unlisted scans are unlisted
+    if (scan.hidden) {
+      scan.scan_id = scan.scan_id.toString() + ' (unlisted)';
     }
 
     // don't show the contribute.json line to non-mozilla sites
@@ -222,7 +227,7 @@ var Observatory = {
     }
 
     // write the server headers into the page
-    _.forEach(Observatory.state.scan.response_headers, function f(value, header) {
+    _.forEach(scan.response_headers, function f(value, header) {
       responseHeaders.push([header, value]);
     });
     Observatory.utils.tableify(responseHeaders, 'server-headers-table');
