@@ -166,19 +166,13 @@ Observatory.thirdParty = {
     load: function load() {
       'use strict';
 
-      var a;
-      var API_URL = 'https://hstspreload.appspot.com/api/v2/';
+      var DOMAIN = 'hstspreload.org';
+      var API_URL = 'https://' + DOMAIN + '/api/v2/';
       var state = {};
 
       // Store the host and url
       state.hostname = Observatory.hostname;
-      state.url = Observatory.utils.linkify('https://hstspreload.appspot.com/?domain=' + Observatory.hostname);
-
-      // create a link to the actual results
-      a = document.createElement('a');
-      a.href = state.url;
-      a.appendChild(document.createTextNode('hstspreload.appspot.com'));
-      $('#third-party-test-scores-hstspreload').html(a);
+      state.url = Observatory.utils.linkify('https://' + DOMAIN + '/?domain=' + Observatory.hostname);
 
       $.when(
         $.getJSON(API_URL + 'status?domain=' + Observatory.hostname.toLowerCase()),
