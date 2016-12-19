@@ -157,6 +157,7 @@ Observatory.utils = {
         break;
       case 'Insecure':  // TODO: kill all this once the TLS Observatory is returning a correct grade
         letter = 'F';
+        domContainer.toggleClass('grade-f');
         break;
       case 'Old (Backwards Compatible)':
         domContainer.toggleClass('grade-f');
