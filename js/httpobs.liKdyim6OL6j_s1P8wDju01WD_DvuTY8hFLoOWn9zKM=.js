@@ -89,13 +89,17 @@ var Observatory = {
     var monospacedKeywords;
     var responseHeaders = [];
 
-    // stick the final hostname into scan, so it shows up
-    scan.hostname = Observatory.utils.urlParse(_.last(results.redirection.output.route)).host;
-    scan.target = Observatory.hostname;
-
     // stuff both scan and state into the HTTPObs object
     Observatory.state.scan = scan;
     Observatory.state.results = results;
+
+    // stick the final hostname into scan, so it shows up
+    if (results.redirection.output.route.length > 0) {
+      scan.hostname = Observatory.utils.urlParse(_.last(results.redirection.output.route)).host;
+      scan.target = Observatory.hostname;
+    } else {  // just HTTPS, no redirection
+      scan.hostname = scan.target = Observatory.hostname;
+    }
 
     // add a test duration
     scan.test_duration = (
