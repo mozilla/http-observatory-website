@@ -440,7 +440,7 @@ var Observatory = {
 
       // if it succeeds, redirect to the analyze page
       thirdParty = $('#scan-btn-third-party').prop('checked') ? '&third-party=false' : '';
-      window.location.href = window.location + 'analyze.html?host=' + url.host + thirdParty;
+      window.location.href = 'analyze.html?host=' + url.host + thirdParty;
       return true;
     };
 
