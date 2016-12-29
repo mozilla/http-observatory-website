@@ -25,7 +25,6 @@ Observatory.utils = {
     return a;
   },
 
-
   // take an array and turn it into an unordered list, if it's > 1 item
   listify: function listify(list, force) {
     'use strict';
@@ -106,6 +105,31 @@ Observatory.utils = {
     return moment(localtime).format('LLL');
   },
 
+  urlParse: function urlParse(url) {
+    'use strict';
+
+    var a = document.createElement('a');
+    a.href = url;
+
+    // If the URL doesn't contain a scheme, the hostname won't be in the url
+    // For the purposes of the Observatory, we'll just prepend http:// or https:// for :443 and try again
+    if (!a.protocol || !_.startsWith(url.toLowerCase(), 'http')) {
+      if (_.includes(url, ':443')) {  // this is kind of a bad shortcut, but I'm lazy
+        a.href = 'https://' + url;
+      } else {
+        a.href = 'http://' + url;
+      }
+    }
+
+    return {
+      fragment: a.hash,
+      host: a.hostname,
+      path: a.pathname,
+      port: a.port,
+      query: a.search,
+      scheme: a.protocol
+    };
+  },
 
   getQueryParameter: function getQueryParameter(param) {
     var params = _.chain(location.search ? location.search.slice(1).split('&') : '')

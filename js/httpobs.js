@@ -89,8 +89,9 @@ var Observatory = {
     var monospacedKeywords;
     var responseHeaders = [];
 
-    // stick the hostname into scan, so it shows up
-    scan.hostname = Observatory.hostname;
+    // stick the final hostname into scan, so it shows up
+    scan.hostname = Observatory.utils.urlParse(_.last(results.redirection.output.route)).host;
+    scan.target = Observatory.hostname;
 
     // stuff both scan and state into the HTTPObs object
     Observatory.state.scan = scan;
@@ -117,6 +118,11 @@ var Observatory = {
     // make it clear that unlisted scans are unlisted
     if (scan.hidden) {
       scan.scan_id = scan.scan_id.toString() + ' (unlisted)';
+    }
+
+    // if the destination domain isn't the same as the hostname, we should unhide that row
+    if (scan.hostname !== scan.target) {
+      $('#scan-target-container').removeClass('hidden');
     }
 
     // don't show the contribute.json line to non-mozilla sites
@@ -409,23 +415,22 @@ var Observatory = {
   submitScanForAnalysis: function submitScanForAnalysis() {
     'use strict';
 
-    var a;
     var hidden;
     var rescan;
     var successCallback;
     var thirdParty;
 
     // get the hostname that was submitted -- if a api_url, extract the hostname
-    var hostname = $('#scan-input-hostname').val().toLowerCase();
-    if (hostname === '') { // blank hostname
+    var url = Observatory.utils.urlParse($('#scan-input-hostname').val().toLowerCase());
+    if (url.host === '') { // blank hostname
       Observatory.displayError('Must enter hostname');
       return false;
-    } else if (hostname.indexOf('http://') !== -1 || hostname.indexOf('https://') !== -1) { // api_url
-      a = document.createElement('a');
-      a.href = hostname;
-      hostname = a.hostname;
+    } else if (url.port !== '') {
+      Observatory.displayError('Cannot scan non-standard ports');
+      return false;
     }
-    Observatory.hostname = hostname;
+
+    Observatory.hostname = url.host;
 
     successCallback = function f(data) {
       if (data.error) {
@@ -435,7 +440,7 @@ var Observatory = {
 
       // if it succeeds, redirect to the analyze page
       thirdParty = $('#scan-btn-third-party').prop('checked') ? '&third-party=false' : '';
-      window.location.href = window.location + 'analyze.html?host=' + hostname + thirdParty;
+      window.location.href = window.location + 'analyze.html?host=' + url.host + thirdParty;
       return true;
     };
 
@@ -447,7 +452,7 @@ var Observatory = {
       Observatory.thirdParty.TLSObservatory.load(rescan, true);
     }
 
-    Observatory.submitScanForAnalysisXHR(hostname, successCallback, Observatory.displayError, 'POST', rescan, hidden);
+    Observatory.submitScanForAnalysisXHR(url.host, successCallback, Observatory.displayError, 'POST', rescan, hidden);
 
     return false;
   },
