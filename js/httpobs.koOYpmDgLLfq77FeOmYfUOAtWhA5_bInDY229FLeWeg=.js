@@ -89,6 +89,12 @@ var Observatory = {
     var monospacedKeywords;
     var responseHeaders = [];
 
+    var glyphiconAriaLabels = {
+      'glyphicon-ok': 'Pass',
+      'glyphicon-remove': 'Fail',
+      'glyphicon-minus': 'Not Applicable / Optional'
+    };
+
     // stuff both scan and state into the HTTPObs object
     Observatory.state.scan = scan;
     Observatory.state.results = results;
@@ -235,6 +241,12 @@ var Observatory = {
     if (results.cookies.result === 'cookies-not-found') {
       $('#tests-cookies-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
     }
+
+    // assistive technologies can't see the glyphicons, so we assign them an aria-label
+    $('#test-scores td.glyphicon').each(function f() {
+      var glyphClass = $(this).attr('class').split(' ')[1];
+      $(this).attr('aria-label', glyphiconAriaLabels[glyphClass]);
+    });
 
     // write the server headers into the page
     _.forEach(scan.response_headers, function f(value, header) {
