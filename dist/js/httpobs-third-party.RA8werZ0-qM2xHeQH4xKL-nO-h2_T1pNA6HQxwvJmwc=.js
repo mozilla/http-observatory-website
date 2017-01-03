@@ -275,18 +275,29 @@ Observatory.thirdParty = {
   },
 
   securityHeaders: {
-    state: {},
+    state: {
+      scanHTTPSOnly: false
+    },
 
     // due to its simplicity, it both loads and inserts
     load: function loadAndInsert() {
       'use strict';
 
-      var API_URL = 'https://securityheaders.io/?followRedirects=on&hide=on&q=' + Observatory.hostname;
+      var API_URL;
       var state = Observatory.thirdParty.securityHeaders.state;
+      var successCallback;
 
-      var successCallback = function s(data, textStatus, jqXHR) {
+      if (state.scanHTTPSOnly === true) {
+        API_URL = 'https://securityheaders.io/?followRedirects=on&hide=on&q=https://' + Observatory.hostname;
+      } else {
+        API_URL = 'https://securityheaders.io/?followRedirects=on&hide=on&q=' + Observatory.hostname;
+      }
+
+      successCallback = function s(data, textStatus, jqXHR) {
+        var grade;
+
         // store the response headers for debugging
-        var grade = jqXHR.getResponseHeader('X-Grade');
+        grade = jqXHR.getResponseHeader('X-Grade');
         state.headers = jqXHR.getAllResponseHeaders();
         state.grade = grade;
 
@@ -294,11 +305,19 @@ Observatory.thirdParty = {
         state.hostname = Observatory.hostname;
         state.url = Observatory.utils.linkify(API_URL);
 
-        if (grade === undefined) {
+        if (grade === undefined) {  // securityheaders.io didn't respond properly
           Observatory.utils.errorResults('Unknown error', 'securityheaders');
         } else if (grade === null || grade === '') {
-          Observatory.utils.errorResults('Site unavailable', 'securityheaders');
-        } else {
+          // when we get a failed back back from securityheaders.io, there could be two reasons:
+          // 1. the site isn't actually available, or 2. it's only available over HTTPS
+          // For this reason, we attempt a rescan after the first try
+          if (state.scanHTTPSOnly) { // retry failed
+            Observatory.utils.errorResults('Site unavailable', 'securityheaders');
+          } else {
+            state.scanHTTPSOnly = true;
+            Observatory.thirdParty.securityHeaders.load();
+          }
+        } else {  // everything went great, lets insert the results
           Observatory.utils.insertGrade(grade, 'securityheaders');
           Observatory.utils.insertResults(state, 'securityheaders');
           Observatory.utils.showResults('securityheaders');
