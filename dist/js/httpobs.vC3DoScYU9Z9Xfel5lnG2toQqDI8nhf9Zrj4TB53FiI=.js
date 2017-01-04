@@ -192,8 +192,8 @@ var Observatory = {
       // now we read that back and do some formatting
       scoreDescription = $('#tests-' + result.name + '-score-description').text();
 
-      // add newlines at each sentence (may change in the future
-      scoreDescription = scoreDescription.replace(/\. /g, '.<br><br>');
+      // add newlines at each sentence (may change in the future), and remove the tick marks
+      scoreDescription = scoreDescription.replace(/\. /g, '.<br><br>').replace(/`/, '');
 
       // monospace each codeword
       scoreDescription = Observatory.utils.monospaceify(scoreDescription, monospacedKeywords);
