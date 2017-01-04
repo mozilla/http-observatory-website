@@ -70,7 +70,11 @@ var Observatory = {
       error = 'HTTP Observatory is down';
     } else {
       error = error.replace(/-/g, ' ');
-      error = error.charAt(0).toUpperCase() + text.slice(1); // capitalize
+
+      // capitalize the errors, but only if they don't "begin" with a hostname
+      if (!_.includes(error, 'hostname')) {
+        error = error.charAt(0).toUpperCase() + text.slice(1); // capitalize
+      }
     }
 
     // hide the scan progress bar
