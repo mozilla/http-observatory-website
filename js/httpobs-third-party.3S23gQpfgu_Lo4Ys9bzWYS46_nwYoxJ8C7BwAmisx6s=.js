@@ -614,6 +614,7 @@ Observatory.thirdParty = {
         certificate_url: state.certificate_url,
         end_time: results.timestamp.replace('T', ' ').split('.')[0],
         end_time_l: Observatory.utils.toLocalTime(results.timestamp, 'YYYY-MM-DDTHH:mm:ss.SSSSZ'),
+        explainer_url: state.explainer_url,
         ip: results.connection_info.scanIP,
         mozilla_configuration_level: mozillaConfigurationLevel,
         mozilla_configuration_level_description: mozillaConfigurationLevelDescription,
@@ -626,7 +627,7 @@ Observatory.thirdParty = {
       // now let's handle the certificate stuff
       state.output.certificate = {
         alt_names: _.without(cert.x509v3Extensions.subjectAlternativeName, cert.subject.cn).join(', '),
-        cert_id: cert.id,
+        cert_id: Observatory.utils.linkify(state.explainer_url, cert.id.toString()),
         cn: cert.subject.cn,
         first_seen: cert.firstSeenTimestamp.split('T')[0],
         issuer: cert.issuer.cn,
@@ -756,6 +757,7 @@ Observatory.thirdParty = {
       var SCAN_URL = 'https://tls-observatory.services.mozilla.com/api/v1/scan';
       var RESULTS_URL = 'https://tls-observatory.services.mozilla.com/api/v1/results';
       var CERTIFICATE_URL = 'https://tls-observatory.services.mozilla.com/api/v1/certificate';
+      var CERTIFICATE_EXPLAINER_URL = 'https://tls-observatory.services.mozilla.com/static/certsplainer.html';
       var state = Observatory.thirdParty.TLSObservatory.state;
 
       initiateScanOnly = typeof initiateScanOnly !== 'undefined' ? initiateScanOnly : false;
@@ -817,6 +819,7 @@ Observatory.thirdParty = {
 
         // set the certificate URL in the output summary
         state.certificate_url = Observatory.utils.linkify(CERTIFICATE_URL + '?id=' + state.results.cert_id);
+        state.explainer_url = Observatory.utils.linkify(CERTIFICATE_EXPLAINER_URL + '?id=' + state.results.cert_id);
 
         $.ajax({
           data: {

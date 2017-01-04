@@ -15,12 +15,16 @@ Observatory.utils = {
   },
 
   // take a link and return an a href
-  linkify: function linkify(url) {
+  linkify: function linkify(url, text) {
     'use strict';
 
     var a = document.createElement('a');
+
+    // if they don't include any text, the text is the url
+    text = typeof text !== 'undefined' ? text : url;
+
     a.href = url;
-    a.appendChild(document.createTextNode(url));
+    a.appendChild(document.createTextNode(text));
 
     return a;
   },
