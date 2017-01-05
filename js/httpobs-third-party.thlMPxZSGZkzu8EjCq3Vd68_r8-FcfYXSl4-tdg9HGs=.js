@@ -675,7 +675,7 @@ Observatory.thirdParty = {
         protos = protos.join(', ');
 
         // protocol name, perfect forward secrecy, protocols
-        cipherTable.push([(i + 1).toString() + '.', point, cipher, keySize + ' bits', aead, pfs, protos]);
+        cipherTable.push([(i + 1).toString() + '.', cipher, point, keySize + ' bits', aead, pfs, protos]);
       });
 
       // let's load up the misc object

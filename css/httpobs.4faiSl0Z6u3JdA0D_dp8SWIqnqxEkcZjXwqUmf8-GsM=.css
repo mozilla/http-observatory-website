@@ -294,24 +294,26 @@ div.large-progress-bar-condensed + div.row {
 /* tls observatory protocols table is a big crowded */
 .bold-no-wrap, #tlsobservatory-ciphers-table tr td:nth-of-type(1) {
     font-weight: 600;
+    text-align: right;
     white-space: nowrap;
 }
 
 /* code point */
-#tlsobservatory-ciphers-table tr td:nth-of-type(2) {
+#tlsobservatory-ciphers-table tr td:nth-of-type(3) {
     color: #666;  /* the most evil color */
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     font-size: .85em;
-    line-height: .85em;
-    padding-right: .75em;
-    vertical-align: middle;
+    padding: .15em 1em 0 1em;
+    vertical-align: inherit;
+    white-space: nowrap;
 }
 
-#tlsobservatory-ciphers-table tr th:nth-of-type(2) {
+#tlsobservatory-ciphers-table tr th:nth-of-type(3) {
     text-align: center;
 }
 
-#tlsobservatory-ciphers-table tr td:nth-of-type(3) {
+#tlsobservatory-ciphers-table tr td:nth-of-type(2) {
+    border-right: solid 1px #dddddd;
     padding-right: 1em;
     white-space: nowrap;
 }
