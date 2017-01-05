@@ -553,12 +553,11 @@ Observatory.thirdParty = {
       var analyzers;
       var cipher;
       var cipherTable = [];
-      var i;  // counter
-      var j;  // counter
       var keySize;
       var mozillaConfigurationLevel;
       var mozillaConfigurationLevelDescription;
       var ocspStapling = 'No';
+      var point;
       var pfs;
       var proto;
       var protos;
@@ -643,21 +642,26 @@ Observatory.thirdParty = {
       }
 
       // now it's time for the ciphers table
-      for (i = 0; i < results.connection_info.ciphersuite.length; i += 1) {
-        cipher = results.connection_info.ciphersuite[i].cipher;
+      _.forEach(results.connection_info.ciphersuite, function suites(suite, i) {
+        cipher = suite.cipher;
         aead = (cipher.indexOf('-GCM') !== -1 || cipher.indexOf('POLY1305') !== -1) ? 'Yes' : 'No';
-        keySize = results.connection_info.ciphersuite[i].pubkey.toString();
-        pfs = results.connection_info.ciphersuite[i].pfs === 'None' ? 'No' : 'Yes';
+        keySize = suite.pubkey.toString();
+        pfs = suite.pfs === 'None' ? 'No' : 'Yes';
         protos = [];
 
         // check ocsp stapling
-        if (results.connection_info.ciphersuite[i].ocsp_stapling === true) {
+        if (suite.ocsp_stapling === true) {
           ocspStapling = 'Yes';
         }
 
+        // get the code point
+        point = suite.code.toString(16).toUpperCase();
+        point = '0'.repeat(4 - point.length) + point;  // padd with 0s
+        point = '0x' + point[1] + point[0] + ',0x' + point[2] + point[3];  // wtf endianness
+
         // for each supported protocol (TLS 1.0, etc.)
-        for (j = 0; j < results.connection_info.ciphersuite[i].protocols.length; j += 1) {
-          proto = results.connection_info.ciphersuite[i].protocols[j].replace('v', ' ');
+        _.forEach(suite.protocols, function protocols(protocol) {
+          proto = protocol.replace('v', ' ');
 
           // rename TLSv1 to TLSv1.0
           if (/ \d$/.test(proto)) {
@@ -665,14 +669,14 @@ Observatory.thirdParty = {
           }
 
           protos.push(proto);
-        }
+        });
 
         protos.reverse();
         protos = protos.join(', ');
 
         // protocol name, perfect forward secrecy, protocols
-        cipherTable.push([(i + 1).toString() + '.', cipher, keySize + ' bits', aead, pfs, protos]);
-      }
+        cipherTable.push([(i + 1).toString() + '.', point, cipher, keySize + ' bits', aead, pfs, protos]);
+      });
 
       // let's load up the misc object
       state.output.misc = {

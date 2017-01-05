@@ -297,13 +297,27 @@ div.large-progress-bar-condensed + div.row {
     white-space: nowrap;
 }
 
+/* code point */
 #tlsobservatory-ciphers-table tr td:nth-of-type(2) {
+    color: #666;  /* the most evil color */
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: .85em;
+    line-height: .85em;
+    padding-right: .75em;
+    vertical-align: middle;
+}
+
+#tlsobservatory-ciphers-table tr th:nth-of-type(2) {
+    text-align: center;
+}
+
+#tlsobservatory-ciphers-table tr td:nth-of-type(3) {
     padding-right: 1em;
     white-space: nowrap;
 }
 
 /* key size, AEAD, and PFS */
-#tlsobservatory-ciphers-table tbody tr td:nth-child(n+3):nth-child(-n+5) {
+#tlsobservatory-ciphers-table tbody tr td:nth-child(n+4):nth-child(-n+6) {
     text-align: center;
     white-space: nowrap;
 }
