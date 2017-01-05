@@ -10,6 +10,24 @@ It is split into three projects:
 
 TLS evaluation relies on external scanners, such as Mozilla's [TLS Observatory](https://github.com/mozilla/tls-observatory).
 
+## Installation
+
+If you just want to use a local version of the website, you can simply clone the dist directory:
+
+```bash
+git clone -b gh-pages https://github.com/mozilla/http-observatory-website.git
+```
+
+However, it comes with a built-in web server that will automatically regenerate the SRI hashes:
+
+```bash
+git clone gh-pages https://github.com/mozilla/http-observatory-website.git
+make devserver
+```
+
+Note that this will still use the global Mozilla Observatory API endpoints; you will need to change `httpobs.js` and
+`httpobs-third-party.js` if you wish to use your own local endpoints.
+
 ## Authors
 
 * April King
