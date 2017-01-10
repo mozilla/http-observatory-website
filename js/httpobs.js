@@ -481,16 +481,20 @@ var Observatory = {
   onPageLoad: function onPageLoad() {
     'use strict';
 
-    // initialize all the popovers
-    $(function f() {
-      $('[data-toggle="popover"]').popover(
-        {
-          html: true,
-          placement: 'left',
-          trigger: 'hover'
-        }
-      );
-    });
+    // initialize all the popovers on larger displays
+    if (window.matchMedia !== undefined) {
+      if (window.matchMedia('(min-device-width: 480px)').matches) {
+        $(function f() {
+          $('[data-toggle="popover"]').popover(
+            {
+              html: true,
+              placement: 'left',
+              trigger: 'hover'
+            }
+          );
+        });
+      }
+    }
 
     // Show the redirection banner, if you're not on the production site
     if (document.domain !== 'observatory.mozilla.org') {
