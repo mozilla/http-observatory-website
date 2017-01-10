@@ -392,3 +392,10 @@ sup, sub {
     color: white;
     text-decoration: dotted underline white;
 }
+
+/* mobile tweaks below */
+@media only screen and (max-width: 480px) {
+    .no-popover-mobile .popover {
+        display: none !important;
+    }
+}
