@@ -2,10 +2,6 @@ body {
     line-height: 1.5em;
 }
 
-.panel-body {
-    padding: 2em;
-}
-
 .no-margin-top {
     margin-top: 0;
 }
@@ -209,6 +205,10 @@ div.large-progress-bar-condensed + div.row {
     white-space: nowrap;
 }
 
+.summary tr td a, .broken {
+    word-break: break-all;
+}
+
 .summary tr td:nth-child(2) {
     white-space: pre-wrap;
     width: 100%;
@@ -393,9 +393,16 @@ sup, sub {
     text-decoration: dotted underline white;
 }
 
-/* mobile tweaks below */
-/*@media only screen and (max-width: 480px) {
-    .no-popover-mobile .popover {
-        display: none !important;
+/* larger screen tweaks below */
+@media only screen and (min-width: 480px) {
+    .panel-body {
+        padding: 2em;
     }
-}*/
+}
+
+/* mobile screen tweaks below */
+@media only screen and (max-width: 479px) {
+    .grade-container {
+        margin-bottom: .15em;
+    }
+}
