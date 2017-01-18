@@ -2,6 +2,10 @@ body {
     line-height: 1.5em;
 }
 
+.panel-body {
+    padding: 2em;
+}
+
 .no-margin-top {
     margin-top: 0;
 }
@@ -122,14 +126,12 @@ body {
     right: -2px;
 }
 
-
-
 .hostname {
     border: none;
-	max-width: 13.5em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    max-width: 13.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .large-progress-bar {
@@ -203,10 +205,6 @@ div.large-progress-bar-condensed + div.row {
     font-weight: 600;
     padding-right: 1.5em;
     white-space: nowrap;
-}
-
-.summary tr td a, .broken {
-    word-break: break-all;
 }
 
 .summary tr td:nth-child(2) {
@@ -391,18 +389,4 @@ sup, sub {
 #redirect-banner a {
     color: white;
     text-decoration: dotted underline white;
-}
-
-/* larger screen tweaks below */
-@media only screen and (min-width: 480px) {
-    .panel-body {
-        padding: 2em;
-    }
-}
-
-/* mobile screen tweaks below */
-@media only screen and (max-width: 479px) {
-    .grade-container {
-        margin-bottom: .15em;
-    }
 }
