@@ -645,7 +645,7 @@ Observatory.thirdParty = {
       _.forEach(results.connection_info.ciphersuite, function suites(suite, i) {
         cipher = suite.cipher;
         aead = (cipher.indexOf('-GCM') !== -1 || cipher.indexOf('POLY1305') !== -1) ? 'Yes' : 'No';
-        keySize = suite.pubkey.toString();
+        keySize = suite.pubkey === undefined ? '--' : suite.pubkey.toString() + ' bits';
         pfs = suite.pfs === 'None' ? 'No' : 'Yes';
         protos = [];
 
@@ -675,7 +675,7 @@ Observatory.thirdParty = {
         protos = protos.join(', ');
 
         // protocol name, perfect forward secrecy, protocols
-        cipherTable.push([(i + 1).toString() + '.', cipher, point, keySize + ' bits', aead, pfs, protos]);
+        cipherTable.push([(i + 1).toString() + '.', cipher, point, keySize, aead, pfs, protos]);
       });
 
       // let's load up the misc object

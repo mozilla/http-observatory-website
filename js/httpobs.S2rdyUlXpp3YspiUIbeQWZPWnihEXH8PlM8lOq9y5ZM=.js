@@ -91,6 +91,7 @@ var Observatory = {
 
     var lastScanDelta;
     var monospacedKeywords;
+    var importantGlyphs = '\ud83c\udf89\ud83c\udf89\ud83c\udf89';
     var responseHeaders = [];
 
     var glyphiconAriaLabels = {
@@ -109,6 +110,11 @@ var Observatory = {
       scan.target = Observatory.hostname;
     } else {  // just HTTPS, no redirection
       scan.hostname = scan.target = Observatory.hostname;
+    }
+
+    // bug fixes
+    if (scan.hostname === 'observatory.mozilla.org') {
+      scan.hostname = scan.target = importantGlyphs + '   ' + scan.hostname + '   ' + importantGlyphs;
     }
 
     // add a test duration
@@ -483,7 +489,7 @@ var Observatory = {
 
     // initialize all the popovers on larger displays
     if (window.matchMedia !== undefined) {
-      if (window.matchMedia('(min-device-width: 480px)').matches) {
+      if (window.matchMedia('(min-width: 480px)').matches) {
         $(function f() {
           $('[data-toggle="popover"]').popover(
             {
@@ -508,6 +514,9 @@ var Observatory = {
     if (window.location.pathname.indexOf('/analyze.html') !== -1) {
       // Get the hostname in the GET parameters
       Observatory.hostname = Observatory.utils.getQueryParameter('host');
+
+      // update the page title to reflect that's a scan
+      document.title = document.title + ' :: Scan Results for ' + Observatory.hostname;
 
       // make it so that when we click a collapsed element, it removes it from the DOM
       $('[data-toggle="collapse"]').click(
