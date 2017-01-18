@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="{{ AUTHOR }}">
+    <meta name="description" content="Observatory by Mozilla is a project designed to help developers, system administrators, and security professionals configure their sites safely and securely.">
+    <meta property="og:title" content="Observatory by Mozilla">
+
+    <!-- favicon stuff -->
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="196x196" href="/images/favicons/favicon-196x196.png">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+
+    <title>{{ SITENAME }}</title>
+
+    <link rel="stylesheet" href="css/{{ files['bootstrap-3.3.7.min.css']['name'] }}" type="text/css" integrity="{{ files['bootstrap-3.3.7.min.css']['hash'] }}" />
+</head>
+<body>
+    <div class="alert alert-success text-center" id="redirect-banner">
+        <strong>You've found the Observatory development site. Were you looking for <a id="redirect-banner-url" href="https://observatory.mozilla.org">the official website</a>?</strong>
+    </div>
+
+    <script src="js/{{ files['jquery-3.1.1.min.js']['name'] }}" integrity="{{ files['jquery-3.1.1.min.js']['hash'] }}"></script>
+    <script src="js/{{ files['bootstrap-3.3.7.min.js']['name'] }}" integrity="{{ files['bootstrap-3.3.7.min.js']['hash'] }}"></script>
+    <script src="js/{{ files['lodash-4.16.4.min.js']['name'] }}" integrity="{{ files['lodash-4.16.4.min.js']['hash'] }}"></script>
+    <script src="js/{{ files['moment-2.15.1.min.js']['name'] }}" integrity="{{ files['moment-2.15.1.min.js']['hash'] }}"></script>
+    <script src="js/{{ files['httpobs.js']['name'] }}" integrity="{{ files['httpobs.js']['hash'] }}"></script>
+    <script src="js/{{ files['httpobs-utils.js']['name'] }}" integrity="{{ files['httpobs-utils.js']['hash'] }}"></script>
+    <script src="js/{{ files['httpobs-third-party.js']['name'] }}" integrity="{{ files['httpobs-third-party.js']['hash'] }}"></script>
+</body>
+</html>

@@ -38,13 +38,13 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-offset-3 col-sm-2 col-sm-offset-0">
+                    <div class="col-md-2">
                         <span class="grade-container text-center" id="scan-grade-container">
                             <span class="grade-letter" id="scan-grade-letter"></span>
                             <sup class="grade-letter-modifier" id="scan-grade-modifier"></sup>
                         </span>
                     </div>
-                    <div class="col-xs-12 col-sm-10">
+                    <div class="col-md-10">
                         <table class="table table-striped table-condensed pull-left scan-summary-table">
                             <tr>
                                 <td>Host:</td>
@@ -86,7 +86,7 @@
                 <span class="h3">Test Scores</span>
             </div>
             <div class="panel-body">
-                <div class="row table-responsive">
+                <div class="row">
                     <table class="table table-striped table-condensed pull-left scan-summary-table">
                         <tr>
                             <th>Test</th>
@@ -191,7 +191,7 @@
                 <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#host-history-panel-body" aria-expanded="false" aria-controls="host-history-panel-body">Click to Expand</button>
             </div>
             <div class="panel-body collapse" id="host-history-panel-body">
-                <div class="row table-responsive">
+                <div class="row">
                     <table class="table table-striped table-condensed pull-left" id="host-history-table">
                         <thead>
                             <tr>
@@ -212,7 +212,7 @@
                 <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#server-headers-panel-body" aria-expanded="false" aria-controls="server-headers-panel-body">Click to Expand</button>
             </div>
             <div class="panel-body collapse" id="server-headers-panel-body">
-                <div class="row table-responsive">
+                <div class="row">
                     <table class="table table-striped table-condensed pull-left" id="server-headers-table">
                     </table>
                 </div>
@@ -243,7 +243,7 @@
                                 <sup class="grade-letter-modifier" id="tlsobservatory-summary-grade-modifier"></sup>
                             </span>
                         </div>
-                        <div class="col-md-10 table-responsive">
+                        <div class="col-md-10">
                             <table class="table table-striped table-condensed pull-left tlsobservatory-summary-summary-table">
                                 <tr>
                                     <td>Host:</td>
@@ -299,7 +299,7 @@
                     <span class="h3">Certificate Information</span>
                 </div>
                 <div class="panel-body">
-                    <div class="row table-responsive">
+                    <div class="row">
                         <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-certificate-table">
                             <tr>
                                 <td>Common name:</td>
@@ -356,7 +356,7 @@
                     <span class="h3">Cipher Suites</span>
                 </div>
                 <div class="panel-body">
-                    <div class="row table-responsive">
+                    <div class="row">
                         <table class="table table-striped table-condensed pull-left" id="tlsobservatory-ciphers-table">
                             <thead>
                                 <tr>
@@ -380,7 +380,7 @@
                     <span class="h3">Miscellaneous Information</span>
                 </div>
                 <div class="panel-body">
-                    <div class="row table-responsive">
+                    <div class="row">
                         <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-misc-table">
                             <tr>
                                 <td>Cipher Preference:</td>
@@ -498,7 +498,7 @@
                                 <sup class="grade-letter-modifier" id="htbridge-grade-modifier"></sup>
                             </span>
                         </div>
-                        <div class="col-md-10 table-responsive">
+                        <div class="col-md-10">
                             <table class="table table-striped table-condensed htbridge-summary-table">
                                 <tbody>
                                     <tr>
@@ -593,13 +593,13 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xs-12 col-sm-2">
+                        <div class="col-md-2">
                             <span class="grade-container text-center" id="tlsimirhilfr-grade-container">
                                 <span class="grade-letter" id="tlsimirhilfr-grade-letter"></span>
                                 <sup class="grade-letter-modifier" id="tlsimirhilfr-grade-modifier"></sup>
                             </span>
                         </div>
-                        <div class="col-xs-12 col-sm-12">
+                        <div class="col-md-10">
                             <table class="table table-striped table-condensed pull-left tlsimirhilfr-summary-table">
                                 <tr>
                                     <td>Host:</td>
@@ -607,11 +607,11 @@
                                 </tr>
                                 <tr>
                                     <td>IP addresses:</td>
-                                    <td class="broken" id="tlsimirhilfr-addresses"></td>
+                                    <td id="tlsimirhilfr-addresses"></td>
                                 </tr>
                                 <tr id="tlsimirhilfr-failing_addresses-row">
                                     <td>Failing addresses:</td>
-                                    <td class="broken" id="tlsimirhilfr-failing_addresses"></td>
+                                    <td id="tlsimirhilfr-failing_addresses"></td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
@@ -694,7 +694,7 @@
                                 <sup class="grade-letter-modifier" id="hstspreload-grade-modifier"></sup>
                             </span>
                         </div>
-                        <div class="col-md-10 table-responsive">
+                        <div class="col-md-10">
                             <table class="table table-striped table-condensed pull-left hstspreload-summary-table">
                                 <tr>
                                     <td>Host:</td>
@@ -723,31 +723,5 @@
             </div>
 
         </div>
-<!--        <div class="panel panel-primary" id="third-party-test-scores">
-            <div class="panel-heading">
-                <span class="h3">Additional Scanners</span>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <table class="table table-striped table-condensed pull-left scan-summary-table">
-                        <tr>
-                            <th>Scanner</th>
-                            <th>Scan Result</th>
-                        </tr>
-                        <tr>
-                            <td id="third-party-test-scores-htbridge"><a href="https://www.htbridge.com/ssl/">htbridge.com</a></td>
-                            <td id="third-party-test-scores-htbridge-score">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100" style="width: 100%;">
-                                        PENDING (This may take several minutes)
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
--->
     </div>
 {% endblock %}
