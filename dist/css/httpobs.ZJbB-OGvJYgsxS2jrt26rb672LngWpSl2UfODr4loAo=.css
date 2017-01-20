@@ -282,7 +282,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* server header values, protocols */
-#server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child, #tlsobservatory-ciphers-table tr td:last-child, #tlsobservatory-misc-table tr td:nth-child(2) {
+#server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child, #tlsobservatory-ciphers-table tr td:last-child {
     hyphens: auto;
     white-space: pre-wrap;
     width: 100%;

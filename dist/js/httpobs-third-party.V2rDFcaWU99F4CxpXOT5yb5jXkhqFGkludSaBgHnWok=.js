@@ -554,6 +554,8 @@ Observatory.thirdParty = {
       var cipher;
       var cipherTable = [];
       var keySize;
+      var minClients = [];
+      var minClientAnalyzer = {};
       var mozillaConfigurationLevel;
       var mozillaConfigurationLevelDescription;
       var ocspStapling = 'No';
@@ -568,27 +570,12 @@ Observatory.thirdParty = {
       var results = state.results;
 
       // let's have slightly nicer looking terms for the configuration level
-      var config = {
-        old: {
-          description: 'Old (Backwards Compatible)',
-          oldest_clients: 'Firefox 1, Chrome 1, Windows XP IE6, Java 6'
-        },
-        intermediate: {
-          description: 'Intermediate',
-          oldest_clients: 'Firefox 1, Chrome 1, IE 7, Opera 5, Safari 1, Windows XP IE8, Android 2.3, Java 7'
-        },
-        modern: {
-          description: 'Modern',
-          oldest_clients: 'Firefox 27, Chrome 30, IE 11 on Windows 7, Edge, Opera 17, Safari 9, Android 5.0, Java 8'
-        },
-        bad: {
-          description: 'Insecure',
-          oldest_clients: undefined
-        },
-        'non compliant': {
-          description: 'Non-compliant',
-          oldest_clients: undefined
-        }
+      var configLevelDesc = {
+        old: 'Old (Backwards Compatible)',
+        intermediate: 'Intermediate',
+        modern: 'Modern',
+        bad: 'Insecure',
+        'non compliant': 'Non-compliant'
       };
 
       // Loop through the analyzers and store to an object
@@ -600,12 +587,29 @@ Observatory.thirdParty = {
       analyzers = state.analyzers;
       delete state.results.analysis;
 
-      mozillaConfigurationLevel = config[analyzers.mozillaEvaluationWorker.level].description;
+      // lets loop through the client support analyzer and generate a supported client list
+      _.forEach(analyzers.sslLabsClientSupport, function (entry) {
+        if (entry.is_supported) {
+          if (entry.name in minClientAnalyzer) {
+            minClientAnalyzer[entry.name].push(entry.version);
+          } else {
+            minClientAnalyzer[entry.name] = [entry.version];
+          }
+        }
+      });
+
+      // now let's generate a string to use on the site
+      _.forEach(minClientAnalyzer, function (versions, client) {
+        minClients.push(client + ' ' + versions[0]);
+      });
+      minClients.sort();
+
+      mozillaConfigurationLevel = configLevelDesc[analyzers.mozillaEvaluationWorker.level];
       if (mozillaConfigurationLevel === 'Non-compliant') {
         mozillaConfigurationLevelDescription = 'Non-compliant\n\nPlease note that non-compliance simply means that the server\'s configuration is either more or less strict than a pre-defined Mozilla configuration level.';
       } else {
         mozillaConfigurationLevelDescription =
-          config[analyzers.mozillaEvaluationWorker.level].description;
+          configLevelDesc[analyzers.mozillaEvaluationWorker.level];
       }
 
       // let's load up the summary object
@@ -682,7 +686,7 @@ Observatory.thirdParty = {
       state.output.misc = {
         chooser: results.connection_info.serverside === true ? 'Server' : 'Client',
         ocsp_stapling: ocspStapling,
-        oldest_clients: config[analyzers.mozillaEvaluationWorker.level].oldest_clients
+        oldest_clients: minClients.join(', ')
       };
 
       // remove the oldest client row if it's undefined
