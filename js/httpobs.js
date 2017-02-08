@@ -7,11 +7,14 @@ var Observatory = {
       xmark: '&#x2717;'
     },
     grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
+    maxQueriesBeforeTimeout: 600,
     urls: {
       api: 'https://http-observatory.security.mozilla.org/api/v1/'
     }
   },
-  state: {},
+  state: {
+    count: 0
+  },
 
 /*
  *
@@ -343,7 +346,7 @@ var Observatory = {
         retry = true;
         break;
       case 'RUNNING':
-        if (Math.random() > 0.96 || $('#scan-text').text() === 'Reticulating splines') {
+        if (Math.random() > 0.98 || $('#scan-text').text() === 'Reticulating splines') {
           text = 'Reticulating splines';
         } else {
           text = 'Scan in progress';
@@ -362,6 +365,14 @@ var Observatory = {
 
     // update the progress bar text and try again in a second
     if (retry) {
+      // make sure we haven't be scanning for too long; if so, let's stop checking
+      Observatory.state.count += 1;
+      if (Observatory.state.count >= Observatory.const.maxQueriesBeforeTimeout) {
+        Observatory.displayError('Scan timed out');
+        return false;
+      }
+
+
       $('#scan-text').text(text);
       setTimeout(Observatory.loadScanResults, 1000);
       return false;

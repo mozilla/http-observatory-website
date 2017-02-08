@@ -542,7 +542,9 @@ Observatory.thirdParty = {
   },
 
   TLSObservatory: {
+    maxQueriesBeforeTimeout: 300,  // 10 minutes
     state: {
+      count: 0,
       output: {}
     },
 
@@ -771,6 +773,13 @@ Observatory.thirdParty = {
       initiateScanOnly = typeof initiateScanOnly !== 'undefined' ? initiateScanOnly : false;
       rescan = typeof rescan !== 'undefined' ? rescan : false;
 
+      // Increment the connection count; if we've been trying too long
+      state.count += 1;
+      if (state.count >= Observatory.thirdParty.TLSObservatory.maxQueriesBeforeTimeout) {
+        Observatory.utils.errorResults('Scanner unavailable', 'tlsobservatory-summary');
+        return;
+      }
+
       // if it's the first scan through, we need to do a post
       if (state.scan_id === undefined || rescan) {
         // make a POST to initiate the scan
@@ -782,7 +791,7 @@ Observatory.thirdParty = {
           initiateScanOnly: initiateScanOnly,
           dataType: 'json',
           method: 'POST',
-          error: function e() { Observatory.utils.errorResults('Scanner unavailable', 'tlsobservatory'); },
+          error: function e() { Observatory.utils.errorResults('Scanner unavailable', 'tlsobservatory-summary'); },
           success: function s(data) {
             state.scan_id = data.scan_id;
 
@@ -805,7 +814,7 @@ Observatory.thirdParty = {
           },
           dataType: 'json',
           method: 'GET',
-          error: function e() { Observatory.utils.errorResults('Scanner unavailable', 'tlsobservatory'); },
+          error: function e() { Observatory.utils.errorResults('Scanner unavailable', 'tlsobservatory-summary'); },
           success: function s(data) {
             // not yet completed
             if (data.completion_perc !== 100) {
@@ -835,7 +844,7 @@ Observatory.thirdParty = {
           },
           dataType: 'json',
           method: 'GET',
-          error: function e() { Observatory.utils.errorResults('Scanner unavailable', 'tlsobservatory'); },
+          error: function e() { Observatory.utils.errorResults('Scanner unavailable', 'tlsobservatory-summary'); },
           success: function s(data) {
             state.certificate = data;
             Observatory.thirdParty.TLSObservatory.insert();  // put things into the page
