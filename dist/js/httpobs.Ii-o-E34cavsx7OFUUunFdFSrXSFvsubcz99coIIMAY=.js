@@ -54,7 +54,7 @@ var Observatory = {
   enableInitiateRescanButton: function enableInitiateRescanButton() {
     'use strict';
 
-    $('#force-rescan').removeClass('disabled').on('click', function forceRescan() {
+    $('.force-rescan').removeClass('disabled').on('click', function forceRescan() {
       function reload() { window.location.reload(true); }
 
       Observatory.thirdParty.TLSObservatory.load(true);
@@ -94,7 +94,7 @@ var Observatory = {
 
     var lastScanDelta;
     var monospacedKeywords;
-    var nextStep;
+    var nextStep = 'congratulations';
     var importantGlyphs = '\ud83c\udf89\ud83c\udf89\ud83c\udf89';
     var responseHeaders = [];
 
@@ -269,14 +269,66 @@ var Observatory = {
     Observatory.utils.tableify(responseHeaders, 'server-headers-table');
 
     // let's try to give people a good first step on where they should go from these results
-    if (_.includes(['hsts-not-implemented-no-https', 'hsts-invalid-cert'],  // no https
+    // TODO: find a cleaner way of doing this
+    if (_.includes([
+      'hsts-not-implemented-no-https',
+      'hsts-invalid-cert'],  // no https
       results['strict-transport-security'].result)) {
       nextStep = 'https';
-    } else if (_.includes(['redirection-missing', 'redirection-not-to-https', 'redirection-invalid-cert'],
-      results.redirection.result)) { nextStep = 'redirection'; }
+    } else if (_.includes([
+      'redirection-missing',
+      'redirection-not-to-https',
+      'redirection-invalid-cert'],
+      results.redirection.result)) {
+      nextStep = 'redirection';
+    } else if (_.includes([
+      'hsts-implemented-max-age-less-than-six-months',
+      'hsts-not-implemented',
+      'hsts-header-invalid'],
+      results['strict-transport-security'].result)) {
+      nextStep = 'strict-transport-security';
+    } else if (_.includes([
+      'cookies-without-secure-flag-but-protected-by-hsts',
+      'cookies-without-secure-flag',
+      'cookies-session-without-httponly-flag',
+      'cookies-session-without-secure-flag'],
+      results.cookies.result)) {
+      nextStep = 'cookies';
+    } else if (_.includes([
+      'x-frame-options-not-implemented',
+      'x-frame-options-header-invalid'],
+      results['x-frame-options'].result)) {
+      nextStep = 'x-frame-options';
+    } else if (_.includes([
+      'x-content-type-options-not-implemented',
+      'x-content-type-options-header-invalid'],
+      results['x-content-type-options'].result)) {
+      nextStep = 'x-content-type-options';
+    } else if (_.includes([
+      'csp-implemented-with-unsafe-eval',
+      'csp-implemented-with-insecure-scheme',
+      'csp-implemented-with-unsafe-inline',
+      'csp-not-implemented',
+      'csp-header-invalid'],
+      results['content-security-policy'].result)) {
+      nextStep = 'content-security-policy';
+    } else if (_.includes([
+      'sri-not-implemented-but-external-scripts-loaded-securely'],
+      results['subresource-integrity'].result)) {
+      nextStep = 'subresource-integrity';
+    } else if (_.includes([
+      'referrer-policy-not-implemented',
+      'referrer-policy-unsafe',
+      'referrer-policy-headeer-invalid'],
+      results['referrer-policy'].result)) {
+      nextStep = 'referrer-policy';
+    }
 
-    if (nextStep) {
-      $('#next-steps, #next-steps-' + nextStep).removeClass('hidden');
+
+    $('#next-steps, #next-steps-' + nextStep).removeClass('hidden');
+
+    if (nextStep === 'congratulations') {
+      $('#next-steps-initiate-rescan').addClass('hidden');
     }
     // nextSteps.html(nextStep);
     // nextSteps.removeClass('hidden');
