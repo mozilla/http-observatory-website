@@ -16,7 +16,7 @@
     <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.7.min.M4BawzpX2gZqpVcQ1m-1u-phtpgCuUP8wgn-fDlFPR8=.css" type="text/css" integrity="sha256-M4BawzpX2gZqpVcQ1m+1u+phtpgCuUP8wgn+fDlFPR8=" />
-    <link rel="stylesheet" href="css/httpobs.0ZO4CwXBYkkdEkLRyFRfDtGxwN1l96hcZgkr5xtIeUo=.css" type="text/css" integrity="sha256-0ZO4CwXBYkkdEkLRyFRfDtGxwN1l96hcZgkr5xtIeUo=" />
+    <link rel="stylesheet" href="css/httpobs.lxbm1mcb54og69GP9qezO7VbfZtMLe9i_mebAJOqpVc=.css" type="text/css" integrity="sha256-lxbm1mcb54og69GP9qezO7VbfZtMLe9i/mebAJOqpVc=" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
@@ -144,7 +144,14 @@
                     <div class="panel-body">
                         <!-- Next steps -->
                         <div class="row hidden" id="next-steps">
-                            <div id="next-steps-https" class="hidden">Wondering where to start?<br><br>Protect your users from malware, tracking, and injected advertising by <a href="https://wiki.mozilla.org/Security/Server_Side_TLS">using HTTPS</a>.</div>
+                            <div id="next-steps-https" class="hidden">
+                                <p>Wondering where to start?</p>
+                                <p>Protect your users from malware, tracking, and injected advertising by using HTTPS.</p>
+                                <ul>
+                                  <li><a href="https://wiki.mozilla.org/Security/Server_Side_TLS">Mozilla TLS Guidelines</a></li>
+                                  <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
+                                </ul>
+                            </div>
                             <div id="next-steps-redirection" class="hidden">Hey, we noticed that your site is accessible over HTTPS, but still defaults to HTTP.<br><br><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Redirections">Redirecting to HTTPS</a> helps ensure that your users always get served a secure version of your site.</div>
                             <div id="next-steps-strict-transport-security" class="hidden">Great work using HTTPS! Using <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Strict_Transport_Security">HTTP Strict Transport Security can keep your users safe by ensuring that they never accidentally attempt to visit over HTTP.</div>
                             <div id="next-steps-cookies" class="hidden">Fantastic work with HTTPS and HSTS! Since you’re only allowing access over HTTPS, consider <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cookies">setting your cookies securely</a>, to protect against their transmission over HTTP.</div>
