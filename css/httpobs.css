@@ -400,3 +400,8 @@ sup, sub {
     margin-bottom: 11px;
     margin-top: 11px;
 }
+
+.flexboxwrapper {
+    align-items: stretch;
+    display: flex;
+}
