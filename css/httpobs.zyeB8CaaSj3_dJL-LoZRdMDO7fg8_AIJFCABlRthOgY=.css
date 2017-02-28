@@ -197,7 +197,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* bootstrap is so dumb here */
-#force-rescan+div.popover {
+.force-rescan+div.popover {
     color: black;
 }
 
