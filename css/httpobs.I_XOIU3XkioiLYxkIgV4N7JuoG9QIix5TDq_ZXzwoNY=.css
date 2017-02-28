@@ -385,8 +385,18 @@ sup, sub {
     margin-top: 1em;
 }
 
-/* redirection banner at the top */
-#redirect-banner a {
+/* redirection and next steps banners */
+#redirect-banner {
+    font-weight: bold;
+}
+
+#next-steps a, #redirect-banner a {
     color: white;
-    text-decoration: dotted underline white;
+    font-weight: bold;
+    text-decoration: dotted underline;
+}
+
+#next-steps {
+    margin-bottom: 11px;
+    margin-top: 11px;
 }

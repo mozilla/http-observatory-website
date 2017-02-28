@@ -94,6 +94,7 @@ var Observatory = {
 
     var lastScanDelta;
     var monospacedKeywords;
+    var nextStep;
     var importantGlyphs = '\ud83c\udf89\ud83c\udf89\ud83c\udf89';
     var responseHeaders = [];
 
@@ -266,6 +267,19 @@ var Observatory = {
       responseHeaders.push([header, value]);
     });
     Observatory.utils.tableify(responseHeaders, 'server-headers-table');
+
+    // let's try to give people a good first step on where they should go from these results
+    if (_.includes(['hsts-not-implemented-no-https', 'hsts-invalid-cert'],  // no https
+      results['strict-transport-security'].result)) {
+      nextStep = 'https';
+    } else if (_.includes(['redirection-missing', 'redirection-not-to-https', 'redirection-invalid-cert'],
+      results.redirection.result)) { nextStep = 'redirection'; }
+
+    if (nextStep) {
+      $('#next-steps, #next-steps-' + nextStep).removeClass('hidden');
+    }
+    // nextSteps.html(nextStep);
+    // nextSteps.removeClass('hidden');
 
     // show the scan results and remove the progress bar
     $('#scan-progress').hide();
