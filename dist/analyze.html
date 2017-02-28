@@ -16,11 +16,11 @@
     <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.7.min.M4BawzpX2gZqpVcQ1m-1u-phtpgCuUP8wgn-fDlFPR8=.css" type="text/css" integrity="sha256-M4BawzpX2gZqpVcQ1m+1u+phtpgCuUP8wgn+fDlFPR8=" />
-    <link rel="stylesheet" href="css/httpobs.ZJbB-OGvJYgsxS2jrt26rb672LngWpSl2UfODr4loAo=.css" type="text/css" integrity="sha256-ZJbB+OGvJYgsxS2jrt26rb672LngWpSl2UfODr4loAo=" />
+    <link rel="stylesheet" href="css/httpobs.I_XOIU3XkioiLYxkIgV4N7JuoG9QIix5TDq_ZXzwoNY=.css" type="text/css" integrity="sha256-I/XOIU3XkioiLYxkIgV4N7JuoG9QIix5TDq/ZXzwoNY=" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
-        <strong>You've found the Observatory development site. Were you looking for <a id="redirect-banner-url" href="https://observatory.mozilla.org">the official website</a>?</strong>
+        You've found the Observatory development site. Were you looking for <a id="redirect-banner-url" href="https://observatory.mozilla.org">the official website</a>?
     </div>
 
     <nav class="navbar navbar-default navbar-static-top">
@@ -76,6 +76,22 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Next steps -->
+    <div class="row">
+        <div class="alert alert-success hidden text-center col-xs-12 col-md-8 col-md-offset-2" id="next-steps">
+            <div id="next-steps-https" class="hidden">Wondering where to start?<br><br>Protect your users from malware, tracking, and injected advertising by <a href="https://wiki.mozilla.org/Security/Server_Side_TLS">using HTTPS</a>.</div>
+            <div id="next-steps-redirection" class="hidden">We’ve noticed that your site is accessible over HTTPS, but still defaults to HTTP.<br><br><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Redirections">Redirecting to HTTPS</a> helps ensure that your users always get served a secure version of your site.</div>
+            <div id="next-steps-strict-transport-security" class="hidden">Great work using HTTPS! Using <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Strict_Transport_Security">HTTP Strict Transport Security can keep your users safe by ensuring that they never accidentally attempt to visit over HTTP.</div>
+            <div id="next-steps-cookies" class="hidden">Fantastic work with HTTPS and HSTS! Since you’re only allowing access over HTTPS, consider <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cookies">setting your cookies securely</a>, to protect against their transmission over HTTP.</div>
+            <div id="next-steps-x-frame-options" class="hidden">What’s next, you ask? The <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Frame-Options">use of CSP’s <code>frame-ancestors</code> and <code>X-Frame-Options</code></a> is a simple and easy way to guard against clickjacking attacks.</div>
+            <div id="next-steps-x-content-type-options" class="hidden">Congratulations on your continued improvement! Using <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Content-Type-Options">X-Content-Type-Options</a> can protect your site from MIME-type confusion attacks.</div>
+            <div id="next-steps-content-security-policy" class="hidden">Keep up the great work! Did you know that a <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">strong Content Security Policy</a> can help protect your website against cross-site scripting attacks?</div>
+            <div id="next-steps-subresource-integrity" class="hidden">We noticed you’re using other origins to host your JavaScript code. Using <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Subresource_Integrity">Subresource Integrity</a> guarantees that you will stay safe even if the origin is compromised.</div>
+            <div id="next-steps-referrer-policy" class="hidden">You’re on the home stretch! The use of <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Referrer_Policy">Referrer Policy</a> can help protect the privacy of users on your website.</div>
+            <div id="next-steps-congratulations" class="hidden">Thank you for everything you're doing to keep the internet a safe, secure, and private place!</div>
         </div>
     </div>
 
@@ -794,7 +810,7 @@
     <script src="js/bootstrap-3.3.7.min.U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8="></script>
     <script src="js/lodash-4.16.4.min.2thRDsoFcq5cPnuOJsHa4x7hHK8naecMSs6zv0rIBOc=.js" integrity="sha256-2thRDsoFcq5cPnuOJsHa4x7hHK8naecMSs6zv0rIBOc="></script>
     <script src="js/moment-2.15.1.min.4PIvl58L9q7iwjT654TQJM-C_acEyoG738iL8B8nhXg=.js" integrity="sha256-4PIvl58L9q7iwjT654TQJM+C/acEyoG738iL8B8nhXg="></script>
-    <script src="js/httpobs.AktNYPMDv2zHvVufNWlOP9-qMKSYHyOlINgejUDPnrk=.js" integrity="sha256-AktNYPMDv2zHvVufNWlOP9+qMKSYHyOlINgejUDPnrk="></script>
+    <script src="js/httpobs.W65NPmZZAOzkNPpX-Pta5WNeDjTWAz588IV7i4ThdLM=.js" integrity="sha256-W65NPmZZAOzkNPpX+Pta5WNeDjTWAz588IV7i4ThdLM="></script>
     <script src="js/httpobs-utils.UCc_W6nOtS8ZqOwFH9fOAmLCodoyhdvZDLmwvrzMGNM=.js" integrity="sha256-UCc/W6nOtS8ZqOwFH9fOAmLCodoyhdvZDLmwvrzMGNM="></script>
     <script src="js/httpobs-third-party.FIA9KMCIIHehg6_s7Q7YmEKBHUPw9avLceRNLfalSio=.js" integrity="sha256-FIA9KMCIIHehg6/s7Q7YmEKBHUPw9avLceRNLfalSio="></script>
 </body>
