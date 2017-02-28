@@ -392,10 +392,10 @@ sup, sub {
 
 #redirect-banner a {
     color: white;
+    font-weight: bold;
 }
 
 #next-steps a, #redirect-banner a {
-    font-weight: bold;
     text-decoration: dotted underline;
 }
 
