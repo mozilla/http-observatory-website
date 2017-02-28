@@ -390,18 +390,22 @@ sup, sub {
     font-weight: bold;
 }
 
-#next-steps a, #redirect-banner a {
+#redirect-banner a {
     color: white;
+}
+
+#next-steps a, #redirect-banner a {
     font-weight: bold;
     text-decoration: dotted underline;
 }
 
 #next-steps {
-    margin-bottom: 11px;
-    margin-top: 11px;
+/*    margin-bottom: 11px;
+    margin-top: 11px;*/
 }
 
-.flexboxwrapper {
-    align-items: stretch;
+.equal, .equal > div[class*='col-'] {
+    display: -webkit-flex;
     display: flex;
+    flex: 1 auto;
 }
