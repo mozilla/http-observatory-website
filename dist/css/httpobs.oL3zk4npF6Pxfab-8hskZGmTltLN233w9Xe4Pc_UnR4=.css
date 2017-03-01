@@ -399,11 +399,6 @@ sup, sub {
     text-decoration: dotted underline;
 }
 
-#next-steps {
-/*    margin-bottom: 11px;
-    margin-top: 11px;*/
-}
-
 .equal, .equal > div[class*='col-'] {
     display: -webkit-flex;
     display: flex;

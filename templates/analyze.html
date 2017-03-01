@@ -91,7 +91,7 @@
                         <div class="row hidden" id="next-steps">
                             <div id="next-steps-cross-origin-resource-sharing" class="hidden">
                                 <p>Wondering where to start?</p>
-                                <p>Without HTTPS, your site's visitors are vulnerable to tracking, malware, and injected advertising. Many services providers and certificate authorities provide free digital certificates to help you protect them.</p>
+                                <p>Your site seems to be unavailable over HTTPS. Without HTTPS, your site's visitors are vulnerable to tracking, malware, and injected advertising. Many services providers and certificate authorities provide free digital certificates to help you protect them.</p>
                                 <ul>
                                     <li><a href="https://wiki.mozilla.org/Security/Server_Side_TLS">Mozilla TLS Guidelines</a></li>
                                     <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
@@ -99,7 +99,8 @@
                             </div>
                             <div id="next-steps-https" class="hidden">
                                 <p>Wondering where to start?</p>
-                                <p>Without HTTPS, your site's visitors are vulnerable to tracking, malware, and injected advertising. Many services providers and certificate authorities provide free digital certificates to help you protect them.</p>
+                                <p>Adding HTTPS protects your site's visitors from tracking, malware, and injected advertising.</p>
+                                <p>Many services providers and certificate authorities now provide free HTTPS and digital certificates to make this as painless as possible!</p>
                                 <ul>
                                     <li><a href="https://wiki.mozilla.org/Security/Server_Side_TLS">Mozilla TLS Guidelines</a></li>
                                     <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
@@ -164,6 +165,15 @@
                                 <p>The use of Referrer Policy can help protect the privacy of your users by restricting the information that browsers provide when accessing resources kept on other sites.</p>
                                 <ul>
                                     <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Referrer_Policy">Mozilla Web Security Guidelines (Referrer Policy)</a></li>
+                                </ul>
+                            </div>
+                            <div id="next-steps-content-security-policy-unsafe-inline-in-style-src-only" class="hidden">
+                                <p>Almost there!</p>
+                                <p>Your current CSP policy allows the use of <code>'unsafe-inline'</code> inside of <code>style-src</code>. Moving <code>style</code> attributes into external stylesheets not only makes you safer, but also makes your code easier to maintain.</p>
+                                <ul>
+                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
+                                    <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
+                                    <li><a href="http://www.cspplayground.com/">CSP Playground</a></li>
                                 </ul>
                             </div>
                             <div id="next-steps-congratulations" class="hidden">
