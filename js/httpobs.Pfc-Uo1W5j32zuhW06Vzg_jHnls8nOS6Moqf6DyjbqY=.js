@@ -271,6 +271,10 @@ var Observatory = {
     // let's try to give people a good first step on where they should go from these results
     // TODO: find a cleaner way of doing this
     if (_.includes([
+      'cross-origin-resource-sharing-implemented-with-universal-access'],
+      results['cross-origin-resource-sharing'].result)) {
+      nextStep = 'cross-origin-resource-sharing';
+    } else if (_.includes([
       'hsts-not-implemented-no-https',
       'hsts-invalid-cert'],  // no https
       results['strict-transport-security'].result)) {
