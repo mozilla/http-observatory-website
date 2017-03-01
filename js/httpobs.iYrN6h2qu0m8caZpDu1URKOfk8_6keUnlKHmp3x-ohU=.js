@@ -322,16 +322,17 @@ var Observatory = {
       'referrer-policy-headeer-invalid'],
       results['referrer-policy'].result)) {
       nextStep = 'referrer-policy';
+    } else if (_.includes([
+      'csp-implemented-with-unsafe-inline-in-style-src-only'],
+      results['content-security-policy'].result)) {
+      nextStep = 'content-security-policy-unsafe-inline-in-style-src-only';
     }
-
 
     $('#next-steps, #next-steps-' + nextStep).removeClass('hidden');
 
     if (nextStep === 'congratulations') {
       $('#next-steps-initiate-rescan').addClass('hidden');
     }
-    // nextSteps.html(nextStep);
-    // nextSteps.removeClass('hidden');
 
     // show the scan results and remove the progress bar
     $('#scan-progress').hide();
