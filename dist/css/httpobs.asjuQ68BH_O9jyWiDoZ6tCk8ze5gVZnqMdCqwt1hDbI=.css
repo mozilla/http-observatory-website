@@ -179,6 +179,10 @@ body {
     padding-right: 1em !important;
 }
 
+.p-l-0 {
+    padding-left: 0em !important;
+}
+
 #server-headers {
     margin-bottom: 5em;
 }
@@ -210,6 +214,10 @@ div.large-progress-bar-condensed + div.row {
 .summary tr td:nth-child(2) {
     white-space: pre-wrap;
     width: 100%;
+}
+
+.summary-condensed tr td:nth-child(1) {
+    padding-right: 1em;
 }
 
 #scan-progress, #scan-summary {
