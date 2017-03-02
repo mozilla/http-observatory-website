@@ -130,6 +130,17 @@ var Observatory = {
     scan.start_time_l = Observatory.utils.toLocalTime(Observatory.state.scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
     scan.end_time_l = Observatory.utils.toLocalTime(Observatory.state.scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
 
+    // store whether or not they have HTTPS, in the scan object
+    if (_.includes([
+      'hsts-not-implemented-no-https',
+      'hsts-invalid-cert'],  // no https
+      results['strict-transport-security'].result)) {
+      scan.hasHttps = false;
+    } else {
+      scan.hasHttps = true;
+    }
+    scan.scheme = scan.hasHttps ? 'https' : 'http';
+
     // enable the rescan button if the test was over 315 seconds ago,
     // otherwise enable it at that point
     lastScanDelta = moment() - moment.utc(scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
@@ -154,6 +165,13 @@ var Observatory = {
       $('#tests-contribute-row').remove();
       scan.tests_passed -= 1;
       scan.tests_quantity -= 1;
+    }
+
+    // update the links for the Google CSP Evaluator, if they have a CSP policy
+    if (results['content-security-policy'].result !== 'csp-not-implemented') {
+      $('.google-csp-evaluator-link').each(function f() {
+        $(this).attr('href', $(this).attr('href') + '?csp=' + scan.scheme + '://' + scan.target);
+      });
     }
 
     // insert in the grade and summary results
@@ -274,10 +292,7 @@ var Observatory = {
       'cross-origin-resource-sharing-implemented-with-universal-access'],
       results['cross-origin-resource-sharing'].result)) {
       nextStep = 'cross-origin-resource-sharing';
-    } else if (_.includes([
-      'hsts-not-implemented-no-https',
-      'hsts-invalid-cert'],  // no https
-      results['strict-transport-security'].result)) {
+    } else if (!scan.hasHttps) {
       nextStep = 'https';
     } else if (_.includes([
       'redirection-missing',
