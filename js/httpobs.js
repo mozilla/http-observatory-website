@@ -371,6 +371,9 @@ var Observatory = {
         entry.grade]);
     });
 
+    // sort newest first
+    rows.reverse();
+
     Observatory.utils.tableify(rows, 'host-history-table');
 
     // unhide the host history section
