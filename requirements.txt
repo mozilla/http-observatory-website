@@ -1,0 +1,2 @@
+Jinja2==2.9.6
+livereload==2.5.1
