@@ -224,10 +224,6 @@ div.large-progress-bar-condensed + div.row {
     margin-top: 1.2em;
 }
 
-#host-history table, #scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
-    margin-bottom: 0;
-}
-
 #test-scores .glyphicon, #tlsobservatory-ciphers-table .glyphicon {
     display: table-cell;  /* override inline-block */
 }
