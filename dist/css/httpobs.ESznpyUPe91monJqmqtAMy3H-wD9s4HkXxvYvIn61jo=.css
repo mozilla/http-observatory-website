@@ -55,6 +55,12 @@ body {
         display: flex;
         flex: 1 auto;
     }
+
+    /*There needs to be some margin so that the tables do not show a scrolbar*/
+    #host-history table, #scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
+        margin-bottom: 0px;
+    }
+
 }
 
 /* home page stuff */
