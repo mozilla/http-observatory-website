@@ -49,6 +49,12 @@ body {
     #observatory-wordmark {
         height: 2.5em;
     }
+
+    .equal, .equal > div[class*='col-'] {
+        display: -webkit-flex;
+        display: flex;
+        flex: 1 auto;
+    }
 }
 
 /* home page stuff */
@@ -401,10 +407,4 @@ sup, sub {
 
 #next-steps a, #redirect-banner a {
     text-decoration: dotted underline;
-}
-
-.equal, .equal > div[class*='col-'] {
-    display: -webkit-flex;
-    display: flex;
-    flex: 1 auto;
 }
