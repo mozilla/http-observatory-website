@@ -21,7 +21,8 @@ $ git clone -b gh-pages https://github.com/mozilla/http-observatory-website.git
 However, it comes with a built-in web server that will automatically regenerate the SRI hashes:
 
 ```bash
-$ git clone gh-pages https://github.com/mozilla/http-observatory-website.git
+$ git clone https://github.com/mozilla/http-observatory-website.git
+$ pip install -r requirements.txt
 $ make devserver
 ```
 
