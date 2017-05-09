@@ -49,6 +49,18 @@ body {
     #observatory-wordmark {
         height: 2.5em;
     }
+
+    .equal, .equal > div[class*='col-'] {
+        display: -webkit-flex;
+        display: flex;
+        flex: 1 auto;
+    }
+
+    /*There needs to be some margin so that the tables do not show a scrolbar*/
+    #host-history table, #scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
+        margin-bottom: 0px;
+    }
+
 }
 
 /* home page stuff */
@@ -222,10 +234,6 @@ div.large-progress-bar-condensed + div.row {
 
 #scan-progress, #scan-summary {
     margin-top: 1.2em;
-}
-
-#host-history table, #scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
-    margin-bottom: 0;
 }
 
 #test-scores .glyphicon, #tlsobservatory-ciphers-table .glyphicon {
@@ -405,10 +413,4 @@ sup, sub {
 
 #next-steps a, #redirect-banner a {
     text-decoration: dotted underline;
-}
-
-.equal, .equal > div[class*='col-'] {
-    display: -webkit-flex;
-    display: flex;
-    flex: 1 auto;
 }
