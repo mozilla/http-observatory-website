@@ -56,9 +56,18 @@ body {
         flex: 1 auto;
     }
 
-    /*There needs to be some margin so that the tables do not show a scrolbar*/
+    /* There needs to be some margin so that the tables do not show a scrolbar */
     #host-history table, #scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
         margin-bottom: 0px;
+    }
+
+    /* fix large gap between sections */
+    #recommended-change {
+        min-width: 360px;
+    }
+
+    #scan-summary {
+        width: 95%;
     }
 
 }
@@ -76,6 +85,31 @@ body {
     margin-top: .8em;
 }
 
+
+/* make tabs look niceish */
+/*.nav-tabs {
+    border-bottom: solid 2px #dddddd;
+}
+
+.nav-tabs li {
+    margin-bottom: -2px;
+}*/
+
+.navbar {
+    border: 0;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #4582ec;
+    border-color: #4582ec;
+    border-width: 3px 3px 0 3px;
+    color: white;
+    font-weight: 600;
+}
+
+.tab-content {
+    margin-top: 1.2em;
+}
 
 /* grades */
 .grade-container {
@@ -230,10 +264,6 @@ div.large-progress-bar-condensed + div.row {
 
 .summary-condensed tr td:nth-child(1) {
     padding-right: 1em;
-}
-
-#scan-progress, #scan-summary {
-    margin-top: 1.2em;
 }
 
 #test-scores .glyphicon, #tlsobservatory-ciphers-table .glyphicon {

@@ -16,7 +16,7 @@
     <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.7.min.M4BawzpX2gZqpVcQ1m-1u-phtpgCuUP8wgn-fDlFPR8=.css" type="text/css" integrity="sha256-M4BawzpX2gZqpVcQ1m+1u+phtpgCuUP8wgn+fDlFPR8=" />
-    <link rel="stylesheet" href="css/httpobs.ESznpyUPe91monJqmqtAMy3H-wD9s4HkXxvYvIn61jo=.css" type="text/css" integrity="sha256-ESznpyUPe91monJqmqtAMy3H+wD9s4HkXxvYvIn61jo=" />
+    <link rel="stylesheet" href="css/httpobs.zn1QzDdSjk83Ws3rsYd95m2-Y_vkKKAGQV8y0aGjmoA=.css" type="text/css" integrity="sha256-zn1QzDdSjk83Ws3rsYd95m2+Y/vkKKAGQV8y0aGjmoA=" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
@@ -81,818 +81,815 @@
 
     <!-- HTTP Observatory Scan Results -->
     <div class="row" id="scan-results">
-    <!--
-        <div class="page-header no-margin-top">
-            <h1 class="no-margin-top">HTTP Observatory</h1>
-        </div> -->
-        <div class="row equal">
-            <div class="col-md-6">
-                <div class="panel panel-primary summary summary-condensed" id="scan-summary">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#tab-http-observatory" aria-controls="tab-http-observatory" role="tab" data-toggle="tab">HTTP Observatory</a></li>
+            <li role="presentation"><a href="#tab-tls-observatory" aria-controls="tab-tls-observatory" role="tab" data-toggle="tab">TLS Observatory</a></li>
+            <li role="presentation"><a href="#tab-third-party-tests" aria-controls="tab-third-party-tests" role="tab" data-toggle="tab">Third-party Tests</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab-http-observatory">
+                <div class="row equal">
+                    <div class="col-md-6">
+                        <div class="panel panel-primary summary summary-condensed" id="scan-summary">
+                            <div class="panel-heading">
+                                <span class="h3">Scan Summary</span>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <span class="grade-container text-center" id="scan-grade-container">
+                                            <span class="grade-letter" id="scan-grade-letter"></span>
+                                            <sup class="grade-letter-modifier" id="scan-grade-modifier"></sup>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-8 p-l-0 table-responsive">
+                                        <table class="table table-striped table-condensed pull-left scan-summary-table">
+                                            <tr>
+                                                <td>Host:</td>
+                                                <td><span class="hidden" id="scan-target-container"><span id="scan-target"></span> &rarr; </span><span id="scan-hostname"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Scan ID #:</td>
+                                                <td><span id="scan-scan_id"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Start Time:</td>
+                                                <td id="scan-start_time_l"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Duration:</td>
+                                                <td><span id="scan-test_duration"></span> seconds</td>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Score:</td>
+                                                <td><span id="scan-score"></span>/100</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tests Passed:</td>
+                                                <td><span id="scan-tests_passed"></span>/<span id="scan-tests_quantity"></span></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-success summary" id="recommended-change">
+                            <div class="panel-heading">
+                                <span class="h3">Recommended Change</span>
+                                <button class="btn btn-default pull-right expandy-panel-button disabled force-rescan" type="button" data-toggle="popover" title="Make some improvements?" data-content="The HTTP Observatory allows you to scan your site every five minutes.">Initiate Rescan</button>
+                            </div>
+                            <div class="panel-body">
+                                <!-- Next steps -->
+                                <div class="row hidden" id="next-steps">
+                                    <div id="next-steps-cross-origin-resource-sharing" class="hidden">
+                                        <p>Your site is configured with extremely broad resource sharing permissions.</p>
+                                        <p>This can be dangerous, and is possibly not what was intended.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cross-origin_Resource_Sharing">Mozilla Web Security Guidelines (cross-origin resource sharing)</a></li>
+                                            <li><a href="https://pokeinthe.io/2016/11/29/understanding-cors/">Understanding CORS</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-https" class="hidden">
+                                        <p>Wondering where to start?</p>
+                                        <p>Adding HTTPS protects your site's visitors from tracking, malware, and injected advertising.</p>
+                                        <p>Many services providers and certificate authorities now provide free HTTPS and digital certificates to make this as painless as possible!</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Server_Side_TLS">Mozilla TLS Guidelines</a></li>
+                                            <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-redirection" class="hidden">
+                                        <p>We noticed that your site is accessible over HTTPS, but still defaults to HTTP.</p>
+                                        <p>Automatically redirecting from HTTP to HTTPS helps ensure that your users get served a secure version of your site.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Redirections">Mozilla Web Security Guidelines (redirections)</a></li>
+                                            <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-strict-transport-security" class="hidden">
+                                        <p>Fantastic work using HTTPS! Did you know that you can ensure users never visit your site over HTTP accidentally?</p>
+                                        <p>HTTP Strict Transport Security tells web browsers to only access your site over HTTPS in the future, even if the user attempts to visit over HTTP or clicks an <code>http://</code> link.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Strict_Transport_Security">Mozilla Web Security Guidelines (HSTS)</a></li>
+                                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">MDN on HTTP Strict Transport Security</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-cookies" class="hidden">
+                                        <p>You're doing a great job with HTTPS and HTTP Strict Transport Security!</p>
+                                        <p>Since you’re now only allowing connections over HTTPS, consider using the <code>Secure</code> flag to protect your cookies against their accidental transmission over HTTP. Furthermore, the use of <code>HttpOnly</code> protects your session cookies from malicious JavaScript.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cookies">Mozilla Web Security Guidelines (cookies)</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-x-frame-options" class="hidden">
+                                        <p>What’s a good next step?</p>
+                                        <p>The use of the <code>X-Frame-Options</code> header and Content Security Policy’s <code>frame-ancestors</code> directive are a simple and easy way to protect your site against clickjacking attacks.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Frame-Options">Mozilla Web Security Guidelines (X-Frame-Options)</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-x-content-type-options" class="hidden">
+                                        <p>You’re halfway finished! Nice job!</p>
+                                        <p>The <code>X-Content-Type-Options</code> header tells browsers to stop automatically detecting the contents of files. This protects against attacks where they're tricked into incorrectly interpreting files as JavaScript.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Content-Type-Options">Mozilla Web Security Guidelines (X-Content-Type-Options)</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-content-security-policy" class="hidden">
+                                        <p>You’re doing a wonderful job so far!</p>
+                                        <p>Did you know that a strong Content Security Policy (CSP) policy can help protect your website against malicious cross-site scripting attacks?</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
+                                            <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
+                                            <li><a class="google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Google CSP Evaluator</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-subresource-integrity" class="hidden">
+                                        <p>We’ve noticed you’re using other domains to host your JavaScript code.</p>
+                                        <p>Subresource Integrity guarantees that your site will stay safe even if one of those domains is compromised.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Subresource_Integrity">Mozilla Web Security Guidelines (Subresource Integrity)</a></li>
+                                            <li><a href="https://www.srihash.org/">SRI Hash Generator</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-referrer-policy" class="hidden">
+                                        <p>You’re on the home stretch!</p>
+                                        <p>The use of Referrer Policy can help protect the privacy of your users by restricting the information that browsers provide when accessing resources kept on other sites.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Referrer_Policy">Mozilla Web Security Guidelines (Referrer Policy)</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-content-security-policy-unsafe-inline-in-style-src-only" class="hidden">
+                                        <p>Almost there!</p>
+                                        <p>Your current CSP policy allows the use of <code>'unsafe-inline'</code> inside of <code>style-src</code>. Moving <code>style</code> attributes into external stylesheets not only makes you safer, but also makes your code easier to maintain.</p>
+                                        <ul>
+                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
+                                            <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
+                                            <li><a class="google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Google CSP Evaluator</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="next-steps-congratulations" class="hidden">
+                                        <p class="text-center"><em>&#x1F389;&#x1F389;&#x1F389;&nbsp; We don't have any! &nbsp;&#x1F389;&#x1F389;&#x1F389;</em></p>
+                                        <p><hr>Make sure to check back occasionally to ensure that your website is keeping up with the latest in web security standards.</p>
+                                        <p>In the meantime, thanks for for everything you're doing to keep the internet a safe, secure, and private place!</p>
+                                    </div>
+                                    <div id="next-steps-initiate-rescan">
+                                        <hr>
+                                        <p>Once you've successfully completed your change, click Initiate Rescan for the next piece of advice.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HTTP Observatory test results -->
+                <div class="panel panel-primary" id="test-scores">
+                    <div class="panel-heading">
+                        <span class="h3">Test Scores</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left scan-summary-table">
+                                <tr>
+                                    <th>Test</th>
+                                    <th>Pass</th>
+                                    <th>Score</th>
+                                    <th>Explanation</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Content Security Policy</a></td>
+                                    <td class="glyphicon" id="tests-content-security-policy-pass" aria-hidden="true"></td>
+                                    <td id="tests-content-security-policy-score"></td>
+                                    <td id="tests-content-security-policy-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Content Security Policy" data-content="Content Security Policy (CSP) can prevent a wide range of cross-site scripting (XSS) and clickjacking attacks against your website."></span></td>
+                                </tr>
+                                <tr id="tests-contribute-row">
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#contribute.json">Contribute.json</a></td>
+                                    <td class="glyphicon" id="tests-contribute-pass" aria-hidden="true"></td>
+                                    <td id="tests-contribute-score"></td>
+                                    <td id="tests-contribute-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="contribute.json" data-content="Having a contribute.json file on the root your website allows Mozilla's information security team to more quickly triage incoming security bugs."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cookies">Cookies</a></td>
+                                    <td class="glyphicon" id="tests-cookies-pass" aria-hidden="true"></td>
+                                    <td id="tests-cookies-score"></td>
+                                    <td id="tests-cookies-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cookies" data-content="Using cookies attributes such as Secure and HttpOnly can protect users from having their personal information stolen."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cross-origin_Resource_Sharing">Cross-origin Resource Sharing</a></td>
+                                    <td class="glyphicon" id="tests-cross-origin-resource-sharing-pass" aria-hidden="true"></td>
+                                    <td id="tests-cross-origin-resource-sharing-score"></td>
+                                    <td id="tests-cross-origin-resource-sharing-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cross-origin Resource Sharing" data-content="Incorrectly configured CORS settings can allow foreign sites to read your site's contents, possibly allowing them access to private user information."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Public_Key_Pinning">HTTP Public Key Pinning</a></td>
+                                    <td class="glyphicon" id="tests-public-key-pinning-pass" aria-hidden="true"></td>
+                                    <td id="tests-public-key-pinning-score"></td>
+                                    <td id="tests-public-key-pinning-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="HTTP Public Key Pinning" data-content="HTTP Public Key Pinning (HPKP) binds a site to a specific combination of certificate authorities and/or keys, protecting against the unauthorized issuance of certificates."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Strict_Transport_Security">HTTP Strict Transport Security</a></td>
+                                    <td class="glyphicon" id="tests-strict-transport-security-pass" aria-hidden="true"></td>
+                                    <td id="tests-strict-transport-security-score"></td>
+                                    <td id="tests-strict-transport-security-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="HTTP Strict Transport Security" data-content="HTTP Strict Transport Security (HSTS) instructs web browsers to visit your site only over HTTPS."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Redirections">Redirection</a></td>
+                                    <td class="glyphicon" id="tests-redirection-pass" aria-hidden="true"></td>
+                                    <td id="tests-redirection-score"></td>
+                                    <td id="tests-redirection-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Redirection" data-content="Properly configured redirections from HTTP to HTTPS allow browsers to correctly apply HTTP Strict Transport Security (HSTS) settings."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Referrer_Policy">Referrer Policy</a></td>
+                                    <td class="glyphicon" id="tests-referrer-policy-pass" aria-hidden="true"></td>
+                                    <td id="tests-referrer-policy-score"></td>
+                                    <td id="tests-referrer-policy-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Referrer Policy" data-content="Referrer Policy can protect the privacy of your users by restricting the contents of the HTTP Referer header."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Subresource_Integrity">Subresource Integrity</a></td>
+                                    <td class="glyphicon" id="tests-subresource-integrity-pass" aria-hidden="true"></td>
+                                    <td id="tests-subresource-integrity-score"></td>
+                                    <td id="tests-subresource-integrity-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Subresource Integrity" data-content="Subresource Integrity protects against JavaScript files and stylesheets stored on content delivery networks (CDNs) from being maliciously modified."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Content-Type-Options">X-Content-Type-Options</a></td>
+                                    <td class="glyphicon" id="tests-x-content-type-options-pass" aria-hidden="true"></td>
+                                    <td id="tests-x-content-type-options-score"></td>
+                                    <td id="tests-x-content-type-options-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-Content-Type-Options" data-content="X-Content-Type-Options instructs browsers to not guess the MIME types of files that the web server is delivering."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Frame-Options">X-Frame-Options</a></td>
+                                    <td class="glyphicon" id="tests-x-frame-options-pass" aria-hidden="true"></td>
+                                    <td id="tests-x-frame-options-score"></td>
+                                    <td id="tests-x-frame-options-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-Frame-Options" data-content="X-Frame-Options controls whether your site can be framed, protecting against clickjacking attacks. It has been superseded by Content Security Policy's <code>frame-ancestors</code> directive, but should still be used for now."></span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-XSS-Protection">X-XSS-Protection</a></td>
+                                    <td class="glyphicon" id="tests-x-xss-protection-pass" aria-hidden="true"></td>
+                                    <td id="tests-x-xss-protection-score"></td>
+                                    <td id="tests-x-xss-protection-score-description"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-XSS-Protection" data-content="X-XSS-Protection protects against reflected cross-site scripting (XSS) attacks in IE and Chrome, but has been superseded by Content Security Policy. It can still be used to protect users of older web browsers."></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HTTP Observatory host history results -->
+                <div class="panel panel-primary" id="host-history">
+                    <div class="panel-heading">
+                        <span class="h3">Grade History</span>
+                        <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#host-history-panel-body" aria-expanded="false" aria-controls="host-history-panel-body">Click to Expand</button>
+                    </div>
+                    <div class="panel-body collapse" id="host-history-panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left" id="host-history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Score</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HTTP Observatory raw test results -->
+                <div class="panel panel-primary" id="server-headers">
+                    <div class="panel-heading">
+                        <span class="h3">Raw Server Headers</span>
+                        <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#server-headers-panel-body" aria-expanded="false" aria-controls="server-headers-panel-body">Click to Expand</button>
+                    </div>
+                    <div class="panel-body collapse" id="server-headers-panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left" id="server-headers-table">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- TLS Observatory -->
+        <div role="tabpanel" class="tab-pane" id="tab-tls-observatory">
+            <div id="tlsobservatory">
+                <div class="panel panel-primary summary" id="tlsobservatory-summary">
                     <div class="panel-heading">
                         <span class="h3">Scan Summary</span>
                     </div>
                     <div class="panel-body">
+                        <div class="progress large-progress-bar large-progress-bar-condensed" id="tlsobservatory-summary-progress-bar">
+                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="tlsobservatory-summary-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                                PENDING (This may take several minutes)
+                            </div>
+                        </div>
+
                         <div class="row">
-                            <div class="col-md-4">
-                                <span class="grade-container text-center" id="scan-grade-container">
-                                    <span class="grade-letter" id="scan-grade-letter"></span>
-                                    <sup class="grade-letter-modifier" id="scan-grade-modifier"></sup>
+                            <div class="col-md-2">
+                                <span class="grade-container text-center" id="tlsobservatory-summary-grade-container">
+                                    <span class="grade-letter" id="tlsobservatory-summary-grade-letter"></span>
+                                    <sup class="grade-letter-modifier" id="tlsobservatory-summary-grade-modifier"></sup>
                                 </span>
                             </div>
-                            <div class="col-md-8 p-l-0 table-responsive">
-                                <table class="table table-striped table-condensed pull-left scan-summary-table">
+                            <div class="col-md-10 table-responsive">
+                                <table class="table table-striped table-condensed pull-left tlsobservatory-summary-summary-table">
                                     <tr>
                                         <td>Host:</td>
-                                        <td><span class="hidden" id="scan-target-container"><span id="scan-target"></span> &rarr; </span><span id="scan-hostname"></span></td>
+                                        <td><span id="tlsobservatory-summary-target"></span> <span class="deemphasize">(<span id="tlsobservatory-summary-ip"></span>)</span></td>
                                     </tr>
                                     <tr>
                                         <td>Scan ID #:</td>
-                                        <td><span id="scan-scan_id"></span></td>
+                                        <td id="tlsobservatory-summary-scan_id"></td>
                                     </tr>
                                     <tr>
-                                        <td>Start Time:</td>
-                                        <td id="scan-start_time_l"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Duration:</td>
-                                        <td><span id="scan-test_duration"></span> seconds</td>
+                                        <td>End Time:</td>
+                                        <td id="tlsobservatory-summary-end_time_l"></td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                     </tr>
+                                    <tr>
+                                        <td><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Compatibility Level:</a></td>
+                                        <td id="tlsobservatory-summary-mozilla_configuration_level_description"></td>
+                                    </tr>
+                                    <!--
                                     <tr>
                                         <td>Score:</td>
-                                        <td><span id="scan-score"></span>/100</td>
+                                        <td><span id="tlsobservatory-summary-score"></span>/100</td>
+                                    </tr>
+                                    -->
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
                                     </tr>
                                     <tr>
-                                        <td>Tests Passed:</td>
-                                        <td><span id="scan-tests_passed"></span>/<span id="scan-tests_quantity"></span></td>
+                                      <td>Certificate Explainer:</td>
+                                      <td id="tlsobservatory-summary-explainer_url"></td>
                                     </tr>
+    <!--                            <tr>
+                                        <td>Certificate Results (JSON):</td>
+                                        <td id="tlsobservatory-summary-certificate_url"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Scan Results (JSON):</td>
+                                        <td id="tlsobservatory-summary-results_url"></td>
+                                    </tr> -->
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-success summary" id="scan-summary">
+
+                <!-- TLS Observatory certificate panel -->
+                <div class="panel panel-primary hide" id="tlsobservatory-certificate">
                     <div class="panel-heading">
-                        <span class="h3">Recommended Change</span>
-                        <button class="btn btn-default pull-right expandy-panel-button disabled force-rescan" type="button" data-toggle="popover" title="Make some improvements?" data-content="The HTTP Observatory allows you to scan your site every five minutes.">Initiate Rescan</button>
+                        <span class="h3">Certificate Information</span>
                     </div>
                     <div class="panel-body">
-                        <!-- Next steps -->
-                        <div class="row hidden" id="next-steps">
-                            <div id="next-steps-cross-origin-resource-sharing" class="hidden">
-                                <p>Your site is configured with extremely broad resource sharing permissions.</p>
-                                <p>This can be dangerous, and is possibly not what was intended.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cross-origin_Resource_Sharing">Mozilla Web Security Guidelines (cross-origin resource sharing)</a></li>
-                                    <li><a href="https://pokeinthe.io/2016/11/29/understanding-cors/">Understanding CORS</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-https" class="hidden">
-                                <p>Wondering where to start?</p>
-                                <p>Adding HTTPS protects your site's visitors from tracking, malware, and injected advertising.</p>
-                                <p>Many services providers and certificate authorities now provide free HTTPS and digital certificates to make this as painless as possible!</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Server_Side_TLS">Mozilla TLS Guidelines</a></li>
-                                    <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-redirection" class="hidden">
-                                <p>We noticed that your site is accessible over HTTPS, but still defaults to HTTP.</p>
-                                <p>Automatically redirecting from HTTP to HTTPS helps ensure that your users get served a secure version of your site.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Redirections">Mozilla Web Security Guidelines (redirections)</a></li>
-                                    <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-strict-transport-security" class="hidden">
-                                <p>Fantastic work using HTTPS! Did you know that you can ensure users never visit your site over HTTP accidentally?</p>
-                                <p>HTTP Strict Transport Security tells web browsers to only access your site over HTTPS in the future, even if the user attempts to visit over HTTP or clicks an <code>http://</code> link.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Strict_Transport_Security">Mozilla Web Security Guidelines (HSTS)</a></li>
-                                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">MDN on HTTP Strict Transport Security</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-cookies" class="hidden">
-                                <p>You're doing a great job with HTTPS and HTTP Strict Transport Security!</p>
-                                <p>Since you’re now only allowing connections over HTTPS, consider using the <code>Secure</code> flag to protect your cookies against their accidental transmission over HTTP. Furthermore, the use of <code>HttpOnly</code> protects your session cookies from malicious JavaScript.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cookies">Mozilla Web Security Guidelines (cookies)</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-x-frame-options" class="hidden">
-                                <p>What’s a good next step?</p>
-                                <p>The use of the <code>X-Frame-Options</code> header and Content Security Policy’s <code>frame-ancestors</code> directive are a simple and easy way to protect your site against clickjacking attacks.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Frame-Options">Mozilla Web Security Guidelines (X-Frame-Options)</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-x-content-type-options" class="hidden">
-                                <p>You’re halfway finished! Nice job!</p>
-                                <p>The <code>X-Content-Type-Options</code> header tells browsers to stop automatically detecting the contents of files. This protects against attacks where they're tricked into incorrectly interpreting files as JavaScript.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Content-Type-Options">Mozilla Web Security Guidelines (X-Content-Type-Options)</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-content-security-policy" class="hidden">
-                                <p>You’re doing a wonderful job so far!</p>
-                                <p>Did you know that a strong Content Security Policy (CSP) policy can help protect your website against malicious cross-site scripting attacks?</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
-                                    <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
-                                    <li><a class="google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Google CSP Evaluator</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-subresource-integrity" class="hidden">
-                                <p>We’ve noticed you’re using other domains to host your JavaScript code.</p>
-                                <p>Subresource Integrity guarantees that your site will stay safe even if one of those domains is compromised.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Subresource_Integrity">Mozilla Web Security Guidelines (Subresource Integrity)</a></li>
-                                    <li><a href="https://www.srihash.org/">SRI Hash Generator</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-referrer-policy" class="hidden">
-                                <p>You’re on the home stretch!</p>
-                                <p>The use of Referrer Policy can help protect the privacy of your users by restricting the information that browsers provide when accessing resources kept on other sites.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Referrer_Policy">Mozilla Web Security Guidelines (Referrer Policy)</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-content-security-policy-unsafe-inline-in-style-src-only" class="hidden">
-                                <p>Almost there!</p>
-                                <p>Your current CSP policy allows the use of <code>'unsafe-inline'</code> inside of <code>style-src</code>. Moving <code>style</code> attributes into external stylesheets not only makes you safer, but also makes your code easier to maintain.</p>
-                                <ul>
-                                    <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
-                                    <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
-                                    <li><a class="google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Google CSP Evaluator</a></li>
-                                </ul>
-                            </div>
-                            <div id="next-steps-congratulations" class="hidden">
-                                <p class="text-center"><em>&#x1F389;&#x1F389;&#x1F389;&nbsp; We don't have any! &nbsp;&#x1F389;&#x1F389;&#x1F389;</em></p>
-                                <p><hr>Make sure to check back occasionally to ensure that your website is keeping up with the latest in web security standards.</p>
-                                <p>In the meantime, thanks for for everything you're doing to keep the internet a safe, secure, and private place!</p>
-                            </div>
-                            <div id="next-steps-initiate-rescan">
-                                <hr>
-                                <p>Once you've successfully completed your change, click Initiate Rescan for the next piece of advice.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- HTTP Observatory test results -->
-        <div class="panel panel-primary" id="test-scores">
-            <div class="panel-heading">
-                <span class="h3">Test Scores</span>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-condensed pull-left scan-summary-table">
-                        <tr>
-                            <th>Test</th>
-                            <th>Pass</th>
-                            <th>Score</th>
-                            <th>Explanation</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Content Security Policy</a></td>
-                            <td class="glyphicon" id="tests-content-security-policy-pass" aria-hidden="true"></td>
-                            <td id="tests-content-security-policy-score"></td>
-                            <td id="tests-content-security-policy-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Content Security Policy" data-content="Content Security Policy (CSP) can prevent a wide range of cross-site scripting (XSS) and clickjacking attacks against your website."></span></td>
-                        </tr>
-                        <tr id="tests-contribute-row">
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#contribute.json">Contribute.json</a></td>
-                            <td class="glyphicon" id="tests-contribute-pass" aria-hidden="true"></td>
-                            <td id="tests-contribute-score"></td>
-                            <td id="tests-contribute-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="contribute.json" data-content="Having a contribute.json file on the root your website allows Mozilla's information security team to more quickly triage incoming security bugs."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cookies">Cookies</a></td>
-                            <td class="glyphicon" id="tests-cookies-pass" aria-hidden="true"></td>
-                            <td id="tests-cookies-score"></td>
-                            <td id="tests-cookies-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cookies" data-content="Using cookies attributes such as Secure and HttpOnly can protect users from having their personal information stolen."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cross-origin_Resource_Sharing">Cross-origin Resource Sharing</a></td>
-                            <td class="glyphicon" id="tests-cross-origin-resource-sharing-pass" aria-hidden="true"></td>
-                            <td id="tests-cross-origin-resource-sharing-score"></td>
-                            <td id="tests-cross-origin-resource-sharing-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cross-origin Resource Sharing" data-content="Incorrectly configured CORS settings can allow foreign sites to read your site's contents, possibly allowing them access to private user information."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Public_Key_Pinning">HTTP Public Key Pinning</a></td>
-                            <td class="glyphicon" id="tests-public-key-pinning-pass" aria-hidden="true"></td>
-                            <td id="tests-public-key-pinning-score"></td>
-                            <td id="tests-public-key-pinning-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="HTTP Public Key Pinning" data-content="HTTP Public Key Pinning (HPKP) binds a site to a specific combination of certificate authorities and/or keys, protecting against the unauthorized issuance of certificates."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Strict_Transport_Security">HTTP Strict Transport Security</a></td>
-                            <td class="glyphicon" id="tests-strict-transport-security-pass" aria-hidden="true"></td>
-                            <td id="tests-strict-transport-security-score"></td>
-                            <td id="tests-strict-transport-security-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="HTTP Strict Transport Security" data-content="HTTP Strict Transport Security (HSTS) instructs web browsers to visit your site only over HTTPS."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Redirections">Redirection</a></td>
-                            <td class="glyphicon" id="tests-redirection-pass" aria-hidden="true"></td>
-                            <td id="tests-redirection-score"></td>
-                            <td id="tests-redirection-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Redirection" data-content="Properly configured redirections from HTTP to HTTPS allow browsers to correctly apply HTTP Strict Transport Security (HSTS) settings."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Referrer_Policy">Referrer Policy</a></td>
-                            <td class="glyphicon" id="tests-referrer-policy-pass" aria-hidden="true"></td>
-                            <td id="tests-referrer-policy-score"></td>
-                            <td id="tests-referrer-policy-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Referrer Policy" data-content="Referrer Policy can protect the privacy of your users by restricting the contents of the HTTP Referer header."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Subresource_Integrity">Subresource Integrity</a></td>
-                            <td class="glyphicon" id="tests-subresource-integrity-pass" aria-hidden="true"></td>
-                            <td id="tests-subresource-integrity-score"></td>
-                            <td id="tests-subresource-integrity-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Subresource Integrity" data-content="Subresource Integrity protects against JavaScript files and stylesheets stored on content delivery networks (CDNs) from being maliciously modified."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Content-Type-Options">X-Content-Type-Options</a></td>
-                            <td class="glyphicon" id="tests-x-content-type-options-pass" aria-hidden="true"></td>
-                            <td id="tests-x-content-type-options-score"></td>
-                            <td id="tests-x-content-type-options-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-Content-Type-Options" data-content="X-Content-Type-Options instructs browsers to not guess the MIME types of files that the web server is delivering."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Frame-Options">X-Frame-Options</a></td>
-                            <td class="glyphicon" id="tests-x-frame-options-pass" aria-hidden="true"></td>
-                            <td id="tests-x-frame-options-score"></td>
-                            <td id="tests-x-frame-options-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-Frame-Options" data-content="X-Frame-Options controls whether your site can be framed, protecting against clickjacking attacks. It has been superseded by Content Security Policy's <code>frame-ancestors</code> directive, but should still be used for now."></span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-XSS-Protection">X-XSS-Protection</a></td>
-                            <td class="glyphicon" id="tests-x-xss-protection-pass" aria-hidden="true"></td>
-                            <td id="tests-x-xss-protection-score"></td>
-                            <td id="tests-x-xss-protection-score-description"></td>
-                            <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-XSS-Protection" data-content="X-XSS-Protection protects against reflected cross-site scripting (XSS) attacks in IE and Chrome, but has been superseded by Content Security Policy. It can still be used to protect users of older web browsers."></span></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- HTTP Observatory host history results -->
-        <div class="panel panel-primary" id="host-history">
-            <div class="panel-heading">
-                <span class="h3">Grade History</span>
-                <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#host-history-panel-body" aria-expanded="false" aria-controls="host-history-panel-body">Click to Expand</button>
-            </div>
-            <div class="panel-body collapse" id="host-history-panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-condensed pull-left" id="host-history-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Score</th>
-                                <th>Grade</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- HTTP Observatory raw test results -->
-        <div class="panel panel-primary" id="server-headers">
-            <div class="panel-heading">
-                <span class="h3">Raw Server Headers</span>
-                <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#server-headers-panel-body" aria-expanded="false" aria-controls="server-headers-panel-body">Click to Expand</button>
-            </div>
-            <div class="panel-body collapse" id="server-headers-panel-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-condensed pull-left" id="server-headers-table">
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="page-header">
-            <h1>TLS Observatory</h1>
-        </div>
-
-        <!-- TLS Observatory -->
-        <div id="tlsobservatory">
-            <div class="panel panel-primary summary" id="tlsobservatory-summary">
-                <div class="panel-heading">
-                    <span class="h3">Scan Summary</span>
-                </div>
-                <div class="panel-body">
-                    <div class="progress large-progress-bar large-progress-bar-condensed" id="tlsobservatory-summary-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="tlsobservatory-summary-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            PENDING (This may take several minutes)
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <span class="grade-container text-center" id="tlsobservatory-summary-grade-container">
-                                <span class="grade-letter" id="tlsobservatory-summary-grade-letter"></span>
-                                <sup class="grade-letter-modifier" id="tlsobservatory-summary-grade-modifier"></sup>
-                            </span>
-                        </div>
-                        <div class="col-md-10 table-responsive">
-                            <table class="table table-striped table-condensed pull-left tlsobservatory-summary-summary-table">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-certificate-table">
                                 <tr>
-                                    <td>Host:</td>
-                                    <td><span id="tlsobservatory-summary-target"></span> <span class="deemphasize">(<span id="tlsobservatory-summary-ip"></span>)</span></td>
+                                    <td>Common name:</td>
+                                    <td id="tlsobservatory-certificate-cn"></td>
                                 </tr>
                                 <tr>
-                                    <td>Scan ID #:</td>
-                                    <td id="tlsobservatory-summary-scan_id"></td>
-                                </tr>
-                                <tr>
-                                    <td>End Time:</td>
-                                    <td id="tlsobservatory-summary-end_time_l"></td>
+                                    <td>Alternative Names:</td>
+                                    <td id="tlsobservatory-certificate-alt_names"></td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Compatibility Level:</a></td>
-                                    <td id="tlsobservatory-summary-mozilla_configuration_level_description"></td>
+                                    <td>First Observed:</td>
+                                    <td><span id="tlsobservatory-certificate-first_seen"></span><span class="deemphasize"> (certificate #<span id="tlsobservatory-certificate-cert_id"></span>)</span></td>
                                 </tr>
-                                <!--
-                                <tr>
-                                    <td>Score:</td>
-                                    <td><span id="tlsobservatory-summary-score"></span>/100</td>
-                                </tr>
-                                -->
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                  <td>Certificate Explainer:</td>
-                                  <td id="tlsobservatory-summary-explainer_url"></td>
-                                </tr>
-<!--                            <tr>
-                                    <td>Certificate Results (JSON):</td>
-                                    <td id="tlsobservatory-summary-certificate_url"></td>
+                                    <td>Valid From:</td>
+                                    <td id="tlsobservatory-certificate-valid_from"></td>
                                 </tr>
                                 <tr>
-                                    <td>Scan Results (JSON):</td>
-                                    <td id="tlsobservatory-summary-results_url"></td>
-                                </tr> -->
+                                    <td>Valid To:</td>
+                                    <td id="tlsobservatory-certificate-valid_to"></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>Key:</td>
+                                    <td id="tlsobservatory-certificate-key"></td>
+                                </tr>
+                                <tr>
+                                    <td>Issuer:</td>
+                                    <td id="tlsobservatory-certificate-issuer"></td>
+                                </tr>
+                                <tr>
+                                    <td>Signature Algorithm:</td>
+                                    <td id="tlsobservatory-certificate-sig_alg"></td>
+                                </tr>
                             </table>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- TLS Observatory certificate panel -->
-            <div class="panel panel-primary hide" id="tlsobservatory-certificate">
-                <div class="panel-heading">
-                    <span class="h3">Certificate Information</span>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-certificate-table">
-                            <tr>
-                                <td>Common name:</td>
-                                <td id="tlsobservatory-certificate-cn"></td>
-                            </tr>
-                            <tr>
-                                <td>Alternative Names:</td>
-                                <td id="tlsobservatory-certificate-alt_names"></td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>First Observed:</td>
-                                <td><span id="tlsobservatory-certificate-first_seen"></span><span class="deemphasize"> (certificate #<span id="tlsobservatory-certificate-cert_id"></span>)</span></td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>Valid From:</td>
-                                <td id="tlsobservatory-certificate-valid_from"></td>
-                            </tr>
-                            <tr>
-                                <td>Valid To:</td>
-                                <td id="tlsobservatory-certificate-valid_to"></td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>Key:</td>
-                                <td id="tlsobservatory-certificate-key"></td>
-                            </tr>
-                            <tr>
-                                <td>Issuer:</td>
-                                <td id="tlsobservatory-certificate-issuer"></td>
-                            </tr>
-                            <tr>
-                                <td>Signature Algorithm:</td>
-                                <td id="tlsobservatory-certificate-sig_alg"></td>
-                            </tr>
-                        </table>
+                <!-- TLS Observatory protocol panel -->
+                <div class="panel panel-primary hide" id="tlsobservatory-ciphers">
+                    <div class="panel-heading">
+                        <span class="h3">Cipher Suites</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left" id="tlsobservatory-ciphers-table">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Cipher&nbsp;suite</th>
+                                        <th><abbr title="Code Points" data-toggle="popover" data-content="Cipher suite names can vary between implementation. Code points are a standardized set of numbers that allow you to refer to a specific cipher suite regardless of implementation.">Code</abbr></th>
+                                        <th>Key&nbsp;size</th>
+                                        <th><abbr title="Authenticated Encryption with Associated Data" data-toggle="popover" data-content="AEADs are a new way of using cryptographic ciphers that provide additional security guarantees while being less prone to implementation mistakes.">AEAD</abbr></th>
+                                        <th><abbr title="Forward Secrecy" data-toggle="popover" data-content="Forward secrecy protects your past communications from being decrypted if the server's private key is ever compromised.">PFS</abbr></th>
+                                        <th>Protocols</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- TLS Observatory protocol panel -->
-            <div class="panel panel-primary hide" id="tlsobservatory-ciphers">
-                <div class="panel-heading">
-                    <span class="h3">Cipher Suites</span>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-condensed pull-left" id="tlsobservatory-ciphers-table">
-                            <thead>
+                <!-- TLS Observatory misc panel -->
+                <div class="panel panel-primary hide" id="tlsobservatory-misc">
+                    <div class="panel-heading">
+                        <span class="h3">Miscellaneous Information</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-misc-table">
                                 <tr>
-                                    <th>&nbsp;</th>
-                                    <th>Cipher&nbsp;suite</th>
-                                    <th><abbr title="Code Points" data-toggle="popover" data-content="Cipher suite names can vary between implementation. Code points are a standardized set of numbers that allow you to refer to a specific cipher suite regardless of implementation.">Code</abbr></th>
-                                    <th>Key&nbsp;size</th>
-                                    <th><abbr title="Authenticated Encryption with Associated Data" data-toggle="popover" data-content="AEADs are a new way of using cryptographic ciphers that provide additional security guarantees while being less prone to implementation mistakes.">AEAD</abbr></th>
-                                    <th><abbr title="Forward Secrecy" data-toggle="popover" data-content="Forward secrecy protects your past communications from being decrypted if the server's private key is ever compromised.">PFS</abbr></th>
-                                    <th>Protocols</th>
+                                    <td>Cipher Preference:</td>
+                                    <td><span id="tlsobservatory-misc-chooser"></span> selects preferred cipher</td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cipher Preference" data-content="Configuring your server to choose the preferred cipher can force older clients to use more secure ciphers than they would by default."></span></td>
                                 </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TLS Observatory misc panel -->
-            <div class="panel panel-primary hide" id="tlsobservatory-misc">
-                <div class="panel-heading">
-                    <span class="h3">Miscellaneous Information</span>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-misc-table">
-                            <tr>
-                                <td>Cipher Preference:</td>
-                                <td><span id="tlsobservatory-misc-chooser"></span> selects preferred cipher</td>
-                                <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cipher Preference" data-content="Configuring your server to choose the preferred cipher can force older clients to use more secure ciphers than they would by default."></span></td>
-                            </tr>
-                            <tr id="tlsobservatory-misc-oldest_clients-row">
-                                <td>Compatible Clients:</td>
-                                <td id="tlsobservatory-misc-oldest_clients"></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>OCSP Stapling:</td>
-                                <td id="tlsobservatory-misc-ocsp_stapling"></td>
-                                <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="OCSP Stapling" data-content="OCSP Stapling allows clients to check for certificate revocation both quickly and privately."></span></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TLS Observatory suggestions panel -->
-            <div class="panel panel-primary hide" id="tlsobservatory-suggestions">
-                <div class="panel-heading">
-                    <span class="h3">Suggestions</span>
-                    <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#tlsobservatory-suggestions-panel-body" aria-expanded="false" aria-controls="tlsobservatory-suggestions-panel-body">Click to Expand</button>
-                </div>
-                <div class="panel-body collapse" id="tlsobservatory-suggestions-panel-body">
-                    <div class="row">
-                        <div id="tlsobservatory-suggestions-modern-row">
-                            <p><strong>Looking for improved security and have a user base of only modern clients?</strong></p>
-                            <p class="p-l-2 p-r-1" id="tlsobservatory-suggestions-modern-notes">Take a look at the <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility">Mozilla &ldquo;Modern&rdquo; TLS configuration</a>!  It provides an extremely high level of security and performance and is compatible with all clients released in the last couple years. It is not recommended for general purpose websites that may need to service older clients such as Android 4.x, Internet Explorer 10, or Java 6.x.</p>
-                            <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-modern" aria-expanded="false" aria-controls="tlsobservatory-suggestions-modern">Want the detailed technical nitty-gritty?</a></p>
-                            <p class="p-l-2 p-r-1 collapse" id="tlsobservatory-suggestions-modern"></p>
+                                <tr id="tlsobservatory-misc-oldest_clients-row">
+                                    <td>Compatible Clients:</td>
+                                    <td id="tlsobservatory-misc-oldest_clients"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>OCSP Stapling:</td>
+                                    <td id="tlsobservatory-misc-ocsp_stapling"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="OCSP Stapling" data-content="OCSP Stapling allows clients to check for certificate revocation both quickly and privately."></span></td>
+                                </tr>
+                            </table>
                         </div>
-                        <div id="tlsobservatory-suggestions-intermediate-row">
+                    </div>
+                </div>
+
+                <!-- TLS Observatory suggestions panel -->
+                <div class="panel panel-primary hide" id="tlsobservatory-suggestions">
+                    <div class="panel-heading">
+                        <span class="h3">Suggestions</span>
+                        <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#tlsobservatory-suggestions-panel-body" aria-expanded="false" aria-controls="tlsobservatory-suggestions-panel-body">Click to Expand</button>
+                    </div>
+                    <div class="panel-body collapse" id="tlsobservatory-suggestions-panel-body">
+                        <div class="row">
+                            <div id="tlsobservatory-suggestions-modern-row">
+                                <p><strong>Looking for improved security and have a user base of only modern clients?</strong></p>
+                                <p class="p-l-2 p-r-1" id="tlsobservatory-suggestions-modern-notes">Take a look at the <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility">Mozilla &ldquo;Modern&rdquo; TLS configuration</a>!  It provides an extremely high level of security and performance and is compatible with all clients released in the last couple years. It is not recommended for general purpose websites that may need to service older clients such as Android 4.x, Internet Explorer 10, or Java 6.x.</p>
+                                <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-modern" aria-expanded="false" aria-controls="tlsobservatory-suggestions-modern">Want the detailed technical nitty-gritty?</a></p>
+                                <p class="p-l-2 p-r-1 collapse" id="tlsobservatory-suggestions-modern"></p>
+                            </div>
+                            <div id="tlsobservatory-suggestions-intermediate-row">
+                                <hr>
+                                <p><strong>Still want secure website, but need compatibility with those older clients?</strong></p>
+                                <p class="p-l-2 p-r-1" id="tlsobservatory-suggestions-intermediate-notes">No problem! The <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28default.29">Mozilla &ldquo;Intermediate&rdquo; TLS configuration</a> may be just right for you!  It provides the similar level of security to the &ldquo;Modern&rdquo; configuration when used with current clients, but still supports older versions of web browsers and tools.</p>
+                                <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-intermediate" aria-expanded="false" aria-controls="tlsobservatory-suggestions-intermediate">Want the detailed technical nitty-gritty?</a></p>
+                                <p class="p-l-2 p-r-1 collapse" id="tlsobservatory-suggestions-intermediate"></p>
+                            </div>
                             <hr>
-                            <p><strong>Still want secure website, but need compatibility with those older clients?</strong></p>
-                            <p class="p-l-2 p-r-1" id="tlsobservatory-suggestions-intermediate-notes">No problem! The <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28default.29">Mozilla &ldquo;Intermediate&rdquo; TLS configuration</a> may be just right for you!  It provides the similar level of security to the &ldquo;Modern&rdquo; configuration when used with current clients, but still supports older versions of web browsers and tools.</p>
-                            <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-intermediate" aria-expanded="false" aria-controls="tlsobservatory-suggestions-intermediate">Want the detailed technical nitty-gritty?</a></p>
-                            <p class="p-l-2 p-r-1 collapse" id="tlsobservatory-suggestions-intermediate"></p>
-                        </div>
-                        <hr>
-                        <div id="tlsobservatory-suggestions-disclaimer">
-                            <p>Please note that these suggestions may not be appropriate for your particular usage requirements!  If they do sound like something you'd like assistance with, then hop on board:</p>
-                            <p class="text-center"><a class="btn btn-primary" href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Teleport me to Mozilla's configuration generator!</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="page-header" id="third-party-tests-page-header">
-            <h1>Third-party Scan Results</h1>
-        </div>
-
-        <div id="third-party-tests">
-            <h3>TLS/SSL Scanners</h3>
-
-            <!-- SSL Labs -->
-            <div class="panel panel-primary summary" id="ssllabs-summary">
-                <div class="panel-heading">
-                    <span class="h3">ssllabs.com</span>
-                </div>
-                <div class="panel-body">
-                    <div class="progress large-progress-bar large-progress-bar-condensed" id="ssllabs-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="ssllabs-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            PENDING (This may take several minutes)
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <span class="grade-container text-center" id="ssllabs-grade-container">
-                                <span class="grade-letter" id="ssllabs-grade-letter"></span>
-                                <sup class="grade-letter-modifier" id="ssllabs-grade-modifier"></sup>
-                            </span>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-condensed ssllabs-summary-table">
-                                    <tr>
-                                        <td>Host:</td>
-                                        <td id="ssllabs-hostname"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Complete Results:</td>
-                                        <td id="ssllabs-url"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="row text-right">
-                                <img id="qualys-logo" src="images/qualys-ssl-labs-logo.svg">
+                            <div id="tlsobservatory-suggestions-disclaimer">
+                                <p>Please note that these suggestions may not be appropriate for your particular usage requirements!  If they do sound like something you'd like assistance with, then hop on board:</p>
+                                <p class="text-center"><a class="btn btn-primary" href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Teleport me to Mozilla's configuration generator!</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-
-            <!-- HT Bridge -->
-            <div class="panel panel-primary summary" id="htbridge-summary">
-                <div class="panel-heading">
-                    <span class="h3">htbridge.com</span>
-                </div>
-                <div class="panel-body">
-                    <div class="progress large-progress-bar large-progress-bar-condensed" id="htbridge-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="htbridge-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            PENDING (This may take several minutes)
-                        </div>
+        <div role="tabpanel" class="tab-pane" id="tab-third-party-tests">
+            <div id="third-party-tests">
+                <!-- SSL Labs -->
+                <div class="panel panel-primary summary" id="ssllabs-summary">
+                    <div class="panel-heading">
+                        <span class="h3">ssllabs.com</span>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <span class="grade-container text-center" id="htbridge-grade-container">
-                                <span class="grade-letter" id="htbridge-grade-letter"></span>
-                                <sup class="grade-letter-modifier" id="htbridge-grade-modifier"></sup>
-                            </span>
+                    <div class="panel-body">
+                        <div class="progress large-progress-bar large-progress-bar-condensed" id="ssllabs-progress-bar">
+                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="ssllabs-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                                PENDING (This may take several minutes)
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-condensed htbridge-summary-table">
-                                    <tbody>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span class="grade-container text-center" id="ssllabs-grade-container">
+                                    <span class="grade-letter" id="ssllabs-grade-letter"></span>
+                                    <sup class="grade-letter-modifier" id="ssllabs-grade-modifier"></sup>
+                                </span>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-condensed ssllabs-summary-table">
                                         <tr>
                                             <td>Host:</td>
-                                            <td><span id="htbridge-hostname"></span> <span class="deemphasize">(<span id="htbridge-ip"></span>)</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Compliance:</td>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3">PCI-DSS:</td>
-                                            <td id="htbridge-pci_dss_compliant"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3">HIPAA:</td>
-                                            <td id="htbridge-hipaa_compliant"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3">NIST:</td>
-                                            <td id="htbridge-nist_compliant"></td>
-                                        </tr>
-                                        <tr>
-                                            <td> </td>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Vulnerability Tests:</td>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3"><a href="https://drownattack.com/">DROWN</a>:</td>
-                                            <td id="htbridge-drown"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3"><a href="http://heartbleed.com/">Heartbleed</a>:</td>
-                                            <td id="htbridge-heartbleed"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3">Insecure Renegotiation:</td>
-                                            <td id="htbridge-insecure_reneg"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3"><a href="https://blog.qualys.com/ssllabs/2014/06/13/ssl-pulse-49-vulnerable-to-cve-2014-0224-14-exploitable">OpenSSL ChangeCipherSpec</a>:</td>
-                                            <td id="htbridge-cve_2014_0224"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3"><a href="https://blog.cloudflare.com/yet-another-padding-oracle-in-openssl-cbc-ciphersuites/">OpenSSL Padding Oracle</a>:</td>
-                                            <td id="htbridge-cve_2016_2107"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/10/14/poodle.html">Poodle (SSLv3)</a>:</td>
-                                            <td id="htbridge-poodle_ssl"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/12/08/poodleagain.html">Poodle (TLS)</a>:</td>
-                                            <td id="htbridge-poodle_tls"></td>
-                                        </tr>
-                                        <tr>
-                                            <td> </td>
-                                            <td> </td>
+                                            <td id="ssllabs-hostname"></td>
                                         </tr>
                                         <tr>
                                             <td>Complete Results:</td>
-                                            <td><span id="htbridge-url"></span></td>
+                                            <td id="ssllabs-url"></td>
                                         </tr>
-                                    </tbody>
+                                    </table>
+                                </div>
+                                <div class="row text-right">
+                                    <img id="qualys-logo" src="images/qualys-ssl-labs-logo.svg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- HT Bridge -->
+                <div class="panel panel-primary summary" id="htbridge-summary">
+                    <div class="panel-heading">
+                        <span class="h3">htbridge.com</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="progress large-progress-bar large-progress-bar-condensed" id="htbridge-progress-bar">
+                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="htbridge-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                                PENDING (This may take several minutes)
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span class="grade-container text-center" id="htbridge-grade-container">
+                                    <span class="grade-letter" id="htbridge-grade-letter"></span>
+                                    <sup class="grade-letter-modifier" id="htbridge-grade-modifier"></sup>
+                                </span>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-condensed htbridge-summary-table">
+                                        <tbody>
+                                            <tr>
+                                                <td>Host:</td>
+                                                <td><span id="htbridge-hostname"></span> <span class="deemphasize">(<span id="htbridge-ip"></span>)</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Compliance:</td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3">PCI-DSS:</td>
+                                                <td id="htbridge-pci_dss_compliant"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3">HIPAA:</td>
+                                                <td id="htbridge-hipaa_compliant"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3">NIST:</td>
+                                                <td id="htbridge-nist_compliant"></td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Vulnerability Tests:</td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3"><a href="https://drownattack.com/">DROWN</a>:</td>
+                                                <td id="htbridge-drown"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3"><a href="http://heartbleed.com/">Heartbleed</a>:</td>
+                                                <td id="htbridge-heartbleed"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3">Insecure Renegotiation:</td>
+                                                <td id="htbridge-insecure_reneg"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3"><a href="https://blog.qualys.com/ssllabs/2014/06/13/ssl-pulse-49-vulnerable-to-cve-2014-0224-14-exploitable">OpenSSL ChangeCipherSpec</a>:</td>
+                                                <td id="htbridge-cve_2014_0224"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3"><a href="https://blog.cloudflare.com/yet-another-padding-oracle-in-openssl-cbc-ciphersuites/">OpenSSL Padding Oracle</a>:</td>
+                                                <td id="htbridge-cve_2016_2107"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/10/14/poodle.html">Poodle (SSLv3)</a>:</td>
+                                                <td id="htbridge-poodle_ssl"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/12/08/poodleagain.html">Poodle (TLS)</a>:</td>
+                                                <td id="htbridge-poodle_tls"></td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Complete Results:</td>
+                                                <td><span id="htbridge-url"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row text-right">
+                                    <img id="htbridge-logo" src="images/htbridge-logo.svg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- tls.imirhil.fr -->
+                <div class="panel panel-primary summary" id="tlsimirhilfr-summary">
+                    <div class="panel-heading">
+                        <span class="h3">tls.imirhil.fr</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="progress large-progress-bar large-progress-bar-condensed" id="tlsimirhilfr-progress-bar">
+                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="tlsimirhilfr-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                                PENDING (This may take several minutes)
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span class="grade-container text-center" id="tlsimirhilfr-grade-container">
+                                    <span class="grade-letter" id="tlsimirhilfr-grade-letter"></span>
+                                    <sup class="grade-letter-modifier" id="tlsimirhilfr-grade-modifier"></sup>
+                                </span>
+                            </div>
+                            <div class="col-md-10 table-responsive">
+                                <table class="table table-striped table-condensed pull-left tlsimirhilfr-summary-table">
+                                    <tr>
+                                        <td>Host:</td>
+                                        <td id="tlsimirhilfr-hostname"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>IP addresses:</td>
+                                        <td id="tlsimirhilfr-addresses"></td>
+                                    </tr>
+                                    <tr id="tlsimirhilfr-failing_addresses-row">
+                                        <td>Failing addresses:</td>
+                                        <td id="tlsimirhilfr-failing_addresses"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Overall score:</td>
+                                        <td><span id="tlsimirhilfr-overall_score"></span>/100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Complete Results:</td>
+                                        <td id="tlsimirhilfr-url"></td>
+                                    </tr>
                                 </table>
                             </div>
-                            <div class="row text-right">
-                                <img id="htbridge-logo" src="images/htbridge-logo.svg">
+                        </div>
+                    </div>
+                </div>
+
+
+                <h3>HTTP Headers &amp; Content Security</h3>
+
+                <!-- securityheaders.io -->
+                <div class="panel panel-primary summary" id="securityheaders-summary">
+                    <div class="panel-heading">
+                        <span class="h3">securityheaders.io</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="progress large-progress-bar large-progress-bar-condensed" id="securityheaders-progress-bar">
+                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="securityheaders-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                                PENDING
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span class="grade-container text-center" id="securityheaders-grade-container">
+                                    <span class="grade-letter" id="securityheaders-grade-letter"></span>
+                                    <sup class="grade-letter-modifier" id="securityheaders-grade-modifier"></sup>
+                                </span>
+                            </div>
+                            <div class="col-md-10 table-responsive">
+                                <table class="table table-striped table-condensed pull-left securityheaders-summary-table">
+                                    <tr>
+                                        <td>Host:</td>
+                                        <td id="securityheaders-hostname"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Complete Results:</td>
+                                        <td id="securityheaders-url"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Miscellaneous</h3>
+
+                <!-- hstspreload.org -->
+                <div class="panel panel-primary summary" id="hstspreload-summary">
+                    <div class="panel-heading">
+                        <span class="h3">hstspreload.org</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="progress large-progress-bar large-progress-bar-condensed" id="hstspreload-progress-bar">
+                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="hstspreload-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                                PENDING
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <span class="grade-container text-center" id="hstspreload-grade-container">
+                                    <span class="grade-letter" id="hstspreload-grade-letter"></span>
+                                    <sup class="grade-letter-modifier" id="hstspreload-grade-modifier"></sup>
+                                </span>
+                            </div>
+                            <div class="col-md-10 table-responsive">
+                                <table class="table table-striped table-condensed pull-left hstspreload-summary-table">
+                                    <tr>
+                                        <td>Host:</td>
+                                        <td id="hstspreload-hostname"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Preloaded:</td>
+                                        <td id="hstspreload-preloaded"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td id="hstspreload-notes-label">Notes:</td>
+                                        <td id="hstspreload-notes"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Complete Results:</td>
+                                        <td id="hstspreload-url"></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <!-- tls.imirhil.fr -->
-            <div class="panel panel-primary summary" id="tlsimirhilfr-summary">
-                <div class="panel-heading">
-                    <span class="h3">tls.imirhil.fr</span>
-                </div>
-                <div class="panel-body">
-                    <div class="progress large-progress-bar large-progress-bar-condensed" id="tlsimirhilfr-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="tlsimirhilfr-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            PENDING (This may take several minutes)
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <span class="grade-container text-center" id="tlsimirhilfr-grade-container">
-                                <span class="grade-letter" id="tlsimirhilfr-grade-letter"></span>
-                                <sup class="grade-letter-modifier" id="tlsimirhilfr-grade-modifier"></sup>
-                            </span>
-                        </div>
-                        <div class="col-md-10 table-responsive">
-                            <table class="table table-striped table-condensed pull-left tlsimirhilfr-summary-table">
-                                <tr>
-                                    <td>Host:</td>
-                                    <td id="tlsimirhilfr-hostname"></td>
-                                </tr>
-                                <tr>
-                                    <td>IP addresses:</td>
-                                    <td id="tlsimirhilfr-addresses"></td>
-                                </tr>
-                                <tr id="tlsimirhilfr-failing_addresses-row">
-                                    <td>Failing addresses:</td>
-                                    <td id="tlsimirhilfr-failing_addresses"></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>Overall score:</td>
-                                    <td><span id="tlsimirhilfr-overall_score"></span>/100</td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>Complete Results:</td>
-                                    <td id="tlsimirhilfr-url"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <h3>HTTP Headers &amp; Content Security</h3>
-
-            <!-- securityheaders.io -->
-            <div class="panel panel-primary summary" id="securityheaders-summary">
-                <div class="panel-heading">
-                    <span class="h3">securityheaders.io</span>
-                </div>
-                <div class="panel-body">
-                    <div class="progress large-progress-bar large-progress-bar-condensed" id="securityheaders-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="securityheaders-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            PENDING
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <span class="grade-container text-center" id="securityheaders-grade-container">
-                                <span class="grade-letter" id="securityheaders-grade-letter"></span>
-                                <sup class="grade-letter-modifier" id="securityheaders-grade-modifier"></sup>
-                            </span>
-                        </div>
-                        <div class="col-md-10 table-responsive">
-                            <table class="table table-striped table-condensed pull-left securityheaders-summary-table">
-                                <tr>
-                                    <td>Host:</td>
-                                    <td id="securityheaders-hostname"></td>
-                                </tr>
-                                <tr>
-                                    <td>Complete Results:</td>
-                                    <td id="securityheaders-url"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3>Miscellaneous</h3>
-
-            <!-- hstspreload.org -->
-            <div class="panel panel-primary summary" id="hstspreload-summary">
-                <div class="panel-heading">
-                    <span class="h3">hstspreload.org</span>
-                </div>
-                <div class="panel-body">
-                    <div class="progress large-progress-bar large-progress-bar-condensed" id="hstspreload-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="hstspreload-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            PENDING
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <span class="grade-container text-center" id="hstspreload-grade-container">
-                                <span class="grade-letter" id="hstspreload-grade-letter"></span>
-                                <sup class="grade-letter-modifier" id="hstspreload-grade-modifier"></sup>
-                            </span>
-                        </div>
-                        <div class="col-md-10 table-responsive">
-                            <table class="table table-striped table-condensed pull-left hstspreload-summary-table">
-                                <tr>
-                                    <td>Host:</td>
-                                    <td id="hstspreload-hostname"></td>
-                                </tr>
-                                <tr>
-                                    <td>Preloaded:</td>
-                                    <td id="hstspreload-preloaded"></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td id="hstspreload-notes-label">Notes:</td>
-                                    <td id="hstspreload-notes"></td>
-                                </tr>
-                                <tr>
-                                    <td>Complete Results:</td>
-                                    <td id="hstspreload-url"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
