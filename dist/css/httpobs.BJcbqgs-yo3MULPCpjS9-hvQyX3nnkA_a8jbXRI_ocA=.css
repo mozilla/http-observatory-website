@@ -85,18 +85,15 @@ body {
     margin-top: .8em;
 }
 
-
-/* make tabs look niceish */
-/*.nav-tabs {
-    border-bottom: solid 2px #dddddd;
-}
-
-.nav-tabs li {
-    margin-bottom: -2px;
-}*/
-
 .navbar {
     border: 0;
+}
+
+.nav-tabs > li > a {
+    background-color: #f6f6f6;
+    border-width: 2px 2px 0 2px;
+    border-color: #dddddd;
+    border-radius: 4px 4px 0 0;
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
@@ -275,6 +272,10 @@ div.large-progress-bar-condensed + div.row {
     font-weight: 600;
     padding-right: 1em;
     white-space: nowrap;
+}
+
+#test-scores a {
+    text-decoration: dotted underline;
 }
 
 /* pass fail */

@@ -371,8 +371,14 @@ var Observatory = {
         entry.grade]);
     });
 
-    // sort newest first
+    // sort newest first, limit to ten entries
     rows.reverse();
+
+    // if it's less than ten entries, expand it automatically -- done this way to avoid animation
+    if (rows.length <= 10) {
+      $('#host-history-panel-body').removeClass('collapse');
+      $('#host-history button')[0].remove();
+    }
 
     Observatory.utils.tableify(rows, 'host-history-table');
 
