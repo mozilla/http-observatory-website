@@ -274,10 +274,6 @@ div.large-progress-bar-condensed + div.row {
     white-space: nowrap;
 }
 
-#test-scores a {
-    text-decoration: dotted underline;
-}
-
 /* pass fail */
 #test-scores tr td:nth-child(2) {
     margin-right: 3em;
@@ -442,6 +438,7 @@ sup, sub {
     font-weight: bold;
 }
 
-#next-steps a, #redirect-banner a {
-    text-decoration: dotted underline;
+#next-steps a, #redirect-banner a, #test-scores a {
+    border-bottom: 1px dotted #4582ec;
+    text-decoration: none;
 }
