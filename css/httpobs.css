@@ -57,8 +57,8 @@ body {
     }
 
     /* There needs to be some margin so that the tables do not show a scrolbar */
-    #host-history table, #scan-summary table, #server-headers table, #ssllabs table, #test-scores table, #tlsobservatory table, #third-party-tests table {
-        margin-bottom: 0px;
+    .table {
+        margin-bottom: 1px;
     }
 
     /* fix large gap between sections */
@@ -223,7 +223,7 @@ body {
 }
 
 .p-l-0 {
-    padding-left: 0em !important;
+    padding-left: 0 !important;
 }
 
 #server-headers {
