@@ -409,7 +409,7 @@ Observatory.thirdParty = {
     load: function load() {
       'use strict';
 
-      var API_URL = 'https://sshscpan.rubidus.com/api/v1/';
+      var API_URL = 'https://sshscan.rubidus.com/api/v1/';
       var state = Observatory.thirdParty.SSHObservatory.state;
 
       // if we haven't initiated a scan
