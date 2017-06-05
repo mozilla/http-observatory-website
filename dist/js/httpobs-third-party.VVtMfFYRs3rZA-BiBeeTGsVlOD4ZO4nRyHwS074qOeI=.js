@@ -345,7 +345,10 @@ Observatory.thirdParty = {
         results.compression_algorithms_client_to_server);
 
       // Duplicate host key message
-      var duplicateHostKeyIpMsg = 'Yes, ' + (results.duplicate_host_key_ips.length - 1).toString() + ' other known IP addresses';
+      var duplicateHostKeyIpMsg = 'Yes, ' + results.duplicate_host_key_ips.length.toString() + ' other known IP address';
+      if (results.duplicate_host_key_ips.length > 1) {
+        duplicateHostKeyIpMsg += 'es';
+      }
 
       Observatory.thirdParty.SSHObservatory.state.output = {
         compliance_recommendations: [],
@@ -406,7 +409,7 @@ Observatory.thirdParty = {
     load: function load() {
       'use strict';
 
-      var API_URL = 'https://sshscan.rubidus.com/api/v1/';
+      var API_URL = 'https://sshscpan.rubidus.com/api/v1/';
       var state = Observatory.thirdParty.SSHObservatory.state;
 
       // if we haven't initiated a scan
