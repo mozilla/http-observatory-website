@@ -53,9 +53,14 @@ Observatory.utils = {
 
     _.forEach(list, function f(i) {
       li = document.createElement('li');
-      text = document.createTextNode(i);
+      if (typeof i === 'string') {
+        text = document.createTextNode(i);
 
-      li.appendChild(text);
+        li.appendChild(text);
+      } else {
+        li.appendChild(i);
+      }
+
       ul.appendChild(li);
     });
 
@@ -93,8 +98,13 @@ Observatory.utils = {
 
       _.forEach(row, function traverseCols(col) {
         var td = document.createElement('td');
-        td.textContent = col;
 
+        // if it's an element, append that; otherwise set textContent
+        if (typeof col === 'string') {
+          td.textContent = col;
+        } else {
+          td.appendChild(col);
+        }
         tr.appendChild(td);
       });
       tbody.appendChild(tr);

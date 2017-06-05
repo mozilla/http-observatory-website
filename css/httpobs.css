@@ -2,6 +2,10 @@ body {
     line-height: 1.5em;
 }
 
+ul {
+    margin-bottom: 0;
+}
+
 .panel-body {
     padding: 2em;
 }
@@ -268,7 +272,12 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* test name */
-#test-scores tr td:nth-child(1), #server-headers-table tr td:nth-child(1), #tlsobservatory-certificate-table tr td:nth-child(1), #tlsobservatory-misc-table tr td:nth-child(1) {
+#test-scores tr td:nth-child(1),
+#server-headers-table tr td:nth-child(1),
+#tlsobservatory-certificate-table tr td:nth-child(1),
+#tlsobservatory-misc-table tr td:nth-child(1),
+#sshobservatory-misc-table tr td:nth-child(1),
+#sshobservatory-version-table tr td:nth-child(1) {
     font-weight: 600;
     padding-right: 1em;
     white-space: nowrap;

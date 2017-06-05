@@ -333,6 +333,122 @@ Observatory.thirdParty = {
     }
   },
 
+  SSHObservatory: {
+    state: {
+      count: 0
+    },
+
+    insert: function insert() {
+      var output;
+      var results = Observatory.thirdParty.SSHObservatory.state.results;
+      var compression = results.compression_algorithms_client_to_server.concat(
+        results.compression_algorithms_client_to_server);
+
+      // Duplicate host key message
+      var duplicateHostKeyIpMsg = 'Yes, ' + (results.duplicate_host_key_ips.length - 1).toString() + ' other known IP addresses';
+
+      Observatory.thirdParty.SSHObservatory.state.output = {
+        compliance_recommendations: [],
+        compliant: results.compliance.compliant ? 'Yes' : 'No',
+        compression: _.without(compression, ['none']).length > 0 ? 'Available' : 'Unavailable',
+        duplicate_host_keys: results.duplicate_host_key_ips.length > 0 ? duplicateHostKeyIpMsg : 'No',
+        end_time_l: Observatory.utils.toLocalTime(results.end_time, 'YYYY-MM-DD HH:mm:ss Z'),
+        grade: results.compliance.grade,
+        hostname: results.hostname,
+        ip: results.ip,
+        os_cpe: results.os_cpe ? results.os_cpe : 'Unknown',
+        port: results.port,
+        server_banner: results.server_banner ? results.server_banner : 'Unknown',
+        ssh_lib_cpe: results.ssh_lib_cpe ? results.ssh_lib_cpe : 'Unknown'
+      };
+      output = Observatory.thirdParty.SSHObservatory.state.output;
+
+      // Grade is either pass or fail in this case
+      // grade = results.compliance.compliant ? 'check-mark' : 'x-mark';
+      _.forEach(results.compliance.recommendations, function f(recommendation) {
+        // convert it to HTML
+        var parsedRecommendation = recommendation.split(': ');
+
+        if (parsedRecommendation.length > 1) {
+          // each argument in something to remove is a technical thing; turn those into <code>
+          recommendation = parsedRecommendation[1].split(', ').reduce(function r(accum, rec) {
+            accum.append($('<code/>', { text: rec })).append($('<span/>', { text: ', ' }));
+            return accum;
+          }, $('<span/>'));
+
+          // remove the final comma
+          recommendation.children().last().remove();
+
+          // put the recommendation text back in there
+          recommendation.prepend($('<span/>', { text: parsedRecommendation[0] + ': ' }));
+
+          // take the node out from a jquery collection
+          recommendation = recommendation[0];
+        }
+
+        output.compliance_recommendations.push([Observatory.utils.listify([recommendation], true)]);
+      });
+
+      // insert the recommendations table if need be
+      if (output.compliance_recommendations.length > 0) {
+        Observatory.utils.tableify(output.compliance_recommendations, 'sshobservatory-recommendations-table');
+      } else {
+        $('#sshobservatory-no-recommendations').removeClass('hide');
+      }
+
+      Observatory.utils.insertGrade(results.compliance.grade, 'sshobservatory');
+      Observatory.utils.insertResults(Observatory.thirdParty.SSHObservatory.state.output, 'sshobservatory');
+      Observatory.utils.showResults('sshobservatory');
+      $('#sshobservatory-misc, #sshobservatory-recommendations, #sshobservatory-version').removeClass('hide');
+    },
+
+
+    load: function load() {
+      'use strict';
+
+      var API_URL = 'https://sshscan.rubidus.com/api/v1/';
+      var state = Observatory.thirdParty.SSHObservatory.state;
+
+      // if we haven't initiated a scan
+      if (state.uuid === undefined) {
+        $.ajax({
+          method: 'POST',
+          error: function e() { Observatory.utils.errorResults('Unable to connect', 'sshobservatory'); },
+          success: function s(data) {
+            if (data.uuid === undefined) {
+              Observatory.utils.errorResults('Unknown error', 'sshobservatory');
+            } else {
+              state.uuid = data.uuid;
+              setTimeout(Observatory.thirdParty.SSHObservatory.load, 1500);
+            }
+          },
+          url: API_URL + 'scan?target=' + Observatory.hostname
+        });
+      } else {  // scan initiated, waiting on results
+        $.ajax({
+          method: 'GET',
+          error: function e() { Observatory.utils.errorResults('Scan failed', 'sshobservatory'); },
+          success: function s(data) {
+            // if we have ssh_scan_version, we can move onto putting it into the page
+            if (data.ssh_scan_version !== undefined) {
+              state.results = data;
+              Observatory.thirdParty.SSHObservatory.insert();
+            }
+
+            // if we haven't haven't gotten results for 30 seconds, let's give up
+            state.count += 1;
+            if (state.count <= 15 && state.results === undefined) {
+              setTimeout(Observatory.thirdParty.SSHObservatory.load, 2000);
+            } else {
+              Observatory.utils.errorResults('Scan failed', 'sshobservatory');
+            }
+          },
+          url: API_URL + 'scan/results?uuid=' + state.uuid
+        });
+      }
+    }
+  },
+
   SSLLabs: {
     insert: function insert() {
       'use strict';
@@ -754,10 +870,7 @@ Observatory.thirdParty = {
 
       // And display the TLS results table
       Observatory.utils.showResults('tlsobservatory-summary');
-      $('#tlsobservatory-certificate').removeClass('hide');
-      $('#tlsobservatory-ciphers').removeClass('hide');
-      $('#tlsobservatory-misc').removeClass('hide');
-      $('#tlsobservatory-suggestions').removeClass('hide');
+      $('#tlsobservatory-certificate, #tlsobservatory-ciphers, #tlsobservatory-misc, #tlsobservatory-suggestions').removeClass('hide');
     },
 
 

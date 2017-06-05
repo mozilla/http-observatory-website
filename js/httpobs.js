@@ -6,6 +6,7 @@ var Observatory = {
       uparrow: '&#x2b06;',
       xmark: '&#x2717;'
     },
+    domain: 'observatory.mozilla.org',
     grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
     maxQueriesBeforeTimeout: 600,
     urls: {
@@ -117,7 +118,7 @@ var Observatory = {
     }
 
     // bug fixes
-    if (scan.hostname === 'observatory.mozilla.org') {
+    if (scan.hostname === Observatory.const.domain) {
       scan.hostname = scan.target = importantGlyphs + '   ' + scan.hostname + '   ' + importantGlyphs;
     }
 
@@ -609,9 +610,10 @@ var Observatory = {
     }
 
     // Show the redirection banner, if you're not on the production site
-    if (document.domain !== 'observatory.mozilla.org') {
+    if (document.domain !== Observatory.const.domain) {
       $('#redirect-banner').removeClass('hidden');
-      $('#redirect-banner-url').attr('href', 'https://observatory.mozilla.org' +
+      $('#redirect-banner-url').attr('href', 'https://' +
+        Observatory.const.domain +
         window.location.pathname.replace('http-observatory-website/', '') +
         window.location.search +
         window.location.hash);
@@ -633,6 +635,12 @@ var Observatory = {
 
       Observatory.loadScanResults();
       Observatory.thirdParty.TLSObservatory.load();
+
+      // also show the SSH observatory and initiate a scan
+      if (document.domain !== Observatory.const.domain) {
+        Observatory.thirdParty.SSHObservatory.load();
+        $('#tab-sshobservatory-tablist-item').removeClass('hide');
+      }
 
       // let's check the third parties if requested
       if (Observatory.utils.getQueryParameter('third-party') !== 'false') {
