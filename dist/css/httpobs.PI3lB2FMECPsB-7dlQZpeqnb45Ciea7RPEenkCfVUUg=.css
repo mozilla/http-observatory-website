@@ -243,10 +243,6 @@ div.large-progress-bar-condensed + div.row {
     display: none;
 }
 
-#scan-results {
-    display: none; /* hide on initial page load */
-}
-
 /* bootstrap is so dumb here */
 .force-rescan+div.popover {
     color: black;

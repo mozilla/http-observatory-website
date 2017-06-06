@@ -82,10 +82,11 @@ var Observatory = {
     }
 
     // hide the scan progress bar
-    $('#scan-progress-bar').hide();
+    // $('#scan-progress-bar').hide();
 
-    $('#scan-alert-text').text(error);
-    $('#scan-alert').removeClass('alert-hidden');
+    // $('#scan-alert-text').text(error);
+    // $('#scan-alert').removeClass('alert-hidden');
+    Observatory.utils.errorResults(error, 'scan');
   },
 
 
@@ -355,8 +356,8 @@ var Observatory = {
     }
 
     // show the scan results and remove the progress bar
-    $('#scan-progress').hide();
-    $('#scan-results').show();
+    $('#scan-progress').remove();
+    $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('hide');
   },
 
 

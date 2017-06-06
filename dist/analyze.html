@@ -16,7 +16,7 @@
     <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.7.min.M4BawzpX2gZqpVcQ1m-1u-phtpgCuUP8wgn-fDlFPR8=.css" type="text/css" integrity="sha256-M4BawzpX2gZqpVcQ1m+1u+phtpgCuUP8wgn+fDlFPR8=" />
-    <link rel="stylesheet" href="css/httpobs.0mSr9FscGrsc3nYe63mP9MVE4ZvAOA18bvbo60g5Oq8=.css" type="text/css" integrity="sha256-0mSr9FscGrsc3nYe63mP9MVE4ZvAOA18bvbo60g5Oq8=" />
+    <link rel="stylesheet" href="css/httpobs.PI3lB2FMECPsB-7dlQZpeqnb45Ciea7RPEenkCfVUUg=.css" type="text/css" integrity="sha256-PI3lB2FMECPsB+7dlQZpeqnb45Ciea7RPEenkCfVUUg=" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
@@ -56,29 +56,6 @@
     <!-- main content -->
     <div class="container">
         
-    <div class="row" id="scan-progress">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <span class="h3">Observatory by Mozilla</span>
-            </div>
-
-            <div class="alert-hidden" id="scan-alert" role="alert">
-                <strong>Error: </strong>
-                <span id="scan-alert-text"></span>
-            </div>
-
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="progress large-progress-bar" id="scan-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="scan-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            Loading Results
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- HTTP Observatory Scan Results -->
     <div class="row" id="scan-results">
         <ul class="nav nav-tabs" role="tablist">
@@ -90,7 +67,26 @@
 
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tab-http-observatory">
-                <div class="row equal">
+
+                <div id="scan-progress">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <span class="h3">Scan Summary</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <div id="scan-progress-bar" class="progress large-progress-bar">
+                                    <div id="scan-progress-bar-text" class="progress-bar progress-bar-striped active large-progress-bar-text" id="scan-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                                        Loading Results
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="scan-summary-row" class="row equal hide">
                     <div class="col-md-6">
                         <div class="panel panel-primary summary summary-condensed" id="scan-summary">
                             <div class="panel-heading">
@@ -254,7 +250,7 @@
                 </div>
 
                 <!-- HTTP Observatory test results -->
-                <div class="panel panel-primary" id="test-scores">
+                <div class="panel panel-primary hide" id="test-scores">
                     <div class="panel-heading">
                         <span class="h3">Test Scores</span>
                     </div>
@@ -358,7 +354,7 @@
                 </div>
 
                 <!-- HTTP Observatory host history results -->
-                <div class="panel panel-primary" id="host-history">
+                <div class="panel panel-primary hide" id="host-history">
                     <div class="panel-heading">
                         <span class="h3">Grade History</span>
                         <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#host-history-panel-body" aria-expanded="false" aria-controls="host-history-panel-body">Click to Expand</button>
@@ -379,7 +375,7 @@
                 </div>
 
                 <!-- HTTP Observatory raw test results -->
-                <div class="panel panel-primary" id="server-headers">
+                <div class="panel panel-primary hide" id="server-headers">
                     <div class="panel-heading">
                         <span class="h3">Raw Server Headers</span>
                         <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#server-headers-panel-body" aria-expanded="false" aria-controls="server-headers-panel-body">Click to Expand</button>
@@ -1024,7 +1020,7 @@
     <script src="js/bootstrap-3.3.7.min.U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8="></script>
     <script src="js/lodash-4.16.4.min.2thRDsoFcq5cPnuOJsHa4x7hHK8naecMSs6zv0rIBOc=.js" integrity="sha256-2thRDsoFcq5cPnuOJsHa4x7hHK8naecMSs6zv0rIBOc="></script>
     <script src="js/moment-2.15.1.min.4PIvl58L9q7iwjT654TQJM-C_acEyoG738iL8B8nhXg=.js" integrity="sha256-4PIvl58L9q7iwjT654TQJM+C/acEyoG738iL8B8nhXg="></script>
-    <script src="js/httpobs.Pyk_MNuloh4ZmR8jHHiX30QbwrCP_h33tNfULZaTmT4=.js" integrity="sha256-Pyk/MNuloh4ZmR8jHHiX30QbwrCP/h33tNfULZaTmT4="></script>
+    <script src="js/httpobs.iYZRPYtBfUX-JXAvgvKFbMpPedDNNM7ra5EqmlhOKoo=.js" integrity="sha256-iYZRPYtBfUX+JXAvgvKFbMpPedDNNM7ra5EqmlhOKoo="></script>
     <script src="js/httpobs-utils.2NMwcSyemM1DBeMp-s2TNpixGmwU4ys1hHV96opsg3E=.js" integrity="sha256-2NMwcSyemM1DBeMp+s2TNpixGmwU4ys1hHV96opsg3E="></script>
     <script src="js/httpobs-third-party.5y6wZAfZ8VRBlJtOyg7oN6fbxcy5S4ly6mZfPbe3TY4=.js" integrity="sha256-5y6wZAfZ8VRBlJtOyg7oN6fbxcy5S4ly6mZfPbe3TY4="></script>
 </body>

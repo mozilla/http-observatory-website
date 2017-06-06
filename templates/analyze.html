@@ -1,29 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="row" id="scan-progress">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <span class="h3">Observatory by Mozilla</span>
-            </div>
-
-            <div class="alert-hidden" id="scan-alert" role="alert">
-                <strong>Error: </strong>
-                <span id="scan-alert-text"></span>
-            </div>
-
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="progress large-progress-bar" id="scan-progress-bar">
-                        <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="scan-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                            Loading Results
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- HTTP Observatory Scan Results -->
     <div class="row" id="scan-results">
         <ul class="nav nav-tabs" role="tablist">
@@ -35,7 +12,26 @@
 
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tab-http-observatory">
-                <div class="row equal">
+
+                <div id="scan-progress">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <span class="h3">Scan Summary</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <div id="scan-progress-bar" class="progress large-progress-bar">
+                                    <div id="scan-progress-bar-text" class="progress-bar progress-bar-striped active large-progress-bar-text" id="scan-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                                        Loading Results
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="scan-summary-row" class="row equal hide">
                     <div class="col-md-6">
                         <div class="panel panel-primary summary summary-condensed" id="scan-summary">
                             <div class="panel-heading">
@@ -199,7 +195,7 @@
                 </div>
 
                 <!-- HTTP Observatory test results -->
-                <div class="panel panel-primary" id="test-scores">
+                <div class="panel panel-primary hide" id="test-scores">
                     <div class="panel-heading">
                         <span class="h3">Test Scores</span>
                     </div>
@@ -303,7 +299,7 @@
                 </div>
 
                 <!-- HTTP Observatory host history results -->
-                <div class="panel panel-primary" id="host-history">
+                <div class="panel panel-primary hide" id="host-history">
                     <div class="panel-heading">
                         <span class="h3">Grade History</span>
                         <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#host-history-panel-body" aria-expanded="false" aria-controls="host-history-panel-body">Click to Expand</button>
@@ -324,7 +320,7 @@
                 </div>
 
                 <!-- HTTP Observatory raw test results -->
-                <div class="panel panel-primary" id="server-headers">
+                <div class="panel panel-primary hide" id="server-headers">
                     <div class="panel-heading">
                         <span class="h3">Raw Server Headers</span>
                         <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#server-headers-panel-body" aria-expanded="false" aria-controls="server-headers-panel-body">Click to Expand</button>
