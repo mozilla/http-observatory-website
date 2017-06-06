@@ -335,12 +335,15 @@ Observatory.thirdParty = {
 
   SSHObservatory: {
     state: {
+      API_URL: 'https://sshscan.rubidus.com/api/v1/',
       count: 0
     },
 
     insert: function insert() {
-      var output;
+      var state = Observatory.thirdParty.SSHObservatory.state;
       var results = Observatory.thirdParty.SSHObservatory.state.results;
+
+      // combine the compression results
       var compression = results.compression_algorithms_client_to_server.concat(
         results.compression_algorithms_client_to_server);
 
@@ -350,7 +353,7 @@ Observatory.thirdParty = {
         duplicateHostKeyIpMsg += 'es';
       }
 
-      Observatory.thirdParty.SSHObservatory.state.output = {
+      state.output = {
         compliance_recommendations: [],
         compliant: results.compliance.compliant ? 'Yes' : 'No',
         compression: _.without(compression, ['none']).length > 0 ? 'Available' : 'Unavailable',
@@ -362,9 +365,9 @@ Observatory.thirdParty = {
         os_cpe: results.os_cpe ? results.os_cpe : 'Unknown',
         port: results.port,
         server_banner: results.server_banner ? results.server_banner : 'Unknown',
-        ssh_lib_cpe: results.ssh_lib_cpe ? results.ssh_lib_cpe : 'Unknown'
+        ssh_lib_cpe: results.ssh_lib_cpe ? results.ssh_lib_cpe : 'Unknown',
+        uuid: state.uuid.split('-')[0]
       };
-      output = Observatory.thirdParty.SSHObservatory.state.output;
 
       // Grade is either pass or fail in this case
       // grade = results.compliance.compliant ? 'check-mark' : 'x-mark';
@@ -389,15 +392,19 @@ Observatory.thirdParty = {
           recommendation = recommendation[0];
         }
 
-        output.compliance_recommendations.push([Observatory.utils.listify([recommendation], true)]);
+        state.output.compliance_recommendations.push(
+          [Observatory.utils.listify([recommendation], true)]);
       });
 
       // insert the recommendations table if need be
-      if (output.compliance_recommendations.length > 0) {
-        Observatory.utils.tableify(output.compliance_recommendations, 'sshobservatory-recommendations-table');
+      if (state.output.compliance_recommendations.length > 0) {
+        Observatory.utils.tableify(state.output.compliance_recommendations, 'sshobservatory-recommendations-table');
       } else {
         $('#sshobservatory-no-recommendations').removeClass('hide');
       }
+
+      // link to the JSON results
+      $('#sshobservatory-uuid').attr('href', state.API_URL + 'scan/results?uuid=' + state.uuid);
 
       Observatory.utils.insertGrade(results.compliance.grade, 'sshobservatory');
       Observatory.utils.insertResults(Observatory.thirdParty.SSHObservatory.state.output, 'sshobservatory');
@@ -409,7 +416,6 @@ Observatory.thirdParty = {
     load: function load() {
       'use strict';
 
-      var API_URL = 'https://sshscan.rubidus.com/api/v1/';
       var state = Observatory.thirdParty.SSHObservatory.state;
 
       // if we haven't initiated a scan
@@ -425,7 +431,7 @@ Observatory.thirdParty = {
               setTimeout(Observatory.thirdParty.SSHObservatory.load, 1500);
             }
           },
-          url: API_URL + 'scan?target=' + Observatory.hostname
+          url: state.API_URL + 'scan?target=' + Observatory.hostname
         });
       } else {  // scan initiated, waiting on results
         $.ajax({
@@ -446,7 +452,7 @@ Observatory.thirdParty = {
               Observatory.utils.errorResults('Scan failed', 'sshobservatory');
             }
           },
-          url: API_URL + 'scan/results?uuid=' + state.uuid
+          url: state.API_URL + 'scan/results?uuid=' + state.uuid
         });
       }
     }
