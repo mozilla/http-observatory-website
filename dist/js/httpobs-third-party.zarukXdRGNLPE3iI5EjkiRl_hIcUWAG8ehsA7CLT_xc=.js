@@ -406,7 +406,6 @@ Observatory.thirdParty = {
       // link to the JSON results
       $('#sshobservatory-uuid').attr('href', state.API_URL + 'scan/results?uuid=' + state.uuid);
 
-      $('#sshobservatory-scanner-alert').remove();
       Observatory.utils.insertGrade(results.compliance.grade, 'sshobservatory');
       Observatory.utils.insertResults(Observatory.thirdParty.SSHObservatory.state.output, 'sshobservatory');
       Observatory.utils.showResults('sshobservatory');
@@ -440,17 +439,15 @@ Observatory.thirdParty = {
           error: function e() { Observatory.utils.errorResults('Scan failed', 'sshobservatory'); },
           success: function s(data) {
             // if we have ssh_scan_version, we can move onto putting it into the page
-            if (data.ssh_scan_version !== undefined) {
+            if (data.status === 'COMPLETED') {
               state.results = data;
               Observatory.thirdParty.SSHObservatory.insert();
-            }
-
-            // if we haven't haven't gotten results for 30 seconds, let's give up
-            state.count += 1;
-            if (state.count <= 15 && state.results === undefined) {
-              setTimeout(Observatory.thirdParty.SSHObservatory.load, 2000);
+            } else if (state.count >= 15 || state.status === 'ERRORED') { // if we haven't haven't gotten results for 30 seconds, let's give up
+              $('#sshobservatory-progress-bar').addClass('hide');
+              $('#sshobservatory-scanner-alert').removeClass('hide');
             } else {
-              Observatory.utils.errorResults('Scan failed', 'sshobservatory');
+              state.count += 1;
+              setTimeout(Observatory.thirdParty.SSHObservatory.load, 2000);
             }
           },
           url: state.API_URL + 'scan/results?uuid=' + state.uuid
@@ -640,7 +637,7 @@ Observatory.thirdParty = {
 
         // it returns "pending", which is invalid JSON, if it's pending
         if (data === 'pending') {
-          setTimeout(Observatory.thirdParty.loadTLSImirhilFrResults, 5000);
+          setTimeout(Observatory.thirdParty.TLSImirhilFr.load, 5000);
         } else {
           Observatory.thirdParty.TLSImirhilFr.insert();
         }

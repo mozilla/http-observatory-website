@@ -207,11 +207,15 @@ ul {
     top: .25em;
 }
 
-/* expandible panel butons, such as raw server headers */
+/* expandible panel buttons, such as raw server headers */
 .expandy-panel-button {
     font-weight: 600;
     padding: 4px 8px;
     white-space: normal;
+}
+
+.m-b-0 {
+    margin-bottom: 0;
 }
 
 .p-l-3 {
