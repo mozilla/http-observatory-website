@@ -347,6 +347,10 @@ Observatory.thirdParty = {
       var compression = results.compression_algorithms_client_to_server.concat(
         results.compression_algorithms_client_to_server);
 
+      var authMethods = results.auth_methods.join(', ')
+                                            .replace('password publickey', 'passwords + public key')
+                                            .replace('publickey', 'public key');
+
       // Duplicate host key message
       var duplicateHostKeyIpMsg = 'Yes, ' + results.duplicate_host_key_ips.length.toString() + ' other known IP address';
       if (results.duplicate_host_key_ips.length > 1) {
@@ -354,6 +358,7 @@ Observatory.thirdParty = {
       }
 
       state.output = {
+        auth_methods: authMethods,
         compliance_recommendations: [],
         compliant: results.compliance.compliant ? 'Yes' : 'No',
         compression: _.without(compression, ['none']).length > 0 ? 'Available' : 'Unavailable',
