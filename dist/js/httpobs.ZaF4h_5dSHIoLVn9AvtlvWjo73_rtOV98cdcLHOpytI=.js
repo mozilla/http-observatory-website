@@ -81,11 +81,8 @@ var Observatory = {
       }
     }
 
-    // hide the scan progress bar
-    // $('#scan-progress-bar').hide();
-
-    // $('#scan-alert-text').text(error);
-    // $('#scan-alert').removeClass('alert-hidden');
+    $('#scan-alert-text').text(error);
+    $('#scan-alert').removeClass('alert-hidden');
     Observatory.utils.errorResults(error, 'scan');
   },
 
@@ -567,7 +564,7 @@ var Observatory = {
     Observatory.hostname = url.host;
 
     successCallback = function f(data) {
-      if (data.error) {
+      if (data.error !== undefined && data.error !== 'site down') {
         Observatory.displayError(data.error);
         return false;
       }
