@@ -490,6 +490,42 @@ var Observatory = {
   },
 
 
+  handleTabFragments: function handleTabFragments() {
+    var hash = window.location.hash;
+    var tab;
+
+    // if we don't have pushState, let's not muck around with hashes
+    if (typeof history.pushState !== 'function') {
+      return false;
+    }
+
+    // on page load, set the tab correctly
+    if (hash !== '') {  // HTTP Observatory (default)
+      hash = hash.split('#')[1];
+      if (_.includes(['ssh', 'tls'], hash)) {
+        tab = 'tab-' + hash + 'observatory';
+      } else {
+        tab = 'tab-third-party-tests';
+      }
+
+      // switch to the correct tab
+      $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+    }
+
+    // set a handler to change the fragment whenever the tab is changed, ignoring HTTP Observatory
+    $('.nav-tabs li').on('shown.bs.tab', function updateFragment(e) {
+      hash = e.target.hash.split('-')[1].split('observatory')[0];
+      if (hash === 'http') {
+        history.pushState(null, null, window.location.pathname + window.location.search);
+      } else {
+        history.pushState(null, null, '#' + hash);
+      }
+    });
+
+    return undefined;
+  },
+
+
   loadScanResults: function loadScanResults() {
     'use strict';
 
@@ -623,6 +659,9 @@ var Observatory = {
 
       // update the page title to reflect that's a scan
       document.title = document.title + ' :: Scan Results for ' + Observatory.hostname;
+
+      // handle the tab fragments
+      Observatory.handleTabFragments();
 
       // make it so that when we click a collapsed element, it removes it from the DOM
       $('[data-toggle="collapse"]').click(
