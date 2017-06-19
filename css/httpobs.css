@@ -447,7 +447,7 @@ sup, sub {
     font-weight: bold;
 }
 
-#next-steps a, #redirect-banner a, #test-scores a {
+#next-steps a, #redirect-banner a, #test-scores a, #sshobservatory-summary a {
     border-bottom: 1px dotted #4582ec;
     text-decoration: none;
 }
