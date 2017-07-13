@@ -467,7 +467,7 @@ var Observatory = {
       }
 
 
-      $('#scan-text').text(text);
+      $('#scan-progress-bar-text').text(text);
       setTimeout(Observatory.loadScanResults, 1000);
       return false;
     }
