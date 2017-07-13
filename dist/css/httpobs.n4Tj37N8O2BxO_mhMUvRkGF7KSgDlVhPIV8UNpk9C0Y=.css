@@ -76,6 +76,10 @@ ul {
 
 }
 
+#results-container {
+    margin-bottom: 1em;
+}
+
 /* home page stuff */
 #scan-input-hostname {
     margin-bottom: .5em;

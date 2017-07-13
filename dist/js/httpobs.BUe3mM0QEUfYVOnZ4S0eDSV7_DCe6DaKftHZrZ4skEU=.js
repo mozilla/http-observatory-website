@@ -536,46 +536,60 @@ var Observatory = {
   },
 
 
-  /* these are the tables on the home page, such as hall of shame, etc. */
-  insertResultTable: function insertResultTable(data, title, id, alert) {
-    'use strict';
+  // tables on home page, such as recent best, recent worst, etc
+  statistics: {
+    insert: function insert(stats) {
+      'use strict';
 
-    var sum = 0;
+      var sum = 0;
+      var table;
+      var tbody;
 
-    // create the table and table header
-    var table = $('<table></table>').addClass('table table-bordered table-striped table-condensed table-recent-results')
-      .append('<thead><tr><th class="alert-' + alert + ' h5" colspan="2">' + title + '</th></tr></thead>');
-    var tbody = table.append('<tbody></tbody>');
+      function createTable(title, alert) {
+        // create the table and table header
+        var table = $('<table></table>').addClass('table table-bordered table-striped table-condensed table-recent-results')
+          .append('<thead><tr><th class="alert-' + alert + ' h5" colspan="2">' + title + '</th></tr></thead>');
+        var tbody = table.append('<tbody></tbody>');
+        return [table, tbody];
+      }
 
-    // the total results are in an array of grade: total mappings, everything else is site: grade
-    if (id === 'totalresults') {
+      // insert in the overall results table (grade to number of results)
+      [table, tbody] = createTable('Overall Results', 'info');
       _.forEach(Observatory.const.grades, function f(grade) {
-        tbody.append('<tr><td>' + grade + '</td><td class="text-right">' + data[grade] + '</td>');
-        sum += data[grade];
+        tbody.append('<tr><td>' + grade + '</td><td class="text-right">' + stats.gradeDistribution[grade] + '</td>');
+        sum += stats.gradeDistribution[grade];
       });
+      $('#results-total').html(table);
 
-      tbody.append('<tr><td>Totals</td><td class="text-right">' + sum + '</td>');
-    } else {
-      _.forEach(data, function f(grade, site) {
-        tbody.append('<tr><td class="hostname">' +
-          '<a href="analyze.html?host=' + site + '">' + site + '</a>' +
-          '</td><td class="grade">' + grade + '</td>');
+      // insert in the recent best/worst/overall
+      _.forEach([
+          {name: 'Recently Scanned', alert: 'warning', data: stats.recent.scans.recent, id: 'results-recent'},
+          {name: 'Recent Best', alert: 'success', data: stats.recent.scans.best, id: 'results-good'},
+          {name: 'Recent Worst', alert: 'danger', data: stats.recent.scans.worst, id: 'results-bad'}], function(t) {
+        [table, tbody] = createTable(t.name, t.alert);
+        _.forEach(t.data, function (grade, site) {
+          tbody.append('<tr><td class="hostname">' +
+            '<a href="analyze.html?host=' + site + '">' + site + '</a>' +
+            '</td><td class="grade">' + grade + '</td>');
+        });
+
+        // insert the table
+        $('#' + t.id).html(table);
+      });
+    },
+
+    load: function load() {
+      'use strict';
+
+      $.ajax({
+        error: function e() {
+          // remove the click-to-reveal button
+          $('#results-reveal-container').remove();
+        },
+        success: function s(data) { Observatory.statistics.insert(data); },
+        url: Observatory.const.urls.api + '__stats__'
       });
     }
-
-    // insert the table into the dom, replacing the hidden div
-    $('#' + id).html(table);
-  },
-
-
-  retrieveResultTable: function retrieveResultTable(title, url, id, alert) {
-    'use strict';
-
-    $.ajax({
-      url: url
-    }).done(function f(data) {
-      Observatory.insertResultTable(data, title, id, alert);
-    });
   },
 
 
@@ -695,15 +709,8 @@ var Observatory = {
       // bind an event to the Scan Me button
       $('#scantron-form').on('submit', Observatory.submitScanForAnalysis);
 
-      // load all the grade and totals tables
-      Observatory.retrieveResultTable('Overall Results',
-        Observatory.const.urls.api + 'getGradeDistribution', 'totalresults', 'info');
-      Observatory.retrieveResultTable('Recently Scanned',
-        Observatory.const.urls.api + 'getRecentScans?num=14', 'recentresults', 'warning');
-      Observatory.retrieveResultTable('Recent Best',
-        Observatory.const.urls.api + 'getRecentScans?min=90&num=14', 'goodresults', 'success');
-      Observatory.retrieveResultTable('Recent Worst',
-        Observatory.const.urls.api + 'getRecentScans?max=20&num=14', 'badresults', 'danger');
+      // retrieve the stats and various grade tables
+      Observatory.statistics.load();
     }
   }
 
