@@ -238,6 +238,10 @@ ul {
     padding-left: 0 !important;
 }
 
+.width-100 {
+    width: 100%;
+}
+
 #server-headers {
     margin-bottom: 5em;
 }

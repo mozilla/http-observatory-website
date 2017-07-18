@@ -423,6 +423,10 @@ Observatory.thirdParty = {
 
       var state = Observatory.thirdParty.SSHObservatory.state;
 
+      // remove the initiate scan button and show the status bar
+      $('#sshobservatory-scan-initiator').remove();
+      $('#sshobservatory-progress-bar').removeClass('hide');
+
       // if we haven't initiated a scan
       if (state.uuid === undefined) {
         $.ajax({

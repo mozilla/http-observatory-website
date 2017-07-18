@@ -687,10 +687,11 @@ var Observatory = {
       Observatory.loadScanResults();
       Observatory.thirdParty.TLSObservatory.load();
 
-      // also show the SSH observatory and initiate a scan
+      // enable auto scans from the non-Observatory domain
       if (document.domain !== Observatory.const.domain) {
         Observatory.thirdParty.SSHObservatory.load();
-        $('#tab-sshobservatory-tablist-item').removeClass('hide');
+      } else {
+        $('#sshobservatory-scan-initiator-btn').on('click', Observatory.thirdParty.SSHObservatory.load)
       }
 
       // let's check the third parties if requested
