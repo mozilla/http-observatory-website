@@ -424,7 +424,7 @@ Observatory.thirdParty = {
       var state = Observatory.thirdParty.SSHObservatory.state;
 
       // remove the initiate scan button and show the status bar
-      $('#sshobservatory-scan-initiator').remove();
+      $('#sshobservatory-scan-initiator').slideUp();
       $('#sshobservatory-progress-bar').removeClass('hide');
 
       // if we haven't initiated a scan
