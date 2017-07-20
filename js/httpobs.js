@@ -426,7 +426,7 @@ var Observatory = {
         return false;
       }
 
-      Observatory.displayError(scan.error);
+      Observatory.displayError(scan.text);
       return false;
     }
 
