@@ -450,7 +450,7 @@ sup, sub {
     font-weight: bold;
 }
 
-#redirect-banner a {
+.alert-danger a, #redirect-banner a {
     color: white;
     font-weight: bold;
 }

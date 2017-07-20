@@ -420,7 +420,7 @@ var Observatory = {
       /* if it's recent-scan-not-found, start a (hidden) scan and refresh the page */
       if (scan.error === 'recent-scan-not-found') {
         success = function f() { location.reload(); };
-        failure = function f() { Observatory.displayError(scan.error); };
+        failure = function f() { Observatory.displayError(scan.text); };
 
         Observatory.submitScanForAnalysisXHR(Observatory.hostname, success, failure, 'POST', false, true);
         return false;
@@ -615,7 +615,15 @@ var Observatory = {
 
     successCallback = function f(data) {
       if (data.error !== undefined && data.error !== 'site down') {
-        Observatory.displayError(data.error);
+        // if it's an IP address error, let them click through
+        if (data.error === 'invalid-hostname-ip') {
+          $('#scan-alert-ip-link').attr('href', window.location.href + 'analyze.html?host=' + url.host + '#ssh');
+          $('#scan-alert-ip-address').text(url.host);
+          $('#scan-alert-ip').removeClass('alert-hidden');
+        } else {
+          Observatory.displayError(data.text);
+        }
+
         return false;
       }
 
