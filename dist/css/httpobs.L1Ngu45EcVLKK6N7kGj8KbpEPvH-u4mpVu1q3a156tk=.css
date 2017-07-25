@@ -206,11 +206,6 @@ ul {
     margin-bottom: 2em;
 }
 
-/* make the glyph icon tooltips align a bit nicer */
-.glyphicon-info-sign[data-toggle="popover"] {
-    top: .25em;
-}
-
 /* expandible panel buttons, such as raw server headers */
 .expandy-panel-button {
     font-weight: 600;
