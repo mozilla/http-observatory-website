@@ -58,54 +58,67 @@
     <!-- main content -->
     <div class="container">
         
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2 margin-bottom">
-            <h1 id="whatami" class="h5 margin-bottom">
-                Observatory by Mozilla has helped <span id="stats-numImprovedSites">over 50,000</span> websites by teaching developers, system administrators, and security professionals how configure their sites safely and securely.
-            </h1>
 
-            <div class="panel panel-primary">
-                <div class="panel-heading"><span class="h3">Scan your site</span></div>
-                <div class="panel-body no-popover-mobile">
-                    <div class="alert alert-danger alert-hidden" id="scan-alert" role="alert">
-                        <strong>Error: </strong>
-                        <span id="scan-alert-text"></span>
+    <div id="statistics">
+        <h1 class="page-header h2 page-header-half-margin-top">HTTP Observatory</h1>
+
+        <div>
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    <tr>
+                        <td>Number of Improved Websites</td>
+                        <td id="stats-numImprovedSites"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Scans</td>
+                        <td id="stats-numScans"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Successfully Completed Scans</td>
+                        <td id="stats-numSuccessfulScans"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Unique Domains</td>
+                        <td id="stats-numUniqueSites"></td>
+                    </tr>
+                    <tr>
+                        <td>Percentage of Sites Passing</td>
+                        <td><span id="stats-percSitesPassing"></span>%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h2 class="h4">Number of Unique Sites per Grade</h2>
+            <canvas id="http-observatory-chart-grade-distribution" height="200"></canvas>
+        </div>
+
+        <div>
+            <h2 class="h4">Number of Grades Levels Improved</h2>
+            <canvas id="http-observatory-chart-grade-improvements" height="200"></canvas>
+        </div>
+
+        <div>
+            <h2 class="h4">Recent Scans</h2>
+
+            <div class="row" id="results-reveal-container">
+                <div class="col-xs-12 col-md-8">
+                    <div class="panel panel-primary collapse in" id="c-button-container">
+                        <div class="panel-heading">
+                            <button class="btn btn-default btn-block expandy-panel-button" type="button" data-toggle="collapse" data-target="#results-container,#c-button-container" aria-expanded="false" aria-controls="results-container">This list is hidden by default, as it may<br>contain sites considered offensive to some.</button>
+                        </div>
                     </div>
-                    <div class="alert alert-danger alert-hidden" id="scan-alert-ip" role="alert">
-                        <strong>Error: </strong>
-                        <span>It appears that <span id="scan-alert-ip-address"></span> is an IP address, which only works for SSH scans. If this is what you intended, please <a id="scan-alert-ip-link">click here</a> to continue.</span>
-                    </div>
-                    <form id="scantron-form">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" id="scan-input-hostname" placeholder="enter domain name here"
-                                       autocorrect="off" autocapitalize="off" spellcheck="false">
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-default pull-right">Scan Me</button>
-                            </div>
-                        </div>
-                        <div class="checkbox">
-                            <label title="Stealth scans" data-toggle="popover" data-content="Don't want your site to appear in the lists below? Not a problem!">
-                                <input type="checkbox" id="scan-btn-hidden">Don't include my site in the public results
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label title="Make some improvements?" data-toggle="popover" data-content="By default, any scan results from within the last 24 hours will be returned.<br><br>If you've made some changes, the Mozilla Observatory allows you to rescan your site up to every five minutes.">
-                                <input type="checkbox" id="scan-btn-rescan">Force a rescan instead of returning cached results
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label title="Third-party scanners" data-toggle="popover" data-content="The Mozilla Observatory integrates with a variety of third-party scanners to provide you additional security insights.<br><br>Information about these scanners can be found in our FAQ.">
-                                <input type="checkbox" id="scan-btn-third-party">Don't scan with third-party scanners
-                            </label>
-                        </div>
-                    </form>
                 </div>
+            </div>
+
+            <div class="row collapse" id="results-container">
+                <div class="col-md-4" id="results-recent"></div>
+                <div class="col-md-4" id="results-good"></div>
+                <div class="col-md-4" id="results-bad"></div>
             </div>
         </div>
     </div>
-
 
     </div>
 

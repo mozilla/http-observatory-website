@@ -38,6 +38,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href=".">Home</a></li>
                     <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="statistics.html">Statistics</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -46,6 +47,7 @@
                             <li><a href="faq.html">Frequently Asked Questions</a></li>
                             <li><a href="terms.html">Legal &amp; Privacy</a></li>
                             <li><a href="https://github.com/mozilla/http-observatory/blob/master/httpobs/docs/scoring.md">Scoring Methodology</a></li>
+                            <li><a href="statistics">Scoring Methodology</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -66,10 +68,11 @@
     </footer>
     -->
 
-    <script src="js/{{ files['jquery-3.1.1.min.js']['name'] }}" integrity="{{ files['jquery-3.1.1.min.js']['hash'] }}"></script>
-    <script src="js/{{ files['bootstrap-3.3.7.min.js']['name'] }}" integrity="{{ files['bootstrap-3.3.7.min.js']['hash'] }}"></script>
-    <script src="js/{{ files['lodash-4.16.4.min.js']['name'] }}" integrity="{{ files['lodash-4.16.4.min.js']['hash'] }}"></script>
-    <script src="js/{{ files['moment-2.15.1.min.js']['name'] }}" integrity="{{ files['moment-2.15.1.min.js']['hash'] }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js" integrity="sha256-8E6QUcFg1KTnpEU8TFGhpTGHw5fJqB9vCms3OhAYLqw=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" integrity="sha256-SiHXR50l06UwJvHhFY4e5vzwq75vEHH+8fFNpkXePr0=" crossorigin="anonymous"></script>
     <script src="js/{{ files['httpobs.js']['name'] }}" integrity="{{ files['httpobs.js']['hash'] }}"></script>
     <script src="js/{{ files['httpobs-utils.js']['name'] }}" integrity="{{ files['httpobs-utils.js']['hash'] }}"></script>
     <script src="js/{{ files['httpobs-third-party.js']['name'] }}" integrity="{{ files['httpobs-third-party.js']['hash'] }}"></script>

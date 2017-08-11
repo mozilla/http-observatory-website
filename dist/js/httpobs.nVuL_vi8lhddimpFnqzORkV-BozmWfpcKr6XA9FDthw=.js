@@ -6,6 +6,13 @@ var Observatory = {
       uparrow: '&#x2b06;',
       xmark: '&#x2717;'
     },
+    colors: {
+      'A': 'rgba(45, 136, 45, .4)',
+      'B': 'rgba(170, 170, 57, .4)',
+      'C': 'rgba(170, 112, 57, .4)',
+      'D': 'rgba(101, 39, 112, .4)',
+      'F': 'rgba(170, 57, 57, .4)'
+    },
     domain: 'observatory.mozilla.org',
     grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
     maxQueriesBeforeTimeout: 600,
@@ -541,6 +548,9 @@ var Observatory = {
     insert: function insert(stats) {
       'use strict';
 
+      var colors = Observatory.const.colors;
+      var nonFailingGrades = Observatory.const.grades.slice(0, Observatory.const.grades.length - 1);
+      var series;
       var sum = 0;
       var table;
       var tbody;
@@ -553,19 +563,11 @@ var Observatory = {
         return [table, tbody];
       }
 
-      // insert in the overall results table (grade to number of results)
-      [table, tbody] = createTable('Overall Results', 'info');
-      _.forEach(Observatory.const.grades, function f(grade) {
-        tbody.append('<tr><td>' + grade + '</td><td class="text-right">' + stats.gradeDistribution[grade] + '</td>');
-        sum += stats.gradeDistribution[grade];
-      });
-      $('#results-total').html(table);
-
       // insert in the recent best/worst/overall
       _.forEach([
           {name: 'Recently Scanned', alert: 'warning', data: stats.recent.scans.recent, id: 'results-recent'},
-          {name: 'Recent Best', alert: 'success', data: stats.recent.scans.best, id: 'results-good'},
-          {name: 'Recent Worst', alert: 'danger', data: stats.recent.scans.worst, id: 'results-bad'}], function(t) {
+          {name: 'High Achievers', alert: 'success', data: stats.recent.scans.best, id: 'results-good'},
+          {name: 'Failing Grade', alert: 'danger', data: stats.recent.scans.worst, id: 'results-bad'}], function(t) {
         [table, tbody] = createTable(t.name, t.alert);
         _.forEach(t.data, function (grade, site) {
           tbody.append('<tr><td class="hostname">' +
@@ -576,6 +578,77 @@ var Observatory = {
         // insert the table
         $('#' + t.id).html(table);
       });
+
+      // add a stat for the percentage of sites passing
+      stats.misc.percSitesPassing = (1 - (stats.gradeDistribution.latest.F / stats.misc.numUniqueSites)) * 100;
+
+      // convert all the miscellaneous numbers to their locale representation
+      _.forEach(stats.misc, function (v, k) {
+        if (typeof v === 'number') {
+          stats.misc[k] = v.toLocaleString();
+        }
+      });
+
+      console.log(stats.gradeDistribution.latest.F, stats.misc.numUniqueSites);
+      console.log(stats.misc.percSitesPassing);
+
+      new Chart($('#http-observatory-chart-grade-distribution'), {
+        type: 'bar',
+        data: {
+          labels: nonFailingGrades,
+          datasets: [{
+            label: ' ',
+            data: nonFailingGrades.map(function (k) { return stats.gradeDistribution.latest[k]; }),
+            backgroundColor: [colors.A, colors.A, colors.A, colors.B, colors.B, colors.B,
+              colors.C, colors.C, colors.C, colors.D, colors.D, colors.D]
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltip, data) {
+                return ' ' + tooltip.yLabel.toLocaleString();
+              },
+              title: function() { return; }
+            },
+            enabled: true
+          }
+        }
+      })
+
+      new Chart($('#http-observatory-chart-grade-improvements'), {
+        type: 'bar',
+        data: {
+          labels: ['1 grade level', '2 grade levels', '3 grade levels', '4 grade levels', '5 grade levels'],
+          datasets: [{
+            label: ' ',
+            data: [stats.gradeImprovements['1'], stats.gradeImprovements['2'], stats.gradeImprovements['3'],
+              stats.gradeImprovements['4'], stats.gradeImprovements['5']],
+            backgroundColor: [colors.F, colors.D, colors.C, colors.B, colors.A]
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltip, data) {
+                return ' ' + tooltip.yLabel.toLocaleString() + ' unique websites';
+              },
+              title: function() { return; }
+            },
+            enabled: true
+          }
+        }
+      })
+
+      // insert in the miscellaneous statistics
+      Observatory.utils.insertResults(stats.misc, 'stats');
+      console.log(stats);
     },
 
     load: function load() {
@@ -714,12 +787,11 @@ var Observatory = {
         $('#third-party-tests').remove();
         $('#third-party-tests-page-header').remove();
       }
+    } else if (window.location.pathname.indexOf('/statistics.html') !== -1) {
+      Observatory.statistics.load();
     } else {
       // bind an event to the Scan Me button
       $('#scantron-form').on('submit', Observatory.submitScanForAnalysis);
-
-      // retrieve the stats and various grade tables
-      Observatory.statistics.load();
     }
   }
 

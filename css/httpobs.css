@@ -136,28 +136,28 @@ ul {
 }
 
 .grade-a {
-    background: #2d882d;
-    border: solid 6px #116611;
+    background: rgb(45, 136, 45);
+    border: solid 6px rgb(17, 102, 17);
 }
 
 .grade-b {
-    background: #aaaa39;
-    border: solid 6px #808015;
+    background: rgb(170, 170, 57);
+    border: solid 6px rgb(128, 128, 21);
 }
 
 .grade-c {
-    background: #aa7039;
-    border: solid 6px #804915;
+    background: rgb(170, 112, 57);
+    border: solid 6px rgb(128, 73, 21);
 }
 
 .grade-d, .grade-e {
-    background: #652770;
-    border: solid 6px #4a1054;
+    background: rgb(101, 39, 112);
+    border: solid 6px rgb(74, 16, 84);
 }
 
 .grade-f {
-    background: #aa3939;
-    border: solid 6px #801515;
+    background: rgb(170, 57, 57);
+    border: solid 6px rgb(128, 21, 21);
 }
 
 .grade-i {  /* intermediate is a weird font that needs to be bigger */
@@ -417,23 +417,27 @@ sup, sub {
     margin-top: 1.5em;
 }
 
-/* faq and terms pages */
+/* faq and terms and statistics pages */
 #faq, #terms {
     max-width: 53em;
     padding: 0 1em;
 }
 
-#faq .question {
+#faq .question, #statistics > div {
     margin-bottom: 2em;
 }
 
-#faq .question p {
+#faq .question p{
     padding: 0 1em;
 }
 
 #faq pre {
     margin-left: 5%;
     margin-top: 1.25em;
+}
+
+#statistics canvas {
+    margin-top: 1em;
 }
 
 .page-header-half-margin-top {
@@ -453,4 +457,9 @@ sup, sub {
 #next-steps a, #redirect-banner a, #test-scores a, #sshobservatory-summary a {
     border-bottom: 1px dotted #4582ec;
     text-decoration: none;
+}
+
+/* chart sizes */
+canvas {
+    height: 400px;
 }
