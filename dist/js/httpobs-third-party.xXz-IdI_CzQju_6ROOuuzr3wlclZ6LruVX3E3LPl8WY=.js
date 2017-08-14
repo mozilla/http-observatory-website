@@ -335,7 +335,6 @@ Observatory.thirdParty = {
 
   SSHObservatory: {
     state: {
-      API_URL: 'https://sshscan.rubidus.com/api/v1/',
       count: 0
     },
 
@@ -440,7 +439,7 @@ Observatory.thirdParty = {
               setTimeout(Observatory.thirdParty.SSHObservatory.load, 1500);
             }
           },
-          url: state.API_URL + 'scan?target=' + Observatory.hostname
+          url: Observatory.const.urls.sshscan + 'scan?target=' + Observatory.hostname
         });
       } else {  // scan initiated, waiting on results
         $.ajax({
@@ -459,7 +458,7 @@ Observatory.thirdParty = {
               setTimeout(Observatory.thirdParty.SSHObservatory.load, 2000);
             }
           },
-          url: state.API_URL + 'scan/results?uuid=' + state.uuid
+          url: Observatory.const.urls.sshscan + 'scan/results?uuid=' + state.uuid
         });
       }
     }

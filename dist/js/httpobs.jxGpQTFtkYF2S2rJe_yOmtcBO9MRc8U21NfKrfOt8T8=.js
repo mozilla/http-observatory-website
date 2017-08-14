@@ -17,7 +17,8 @@ var Observatory = {
     grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
     maxQueriesBeforeTimeout: 600,
     urls: {
-      api: 'https://http-observatory.security.mozilla.org/api/v1/'
+      api: 'https://http-observatory.security.mozilla.org/api/v1/',
+      sshscan: 'https://sshscan.rubidus.com/api/v1/'
     }
   },
   state: {
@@ -545,7 +546,7 @@ var Observatory = {
 
   // tables on home page, such as recent best, recent worst, etc
   statistics: {
-    insert: function insert(stats) {
+    insertHTTP: function insert(stats) {
       'use strict';
 
       var colors = Observatory.const.colors;
@@ -588,9 +589,6 @@ var Observatory = {
           stats.misc[k] = v.toLocaleString();
         }
       });
-
-      console.log(stats.gradeDistribution.latest.F, stats.misc.numUniqueSites);
-      console.log(stats.misc.percSitesPassing);
 
       new Chart($('#http-observatory-chart-grade-distribution'), {
         type: 'bar',
@@ -647,20 +645,69 @@ var Observatory = {
       })
 
       // insert in the miscellaneous statistics
-      Observatory.utils.insertResults(stats.misc, 'stats');
-      console.log(stats);
+      Observatory.utils.insertResults(stats.misc, 'http-observatory-stats');
     },
+
+
+    insertSSH: function insertSSH(data) {
+      var colors = Observatory.const.colors;
+      var grades = data.GRADE_REPORT;
+      var stats = {
+        numScans: _.sum(Object.values(data.SCAN_STATES)),
+        numSuccessfulScans: data.SCAN_STATES.COMPLETED
+      }
+
+      new Chart($('#ssh-observatory-chart-grade-distribution'), {
+        type: 'bar',
+        data: {
+          labels: ['A', 'B', 'C', 'D', 'F'],
+          datasets: [{
+            label: ' ',
+            data: [grades.A, grades.B, grades.C, grades.D, grades.F],
+            backgroundColor: [colors.A, colors.B, colors.C, colors.D, colors.F]
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltip, data) {
+                return ' ' + tooltip.yLabel.toLocaleString();
+              },
+              title: function() { return; }
+            },
+            enabled: true
+          }
+        }
+      });
+
+      // insert in the miscellaneous statistics
+      Observatory.utils.insertResults(stats, 'ssh-observatory-stats');
+    },
+
 
     load: function load() {
       'use strict';
 
+      // HTTP Observatory
       $.ajax({
         error: function e() {
           // remove the click-to-reveal button
           $('#results-reveal-container').remove();
         },
-        success: function s(data) { Observatory.statistics.insert(data); },
+        success: function s(data) { Observatory.statistics.insertHTTP(data); },
         url: Observatory.const.urls.api + '__stats__'
+      });
+
+      // SSH Observatory
+      $.ajax({
+        error: function e() {
+          // remove stats section
+        },
+        success: function s(data) { Observatory.statistics.insertSSH(data); },
+        url: Observatory.const.urls.sshscan + 'stats'
       });
     }
   },
