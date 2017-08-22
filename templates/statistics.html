@@ -3,30 +3,30 @@
 {% block content %}
 
     <div id="statistics">
-        <h1 class="page-header h2 page-header-half-margin-top">HTTP Observatory</h1>
+        <h1 class="page-header h2 m-t-1">HTTP Observatory</h1>
 
         <div>
             <table class="table table-striped table-bordered">
                 <tbody>
                     <tr>
                         <td>Number of Improved Websites</td>
-                        <td id="http-observatory-stats-numImprovedSites"></td>
+                        <td class="text-right" id="http-observatory-stats-numImprovedSites"></td>
                     </tr>
                     <tr>
                         <td>Number of Successfully Completed Scans</td>
-                        <td id="http-observatory-stats-numSuccessfulScans"></td>
+                        <td class="text-right" id="http-observatory-stats-numSuccessfulScans"></td>
                     </tr>
                     <tr>
                         <td>Number of Attempted Scans</td>
-                        <td id="http-observatory-stats-numScans"></td>
+                        <td class="text-right" id="http-observatory-stats-numScans"></td>
                     </tr>
                     <tr>
                         <td>Number of Unique Domains</td>
-                        <td id="http-observatory-stats-numUniqueSites"></td>
+                        <td class="text-right" id="http-observatory-stats-numUniqueSites"></td>
                     </tr>
                     <tr>
                         <td>Percentage of Sites Passing</td>
-                        <td><span id="http-observatory-stats-percSitesPassing"></span>%</td>
+                        <td class="text-right"><span id="http-observatory-stats-percSitesPassing"></span>%</td>
                     </tr>
                 </tbody>
             </table>
@@ -47,7 +47,7 @@
 
             <div class="row" id="results-reveal-container">
                 <div class="col-xs-12 col-md-8">
-                    <div class="panel panel-primary collapse in" id="c-button-container">
+                    <div class="panel panel-primary collapse in m-b-0" id="c-button-container">
                         <div class="panel-heading">
                             <button class="btn btn-default btn-block expandy-panel-button" type="button" data-toggle="collapse" data-target="#results-container,#c-button-container" aria-expanded="false" aria-controls="results-container">This list is hidden by default, as it may<br>contain sites considered offensive to some.</button>
                         </div>
@@ -62,7 +62,42 @@
             </div>
         </div>
 
-        <!-- rebuild -->
+        <h1 class="page-header h2 page-header-half-margin-top">TLS Observatory</h1>
+
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">&nbsp;</th>
+                        <th class="text-center">Last 24 Hours</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Number of Analyses</td>
+                        <td class="text-right">N/A</td>
+                        <td class="text-right" id="tls-observatory-stats-analyses"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Certificates</td>
+                        <td class="text-right" id="tls-observatory-stats-distinctCertsSeenLast24Hours"></td>
+                        <td class="text-right" id="tls-observatory-stats-certificates"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Scans</td>
+                        <td class="text-right" id="tls-observatory-stats-scansLast24Hours"></td>
+                        <td class="text-right" id="tls-observatory-stats-scans"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Trust Relationships</td>
+                        <td class="text-right">N/A</td>
+                        <td class="text-right" id="tls-observatory-stats-trusts"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <h1 class="page-header h2 page-header-half-margin-top">SSH Observatory</h1>
 
         <div>
@@ -70,11 +105,11 @@
                 <tbody>
                     <tr>
                         <td>Number of Successfully Completed Scans</td>
-                        <td id="ssh-observatory-stats-numSuccessfulScans"></td>
+                        <td class="text-right" id="ssh-observatory-stats-numSuccessfulScans"></td>
                     </tr>
                     <tr>
                         <td>Number of Attempted Scans</td>
-                        <td id="ssh-observatory-stats-numScans"></td>
+                        <td class="text-right" id="ssh-observatory-stats-numScans"></td>
                     </tr>
                 </tbody>
             </table>

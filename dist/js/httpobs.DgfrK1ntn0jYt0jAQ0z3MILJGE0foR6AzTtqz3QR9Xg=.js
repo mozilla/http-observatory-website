@@ -18,7 +18,8 @@ var Observatory = {
     maxQueriesBeforeTimeout: 600,
     urls: {
       api: 'https://http-observatory.security.mozilla.org/api/v1/',
-      sshscan: 'https://sshscan.rubidus.com/api/v1/'
+      ssh: 'https://sshscan.rubidus.com/api/v1/',
+      tls: 'https://tls-observatory.services.mozilla.com/api/v1/'
     }
   },
   state: {
@@ -584,11 +585,7 @@ var Observatory = {
       stats.misc.percSitesPassing = (1 - (stats.gradeDistribution.latest.F / stats.misc.numUniqueSites)) * 100;
 
       // convert all the miscellaneous numbers to their locale representation
-      _.forEach(stats.misc, function (v, k) {
-        if (typeof v === 'number') {
-          stats.misc[k] = v.toLocaleString();
-        }
-      });
+      Observatory.utils.prettyNumberify(stats.misc);
 
       new Chart($('#http-observatory-chart-grade-distribution'), {
         type: 'bar',
@@ -684,7 +681,13 @@ var Observatory = {
       });
 
       // insert in the miscellaneous statistics
-      Observatory.utils.insertResults(stats, 'ssh-observatory-stats');
+      Observatory.utils.insertResults(Observatory.utils.prettyNumberify(stats), 'ssh-observatory-stats');
+    },
+
+
+    insertTLS: function insertTLS(stats) {
+      // insert in the TLS Observatory
+      Observatory.utils.insertResults(Observatory.utils.prettyNumberify(stats), 'tls-observatory-stats');
     },
 
 
@@ -707,7 +710,15 @@ var Observatory = {
           // remove stats section
         },
         success: function s(data) { Observatory.statistics.insertSSH(data); },
-        url: Observatory.const.urls.sshscan + 'stats'
+        url: Observatory.const.urls.ssh + 'stats'
+      });
+
+      $.ajax({
+        error: function e() {
+          // remove stats section
+        },
+        success: function s(data) { Observatory.statistics.insertTLS(data); },
+        url: Observatory.const.urls.tls + '__stats__?format=json'
       });
     }
   },

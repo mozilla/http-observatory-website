@@ -85,6 +85,18 @@ Observatory.utils = {
   },
 
 
+  prettyNumberify: function prettyNumberify(numbersObject) {
+    // convert all the miscellaneous numbers to their locale representation
+    _.forEach(numbersObject, function (v, k) {
+      if (typeof v === 'number') {
+        numbersObject[k] = v.toLocaleString();
+      }
+    });
+
+    return numbersObject;
+  },
+
+
   // take a list of lists and push it into an existing table
   tableify: function tableify(list, tableId) {
     'use strict';

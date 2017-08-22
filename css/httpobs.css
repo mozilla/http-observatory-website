@@ -10,10 +10,6 @@ ul {
     padding: 2em;
 }
 
-.no-margin-top {
-    margin-top: 0;
-}
-
 .footer {
     background-color: #ffffff;
     /*bottom: 0;*/
@@ -215,6 +211,10 @@ ul {
 
 .m-b-0 {
     margin-bottom: 0;
+}
+
+.m-t-1 {
+    margin-top: 1em;
 }
 
 .p-l-3 {
@@ -441,7 +441,7 @@ sup, sub {
 }
 
 .page-header-half-margin-top {
-    margin-top: 1em;
+    margin-top: 1.5em;
 }
 
 /* redirection and next steps banners */

@@ -439,7 +439,7 @@ Observatory.thirdParty = {
               setTimeout(Observatory.thirdParty.SSHObservatory.load, 1500);
             }
           },
-          url: Observatory.const.urls.sshscan + 'scan?target=' + Observatory.hostname
+          url: Observatory.const.urls.ssh + 'scan?target=' + Observatory.hostname
         });
       } else {  // scan initiated, waiting on results
         $.ajax({
@@ -458,7 +458,7 @@ Observatory.thirdParty = {
               setTimeout(Observatory.thirdParty.SSHObservatory.load, 2000);
             }
           },
-          url: Observatory.const.urls.sshscan + 'scan/results?uuid=' + state.uuid
+          url: Observatory.const.urls.ssh + 'scan/results?uuid=' + state.uuid
         });
       }
     }
@@ -892,9 +892,6 @@ Observatory.thirdParty = {
     load: function load(rescan, initiateScanOnly) {
       'use strict';
 
-      var SCAN_URL = 'https://tls-observatory.services.mozilla.com/api/v1/scan';
-      var RESULTS_URL = 'https://tls-observatory.services.mozilla.com/api/v1/results';
-      var CERTIFICATE_URL = 'https://tls-observatory.services.mozilla.com/api/v1/certificate';
       var CERTIFICATE_EXPLAINER_URL = 'https://tls-observatory.services.mozilla.com/static/certsplainer.html';
       var state = Observatory.thirdParty.TLSObservatory.state;
 
@@ -927,13 +924,13 @@ Observatory.thirdParty = {
 
             Observatory.thirdParty.TLSObservatory.load();  // retrieve the results
           },
-          url: SCAN_URL
+          url: Observatory.const.urls.tls + 'scan'
         });
 
       // scan initiated, but we don't have the results
       } else if (state.results === undefined) {
         // set the results URL in the output summary
-        state.results_url = Observatory.utils.linkify(RESULTS_URL + '?id=' + state.scan_id);
+        state.results_url = Observatory.utils.linkify(Observatory.const.urls.tls + 'results?id=' + state.scan_id);
 
         // retrieve results
         $.ajax({
@@ -952,7 +949,7 @@ Observatory.thirdParty = {
               Observatory.thirdParty.TLSObservatory.load();  // retrieve the cert
             }
           },
-          url: RESULTS_URL
+          url: Observatory.const.urls.tls + 'results'
         });
       // scan completed, results collected, now we need to fetch the certificate
       } else {
@@ -963,7 +960,7 @@ Observatory.thirdParty = {
         }
 
         // set the certificate URL in the output summary
-        state.certificate_url = Observatory.utils.linkify(CERTIFICATE_URL + '?id=' + state.results.cert_id);
+        state.certificate_url = Observatory.utils.linkify(Observatory.const.urls.tls + 'certificate?id=' + state.results.cert_id);
         state.explainer_url = Observatory.utils.linkify(CERTIFICATE_EXPLAINER_URL + '?id=' + state.results.cert_id);
 
         $.ajax({
@@ -977,7 +974,7 @@ Observatory.thirdParty = {
             state.certificate = data;
             Observatory.thirdParty.TLSObservatory.insert();  // put things into the page
           },
-          url: CERTIFICATE_URL
+          url: Observatory.const.urls.tls + 'certificate'
         });
       }
     }

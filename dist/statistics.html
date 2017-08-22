@@ -16,7 +16,7 @@
     <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="css/bootstrap-3.3.7.min.M4BawzpX2gZqpVcQ1m-1u-phtpgCuUP8wgn-fDlFPR8=.css" type="text/css" integrity="sha256-M4BawzpX2gZqpVcQ1m+1u+phtpgCuUP8wgn+fDlFPR8=" />
-    <link rel="stylesheet" href="css/httpobs.2E8sQc2tCFIYLO4JJv1e5ZTIUDZclgCzo3ZmoM5NWNE=.css" type="text/css" integrity="sha256-2E8sQc2tCFIYLO4JJv1e5ZTIUDZclgCzo3ZmoM5NWNE=" />
+    <link rel="stylesheet" href="css/httpobs.t7fnLj-6p-vYSjbFoBZFnmaBBhhbGZiNow8222xeGvU=.css" type="text/css" integrity="sha256-t7fnLj+6p+vYSjbFoBZFnmaBBhhbGZiNow8222xeGvU=" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
@@ -60,30 +60,30 @@
         
 
     <div id="statistics">
-        <h1 class="page-header h2 page-header-half-margin-top">HTTP Observatory</h1>
+        <h1 class="page-header h2 m-t-1">HTTP Observatory</h1>
 
         <div>
             <table class="table table-striped table-bordered">
                 <tbody>
                     <tr>
                         <td>Number of Improved Websites</td>
-                        <td id="http-observatory-stats-numImprovedSites"></td>
+                        <td class="text-right" id="http-observatory-stats-numImprovedSites"></td>
                     </tr>
                     <tr>
                         <td>Number of Successfully Completed Scans</td>
-                        <td id="http-observatory-stats-numSuccessfulScans"></td>
+                        <td class="text-right" id="http-observatory-stats-numSuccessfulScans"></td>
                     </tr>
                     <tr>
                         <td>Number of Attempted Scans</td>
-                        <td id="http-observatory-stats-numScans"></td>
+                        <td class="text-right" id="http-observatory-stats-numScans"></td>
                     </tr>
                     <tr>
                         <td>Number of Unique Domains</td>
-                        <td id="http-observatory-stats-numUniqueSites"></td>
+                        <td class="text-right" id="http-observatory-stats-numUniqueSites"></td>
                     </tr>
                     <tr>
                         <td>Percentage of Sites Passing</td>
-                        <td><span id="http-observatory-stats-percSitesPassing"></span>%</td>
+                        <td class="text-right"><span id="http-observatory-stats-percSitesPassing"></span>%</td>
                     </tr>
                 </tbody>
             </table>
@@ -104,7 +104,7 @@
 
             <div class="row" id="results-reveal-container">
                 <div class="col-xs-12 col-md-8">
-                    <div class="panel panel-primary collapse in" id="c-button-container">
+                    <div class="panel panel-primary collapse in m-b-0" id="c-button-container">
                         <div class="panel-heading">
                             <button class="btn btn-default btn-block expandy-panel-button" type="button" data-toggle="collapse" data-target="#results-container,#c-button-container" aria-expanded="false" aria-controls="results-container">This list is hidden by default, as it may<br>contain sites considered offensive to some.</button>
                         </div>
@@ -119,7 +119,42 @@
             </div>
         </div>
 
-        <!-- rebuild -->
+        <h1 class="page-header h2 page-header-half-margin-top">TLS Observatory</h1>
+
+        <div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">&nbsp;</th>
+                        <th class="text-center">Last 24 Hours</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Number of Analyses</td>
+                        <td class="text-right">N/A</td>
+                        <td class="text-right" id="tls-observatory-stats-analyses"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Certificates</td>
+                        <td class="text-right" id="tls-observatory-stats-distinctCertsSeenLast24Hours"></td>
+                        <td class="text-right" id="tls-observatory-stats-certificates"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Scans</td>
+                        <td class="text-right" id="tls-observatory-stats-scansLast24Hours"></td>
+                        <td class="text-right" id="tls-observatory-stats-scans"></td>
+                    </tr>
+                    <tr>
+                        <td>Number of Trust Relationships</td>
+                        <td class="text-right">N/A</td>
+                        <td class="text-right" id="tls-observatory-stats-trusts"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <h1 class="page-header h2 page-header-half-margin-top">SSH Observatory</h1>
 
         <div>
@@ -127,11 +162,11 @@
                 <tbody>
                     <tr>
                         <td>Number of Successfully Completed Scans</td>
-                        <td id="ssh-observatory-stats-numSuccessfulScans"></td>
+                        <td class="text-right" id="ssh-observatory-stats-numSuccessfulScans"></td>
                     </tr>
                     <tr>
                         <td>Number of Attempted Scans</td>
-                        <td id="ssh-observatory-stats-numScans"></td>
+                        <td class="text-right" id="ssh-observatory-stats-numScans"></td>
                     </tr>
                 </tbody>
             </table>
@@ -159,8 +194,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js" integrity="sha256-8E6QUcFg1KTnpEU8TFGhpTGHw5fJqB9vCms3OhAYLqw=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" integrity="sha256-SiHXR50l06UwJvHhFY4e5vzwq75vEHH+8fFNpkXePr0=" crossorigin="anonymous"></script>
-    <script src="js/httpobs.jxGpQTFtkYF2S2rJe_yOmtcBO9MRc8U21NfKrfOt8T8=.js" integrity="sha256-jxGpQTFtkYF2S2rJe/yOmtcBO9MRc8U21NfKrfOt8T8="></script>
-    <script src="js/httpobs-utils.2NMwcSyemM1DBeMp-s2TNpixGmwU4ys1hHV96opsg3E=.js" integrity="sha256-2NMwcSyemM1DBeMp+s2TNpixGmwU4ys1hHV96opsg3E="></script>
-    <script src="js/httpobs-third-party.xXz-IdI_CzQju_6ROOuuzr3wlclZ6LruVX3E3LPl8WY=.js" integrity="sha256-xXz+IdI/CzQju/6ROOuuzr3wlclZ6LruVX3E3LPl8WY="></script>
+    <script src="js/httpobs.DgfrK1ntn0jYt0jAQ0z3MILJGE0foR6AzTtqz3QR9Xg=.js" integrity="sha256-DgfrK1ntn0jYt0jAQ0z3MILJGE0foR6AzTtqz3QR9Xg="></script>
+    <script src="js/httpobs-utils.nxttnBymkr7MC-pbxnoaC58CJYx24obU1RvG_7v5RB8=.js" integrity="sha256-nxttnBymkr7MC+pbxnoaC58CJYx24obU1RvG/7v5RB8="></script>
+    <script src="js/httpobs-third-party.mElbFKWhdUTj80ZvW9ar_G7vjTsLGqb5iOkhDSJByOM=.js" integrity="sha256-mElbFKWhdUTj80ZvW9ar/G7vjTsLGqb5iOkhDSJByOM="></script>
 </body>
 </html>
