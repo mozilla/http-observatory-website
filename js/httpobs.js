@@ -175,6 +175,11 @@ var Observatory = {
       scan.tests_quantity -= 1;
     }
 
+    // if the HTTP status code wasn't 200, show the banner for it
+    if (scan.status_code !== 200) {
+      $('#http-status-code-alert').removeClass('hidden');
+    }
+
     // update the links for the Google CSP Evaluator, if they have a CSP policy
     if (results['content-security-policy'].result !== 'csp-not-implemented') {
       $('.google-csp-evaluator-link').each(function f() {
