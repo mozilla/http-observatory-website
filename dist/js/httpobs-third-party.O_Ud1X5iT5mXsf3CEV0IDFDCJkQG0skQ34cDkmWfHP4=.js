@@ -408,7 +408,7 @@ Observatory.thirdParty = {
       }
 
       // link to the JSON results
-      $('#sshobservatory-uuid').attr('href', state.API_URL + 'scan/results?uuid=' + state.uuid);
+      $('#sshobservatory-uuid').attr('href', Observatory.const.urls.ssh + 'scan/results?uuid=' + state.uuid);
 
       Observatory.utils.insertGrade(results.compliance.grade, 'sshobservatory');
       Observatory.utils.insertResults(Observatory.thirdParty.SSHObservatory.state.output, 'sshobservatory');
