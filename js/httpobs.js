@@ -366,6 +366,37 @@ var Observatory = {
       $('#next-steps-initiate-rescan').addClass('hidden');
     }
 
+    // insert in the CSP analysis
+    if (results['content-security-policy'].output.policy !== null) {
+      _.forEach(results['content-security-policy'].output.policy, function (value, directive) {
+        var id = '#csp-analysis-' + directive;
+
+        // these are negated for the purposes of analysis output
+
+        if (_.includes([
+          'insecureSchemeActive',
+          'insecureSchemePassive',
+          'unsafeEval',
+          'unsafeInline',
+          'unsafeInlineStyle',
+          'unsafeObjects'], directive)) {
+          value = !value;
+        }
+
+        if (value === true) {
+          $(id).addClass('glyphicon-ok');
+        } else if (value === false && directive !== 'strictDynamic') {
+          $(id).addClass('glyphicon-remove');
+        } else {
+          $(id).addClass('glyphicon-minus');
+        }
+
+
+      });
+
+      $('#csp-analysis').removeClass('hide');
+    }
+
     // show the scan results and remove the progress bar
     $('#scan-progress').remove();
     $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('hide');

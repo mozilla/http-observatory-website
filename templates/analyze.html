@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="hidden alert alert-danger text-center" id="http-status-code-alert">
-                    Your site returned an HTTP status code other than <strong>200 (OK)</strong>. This may cause your results to be inaccurate.
+                    This site returned an HTTP status code other than <strong>200 (OK)</strong>, which may cause its results to be inaccurate.
                 </div>
 
                 <div id="scan-summary-row" class="row equal hide">
@@ -302,6 +302,72 @@
                     </div>
                 </div>
 
+                <!-- HTTP Observatory CSP analysis -->
+                <div class="panel panel-primary hide" id="csp-analysis">
+                    <div class="panel-heading">
+                        <span class="h3">Content Security Policy Analysis</span>
+                    </div>
+                    <div class="panel-body" id="csp-analysis-panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left" id="csp-analysis-table">
+                                <tr>
+                                    <th>Test</th>
+                                    <th class="text-center">Pass</th>
+                                    <th class="text-center">Info</th>
+                                </tr>
+                                <tr>
+                                    <td>Blocks execution of inline JavaScript by not allowing <code>'unsafe-inline'</code> inside <code>script-src</code></td>
+                                    <td class="glyphicon" id="csp-analysis-unsafeInline" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Unsafe Inline JavaScript" data-content="Blocking the execution of inline JavaScript provides CSP's strongest protection against cross-site scripting attacks.<br><br>Moving JavaScript to external files can also help make your site more maintainable."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Blocks execution of JavaScript's <code>eval()</code> function by not allowing <code>'unsafe-eval'</code> inside <code>script-src</code></td>
+                                    <td class="glyphicon" id="csp-analysis-unsafeEval" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Unsafe JavaScript eval()" data-content="Blocking the use of JavaScript's <code>eval()</code> function can help prevent the execution of untrusted code."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Blocks execution of plug-ins, using <code>object-src</code> restrictions</td>
+                                    <td class="glyphicon" id="csp-analysis-unsafeObjects" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Blocking plug-ins" data-content="Blocking the execution of plug-ins via <code>object-src 'none'</code> or as inherited from <code>default-src</code> can prevent attackers from loading Flash or Java in the context of your page."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Blocks inline styles by not allowing <code>'unsafe-inline'</code> inside <code>style-src</code></td>
+                                    <td class="glyphicon" id="csp-analysis-unsafeInlineStyle" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Unsafe Inline Styles" data-content="Blocking inline styles can help prevent attackers from modifying the contents or appearance of your page.<br><br>Moving styles to external stylesheets can also help make your site more maintainable."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Blocks loading of active content over HTTP or FTP</td>
+                                    <td class="glyphicon" id="csp-analysis-insecureSchemeActive" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Insecure Active Resources" data-content="This site's Content Security Policy allows the use of JavaScript or plugins over insecure protocols such as HTTP or FTP. Consider changing them to load them over HTTPS."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Blocks loading of passive content over HTTP or FTP</td>
+                                    <td class="glyphicon" id="csp-analysis-insecureSchemePassive" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Insecure Passive Resources" data-content="This site's Content Security Policy allows the loading of passive content such as images or videos over insecure protocols such as HTTP or FTP. Consider changing them to load them over HTTPS."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Clickjacking protection, using <code>frame-ancestors</code></td>
+                                    <td class="glyphicon" id="csp-analysis-antiClickjacking" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Clickingjacking Protection" data-content="The use of CSP's <code>frame-ancestors</code> directive offers fine-grained control over who can frame your site."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Deny by default, using <code>default-src 'none'</code></td>
+                                    <td class="glyphicon" id="csp-analysis-defaultNone" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Deny by Default" data-content="Denying by default using <code>default-src 'none'</code>can ensure that your Content Security Policy doesn't allow the loading of resources you didn't intend to allow."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Uses CSP3's <code>'strict-dynamic'</code> directive to allow dynamic script loading</td>
+                                    <td class="glyphicon" id="csp-analysis-strictDynamic" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Strict Dynamic" data-content="<code>'strict-dynamic' lets you use a JavaScript shim loader to load all your site's JavaScript dynamically, without having to track <code>script-src</code> origins."></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-center"><a class="btn btn-primary google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Looking for additional help? Check out Google's CSP Evaluator!</a></p>
+                    </div>
+                </div>
+
                 <!-- HTTP Observatory host history results -->
                 <div class="panel panel-primary hide" id="host-history">
                     <div class="panel-heading">
@@ -323,13 +389,12 @@
                     </div>
                 </div>
 
-                <!-- HTTP Observatory raw test results -->
+                <!-- HTTP Observatory raw header test results -->
                 <div class="panel panel-primary hide" id="server-headers">
                     <div class="panel-heading">
                         <span class="h3">Raw Server Headers</span>
-                        <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#server-headers-panel-body" aria-expanded="false" aria-controls="server-headers-panel-body">Click to Expand</button>
                     </div>
-                    <div class="panel-body collapse" id="server-headers-panel-body">
+                    <div class="panel-body" id="server-headers-panel-body">
                         <div class="table-responsive">
                             <table class="table table-striped table-condensed pull-left" id="server-headers-table">
                             </table>

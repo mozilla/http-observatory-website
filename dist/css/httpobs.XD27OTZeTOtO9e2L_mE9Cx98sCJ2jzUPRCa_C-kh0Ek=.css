@@ -270,7 +270,7 @@ div.large-progress-bar-condensed + div.row {
     padding-right: 1em;
 }
 
-#test-scores .glyphicon, #tlsobservatory-ciphers-table .glyphicon {
+#test-scores .glyphicon, #csp-analysis tr td:nth-child(2), #tlsobservatory-ciphers-table .glyphicon {
     display: table-cell;  /* override inline-block */
 }
 
@@ -287,10 +287,17 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* pass fail */
-#test-scores tr td:nth-child(2) {
+#test-scores tr td:nth-child(2),
+#csp-analysis tr td:nth-child(2),
+#csp-analysis tr td:nth-child(3) {
     margin-right: 3em;
     text-align: center;
     white-space: nowrap;
+}
+
+/* line up vertically with glyphicons */
+#csp-analysis tr td:nth-child(3) span {
+    line-height: 1.42857143;
 }
 
 /* explanations */
@@ -303,7 +310,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* change how code looks inside the test scores */
-#test-scores code {
+#test-scores code, #csp-analysis code {
     color: #811833;
     font-size: 80%;
 }
