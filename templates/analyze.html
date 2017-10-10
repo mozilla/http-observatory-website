@@ -338,7 +338,7 @@
                                 <tr>
                                     <td>Blocks loading of active content over HTTP or FTP</td>
                                     <td class="glyphicon" id="csp-analysis-insecureSchemeActive" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Insecure Active Resources" data-content="This site's Content Security Policy allows the use of JavaScript or plugins over insecure protocols such as HTTP or FTP. Consider changing them to load them over HTTPS."></span></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Insecure Active Resources" data-content="Loading JavaScript or plugins can allow a man-in-the-middle to execute arbitrary code or your website. Restricting your policy and changing links to HTTPS can help prevent this."></span></td>
                                 </tr>
                                 <tr>
                                     <td>Blocks loading of passive content over HTTP or FTP</td>
@@ -354,6 +354,11 @@
                                     <td>Deny by default, using <code>default-src 'none'</code></td>
                                     <td class="glyphicon" id="csp-analysis-defaultNone" aria-hidden="true"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Deny by Default" data-content="Denying by default using <code>default-src 'none'</code>can ensure that your Content Security Policy doesn't allow the loading of resources you didn't intend to allow."></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Restricts use of the <code>&lt;base&gt;</code> tag by using <code>base-uri 'none'</code>, <code>base-uri 'self'</code>, or specific origins</td>
+                                    <td class="glyphicon" id="csp-analysis-insecureBaseUri" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Restricts <code>base</code> tag" data-content="The <code>base</code> tag can be used to trick your site into loading scripts from untrusted origins."></span></td>
                                 </tr>
                                 <tr>
                                     <td>Uses CSP3's <code>'strict-dynamic'</code> directive to allow dynamic script loading (optional)</td>
