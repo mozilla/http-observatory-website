@@ -7,7 +7,7 @@ help:
 	@echo '    make publish                     (re)generate the site'
 	@echo '    make devserver                   constantly regen site with automatic refreshing'
 
-devserver:
+devserver: publish
 	$(PY) devserver.py
 
 deploy:
