@@ -469,10 +469,10 @@ var Observatory = {
 
         Observatory.submitScanForAnalysisXHR(Observatory.hostname, success, failure, 'POST', false, true);
         return false;
+      } else if (scan.text) {
+          Observatory.displayError(scan.text);
+          return false;
       }
-
-      Observatory.displayError(scan.text);
-      return false;
     }
 
     switch (scan.state) {
@@ -493,11 +493,11 @@ var Observatory = {
         retry = true;
         break;
       case 'ABORTED':
-        text = 'Scan aborted';
-        break;
+        Observatory.displayError('Scan aborted');
+        return false;
       case 'FAILED':
-        text = 'Scan failed';
-        break;
+        Observatory.displayError('Scan failed');
+        return false;
       default:
         // party time!
     }
