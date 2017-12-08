@@ -374,6 +374,7 @@ var Observatory = {
         // these are negated for the purposes of analysis output
         if (_.includes([
           'insecureBaseUri',
+          'insecureFormAction',
           'insecureSchemeActive',
           'insecureSchemePassive',
           'unsafeEval',
@@ -390,7 +391,6 @@ var Observatory = {
         } else {
           $(id).addClass('glyphicon-minus');
         }
-
 
       });
 

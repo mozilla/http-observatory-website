@@ -417,6 +417,11 @@
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Restricts <code>base</code> tag" data-content="The <code>base</code> tag can be used to trick your site into loading scripts from untrusted origins."></span></td>
                                 </tr>
                                 <tr>
+                                    <td>Restricts where <code>&lt;form&gt;</code> contents may be submitted by using <code>form-action 'none'</code>, <code>form-action 'self'</code>, or specific URIs</td>
+                                    <td class="glyphicon" id="csp-analysis-insecureFormAction" aria-hidden="true"></td>
+                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Restricts form submissions" data-content="Malicious JavaScript or content injection could modify where sensitive form data is submitted to or create additional forms for data exfiltration."></span></td>
+                                </tr>
+                                <tr>
                                     <td>Uses CSP3's <code>'strict-dynamic'</code> directive to allow dynamic script loading (optional)</td>
                                     <td class="glyphicon" id="csp-analysis-strictDynamic" aria-hidden="true"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Strict Dynamic" data-content="<code>'strict-dynamic'</code> lets you use a JavaScript shim loader to load all your site's JavaScript dynamically, without having to track <code>script-src</code> origins."></span></td>
@@ -1116,7 +1121,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js" integrity="sha256-8E6QUcFg1KTnpEU8TFGhpTGHw5fJqB9vCms3OhAYLqw=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" integrity="sha256-SiHXR50l06UwJvHhFY4e5vzwq75vEHH+8fFNpkXePr0=" crossorigin="anonymous"></script>
-    <script src="js/httpobs.cP1VlZPgOV07Bat7P4T90DIkYUddESjT7za8ZhG7Wcc=.js" integrity="sha256-cP1VlZPgOV07Bat7P4T90DIkYUddESjT7za8ZhG7Wcc="></script>
+    <script src="js/httpobs.ZANt2FYu6bw-CCwdMFy5XFkIDG6popkAH50pvv3QFwE=.js" integrity="sha256-ZANt2FYu6bw+CCwdMFy5XFkIDG6popkAH50pvv3QFwE="></script>
     <script src="js/httpobs-utils.nxttnBymkr7MC-pbxnoaC58CJYx24obU1RvG_7v5RB8=.js" integrity="sha256-nxttnBymkr7MC+pbxnoaC58CJYx24obU1RvG/7v5RB8="></script>
     <script src="js/httpobs-third-party.O_Ud1X5iT5mXsf3CEV0IDFDCJkQG0skQ34cDkmWfHP4=.js" integrity="sha256-O/Ud1X5iT5mXsf3CEV0IDFDCJkQG0skQ34cDkmWfHP4="></script>
 </body>
