@@ -77,6 +77,12 @@ Observatory.utils = {
     var re;
 
     for (i = 0; i < keywords.length; i += 1) {
+      // sucks that we have to do this, but Strict is both a keyword (SameSite cookies) and
+      // part of a description (HSTS)
+      if (keywords[i] == 'Strict' && text.indexOf('Cookies') === -1) {
+        continue;
+      }
+
       re = new RegExp(keywords[i], 'g');
       text = text.replace(re, '<code>' + keywords[i] + '</code>');
     }

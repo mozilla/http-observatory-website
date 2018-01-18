@@ -205,6 +205,9 @@ var Observatory = {
       'style-src',
       'HttpOnly',
       'Secure',
+      'SameSite',
+      'Strict',
+      'Lax',
       'Access-Control-Allow-Origin',
       '"no-referrer"',
       '"same-origin"',
@@ -240,7 +243,7 @@ var Observatory = {
       // add newlines at each sentence (may change in the future), and remove the tick marks
       scoreDescription = scoreDescription.replace(/\. /g, '.<br><br>').replace(/`/, '');
 
-      // monospace each codeword
+      // monospace each codeword - with some exceptions
       scoreDescription = Observatory.utils.monospaceify(scoreDescription, monospacedKeywords);
 
       // collapse <code>s next to each other
