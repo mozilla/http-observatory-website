@@ -403,6 +403,37 @@ var Observatory = {
     // show the scan results and remove the progress bar
     $('#scan-progress').remove();
     $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('hide');
+
+    // show the survey
+    Observatory.insertSurveyBanner();
+  },
+
+
+  insertSurveyBanner: function insertSurveyBanner() {
+    'use strict';
+
+    var surveyName = 'OBSERVATORY_SURVEY_2018_01';
+
+    // if they've taken the survey before, let's not show them the banner
+    if (Observatory.utils.readCookie(surveyName) !== null) {
+      return;
+    }
+
+    // bind a function such that when somebody clicks the close button on the survey banner,
+    // it hides it forever. Same with when the click the link to take the survey.
+    $('#survey-banner a').on('click', function() {
+      Observatory.utils.setCookie(surveyName, 'True', 60);
+    });
+
+    // change the URL for survey link
+    $('#survey-banner-url').attr('href',
+      'https://qsurvey.mozilla.com/s3/Observatory-survey?grade=' +
+        encodeURIComponent(Observatory.state.scan.grade) +
+        '&ScanID=' +
+        Observatory.state.scan.scan_id.toString().split(' ')[0]);
+
+    // unhide the banner
+    $('#survey-banner').removeClass('hidden');
   },
 
 

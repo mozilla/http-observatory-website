@@ -1,5 +1,7 @@
 Observatory.utils = {
   average: function average(list) {
+    'use strict';
+
     var sum = 0;
 
     // let's not divide by zero
@@ -278,5 +280,47 @@ Observatory.utils = {
 
     // simply delete the progress bar and the results should show up
     $('#' + id + '-progress-bar').remove();
+  },
+
+  // cookie handling
+  setCookie: function setCookie(name, value, days) {
+    'use strict';
+
+    var expires = '';
+
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      var expires = '; expires=' + date.toGMTString();
+    }
+
+    document.cookie = name + '=' + value + expires + '; path=/';
+  },
+
+  readCookie: function readCookie(name) {
+    'use strict';
+
+    var nameEQ = name + '=';
+    var ca = document.cookie.split(';');
+
+    for(var i=0; i < ca.length; i++) {
+      var c = ca[i];
+
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1, c.length);
+      }
+
+      if (c.indexOf(nameEQ) == 0) {
+        return c.substring(nameEQ.length, c.length);
+      }
+    }
+
+    return null;
+  },
+
+  deleteCookie: function deleteCookie(name) {
+    'use strict';
+
+    Observatory.utils.setCookie(name, '', -1);
   }
 };

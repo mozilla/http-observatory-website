@@ -452,17 +452,22 @@ sup, sub {
 }
 
 /* redirection and next steps banners */
-#redirect-banner {
+#redirect-banner, #survey-banner {
     font-weight: bold;
 }
 
-.alert-danger a, #redirect-banner a {
+.alert-danger a, #redirect-banner a, #survey-banner a {
     color: white;
     font-weight: bold;
 }
 
-#next-steps a, #redirect-banner a, #test-scores a, #sshobservatory-summary a {
+#next-steps a, #test-scores a, #sshobservatory-summary a {
     border-bottom: 1px dotted #4582ec;
+    text-decoration: none;
+}
+
+#redirect-banner a, #survey-banner a {
+    border-bottom: 2px dotted #ffffff;
     text-decoration: none;
 }
 
