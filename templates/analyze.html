@@ -98,7 +98,7 @@
                                         <p>Your site is configured with extremely broad resource sharing permissions.</p>
                                         <p>This can be dangerous, and is possibly not what was intended.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cross-origin_Resource_Sharing">Mozilla Web Security Guidelines (cross-origin resource sharing)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#cross-origin-resource-sharing">Mozilla Web Security Guidelines (cross-origin resource sharing)</a></li>
                                             <li><a href="https://pokeinthe.io/2016/11/29/understanding-cors/">Understanding CORS</a></li>
                                         </ul>
                                     </div>
@@ -115,7 +115,7 @@
                                         <p>We noticed that your site is accessible over HTTPS, but still defaults to HTTP.</p>
                                         <p>Automatically redirecting from HTTP to HTTPS helps ensure that your users get served a secure version of your site.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Redirections">Mozilla Web Security Guidelines (redirections)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#http-redirections">Mozilla Web Security Guidelines (redirections)</a></li>
                                             <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
                                         </ul>
                                     </div>
@@ -123,7 +123,7 @@
                                         <p>Fantastic work using HTTPS! Did you know that you can ensure users never visit your site over HTTP accidentally?</p>
                                         <p>HTTP Strict Transport Security tells web browsers to only access your site over HTTPS in the future, even if the user attempts to visit over HTTP or clicks an <code>http://</code> link.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Strict_Transport_Security">Mozilla Web Security Guidelines (HSTS)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#http-strict-transport-security">Mozilla Web Security Guidelines (HSTS)</a></li>
                                             <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">MDN on HTTP Strict Transport Security</a></li>
                                         </ul>
                                     </div>
@@ -131,28 +131,28 @@
                                         <p>You're doing a great job with HTTPS and HTTP Strict Transport Security!</p>
                                         <p>Since you’re now only allowing connections over HTTPS, consider using the <code>Secure</code> flag to protect your cookies against their accidental transmission over HTTP. Furthermore, the use of <code>HttpOnly</code> protects your session cookies from malicious JavaScript.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cookies">Mozilla Web Security Guidelines (cookies)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#cookies">Mozilla Web Security Guidelines (cookies)</a></li>
                                         </ul>
                                     </div>
                                     <div id="next-steps-x-frame-options" class="hidden">
                                         <p>What’s a good next step?</p>
                                         <p>The use of the <code>X-Frame-Options</code> header and Content Security Policy’s <code>frame-ancestors</code> directive are a simple and easy way to protect your site against clickjacking attacks.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Frame-Options">Mozilla Web Security Guidelines (X-Frame-Options)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#x-frame-options">Mozilla Web Security Guidelines (X-Frame-Options)</a></li>
                                         </ul>
                                     </div>
                                     <div id="next-steps-x-content-type-options" class="hidden">
                                         <p>You’re halfway finished! Nice job!</p>
                                         <p>The <code>X-Content-Type-Options</code> header tells browsers to stop automatically detecting the contents of files. This protects against attacks where they're tricked into incorrectly interpreting files as JavaScript.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Content-Type-Options">Mozilla Web Security Guidelines (X-Content-Type-Options)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#x-content-type-options">Mozilla Web Security Guidelines (X-Content-Type-Options)</a></li>
                                         </ul>
                                     </div>
                                     <div id="next-steps-content-security-policy" class="hidden">
                                         <p>You’re doing a wonderful job so far!</p>
                                         <p>Did you know that a strong Content Security Policy (CSP) policy can help protect your website against malicious cross-site scripting attacks?</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#content-security-policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
                                             <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
                                             <li><a class="google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Google CSP Evaluator</a></li>
                                             <li><a href="https://addons.mozilla.org/en-US/firefox/addon/laboratory-by-mozilla/">Mozilla Laboratory CSP Generator</a></li>
@@ -162,7 +162,7 @@
                                         <p>We’ve noticed you’re using other domains to host your JavaScript code.</p>
                                         <p>Subresource Integrity guarantees that your site will stay safe even if one of those domains is compromised.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Subresource_Integrity">Mozilla Web Security Guidelines (Subresource Integrity)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#subresource-Integrity">Mozilla Web Security Guidelines (Subresource Integrity)</a></li>
                                             <li><a href="https://www.srihash.org/">SRI Hash Generator</a></li>
                                         </ul>
                                     </div>
@@ -170,14 +170,14 @@
                                         <p>You’re on the home stretch!</p>
                                         <p>The use of Referrer Policy can help protect the privacy of your users by restricting the information that browsers provide when accessing resources kept on other sites.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Referrer_Policy">Mozilla Web Security Guidelines (Referrer Policy)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#referrer-policy">Mozilla Web Security Guidelines (Referrer Policy)</a></li>
                                         </ul>
                                     </div>
                                     <div id="next-steps-content-security-policy-unsafe-inline-in-style-src-only" class="hidden">
                                         <p>Almost there!</p>
                                         <p>Your current CSP policy allows the use of <code>'unsafe-inline'</code> inside of <code>style-src</code>. Moving <code>style</code> attributes into external stylesheets not only makes you safer, but also makes your code easier to maintain.</p>
                                         <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
+                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#content-security-policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
                                             <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
                                             <li><a class="google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Google CSP Evaluator</a></li>
                                         </ul>
@@ -214,84 +214,84 @@
                                     <th></th>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Content_Security_Policy">Content Security Policy</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#content-security-policy">Content Security Policy</a></td>
                                     <td class="glyphicon" id="tests-content-security-policy-pass" aria-hidden="true"></td>
                                     <td id="tests-content-security-policy-score"></td>
                                     <td id="tests-content-security-policy-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Content Security Policy" data-content="Content Security Policy (CSP) can prevent a wide range of cross-site scripting (XSS) and clickjacking attacks against your website."></span></td>
                                 </tr>
                                 <tr id="tests-contribute-row">
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#contribute.json">Contribute.json</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#contributejson">Contribute.json</a></td>
                                     <td class="glyphicon" id="tests-contribute-pass" aria-hidden="true"></td>
                                     <td id="tests-contribute-score"></td>
                                     <td id="tests-contribute-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="contribute.json" data-content="Having a contribute.json file on the root your website allows Mozilla's information security team to more quickly triage incoming security bugs."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cookies">Cookies</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#cookies">Cookies</a></td>
                                     <td class="glyphicon" id="tests-cookies-pass" aria-hidden="true"></td>
                                     <td id="tests-cookies-score"></td>
                                     <td id="tests-cookies-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cookies" data-content="Using cookies attributes such as Secure and HttpOnly can protect users from having their personal information stolen."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Cross-origin_Resource_Sharing">Cross-origin Resource Sharing</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#cross-origin-resource-sharing">Cross-origin Resource Sharing</a></td>
                                     <td class="glyphicon" id="tests-cross-origin-resource-sharing-pass" aria-hidden="true"></td>
                                     <td id="tests-cross-origin-resource-sharing-score"></td>
                                     <td id="tests-cross-origin-resource-sharing-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cross-origin Resource Sharing" data-content="Incorrectly configured CORS settings can allow foreign sites to read your site's contents, possibly allowing them access to private user information."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Public_Key_Pinning">HTTP Public Key Pinning</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#http-public-key-pinning">HTTP Public Key Pinning</a></td>
                                     <td class="glyphicon" id="tests-public-key-pinning-pass" aria-hidden="true"></td>
                                     <td id="tests-public-key-pinning-score"></td>
                                     <td id="tests-public-key-pinning-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="HTTP Public Key Pinning" data-content="HTTP Public Key Pinning (HPKP) binds a site to a specific combination of certificate authorities and/or keys, protecting against the unauthorized issuance of certificates."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Strict_Transport_Security">HTTP Strict Transport Security</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#http-strict-transport-security">HTTP Strict Transport Security</a></td>
                                     <td class="glyphicon" id="tests-strict-transport-security-pass" aria-hidden="true"></td>
                                     <td id="tests-strict-transport-security-score"></td>
                                     <td id="tests-strict-transport-security-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="HTTP Strict Transport Security" data-content="HTTP Strict Transport Security (HSTS) instructs web browsers to visit your site only over HTTPS."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#HTTP_Redirections">Redirection</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#http-redirections">Redirection</a></td>
                                     <td class="glyphicon" id="tests-redirection-pass" aria-hidden="true"></td>
                                     <td id="tests-redirection-score"></td>
                                     <td id="tests-redirection-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Redirection" data-content="Properly configured redirections from HTTP to HTTPS allow browsers to correctly apply HTTP Strict Transport Security (HSTS) settings."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Referrer_Policy">Referrer Policy</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#referrer-policy">Referrer Policy</a></td>
                                     <td class="glyphicon" id="tests-referrer-policy-pass" aria-hidden="true"></td>
                                     <td id="tests-referrer-policy-score"></td>
                                     <td id="tests-referrer-policy-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Referrer Policy" data-content="Referrer Policy can protect the privacy of your users by restricting the contents of the HTTP Referer header."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#Subresource_Integrity">Subresource Integrity</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#subresource-Integrity">Subresource Integrity</a></td>
                                     <td class="glyphicon" id="tests-subresource-integrity-pass" aria-hidden="true"></td>
                                     <td id="tests-subresource-integrity-score"></td>
                                     <td id="tests-subresource-integrity-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Subresource Integrity" data-content="Subresource Integrity protects against JavaScript files and stylesheets stored on content delivery networks (CDNs) from being maliciously modified."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Content-Type-Options">X-Content-Type-Options</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#x-content-type-options">X-Content-Type-Options</a></td>
                                     <td class="glyphicon" id="tests-x-content-type-options-pass" aria-hidden="true"></td>
                                     <td id="tests-x-content-type-options-score"></td>
                                     <td id="tests-x-content-type-options-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-Content-Type-Options" data-content="X-Content-Type-Options instructs browsers to not guess the MIME types of files that the web server is delivering."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-Frame-Options">X-Frame-Options</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#x-frame-options">X-Frame-Options</a></td>
                                     <td class="glyphicon" id="tests-x-frame-options-pass" aria-hidden="true"></td>
                                     <td id="tests-x-frame-options-score"></td>
                                     <td id="tests-x-frame-options-score-description"></td>
                                     <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-Frame-Options" data-content="X-Frame-Options controls whether your site can be framed, protecting against clickjacking attacks. It has been superseded by Content Security Policy's <code>frame-ancestors</code> directive, but should still be used for now."></span></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security#X-XSS-Protection">X-XSS-Protection</a></td>
+                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#x-xss-protection">X-XSS-Protection</a></td>
                                     <td class="glyphicon" id="tests-x-xss-protection-pass" aria-hidden="true"></td>
                                     <td id="tests-x-xss-protection-score"></td>
                                     <td id="tests-x-xss-protection-score-description"></td>
@@ -679,7 +679,7 @@
                                         <td>&nbsp;</td>
                                     </tr>
                                     <tr>
-                                        <td><a href="https://wiki.mozilla.org/Security/Guidelines/OpenSSH">Mozilla SSH Standards Compliant:</a></td>
+                                        <td><a href="https://infosec.mozilla.org/guidelines/openssh">Mozilla SSH Standards Compliant:</a></td>
                                         <td id="sshobservatory-compliant"></td>
                                     </tr>
                                 </table>
