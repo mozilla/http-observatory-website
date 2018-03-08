@@ -195,13 +195,14 @@ Observatory.thirdParty = {
     insert: function insert() {
       'use strict';
 
+
       var htbridgeErrorMapping = ['Unknown', 'No', 'Yes', 'Possibly vulnerable'];
       var output;
       var state = Observatory.thirdParty.HTBridge.state;  // convenience
       var results = state.results;
 
       // error out if the scan fails
-      if (results.error) {
+      if (results.error || results.results === undefined) {
         Observatory.utils.errorResults('Scan failed');
         return;
       }

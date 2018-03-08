@@ -643,7 +643,7 @@ var Observatory = {
         [table, tbody] = createTable(t.name, t.alert);
         _.forEach(t.data, function (grade, site) {
           tbody.append('<tr><td class="hostname">' +
-            '<a href="analyze.html?host=' + site + '">' + site + '</a>' +
+            '<a href="/analyze/' + site + '">' + site + '</a>' +
             '</td><td class="grade">' + grade + '</td>');
         });
 
@@ -818,7 +818,7 @@ var Observatory = {
       if (data.error !== undefined && data.error !== 'site down') {
         // if it's an IP address error, let them click through
         if (data.error === 'invalid-hostname-ip') {
-          $('#scan-alert-ip-link').attr('href', window.location.href + 'analyze.html?host=' + url.host + '#ssh');
+          $('#scan-alert-ip-link').attr('href', window.location.href + 'analyze/' + url.host + '#ssh');
           $('#scan-alert-ip-address').text(url.host);
           $('#scan-alert-ip').removeClass('alert-hidden');
         } else {
@@ -830,7 +830,7 @@ var Observatory = {
 
       // if it succeeds, redirect to the analyze page
       thirdParty = $('#scan-btn-third-party').prop('checked') ? '&third-party=false' : '';
-      window.location.href = 'analyze.html?host=' + url.host + thirdParty;
+      window.location.href = '/analyze/' + url.host + thirdParty;
       return true;
     };
 
@@ -876,9 +876,13 @@ var Observatory = {
         window.location.hash);
     }
 
-    if (window.location.pathname.indexOf('/analyze.html') !== -1) {
-      // Get the hostname in the GET parameters
-      Observatory.hostname = Observatory.utils.getQueryParameter('host');
+    if (window.location.pathname.indexOf('/analyze') !== -1) {
+      // Get the hostname in the GET parameters, with backwards compatibility
+      if (window.location.pathname.indexOf('/analyze.html') !== -1) {
+        Observatory.hostname = Observatory.utils.getQueryParameter('host');
+      } else {
+        Observatory.hostname = window.location.pathname.split('/').slice(-1)[0];
+      }
 
       // update the page title to reflect that's a scan
       document.title = document.title + ' :: Scan Results for ' + Observatory.hostname;
@@ -915,7 +919,7 @@ var Observatory = {
         $('#third-party-tests').remove();
         $('#third-party-tests-page-header').remove();
       }
-    } else if (window.location.pathname.indexOf('/statistics.html') !== -1) {
+    } else if (window.location.pathname.indexOf('/statistics') !== -1) {
       Observatory.statistics.load();
     } else {
       // bind an event to the Scan Me button
