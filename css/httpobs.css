@@ -466,7 +466,7 @@ sup, sub {
     text-decoration: none;
 }
 
-#redirect-banner a, #survey-banner a {
+#redirect-banner a, #survey-banner a, #tlsobservatory-symantec-distrust-warning a {
     border-bottom: 2px dotted #ffffff;
     text-decoration: none;
 }

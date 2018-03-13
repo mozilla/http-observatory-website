@@ -884,6 +884,11 @@ Observatory.thirdParty = {
         }
       });
 
+      // show the Symantec trust warning, if the site is using a bad certificate
+      if (state.analyzers.symantecDistrust.isDistrusted) {
+        $('#tlsobservatory-symantec-distrust-warning').removeClass('hidden');
+      }
+
       // And display the TLS results table
       Observatory.utils.showResults('tlsobservatory-summary');
       $('#tlsobservatory-certificate, #tlsobservatory-ciphers, #tlsobservatory-misc, #tlsobservatory-suggestions').removeClass('hide');
