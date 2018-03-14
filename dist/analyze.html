@@ -62,6 +62,15 @@
     <!-- main content -->
     <div class="container">
         
+    <!-- Symantec certificate errors moved to the very top level -->
+    <div class="hidden alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning-june-2016">
+        This site uses a Symantec cert issued before June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 60</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 66</a>. Please replace its certificate immediately.
+    </div>
+
+    <div class="hidden alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning">
+        This site uses a Symantec cert issued on or after June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 63</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 70</a>. Please replace its certificate immediately.
+    </div>
+
     <!-- HTTP Observatory Scan Results -->
     <div class="row" id="scan-results">
         <ul class="nav nav-tabs" role="tablist">
@@ -477,14 +486,6 @@
         <!-- TLS Observatory -->
         <div role="tabpanel" class="tab-pane" id="tab-tlsobservatory">
             <div id="tlsobservatory">
-                <div class="hidden alert alert-danger text-center" id="tlsobservatory-symantec-distrust-warning-june-2016">
-                    This site uses a Symantec cert issued before June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 60</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 66</a>. Please replace its certificate immediately.
-                </div>
-
-                <div class="hidden alert alert-danger text-center" id="tlsobservatory-symantec-distrust-warning">
-                    This site uses a Symantec cert issued on or after June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 63</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 70</a>. Please replace its certificate immediately.
-                </div>
-
                 <div class="panel panel-primary summary" id="tlsobservatory-summary">
                     <div class="panel-heading">
                         <span class="h3">Scan Summary</span>
