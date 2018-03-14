@@ -818,6 +818,7 @@ Observatory.thirdParty = {
 
       // let's load up the misc object
       state.output.misc = {
+        caa: analyzers.caaWorker.has_caa === true ? 'Yes, on ' + analyzers.caaWorker.host : 'No',
         chooser: results.connection_info.serverside === true ? 'Server' : 'Client',
         ocsp_stapling: ocspStapling,
         oldest_clients: minClients.join(', ')
@@ -885,7 +886,6 @@ Observatory.thirdParty = {
       });
 
       // show the Symantec trust warning, if the site is using a bad certificate
-      console.log(parseInt(cert.validity.notBefore.split('-')[0]));
       if (state.analyzers.symantecDistrust.isDistrusted &&
           (parseInt(cert.validity.notBefore.split('-')[0]) == 2016 && parseInt(cert.validity.notBefore.split('-')[1] <= 5) ||
            parseInt(cert.validity.notBefore.split('-')[0]) < 2016)
