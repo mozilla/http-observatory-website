@@ -895,6 +895,11 @@ Observatory.thirdParty = {
         $('#tlsobservatory-symantec-distrust-warning').removeClass('hidden');
       }
 
+      // similarly, show the warning if the certificate isn't trusted
+      if (results.is_valid === false) {
+        $('#tls-observatory-invalid-cert-warning').removeClass('hidden');
+      }
+
       // And display the TLS results table
       Observatory.utils.showResults('tlsobservatory-summary');
       $('#tlsobservatory-certificate, #tlsobservatory-ciphers, #tlsobservatory-misc, #tlsobservatory-suggestions').removeClass('hide');
