@@ -89,6 +89,7 @@ ul {
     margin-top: .8em;
 }
 
+/* navigation bar */
 .navbar {
     border: 0;
 }
@@ -106,6 +107,18 @@ ul {
     border-width: 3px 3px 0 3px;
     color: white;
     font-weight: 600;
+}
+
+.nav-tabs > li > a.tabs-danger {
+    background-color: #fbeaea;
+    border-color: #f3cac8;
+    color: #ea4b2f;
+}
+
+.nav-tabs > li.active > a.tabs-danger {
+    background-color: #d9534f;
+    border-color: #d9534f;
+    color: white;
 }
 
 .tab-content {

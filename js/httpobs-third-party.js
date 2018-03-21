@@ -898,6 +898,7 @@ Observatory.thirdParty = {
       // similarly, show the warning if the certificate isn't trusted
       if (results.is_valid === false) {
         $('#tls-observatory-invalid-cert-warning').removeClass('hidden');
+        $('a[href="#tab-tlsobservatory"]').addClass('tabs-danger');
       }
 
       // And display the TLS results table
