@@ -887,9 +887,11 @@ Observatory.thirdParty = {
 
       // show the Symantec trust warning, if the site is using a bad certificate
       if (state.analyzers.symantecDistrust.isDistrusted &&
-          (parseInt(cert.validity.notBefore.split('-')[0]) == 2016 && parseInt(cert.validity.notBefore.split('-')[1] <= 5) ||
-           parseInt(cert.validity.notBefore.split('-')[0]) < 2016)
-        ) {
+          (
+            (parseInt(cert.validity.notBefore.split('-')[0]) == 2016 && parseInt(cert.validity.notBefore.split('-')[1]) <= 5) ||
+             parseInt(cert.validity.notBefore.split('-')[0]) < 2016)
+          )
+      {
         $('#tlsobservatory-symantec-distrust-warning-june-2016').removeClass('hidden');
       } else if (state.analyzers.symantecDistrust.isDistrusted) {
         $('#tlsobservatory-symantec-distrust-warning').removeClass('hidden');
