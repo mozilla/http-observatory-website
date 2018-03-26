@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block meta %}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
 {% block content %}
     <!-- Symantec certificate errors moved to the very top level -->
     <div class="hidden alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning-june-2016">
