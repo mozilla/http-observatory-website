@@ -404,8 +404,8 @@ var Observatory = {
     $('#scan-progress').remove();
     $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('hide');
 
-    // show the survey
-    Observatory.insertSurveyBanner();
+    // show the survey, disabled until used again
+    // Observatory.insertSurveyBanner();
   },
 
 

@@ -289,9 +289,9 @@ Observatory.thirdParty = {
       var successCallback;
 
       if (state.scanHTTPSOnly === true) {
-        API_URL = 'https://securityheaders.io/?followRedirects=on&hide=on&q=https://' + Observatory.hostname;
+        API_URL = 'https://securityheaders.com/?followRedirects=on&hide=on&q=https://' + Observatory.hostname;
       } else {
-        API_URL = 'https://securityheaders.io/?followRedirects=on&hide=on&q=' + Observatory.hostname;
+        API_URL = 'https://securityheaders.com/?followRedirects=on&hide=on&q=' + Observatory.hostname;
       }
 
       successCallback = function s(data, textStatus, jqXHR) {
