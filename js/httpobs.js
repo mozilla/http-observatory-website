@@ -829,7 +829,7 @@ var Observatory = {
       }
 
       // if it succeeds, redirect to the analyze page
-      thirdParty = $('#scan-btn-third-party').prop('checked') ? '&third-party=false' : '';
+      thirdParty = $('#scan-btn-third-party').prop('checked') ? '?third-party=false' : '';
       window.location.href = '/analyze/' + url.host + thirdParty;
       return true;
     };
