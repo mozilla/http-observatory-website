@@ -62,13 +62,6 @@ Observatory.thirdParty = {
       var text;
       // var warnings; // todo
 
-      // the observatory scan needs to finish first,
-      // so that we can check to see if a parent domain is preloaded
-      if (Observatory.state.results === undefined) {
-        setTimeout(Observatory.thirdParty.HSTSPreload.insert, 250);
-        return;
-      }
-
       status = state.status.status;
       errors = state.preloadable.errors;
       // warnings = Observatory.state.thirdParty.hstspreload.preloadable.warnings; // todo
@@ -89,6 +82,7 @@ Observatory.thirdParty = {
         'header.preloadable.preload.missing': 'HSTS header missing the "preload" attribute.',
         'internal.redirects.http.first_probe_failed': 'Could not connect to site via HTTP',
         'internal.domain.name.cannot_compute_etld1': 'Could not compute eTLD+1.',
+        'observatory.meets_requirements': 'HSTS header continues to meet preloading requirements.',
         'redirects.http.does_not_exist': 'Site unavailable over HTTP',
         'redirects.http.first_redirect.no_hsts': 'Site doesn\'t issue an HSTS header.',
         'redirects.http.first_redirect.insecure': 'Initial redirect is to an insecure page.',
@@ -108,10 +102,14 @@ Observatory.thirdParty = {
         state.preloaded = status === 'preloaded' ? 'Yes' : 'Pending';
 
         if (errors.length === 0) {
-          text = 'HSTS header continues to meet preloading requirements.';
-        } else {
-          text = 'This site\'s HSTS header does not meet current preloading requirements.\n\n' +
-            'Note that some of the current requirements did not apply to domains preloaded before February 29, 2016.';
+          text = errcodes['observatory.meets_requirements'];
+        } else if (errors.length === 1 && errors[0].code === 'domain.is_subdomain') { // subdomain, parent loaded
+          grade = 'up-arrow';
+          state.preloaded = 'Yes, via parent domain';
+          text = errcodes['observatory.meets_requirements']
+        }
+        else {
+          text = errors[0].message;
         }
       } else if (status === 'unknown') {
         grade = 'x-mark';
@@ -128,20 +126,6 @@ Observatory.thirdParty = {
               text.push('Unknown error.');
             }
           });
-
-          // if there were errors and we're not preloaded,
-          // then let's change the label to errors and not Notes:
-          if (!Observatory.state.results['strict-transport-security'].output.preloaded) {
-            $('#hstspreload-notes-label').text('Errors:');
-          }
-        }
-
-        // use the HTTP Observatory's ability to see if it's preloaded via a parent domain,
-        // and domain.is_subdomain is the only error
-        if (Observatory.state.results['strict-transport-security'].output.preloaded === true &&
-          JSON.stringify(text) === JSON.stringify([errcodes['domain.is_subdomain']])) {
-          grade = 'up-arrow';
-          state.preloaded = 'Yes, via parent domain';
         }
 
         // join all the errors together
