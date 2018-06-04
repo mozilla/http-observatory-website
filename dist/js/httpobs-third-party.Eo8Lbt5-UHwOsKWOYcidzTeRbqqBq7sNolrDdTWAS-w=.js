@@ -776,6 +776,11 @@ Observatory.thirdParty = {
           ocspStapling = 'Yes';
         }
 
+        // OpenSSL often omits the key exchange if it's RSA, so let's add that
+        if (!_.includes(['ADH', 'DH', 'DHE', 'ECDHE', 'ECDE', 'PSK', 'RSA'], cipher.split('-')[0])) {
+          cipher = 'RSA-' + cipher;
+        }
+
         // get the code point
         point = suite.code.toString(16).toUpperCase();
         point = '0'.repeat(4 - point.length) + point;  // padd with 0s
