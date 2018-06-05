@@ -218,6 +218,7 @@ var Observatory = {
       '"origin-when-cross-origin"',
       '"unsafe-url"',
       '"nosniff"',
+      'src="//..."',
       'ALLOW-FROM',
       'DENY',
       'SAMEORIGIN',
