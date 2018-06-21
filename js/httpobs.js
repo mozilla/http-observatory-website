@@ -100,6 +100,7 @@ var Observatory = {
   insertScanResults: function insertScanResults(scan, results) {
     'use strict';
 
+    var cookies = [];
     var lastScanDelta;
     var monospacedKeywords;
     var nextStep = 'congratulations';
@@ -291,11 +292,19 @@ var Observatory = {
       $('#tests-cookies-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
     }
 
-    // assistive technologies can't see the glyphicons, so we assign them an aria-label
-    $('#test-scores td.glyphicon').each(function f() {
-      var glyphClass = $(this).attr('class').split(' ')[1];
-      $(this).attr('aria-label', glyphiconAriaLabels[glyphClass]);
+    // insert in all the cookie values
+    _.forEach(results['cookies']['output']['data'], function f(attributes, name) {
+      cookies.push([
+        name,
+        attributes.expires === null ? 'Session' : Observatory.utils.toLocalTime(String(attributes.expires * 1000), 'x'),
+        $('<code></code>').text(attributes.path)[0],
+        ['', attributes.secure ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-remove'],
+        ['', attributes.httponly ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-remove'],
+        attributes.samesite ? $('<code></code>').text(attributes.samesite)[0] : ['', 'glyphicon glyphicon-remove'],
+        ['', (name.startsWith('__Host') || name.startsWith('__Secure')) ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-remove'],
+      ]);
     });
+    Observatory.utils.tableify(cookies, 'cookies-table');
 
     // write the server headers into the page
     _.forEach(scan.response_headers, function f(value, header) {
@@ -401,9 +410,18 @@ var Observatory = {
       $('#csp-analysis').removeClass('hide');
     }
 
+    // assistive technologies can't see the glyphicons, so we assign them an aria-label
+    $('td.glyphicon').each(function f() {
+      var glyphClass = $(this).attr('class').split(' ')[1];
+      $(this).attr('aria-label', glyphiconAriaLabels[glyphClass]);
+    });
+
     // show the scan results and remove the progress bar
     $('#scan-progress').remove();
     $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('hide');
+    if (_.size(results['cookies']['output']['data']) > 0) {
+      $('#cookies').removeClass('hide');
+    }
 
     // show the survey, disabled until used again
     // Observatory.insertSurveyBanner();

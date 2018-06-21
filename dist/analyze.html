@@ -16,7 +16,7 @@
     <title>Observatory by Mozilla</title>
 
     <link rel="stylesheet" href="/css/bootstrap-3.3.7.min.M4BawzpX2gZqpVcQ1m-1u-phtpgCuUP8wgn-fDlFPR8=.css" type="text/css" integrity="sha256-M4BawzpX2gZqpVcQ1m+1u+phtpgCuUP8wgn+fDlFPR8=" />
-    <link rel="stylesheet" href="/css/httpobs.ZHfd5y4aRmLg0vszP6NrVxBjqUGOxrWgdvvfU3i3rB8=.css" type="text/css" integrity="sha256-ZHfd5y4aRmLg0vszP6NrVxBjqUGOxrWgdvvfU3i3rB8=" />
+    <link rel="stylesheet" href="/css/httpobs.LO5moXmoK7G6f-JqFCLq9zA3ou_0u-KKAV29DkCWmIk=.css" type="text/css" integrity="sha256-LO5moXmoK7G6f+JqFCLq9zA3ou/0u+KKAV29DkCWmIk=" />
 </head>
 <body>
     <div class="hidden alert alert-success text-center" id="redirect-banner">
@@ -447,6 +447,30 @@
                     </div>
                     <div>
                         <p class="text-center"><a class="btn btn-primary google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Looking for additional help? Check out Google's CSP Evaluator!</a></p>
+                    </div>
+                </div>
+
+                <!-- HTTP Observatory cookie results -->
+                <div class="panel panel-primary hide" id="cookies">
+                    <div class="panel-heading">
+                        <span class="h3">Cookies</span>
+                    </div>
+                    <div class="panel-body" id="cookies-panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left" id="cookies-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Expires</th>
+                                        <th>Path</th>
+                                        <th><abbr title="Secure" data-toggle="popover" data-content="Setting the <code>Secure</code> attribute on cookies will prevent them from being sent over insecure HTTP.">Secure</abbr></th>
+                                        <th><abbr title="HttpOnly" data-toggle="popover" data-content="<code>HttpOnly</code> cookies are inaccessible from JavaScript, preventing cross-site scripting (XSS) attacks from stealing session cookies.">HttpOnly</abbr></th>
+                                        <th><abbr title="SameSite" data-toggle="popover" data-content="The <code>SameSite</code> attribute prevents your cookies from being sent cross-site, protecting against CSRF attacks.">SameSite</abbr></th>
+                                        <th><abbr title="Prefixed" data-toggle="popover" data-content="Using the <code>__Host-</code> and <code>__Secure-</code> prefixes on cookie names prevents them from being overwritten by insecure origins.">Prefixed</abbr></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -1148,8 +1172,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js" integrity="sha256-8E6QUcFg1KTnpEU8TFGhpTGHw5fJqB9vCms3OhAYLqw=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js" integrity="sha256-SiHXR50l06UwJvHhFY4e5vzwq75vEHH+8fFNpkXePr0=" crossorigin="anonymous"></script>
-    <script src="/js/httpobs.S7sGdFfHLCAsqPoaE2iSy-31XyOMimWd3X3j6y3NPjY=.js" integrity="sha256-S7sGdFfHLCAsqPoaE2iSy+31XyOMimWd3X3j6y3NPjY="></script>
-    <script src="/js/httpobs-utils.cfx0MoNnkq1UmLEQx_0y2DCbMhLDfOFaZtDVomSWS0o=.js" integrity="sha256-cfx0MoNnkq1UmLEQx/0y2DCbMhLDfOFaZtDVomSWS0o="></script>
+    <script src="/js/httpobs.dYM8QaRVssue_FJPWpMKKf_43KmCsuxxe2IQyMNuYxg=.js" integrity="sha256-dYM8QaRVssue/FJPWpMKKf/43KmCsuxxe2IQyMNuYxg="></script>
+    <script src="/js/httpobs-utils.M3PeD7xQ5JIZY9Cq4NjewsVGjVIJicLxXMrw7vhnncA=.js" integrity="sha256-M3PeD7xQ5JIZY9Cq4NjewsVGjVIJicLxXMrw7vhnncA="></script>
     <script src="/js/httpobs-third-party.Eo8Lbt5-UHwOsKWOYcidzTeRbqqBq7sNolrDdTWAS-w=.js" integrity="sha256-Eo8Lbt5+UHwOsKWOYcidzTeRbqqBq7sNolrDdTWAS+w="></script>
 </body>
 </html>

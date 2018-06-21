@@ -119,9 +119,16 @@ Observatory.utils = {
       _.forEach(row, function traverseCols(col) {
         var td = document.createElement('td');
 
-        // if it's an element, append that; otherwise set textContent
+        // TODO: make this more elegant
+        // columns can be of three types:
+        // string: just insert the string
+        // array: [string, td's class]
+        // object: DOM node
         if (typeof col === 'string') {
           td.textContent = col;
+        } else if (Array.isArray(col)) {
+          td.textContent = col[0];
+          td.classList = col[1];
         } else {
           td.appendChild(col);
         }

@@ -387,6 +387,30 @@
                     </div>
                 </div>
 
+                <!-- HTTP Observatory cookie results -->
+                <div class="panel panel-primary hide" id="cookies">
+                    <div class="panel-heading">
+                        <span class="h3">Cookies</span>
+                    </div>
+                    <div class="panel-body" id="cookies-panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed pull-left" id="cookies-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Expires</th>
+                                        <th>Path</th>
+                                        <th><abbr title="Secure" data-toggle="popover" data-content="Setting the <code>Secure</code> attribute on cookies will prevent them from being sent over insecure HTTP.">Secure</abbr></th>
+                                        <th><abbr title="HttpOnly" data-toggle="popover" data-content="<code>HttpOnly</code> cookies are inaccessible from JavaScript, preventing cross-site scripting (XSS) attacks from stealing session cookies.">HttpOnly</abbr></th>
+                                        <th><abbr title="SameSite" data-toggle="popover" data-content="The <code>SameSite</code> attribute prevents your cookies from being sent cross-site, protecting against CSRF attacks.">SameSite</abbr></th>
+                                        <th><abbr title="Prefixed" data-toggle="popover" data-content="Using the <code>__Host-</code> and <code>__Secure-</code> prefixes on cookie names prevents them from being overwritten by insecure origins.">Prefixed</abbr></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- HTTP Observatory host history results -->
                 <div class="panel panel-primary hide" id="host-history">
                     <div class="panel-heading">

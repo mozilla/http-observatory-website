@@ -283,7 +283,7 @@ div.large-progress-bar-condensed + div.row {
     padding-right: 1em;
 }
 
-#test-scores .glyphicon, #csp-analysis tr td:nth-child(2), #tlsobservatory-ciphers-table .glyphicon {
+.glyphicon, #csp-analysis tr td:nth-child(2) {
     display: table-cell;  /* override inline-block */
 }
 
@@ -311,6 +311,12 @@ div.large-progress-bar-condensed + div.row {
 /* line up vertically with glyphicons */
 #csp-analysis tr td:nth-child(3) span {
     line-height: 1.42857143;
+}
+
+/* cookies */
+#cookies tr td:nth-child(1) {
+    max-width: 8em;
+    word-wrap: break-word;
 }
 
 /* explanations */
@@ -348,7 +354,8 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* site history */
-#host-history-table tbody tr td:nth-child(2), #host-history-table thead tr th:nth-child(2) {
+#host-history-table tbody tr td:nth-child(2),
+#host-history-table thead tr th:nth-child(2) {
     text-align: center;
 }
 
@@ -391,8 +398,9 @@ div.large-progress-bar-condensed + div.row {
     white-space: nowrap;
 }
 
-/* key size, AEAD, and PFS */
-#tlsobservatory-ciphers-table tbody tr td:nth-child(n+4):nth-child(-n+6) {
+#cookies-table tbody tr td:nth-child(n+4):nth-child(-n+7), /* secure, httponly, samesite, prefixed */
+#cookies-table thead tr th:nth-child(n+4):nth-child(-n+7),
+#tlsobservatory-ciphers-table tbody tr td:nth-child(n+4):nth-child(-n+6) { /* key size, AEAD, and PFS */
     text-align: center;
     white-space: nowrap;
 }
