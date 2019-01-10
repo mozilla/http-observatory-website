@@ -8,8 +8,8 @@ help:
 	@echo '    make devserver                   constantly regen site with automatic refreshing'
 
 devserver: publish
-	test ! -s conf/nginx.pid || kill `cat conf/nginx.pid`
-	nginx -p . -c conf/nginx.conf
+	test ! -s config/nginx.pid || kill `cat config/nginx.pid`
+	nginx -p . -c config/nginx.conf
 	$(PY) devserver.py
 
 deploy:

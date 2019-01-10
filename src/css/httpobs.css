@@ -1,5 +1,9 @@
+@import '../../node_modules/bootswatch/dist/materia/bootstrap.min.css';
+
 body {
-    line-height: 1.5em;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 16px;
+/*    line-height: 1.5em; */
 }
 
 ul {
@@ -37,17 +41,17 @@ ul {
 }
 
 /* wordmark and nav stuff */
-#navbar-container {
+/*#navbar-container {
     margin: 6px auto 8px auto;
-}
+}*/
 
 #observatory-wordmark {
-    height: 2.2em;
+    height: 1.6em;
 }
 
 @media only screen and (min-width: 768px) {
     #observatory-wordmark {
-        height: 2.5em;
+        height: 2em;
     }
 
     .equal, .equal > div[class*='col-'] {
@@ -92,8 +96,10 @@ ul {
 /* navigation bar */
 .navbar {
     border: 0;
+    box-shadow: none;
 }
 
+/*
 .nav-tabs > li > a {
     background-color: #f6f6f6;
     border-width: 2px 2px 0 2px;
@@ -119,7 +125,7 @@ ul {
     background-color: #d9534f;
     border-color: #d9534f;
     color: white;
-}
+}*/
 
 .tab-content {
     margin-top: 1.2em;

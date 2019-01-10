@@ -1,6 +1,5 @@
-{% extends "base.html" %}
+<%= require ('html-loader?interpolate!./partials/header.html') %>
 
-{% block content %}
     <!-- Symantec certificate errors moved to the very top level -->
     <div class="hidden alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning-june-2016">
         This site uses a Symantec cert issued before June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 60</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 66</a>. Please replace its certificate immediately.
@@ -1093,4 +1092,6 @@
             </div>
         </div>
     </div>
-{% endblock %}
+
+<%= require ('html-loader?interpolate!./partials/footer.html') %>
+

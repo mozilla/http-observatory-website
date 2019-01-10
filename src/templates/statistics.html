@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-
-{% block content %}
+<%= require ('html-loader?interpolate!./partials/header.html') %>
 
     <div id="statistics">
         <h1 class="page-header h2 m-t-1">HTTP Observatory</h1>
@@ -121,4 +119,5 @@
         </div>
 
     </div>
-{% endblock %}
+
+<%= require ('html-loader!./partials/footer.html') %>

@@ -1,3 +1,6 @@
 .coverage
 .idea
 conf/nginx.pid
+build
+node_modules
+

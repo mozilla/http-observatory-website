@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-
-{% block content %}
+<%= require ('html-loader?interpolate!./partials/header.html') %>
 
     <div>
         <h1>Frequently Asked Questions</h1>
@@ -133,4 +131,6 @@ X-Content-Type-Options: nosniff</pre>
 
 
     </div>
-{% endblock %}
+
+<%= require ('html-loader?interpolate!./partials/footer.html') %>
+
