@@ -46,12 +46,24 @@ module.exports = {
         }]
       },
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         //include: path.resolve(__dirname, '..', 'src'),
         use: [{
           loader: MiniCssExtractPlugin.loader
         },
-        'css-loader'
+        'css-loader',
+        {
+          loader: 'postcss-loader', // Run post css actions
+          options: {
+            plugins: function () { // post css plugins, can be exported to postcss.config.js
+              return [
+                require('precss'),
+                require('autoprefixer')
+              ];
+            }
+          }
+        },
+        'sass-loader'
       ]}
     ]
   },
@@ -98,7 +110,7 @@ module.exports = {
       $: 'jquery'   
     }),
     new MiniCssExtractPlugin({
-      filename: '[hash].httpobs.css',
+      filename: '[hash].index.css',
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',

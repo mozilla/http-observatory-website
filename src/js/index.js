@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { forEach, includes, last, size, sum } from 'lodash';
 
-import '../css/httpobs.css';
+import '../css/index.scss';
 import Observatories from './observatories/observatories.js';
 import constants from './constants.js';
 import statistics from './statistics.js';
@@ -44,7 +44,7 @@ const Observatory = {
         Observatory.state.scan.scan_id.toString().split(' ')[0]);
 
     // unhide the banner
-    $('#survey-banner').removeClass('hidden');
+    $('#survey-banner').removeClass('d-none');
   },
 
 

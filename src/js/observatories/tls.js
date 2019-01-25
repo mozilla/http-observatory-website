@@ -199,20 +199,20 @@ const insert = async () => {
          parseInt(cert.validity.notBefore.split('-')[0]) < 2016)
       )
   {
-    $('#tlsobservatory-symantec-distrust-warning-june-2016').removeClass('hidden');
+    $('#tlsobservatory-symantec-distrust-warning-june-2016').removeClass('d-none');
   } else if (state.analyzers.symantecDistrust.isDistrusted) {
-    $('#tlsobservatory-symantec-distrust-warning').removeClass('hidden');
+    $('#tlsobservatory-symantec-distrust-warning').removeClass('d-none');
   }
 
   // similarly, show the warning if the certificate isn't trusted
   if (results.is_valid === false) {
-    $('#tls-observatory-invalid-cert-warning').removeClass('hidden');
+    $('#tls-observatory-invalid-cert-warning').removeClass('d-none');
     $('a[href="#tab-tlsobservatory"]').addClass('tabs-danger');
   }
 
   // And display the TLS results table
   utils.showResults('tlsobservatory-summary');
-  $('#tlsobservatory-certificate, #tlsobservatory-ciphers, #tlsobservatory-misc, #tlsobservatory-suggestions').removeClass('hide');
+  $('#tlsobservatory-certificate, #tlsobservatory-ciphers, #tlsobservatory-misc, #tlsobservatory-suggestions').removeClass('d-none');
 };
 
 

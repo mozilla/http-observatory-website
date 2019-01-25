@@ -1,0 +1,58 @@
+// colors
+$blue:     #4582ec !default;
+$green:    #3fad46 !default;
+$teal:     #5bc0de !default;
+$orange:   #f0ad4e !default;
+$red:      #d9534f !default;
+$white:    #fff    !default;
+
+$gray-base:     #000 !default;
+$gray-100: lighten($gray-base, 90%) !default;
+$gray-200: lighten($gray-base, 80%) !default;
+$gray-300: lighten($gray-base, 70%) !default;
+$gray-400: lighten($gray-base, 60%) !default;
+$gray-500: lighten($gray-base, 50%) !default;
+$gray-600: lighten($gray-base, 40%) !default;
+$gray-700: lighten($gray-base, 30%) !default;
+$gray-800: lighten($gray-base, 20%) !default;
+$gray-900: lighten($gray-base, 10%) !default;
+
+$primary:  $blue !default;
+$success:  $green !default;
+$info:     $teal !default;
+$warning:  $orange !default;
+$danger:   $red !default;
+
+$theme-color-interval:     10% !default;
+$yiq-contrasted-threshold: 220 !default;
+
+
+// typography
+$font-family-sans-serif:  "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
+$font-family-base:        $font-family-serif !default;
+
+$headings-font-family:    $font-family-sans-serif !default;
+$headings-font-weight:    700 !default;
+
+$popover-font-size:       1rem;
+
+.btn,
+.navbar {
+  font-family: $font-family-sans-serif;
+}
+
+
+// alerts
+$alert-bg-level: 0;
+$alert-border-radius: 0;
+$alert-border-width: 0;
+$alert-color-level: -10;
+
+// cards
+$card-spacer-y: .575rem;
+$card-spacer-x: 1.25rem;
+
+// inputs
+$input-placeholder-color: $gray-300 !default;

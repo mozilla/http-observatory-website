@@ -1,11 +1,11 @@
 <%= require ('html-loader?interpolate!./partials/header.html') %>
 
     <!-- Symantec certificate errors moved to the very top level -->
-    <div class="hidden alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning-june-2016">
+    <div class="d-none alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning-june-2016">
         This site uses a Symantec cert issued before June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 60</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 66</a>. Please replace its certificate immediately.
     </div>
 
-    <div class="hidden alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning">
+    <div class="d-none alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning">
         This site uses a Symantec cert issued on or after June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 63</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 70</a>. Please replace its certificate immediately.
     </div>
 
@@ -39,417 +39,40 @@
                     </div>
                 </div>
 
-                <div class="hidden alert alert-danger text-center" id="http-status-code-alert">
+                <div class="d-none alert alert-danger text-center" id="http-status-code-alert">
                     This site returned an HTTP status code other than <strong>200 (OK)</strong>, which may cause its results to be inaccurate.
                 </div>
 
-                <div id="scan-summary-row" class="row equal hide">
+                <div id="scan-summary-row" class="row equal d-none">
                     <div class="col-md-6">
-                        <div class="panel panel-primary summary summary-condensed" id="scan-summary">
-                            <div class="panel-heading">
-                                <span class="h3">Scan Summary</span>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <span class="grade-container text-center" id="scan-grade-container">
-                                            <span class="grade-letter" id="scan-grade-letter"></span>
-                                            <sup class="grade-letter-modifier" id="scan-grade-modifier"></sup>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-8 p-l-0 table-responsive">
-                                        <table class="table table-striped table-condensed pull-left scan-summary-table">
-                                            <tr>
-                                                <td>Host:</td>
-                                                <td><span class="hidden" id="scan-target-container"><span id="scan-target"></span> &rarr; </span><span id="scan-hostname"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Scan ID #:</td>
-                                                <td><span id="scan-scan_id"></span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Start Time:</td>
-                                                <td id="scan-start_time_l"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Duration:</td>
-                                                <td><span id="scan-test_duration"></span> seconds</td>
-                                            </tr>
-                                            <tr>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Score:</td>
-                                                <td><span id="scan-score"></span>/100</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tests Passed:</td>
-                                                <td><span id="scan-tests_passed"></span>/<span id="scan-tests_quantity"></span></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <%= require ('html-loader?interpolate!./analyze/http-scan-summary.html') %>
                     </div>
                     <div class="col-md-6">
-                        <div class="panel panel-success summary" id="recommended-change">
-                            <div class="panel-heading">
-                                <span class="h3">Recommended Change</span>
-                                <button class="btn btn-default pull-right expandy-panel-button disabled force-rescan" type="button" data-toggle="popover" title="Made some improvements?" data-content="The HTTP Observatory allows you to scan your site every five minutes.">Initiate Rescan</button>
-                            </div>
-                            <div class="panel-body">
-                                <!-- Next steps -->
-                                <div class="row hidden" id="next-steps">
-                                    <div id="next-steps-cross-origin-resource-sharing" class="hidden">
-                                        <p>Your site is configured with extremely broad resource sharing permissions.</p>
-                                        <p>This can be dangerous, and is possibly not what was intended.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#cross-origin-resource-sharing">Mozilla Web Security Guidelines (cross-origin resource sharing)</a></li>
-                                            <li><a href="https://pokeinthe.io/2016/11/29/understanding-cors/">Understanding CORS</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-https" class="hidden">
-                                        <p>Wondering where to start?</p>
-                                        <p>Adding HTTPS protects your site's visitors from tracking, malware, and injected advertising.</p>
-                                        <p>Many services providers and certificate authorities now provide free HTTPS and digital certificates to make this as painless as possible!</p>
-                                        <ul>
-                                            <li><a href="https://wiki.mozilla.org/Security/Server_Side_TLS">Mozilla TLS Guidelines</a></li>
-                                            <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-redirection" class="hidden">
-                                        <p>We noticed that your site is accessible over HTTPS, but still defaults to HTTP.</p>
-                                        <p>Automatically redirecting from HTTP to HTTPS helps ensure that your users get served a secure version of your site.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#http-redirections">Mozilla Web Security Guidelines (redirections)</a></li>
-                                            <li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla TLS Configuration Generator</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-strict-transport-security" class="hidden">
-                                        <p>Fantastic work using HTTPS! Did you know that you can ensure users never visit your site over HTTP accidentally?</p>
-                                        <p>HTTP Strict Transport Security tells web browsers to only access your site over HTTPS in the future, even if the user attempts to visit over HTTP or clicks an <code>http://</code> link.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#http-strict-transport-security">Mozilla Web Security Guidelines (HSTS)</a></li>
-                                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">MDN on HTTP Strict Transport Security</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-cookies" class="hidden">
-                                        <p>You're doing a great job with HTTPS and HTTP Strict Transport Security!</p>
-                                        <p>Since you’re now only allowing connections over HTTPS, consider using the <code>Secure</code> flag to protect your cookies against their accidental transmission over HTTP. Furthermore, the use of <code>HttpOnly</code> protects your session cookies from malicious JavaScript.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#cookies">Mozilla Web Security Guidelines (cookies)</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-x-frame-options" class="hidden">
-                                        <p>What’s a good next step?</p>
-                                        <p>The use of the <code>X-Frame-Options</code> header and Content Security Policy’s <code>frame-ancestors</code> directive are a simple and easy way to protect your site against clickjacking attacks.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#x-frame-options">Mozilla Web Security Guidelines (X-Frame-Options)</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-x-content-type-options" class="hidden">
-                                        <p>You’re halfway finished! Nice job!</p>
-                                        <p>The <code>X-Content-Type-Options</code> header tells browsers to stop automatically detecting the contents of files. This protects against attacks where they're tricked into incorrectly interpreting files as JavaScript.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#x-content-type-options">Mozilla Web Security Guidelines (X-Content-Type-Options)</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-content-security-policy" class="hidden">
-                                        <p>You’re doing a wonderful job so far!</p>
-                                        <p>Did you know that a strong Content Security Policy (CSP) policy can help protect your website against malicious cross-site scripting attacks?</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#content-security-policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
-                                            <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
-                                            <li><a class="google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Google CSP Evaluator</a></li>
-                                            <li><a href="https://addons.mozilla.org/en-US/firefox/addon/laboratory-by-mozilla/">Mozilla Laboratory CSP Generator</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-subresource-integrity" class="hidden">
-                                        <p>We’ve noticed you’re using other domains to host your JavaScript code.</p>
-                                        <p>Subresource Integrity guarantees that your site will stay safe even if one of those domains is compromised.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#subresource-integrity">Mozilla Web Security Guidelines (Subresource Integrity)</a></li>
-                                            <li><a href="https://www.srihash.org/">SRI Hash Generator</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-referrer-policy" class="hidden">
-                                        <p>You’re on the home stretch!</p>
-                                        <p>The use of Referrer Policy can help protect the privacy of your users by restricting the information that browsers provide when accessing resources kept on other sites.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#referrer-policy">Mozilla Web Security Guidelines (Referrer Policy)</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-content-security-policy-unsafe-inline-in-style-src-only" class="hidden">
-                                        <p>Almost there!</p>
-                                        <p>Your current CSP policy allows the use of <code>'unsafe-inline'</code> inside of <code>style-src</code>. Moving <code>style</code> attributes into external stylesheets not only makes you safer, but also makes your code easier to maintain.</p>
-                                        <ul>
-                                            <li><a href="https://infosec.mozilla.org/guidelines/web_security#content-security-policy">Mozilla Web Security Guidelines (Content Security Policy)</a></li>
-                                            <li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a></li>
-                                            <li><a class="google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Google CSP Evaluator</a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="next-steps-congratulations" class="hidden">
-                                        <p class="text-center"><em>&#x1F389;&#x1F389;&#x1F389;&nbsp; We don't have any! &nbsp;&#x1F389;&#x1F389;&#x1F389;</em></p>
-                                        <hr>
-                                        <p>Make sure to check back occasionally to ensure that your website is keeping up with the latest in web security standards.</p>
-                                        <p>In the meantime, thanks for everything you're doing to keep the internet a safe, secure, and private place!</p>
-                                    </div>
-                                    <div id="next-steps-initiate-rescan">
-                                        <hr>
-                                        <p>Once you've successfully completed your change, click Initiate Rescan for the next piece of advice.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <%= require ('html-loader?interpolate!./analyze/http-recommended-changes.html') %>
                     </div>
                 </div>
 
                 <!-- HTTP Observatory test results -->
-                <div class="panel panel-primary hide" id="test-scores">
-                    <div class="panel-heading">
-                        <span class="h3">Test Scores</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left scan-summary-table">
-                                <tr>
-                                    <th>Test</th>
-                                    <th>Pass</th>
-                                    <th>Score</th>
-                                    <th>Explanation</th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#content-security-policy">Content Security Policy</a></td>
-                                    <td class="glyphicon" id="tests-content-security-policy-pass" aria-hidden="true"></td>
-                                    <td id="tests-content-security-policy-score"></td>
-                                    <td id="tests-content-security-policy-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Content Security Policy" data-content="Content Security Policy (CSP) can prevent a wide range of cross-site scripting (XSS) and clickjacking attacks against your website."></span></td>
-                                </tr>
-                                <tr id="tests-contribute-row">
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#contributejson">Contribute.json</a></td>
-                                    <td class="glyphicon" id="tests-contribute-pass" aria-hidden="true"></td>
-                                    <td id="tests-contribute-score"></td>
-                                    <td id="tests-contribute-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="contribute.json" data-content="Having a contribute.json file on the root your website allows Mozilla's information security team to more quickly triage incoming security bugs."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#cookies">Cookies</a></td>
-                                    <td class="glyphicon" id="tests-cookies-pass" aria-hidden="true"></td>
-                                    <td id="tests-cookies-score"></td>
-                                    <td id="tests-cookies-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cookies" data-content="Using cookies attributes such as Secure and HttpOnly can protect users from having their personal information stolen."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#cross-origin-resource-sharing">Cross-origin Resource Sharing</a></td>
-                                    <td class="glyphicon" id="tests-cross-origin-resource-sharing-pass" aria-hidden="true"></td>
-                                    <td id="tests-cross-origin-resource-sharing-score"></td>
-                                    <td id="tests-cross-origin-resource-sharing-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cross-origin Resource Sharing" data-content="Incorrectly configured CORS settings can allow foreign sites to read your site's contents, possibly allowing them access to private user information."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#http-public-key-pinning">HTTP Public Key Pinning</a></td>
-                                    <td class="glyphicon" id="tests-public-key-pinning-pass" aria-hidden="true"></td>
-                                    <td id="tests-public-key-pinning-score"></td>
-                                    <td id="tests-public-key-pinning-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="HTTP Public Key Pinning" data-content="HTTP Public Key Pinning (HPKP) binds a site to a specific combination of certificate authorities and/or keys, protecting against the unauthorized issuance of certificates."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#http-strict-transport-security">HTTP Strict Transport Security</a></td>
-                                    <td class="glyphicon" id="tests-strict-transport-security-pass" aria-hidden="true"></td>
-                                    <td id="tests-strict-transport-security-score"></td>
-                                    <td id="tests-strict-transport-security-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="HTTP Strict Transport Security" data-content="HTTP Strict Transport Security (HSTS) instructs web browsers to visit your site only over HTTPS."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#http-redirections">Redirection</a></td>
-                                    <td class="glyphicon" id="tests-redirection-pass" aria-hidden="true"></td>
-                                    <td id="tests-redirection-score"></td>
-                                    <td id="tests-redirection-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Redirection" data-content="Properly configured redirections from HTTP to HTTPS allow browsers to correctly apply HTTP Strict Transport Security (HSTS) settings."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#referrer-policy">Referrer Policy</a></td>
-                                    <td class="glyphicon" id="tests-referrer-policy-pass" aria-hidden="true"></td>
-                                    <td id="tests-referrer-policy-score"></td>
-                                    <td id="tests-referrer-policy-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Referrer Policy" data-content="Referrer Policy can protect the privacy of your users by restricting the contents of the HTTP Referer header."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#subresource-integrity">Subresource Integrity</a></td>
-                                    <td class="glyphicon" id="tests-subresource-integrity-pass" aria-hidden="true"></td>
-                                    <td id="tests-subresource-integrity-score"></td>
-                                    <td id="tests-subresource-integrity-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Subresource Integrity" data-content="Subresource Integrity protects against JavaScript files and stylesheets stored on content delivery networks (CDNs) from being maliciously modified."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#x-content-type-options">X-Content-Type-Options</a></td>
-                                    <td class="glyphicon" id="tests-x-content-type-options-pass" aria-hidden="true"></td>
-                                    <td id="tests-x-content-type-options-score"></td>
-                                    <td id="tests-x-content-type-options-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-Content-Type-Options" data-content="X-Content-Type-Options instructs browsers to not guess the MIME types of files that the web server is delivering."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#x-frame-options">X-Frame-Options</a></td>
-                                    <td class="glyphicon" id="tests-x-frame-options-pass" aria-hidden="true"></td>
-                                    <td id="tests-x-frame-options-score"></td>
-                                    <td id="tests-x-frame-options-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-Frame-Options" data-content="X-Frame-Options controls whether your site can be framed, protecting against clickjacking attacks. It has been superseded by Content Security Policy's <code>frame-ancestors</code> directive, but should still be used for now."></span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="https://infosec.mozilla.org/guidelines/web_security#x-xss-protection">X-XSS-Protection</a></td>
-                                    <td class="glyphicon" id="tests-x-xss-protection-pass" aria-hidden="true"></td>
-                                    <td id="tests-x-xss-protection-score"></td>
-                                    <td id="tests-x-xss-protection-score-description"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="X-XSS-Protection" data-content="X-XSS-Protection protects against reflected cross-site scripting (XSS) attacks in IE and Chrome, but has been superseded by Content Security Policy. It can still be used to protect users of older web browsers."></span></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <%= require ('html-loader?interpolate!./analyze/http-test-scores.html') %>
 
                 <!-- HTTP Observatory CSP analysis -->
-                <div class="panel panel-primary hide" id="csp-analysis">
-                    <div class="panel-heading">
-                        <span class="h3">Content Security Policy Analysis</span>
-                    </div>
-                    <div class="panel-body" id="csp-analysis-panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left" id="csp-analysis-table">
-                                <tr>
-                                    <th>Test</th>
-                                    <th class="text-center">Pass</th>
-                                    <th class="text-center">Info</th>
-                                </tr>
-                                <tr>
-                                    <td>Blocks execution of inline JavaScript by not allowing <code>'unsafe-inline'</code> inside <code>script-src</code></td>
-                                    <td class="glyphicon" id="csp-analysis-unsafeInline" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Unsafe Inline JavaScript" data-content="Blocking the execution of inline JavaScript provides CSP's strongest protection against cross-site scripting attacks.<br><br>Moving JavaScript to external files can also help make your site more maintainable."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Blocks execution of JavaScript's <code>eval()</code> function by not allowing <code>'unsafe-eval'</code> inside <code>script-src</code></td>
-                                    <td class="glyphicon" id="csp-analysis-unsafeEval" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Unsafe JavaScript eval()" data-content="Blocking the use of JavaScript's <code>eval()</code> function can help prevent the execution of untrusted code."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Blocks execution of plug-ins, using <code>object-src</code> restrictions</td>
-                                    <td class="glyphicon" id="csp-analysis-unsafeObjects" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Blocking plug-ins" data-content="Blocking the execution of plug-ins via <code>object-src 'none'</code> or as inherited from <code>default-src</code> can prevent attackers from loading Flash or Java in the context of your page."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Blocks inline styles by not allowing <code>'unsafe-inline'</code> inside <code>style-src</code></td>
-                                    <td class="glyphicon" id="csp-analysis-unsafeInlineStyle" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Unsafe Inline Styles" data-content="Blocking inline styles can help prevent attackers from modifying the contents or appearance of your page.<br><br>Moving styles to external stylesheets can also help make your site more maintainable."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Blocks loading of active content over HTTP or FTP</td>
-                                    <td class="glyphicon" id="csp-analysis-insecureSchemeActive" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Insecure Active Resources" data-content="Loading JavaScript or plugins can allow a man-in-the-middle to execute arbitrary code or your website. Restricting your policy and changing links to HTTPS can help prevent this."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Blocks loading of passive content over HTTP or FTP</td>
-                                    <td class="glyphicon" id="csp-analysis-insecureSchemePassive" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Insecure Passive Resources" data-content="This site's Content Security Policy allows the loading of passive content such as images or videos over insecure protocols such as HTTP or FTP. Consider changing them to load them over HTTPS."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Clickjacking protection, using <code>frame-ancestors</code></td>
-                                    <td class="glyphicon" id="csp-analysis-antiClickjacking" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Clickingjacking Protection" data-content="The use of CSP's <code>frame-ancestors</code> directive offers fine-grained control over who can frame your site."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Deny by default, using <code>default-src 'none'</code></td>
-                                    <td class="glyphicon" id="csp-analysis-defaultNone" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Deny by Default" data-content="Denying by default using <code>default-src 'none'</code>can ensure that your Content Security Policy doesn't allow the loading of resources you didn't intend to allow."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Restricts use of the <code>&lt;base&gt;</code> tag by using <code>base-uri 'none'</code>, <code>base-uri 'self'</code>, or specific origins</td>
-                                    <td class="glyphicon" id="csp-analysis-insecureBaseUri" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Restricts <code>base</code> tag" data-content="The <code>base</code> tag can be used to trick your site into loading scripts from untrusted origins."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Restricts where <code>&lt;form&gt;</code> contents may be submitted by using <code>form-action 'none'</code>, <code>form-action 'self'</code>, or specific URIs</td>
-                                    <td class="glyphicon" id="csp-analysis-insecureFormAction" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Restricts form submissions" data-content="Malicious JavaScript or content injection could modify where sensitive form data is submitted to or create additional forms for data exfiltration."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Uses CSP3's <code>'strict-dynamic'</code> directive to allow dynamic script loading (optional)</td>
-                                    <td class="glyphicon" id="csp-analysis-strictDynamic" aria-hidden="true"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Strict Dynamic" data-content="<code>'strict-dynamic'</code> lets you use a JavaScript shim loader to load all your site's JavaScript dynamically, without having to track <code>script-src</code> origins."></span></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-center"><a class="btn btn-primary google-csp-evaluator-link" href="https://csp-evaluator.withgoogle.com/">Looking for additional help? Check out Google's CSP Evaluator!</a></p>
-                    </div>
-                </div>
+                <%= require ('html-loader?interpolate!./analyze/http-csp-analysis.html') %>
 
                 <!-- HTTP Observatory cookie results -->
-                <div class="panel panel-primary hide" id="cookies">
-                    <div class="panel-heading">
-                        <span class="h3">Cookies</span>
-                    </div>
-                    <div class="panel-body" id="cookies-panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left" id="cookies-table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Expires</th>
-                                        <th>Path</th>
-                                        <th><abbr title="Secure" data-toggle="popover" data-content="Setting the <code>Secure</code> attribute on cookies will prevent them from being sent over insecure HTTP.">Secure</abbr></th>
-                                        <th><abbr title="HttpOnly" data-toggle="popover" data-content="<code>HttpOnly</code> cookies are inaccessible from JavaScript, preventing cross-site scripting (XSS) attacks from stealing session cookies.">HttpOnly</abbr></th>
-                                        <th><abbr title="SameSite" data-toggle="popover" data-content="The <code>SameSite</code> attribute prevents your cookies from being sent cross-site, protecting against CSRF attacks.">SameSite</abbr></th>
-                                        <th><abbr title="Prefixed" data-toggle="popover" data-content="Using the <code>__Host-</code> and <code>__Secure-</code> prefixes on cookie names prevents them from being overwritten by insecure origins.">Prefixed</abbr></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <%= require ('html-loader?interpolate!./analyze/http-cookies.html') %>
 
                 <!-- HTTP Observatory host history results -->
-                <div class="panel panel-primary hide" id="host-history">
-                    <div class="panel-heading">
-                        <span class="h3">Grade History</span>
-                        <button class="btn btn-default pull-right expandy-panel-button" type="button" data-toggle="collapse" data-target="#host-history-panel-body" aria-expanded="false" aria-controls="host-history-panel-body">Click to Expand</button>
-                    </div>
-                    <div class="panel-body collapse" id="host-history-panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left" id="host-history-table">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Score</th>
-                                        <th>Grade</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <%= require ('html-loader?interpolate!./analyze/http-host-history.html') %>
 
                 <!-- HTTP Observatory raw header test results -->
-                <div class="panel panel-primary hide" id="server-headers">
-                    <div class="panel-heading">
-                        <span class="h3">Raw Server Headers</span>
-                    </div>
-                    <div class="panel-body" id="server-headers-panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left" id="server-headers-table">
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <%= require ('html-loader?interpolate!./analyze/http-raw-server-headers.html') %>
             </div>
 
         <!-- TLS Observatory -->
         <div role="tabpanel" class="tab-pane" id="tab-tlsobservatory">
             <div id="tlsobservatory">
 
-                <div class="hidden alert alert-danger text-center" id="tls-observatory-invalid-cert-warning">
+                <div class="d-none alert alert-danger text-center" id="tls-observatory-invalid-cert-warning">
                     This site uses an <strong>untrusted</strong> or <strong>invalid certificate</strong>. The following results ignore this error.
                 </div>
 
@@ -523,7 +146,7 @@
                 </div>
 
                 <!-- TLS Observatory certificate panel -->
-                <div class="panel panel-primary hide" id="tlsobservatory-certificate">
+                <div class="panel panel-primary d-none" id="tlsobservatory-certificate">
                     <div class="panel-heading">
                         <span class="h3">Certificate Information</span>
                     </div>
@@ -580,7 +203,7 @@
                 </div>
 
                 <!-- TLS Observatory protocol panel -->
-                <div class="panel panel-primary hide" id="tlsobservatory-ciphers">
+                <div class="panel panel-primary d-none" id="tlsobservatory-ciphers">
                     <div class="panel-heading">
                         <span class="h3">Cipher Suites</span>
                     </div>
@@ -604,7 +227,7 @@
                 </div>
 
                 <!-- TLS Observatory misc panel -->
-                <div class="panel panel-primary hide" id="tlsobservatory-misc">
+                <div class="panel panel-primary d-none" id="tlsobservatory-misc">
                     <div class="panel-heading">
                         <span class="h3">Miscellaneous Information</span>
                     </div>
@@ -637,7 +260,7 @@
                 </div>
 
                 <!-- TLS Observatory suggestions panel -->
-                <div class="panel panel-primary hide" id="tlsobservatory-suggestions">
+                <div class="panel panel-primary d-none" id="tlsobservatory-suggestions">
                     <div class="panel-heading">
                         <span class="h3">Suggestions</span>
                     </div>
@@ -684,13 +307,13 @@
                         </div>
 
                         <!-- Notice about which system hosts the scans -->
-                        <div class="alert alert-danger hide m-b-0" id="sshobservatory-scanner-alert" role="alert">
+                        <div class="alert alert-danger d-none m-b-0" id="sshobservatory-scanner-alert" role="alert">
                           <p><strong>Scan Failed: </strong>The Mozilla SSH Observatory scans from <code>sshscan.rubidus.com</code> at <code>45.55.176.164</code>.</p>
 
                           <p>Many systems are configured with firewalls that block SSH access. To successfully scan with the SSH Observatory, access must be granted to Mozilla's scanning system.</p>
                         </div>
 
-                        <div class="progress large-progress-bar large-progress-bar-condensed hide" id="sshobservatory-progress-bar">
+                        <div class="progress large-progress-bar large-progress-bar-condensed d-none" id="sshobservatory-progress-bar">
                             <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="sshobservatory-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
                                 PENDING (This may take several minutes)
                             </div>
@@ -732,7 +355,7 @@
                 </div>
 
                 <!-- SSH Observatory recommendations panel -->
-                <div class="panel panel-success hide" id="sshobservatory-recommendations">
+                <div class="panel panel-success d-none" id="sshobservatory-recommendations">
                     <div class="panel-heading">
                         <span class="h3">Recommendations</span>
                     </div>
@@ -741,14 +364,14 @@
                             <table class="table table-striped table-condensed pull-left scan-summary-table" id="sshobservatory-recommendations-table">
                             </table>
                         </div>
-                        <div class="text-center hide" id="sshobservatory-no-recommendations">
+                        <div class="text-center d-none" id="sshobservatory-no-recommendations">
                           🎉🎉🎉  <em>We don't have any! Keep up the good work!</em> 🎉🎉🎉
                         </div>
                     </div>
                 </div>
 
                 <!-- SSH Observatory miscellaneous panel -->
-                <div class="panel panel-primary hide" id="sshobservatory-misc">
+                <div class="panel panel-primary d-none" id="sshobservatory-misc">
                     <div class="panel-heading">
                         <span class="h3">Miscellaneous</span>
                     </div>
@@ -776,7 +399,7 @@
                 </div>
 
                 <!-- SSH Observatory version information panel -->
-                <div class="panel panel-primary hide" id="sshobservatory-version">
+                <div class="panel panel-primary d-none" id="sshobservatory-version">
                     <div class="panel-heading">
                         <span class="h3">Version Information</span>
                     </div>

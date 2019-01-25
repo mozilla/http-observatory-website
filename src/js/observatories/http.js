@@ -127,7 +127,7 @@ const insert = async (scan, results) => {
 
   // if the destination domain isn't the same as the hostname, we should unhide that row
   if (scan.hostname !== scan.target) {
-    $('#scan-target-container').removeClass('hidden');
+    $('#scan-target-container').removeClass('d-none');
   }
 
   // don't show the contribute.json line to non-mozilla sites
@@ -139,7 +139,7 @@ const insert = async (scan, results) => {
 
   // if the HTTP status code wasn't 200, show the banner for it
   if (scan.status_code !== 200) {
-    $('#http-status-code-alert').removeClass('hidden');
+    $('#http-status-code-alert').removeClass('d-none');
   }
 
   // update the links for the Google CSP Evaluator, if they have a CSP policy
@@ -334,10 +334,10 @@ const insert = async (scan, results) => {
     nextStep = 'content-security-policy-unsafe-inline-in-style-src-only';
   }
 
-  $('#next-steps, #next-steps-' + nextStep).removeClass('hidden');
+  $('#next-steps, #next-steps-' + nextStep).removeClass('d-none');
 
   if (nextStep === 'congratulations') {
-    $('#next-steps-initiate-rescan').addClass('hidden');
+    $('#next-steps-initiate-rescan').addClass('d-none');
   }
 
   // insert in the CSP analysis
@@ -368,7 +368,7 @@ const insert = async (scan, results) => {
 
     });
 
-    $('#csp-analysis').removeClass('hide');
+    $('#csp-analysis').removeClass('d-none');
   }
 
   // assistive technologies can't see the glyphicons, so we assign them an aria-label
@@ -379,9 +379,9 @@ const insert = async (scan, results) => {
 
   // show the scan results and remove the progress bar
   $('#scan-progress').remove();
-  $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('hide');
+  $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('d-none');
   if (size(results['cookies']['output']['data']) > 0) {
-    $('#cookies').removeClass('hide');
+    $('#cookies').removeClass('d-none');
   }
 
   // show the survey, disabled until used again
@@ -411,7 +411,7 @@ const insertHostHistory = async () => {
   utils.tableify(rows, 'host-history-table');
 
   // unhide the host history section
-  $('#host-history').removeClass('hidden');
+  $('#host-history').removeClass('d-none');
 };
 
 

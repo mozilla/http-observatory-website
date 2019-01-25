@@ -16,6 +16,7 @@ module.exports = {
   domain: 'observatory.mozilla.org',
   grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
   maxQueriesBeforeTimeout: 300,
+  numImprovedSites: '165,000',
   title: 'Mozilla Observatory',
   urls: {
     api: 'https://http-observatory.security.mozilla.org/api/v1/',

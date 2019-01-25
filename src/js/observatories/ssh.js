@@ -74,7 +74,7 @@ const insert = async () => {
   if (state.output.compliance_recommendations.length > 0) {
     utils.tableify(state.output.compliance_recommendations, 'sshobservatory-recommendations-table');
   } else {
-    $('#sshobservatory-no-recommendations').removeClass('hide');
+    $('#sshobservatory-no-recommendations').removeClass('d-none');
   }
 
   // link to the JSON results
@@ -83,7 +83,7 @@ const insert = async () => {
   utils.insertGrade(results.compliance.grade, 'sshobservatory');
   utils.insertResults(state.output, 'sshobservatory');
   utils.showResults('sshobservatory');
-  $('#sshobservatory-misc, #sshobservatory-recommendations, #sshobservatory-version').removeClass('hide');
+  $('#sshobservatory-misc, #sshobservatory-recommendations, #sshobservatory-version').removeClass('d-none');
 };
 
 
@@ -94,7 +94,7 @@ export const load = async () => {
 
   // remove the initiate scan button and show the status bar
   $('#sshobservatory-scan-initiator').slideUp();
-  $('#sshobservatory-progress-bar').removeClass('hide');
+  $('#sshobservatory-progress-bar').removeClass('d-none');
 
   // if we haven't initiated a scan
   if (state.uuid === undefined) {
@@ -132,8 +132,8 @@ const loadSuccessCallbackAwaitingResults = async (data) => {
     state.results = data;
     insert();
   } else if (state.count >= 15 || state.status === 'ERRORED') { // if we haven't haven't gotten results for 30 seconds, let's give up
-    $('#sshobservatory-progress-bar').addClass('hide');
-    $('#sshobservatory-scanner-alert').removeClass('hide');
+    $('#sshobservatory-progress-bar').addClass('d-none');
+    $('#sshobservatory-scanner-alert').removeClass('d-none');
   } else {
     state.count += 1;
     await utils.sleep(2000);
