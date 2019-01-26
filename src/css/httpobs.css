@@ -198,21 +198,16 @@ ul {
     white-space: nowrap;
 }
 
-.large-progress-bar {
+.progress.progress-lg {
     height: 44px;
     margin: 22px 0;
 }
 
-.large-progress-bar-condensed {
-    margin: 0;
-}
-
-.large-progress-bar-text {
+.progress-bar.progress-bar-lg {
     font-size: 24px;
     font-weight: 800;
     line-height: 44px;
     text-transform: uppercase;
-    width: 100%;
 }
 
 .margin-bottom {

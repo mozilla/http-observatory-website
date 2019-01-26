@@ -7,6 +7,8 @@ $red:      #d9534f !default;
 $white:    #fff    !default;
 
 $gray-base:     #000 !default;
+$gray-25: lighten($gray-base, 97.5%) !default;
+$gray-50: lighten($gray-base, 95%) !default;
 $gray-100: lighten($gray-base, 90%) !default;
 $gray-200: lighten($gray-base, 80%) !default;
 $gray-300: lighten($gray-base, 70%) !default;
@@ -36,7 +38,7 @@ $font-family-base:        $font-family-serif !default;
 $headings-font-family:    $font-family-sans-serif !default;
 $headings-font-weight:    700 !default;
 
-$popover-font-size:       1rem;
+$popover-font-size:       1rem !default;
 
 .btn,
 .navbar {
@@ -45,14 +47,30 @@ $popover-font-size:       1rem;
 
 
 // alerts
-$alert-bg-level: 0;
-$alert-border-radius: 0;
-$alert-border-width: 0;
-$alert-color-level: -10;
+$alert-bg-level: 0 !default;
+$alert-border-radius: 0 !default;
+$alert-border-width: 0 !default;
+$alert-color-level: -10 !default;
 
 // cards
-$card-spacer-y: .575rem;
-$card-spacer-x: 1.25rem;
+$card-spacer-y: .575rem !default;
+$card-spacer-x: 1.25rem !default;
 
 // inputs
 $input-placeholder-color: $gray-300 !default;
+
+// navs
+$nav-tabs-border-color: $gray-200 !default;
+$nav-tabs-link-active-bg: $blue !default;
+$nav-tabs-link-active-color: $white !default;
+.nav-tabs {
+  .nav-link.nav-item {
+    background: $gray-25;
+    border: 1px solid $gray-200;
+    margin-right: 2px;
+  }
+  .nav-link.nav-item.active {
+    border: 1px solid $blue;
+    font-weight: 700;
+  }
+}

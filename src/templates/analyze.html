@@ -9,67 +9,75 @@
         This site uses a Symantec cert issued on or after June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 63</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 70</a>. Please replace its certificate immediately.
     </div>
 
-    <!-- HTTP Observatory Scan Results -->
-    <div class="row" id="scan-results">
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#tab-http-observatory" aria-controls="tab-http-observatory" role="tab" data-toggle="tab">HTTP Observatory</a></li>
-            <li role="presentation"><a href="#tab-tlsobservatory" aria-controls="tab-tlsobservatory" role="tab" data-toggle="tab">TLS Observatory</a></li>
-            <li role="presentation"><a href="#tab-sshobservatory" aria-controls="tab-sshobservatory" role="tab" data-toggle="tab">SSH Observatory (Beta)</a></li>
-            <li role="presentation"><a href="#tab-third-party-tests" aria-controls="tab-third-party-tests" role="tab" data-toggle="tab">Third-party Tests</a></li>
-        </ul>
+    <nav>
+        <div id="nav-tab" class="nav nav-tabs" role="tablist">
+            <a class="nav-item nav-link active" id="nav-http-tab" data-toggle="tab" href="#http" role="tab" aria-controls="nav-http" aria-selected="true">HTTP Observatory</a>
+            <a class="nav-item nav-link" id="nav-tls-tab" data-toggle="tab" href="#tls" role="tab" aria-controls="nav-tls">TLS Observatory</a>
+            <a class="nav-item nav-link" id="nav-ssh-tab" data-toggle="tab" href="#ssh" role="tab" aria-controls="nav-ssh">SSH Observatory (Beta)</a>
+            <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#third-party" role="tab" aria-controls="nav-third">Third-party Tests</a>
+        </div>
+    </nav>
 
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab-http-observatory">
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="nav-http" role="tabpanel" aria-labelledby="nav-http-tab">
+            <div id="scan-progress">
+                <div class="card card-primary">
+                    <div class="card-header bg-primary text-white">
+                        <span class="h3">Scan Summary</span>
+                    </div>
 
-                <div id="scan-progress">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <span class="h3">Scan Summary</span>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-8 col-md-offset-2">
-                                <div id="scan-progress-bar" class="progress large-progress-bar">
-                                    <div id="scan-progress-bar-text" class="progress-bar progress-bar-striped active large-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
-                                        Loading Results
-                                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-8 offset-md-2">
+                            <div id="scan-progress-bar" class="progress progress-lg">
+                                <div id="scan-progress-bar-text" class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                    Loading Results
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="d-none alert alert-danger text-center" id="http-status-code-alert">
-                    This site returned an HTTP status code other than <strong>200 (OK)</strong>, which may cause its results to be inaccurate.
+            <div class="d-none alert alert-danger text-center" id="http-status-code-alert">
+                This site returned an HTTP status code other than <strong>200 (OK)</strong>, which may cause its results to be inaccurate.
+            </div>
+
+            <div id="scan-summary-row" class="row equal d-none">
+                <div class="col-md-12 col-xl-6">
+                    <%= require ('html-loader?interpolate!./analyze/http/scan-summary.html') %>
                 </div>
-
-                <div id="scan-summary-row" class="row equal d-none">
-                    <div class="col-md-6">
-                        <%= require ('html-loader?interpolate!./analyze/http-scan-summary.html') %>
-                    </div>
-                    <div class="col-md-6">
-                        <%= require ('html-loader?interpolate!./analyze/http-recommended-changes.html') %>
-                    </div>
+                <div class="col-md-12 col-xl-6">
+                    <%= require ('html-loader?interpolate!./analyze/http/recommended-changes.html') %>
                 </div>
+            </div>
 
-                <!-- HTTP Observatory test results -->
-                <%= require ('html-loader?interpolate!./analyze/http-test-scores.html') %>
+            <!-- HTTP Observatory test results -->
+            <%= require ('html-loader?interpolate!./analyze/http/test-scores.html') %>
 
-                <!-- HTTP Observatory CSP analysis -->
-                <%= require ('html-loader?interpolate!./analyze/http-csp-analysis.html') %>
+            <!-- HTTP Observatory CSP analysis -->
+            <%= require ('html-loader?interpolate!./analyze/http/csp-analysis.html') %>
 
-                <!-- HTTP Observatory cookie results -->
-                <%= require ('html-loader?interpolate!./analyze/http-cookies.html') %>
+            <!-- HTTP Observatory cookie results -->
+            <%= require ('html-loader?interpolate!./analyze/http/cookies.html') %>
 
-                <!-- HTTP Observatory host history results -->
-                <%= require ('html-loader?interpolate!./analyze/http-host-history.html') %>
+            <!-- HTTP Observatory host history results -->
+            <%= require ('html-loader?interpolate!./analyze/http/host-history.html') %>
 
-                <!-- HTTP Observatory raw header test results -->
-                <%= require ('html-loader?interpolate!./analyze/http-raw-server-headers.html') %>
+            <!-- HTTP Observatory raw header test results -->
+            <%= require ('html-loader?interpolate!./analyze/http/raw-server-headers.html') %>
+        </div>
+    </div>
+
+    <!-- HTTP Observatory Scan Results -->
+    <div class="row">
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab-http">
+
+
             </div>
 
         <!-- TLS Observatory -->
-        <div role="tabpanel" class="tab-pane" id="tab-tlsobservatory">
+        <div role="tabpanel" class="tab-pane" id="tab-tls">
             <div id="tlsobservatory">
 
                 <div class="d-none alert alert-danger text-center" id="tls-observatory-invalid-cert-warning">
@@ -82,8 +90,8 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="progress large-progress-bar large-progress-bar-condensed" id="tlsobservatory-summary-progress-bar">
-                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="tlsobservatory-summary-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                        <div class="progress progress-lg" id="tlsobservatory-summary-progress-bar">
+                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="tlsobservatory-summary-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                 PENDING (This may take several minutes)
                             </div>
                         </div>
@@ -156,7 +164,7 @@
                                 <tr>
                                     <td>Common name:</td>
                                     <td id="tlsobservatory-certificate-cn"></td>
-                                </tr>
+                               </tr>
                                 <tr>
                                     <td>Alternative Names:</td>
                                     <td id="tlsobservatory-certificate-alt_names"></td>
@@ -291,7 +299,7 @@
         </div>
 
         <!-- SSH Observatory -->
-        <div role="tabpanel" class="tab-pane" id="tab-sshobservatory">
+        <div role="tabpanel" class="tab-pane" id="tab-ssh">
             <div id="sshobservatory">
 
                 <div class="panel panel-primary summary" id="sshobservatory-summary">
@@ -313,8 +321,8 @@
                           <p>Many systems are configured with firewalls that block SSH access. To successfully scan with the SSH Observatory, access must be granted to Mozilla's scanning system.</p>
                         </div>
 
-                        <div class="progress large-progress-bar large-progress-bar-condensed d-none" id="sshobservatory-progress-bar">
-                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="sshobservatory-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                        <div class="progress progress-lg d-none" id="sshobservatory-progress-bar">
+                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="sshobservatory-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                 PENDING (This may take several minutes)
                             </div>
                         </div>
@@ -425,7 +433,7 @@
             </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="tab-third-party-tests">
+        <div role="tabpanel" class="tab-pane" id="tab-third">
             <div id="third-party-tests">
                 <!-- SSL Labs -->
                 <div class="panel panel-primary summary" id="ssllabs-summary">
@@ -433,8 +441,8 @@
                         <span class="h3">ssllabs.com</span>
                     </div>
                     <div class="panel-body">
-                        <div class="progress large-progress-bar large-progress-bar-condensed" id="ssllabs-progress-bar">
-                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="ssllabs-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                        <div class="progress progress-lg" id="ssllabs-progress-bar">
+                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="ssllabs-progress-bar-text" role="progressbar" aria-valuenow="0" aria-valuemin="100" aria-valuemax="100">
                                 PENDING (This may take several minutes)
                             </div>
                         </div>
@@ -474,8 +482,8 @@
                         <span class="h3">htbridge.com</span>
                     </div>
                     <div class="panel-body">
-                        <div class="progress large-progress-bar large-progress-bar-condensed" id="htbridge-progress-bar">
-                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="htbridge-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                        <div class="progress progress-lg" id="htbridge-progress-bar">
+                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="htbridge-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                 PENDING (This may take several minutes)
                             </div>
                         </div>
@@ -577,8 +585,8 @@
                         <span class="h3">tls.imirhil.fr</span>
                     </div>
                     <div class="panel-body">
-                        <div class="progress large-progress-bar large-progress-bar-condensed" id="tlsimirhilfr-progress-bar">
-                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="tlsimirhilfr-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                        <div class="progress progress-lg" id="tlsimirhilfr-progress-bar">
+                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated" id="tlsimirhilfr-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                 PENDING (This may take several minutes)
                             </div>
                         </div>
@@ -635,8 +643,8 @@
                         <span class="h3">securityheaders.com</span>
                     </div>
                     <div class="panel-body">
-                        <div class="progress large-progress-bar large-progress-bar-condensed" id="securityheaders-progress-bar">
-                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="securityheaders-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                        <div class="progress progress-lg" id="securityheaders-progress-bar">
+                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="securityheaders-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                 PENDING
                             </div>
                         </div>
@@ -672,8 +680,8 @@
                         <span class="h3">hstspreload.org</span>
                     </div>
                     <div class="panel-body">
-                        <div class="progress large-progress-bar large-progress-bar-condensed" id="hstspreload-progress-bar">
-                            <div class="progress-bar progress-bar-striped active large-progress-bar-text" id="hstspreload-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="100" aria-valuemax="100">
+                        <div class="progress progress-lg" id="hstspreload-progress-bar">
+                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="hstspreload-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                 PENDING
                             </div>
                         </div>
