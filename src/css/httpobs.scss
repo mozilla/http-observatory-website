@@ -1,0 +1,18 @@
+// eventually httpobs.css should go away, but let's start by moving things over slowly
+.octicon {
+  &.octicon-check {
+    color: $green;
+  }
+
+  &.octicon-dash {
+    color: $gray-500;
+  }
+
+  &.octicon-question {
+    color: $gray-600;
+  }
+
+  &.octicon-x {
+    color: $red;
+  }
+}

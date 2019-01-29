@@ -12,6 +12,8 @@ import statistics from './statistics.js';
 import thirdParty from './third-party/third-party.js';
 import utils from './utils.js';
 
+
+// TODO: make this a heck of a ton smaller
 const Observatory = {
   state: {
     count: 0
@@ -148,6 +150,11 @@ const Observatory = {
         });
       }
     }
+
+    // initialize all the octicons, ie, data-octicon="question" inserts an SVG for the question octicon
+    $('[data-octicon').each((i, node) => {
+      node.append(utils.getOcticon(node.dataset['octicon']));
+    });
 
     // Show the redirection banner, if you're not on the production site
     if (document.domain !== constants.domain) {

@@ -69,7 +69,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(
-      ['build/*.*'],
+      ['build/*/*/*', 'build/*/*', 'build/*'],
       {
         root: path.resolve(__dirname, '..'),
         verbose: true
@@ -89,15 +89,6 @@ module.exports = {
         to: 'images/',
         flatten: true
       }
-      // {
-      //   from: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
-      //   to: 'popup/',
-      // },
-      // {
-      //   from: 'node_modules/octicons/build/svg/*.svg',
-      //   to: 'popup/octicons',
-      //   flatten: true
-      // }
     ]),
     new LicenseWebpackPlugin(
       {

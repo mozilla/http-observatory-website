@@ -1,5 +1,6 @@
 import { chain, forEach, includes, isEmpty, startsWith } from 'lodash';
 import moment from 'moment';
+import octicons from 'octicons';
 
 import constants from './constants.js';
 
@@ -334,11 +335,23 @@ const deleteCookie = name => {
 };
 
 
+const getOcticon = (icon, width = 24, height = 24) => {
+  const template = document.createElement('template');
+  template.innerHTML = octicons[icon].toSVG({
+    width,
+    height,
+  }).trim();
+  
+  return template.content.firstChild;
+};
+
+
 export default {
   average,
   deleteCookie,
   errorResults,
   getQueryParameter,
+  getOcticon,
   getTarget,
   insertGrade,
   insertResults,

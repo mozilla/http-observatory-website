@@ -68,10 +68,10 @@ ul {
         min-width: 360px;
     }
 
-    #scan-summary {
+/*    #scan-summary {
         width: 95%;
     }
-
+*/
 }
 
 #results-container {
@@ -282,7 +282,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* test name */
-#test-scores tr td:nth-child(1),
+/* #test-scores tr td:nth-child(1), */
 #server-headers-table tr td:nth-child(1),
 #tlsobservatory-certificate-table tr td:nth-child(1),
 #tlsobservatory-misc-table tr td:nth-child(1),
@@ -294,7 +294,7 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* pass fail */
-#test-scores tr td:nth-child(2),
+/* #test-scores tr td:nth-child(2), */
 #csp-analysis tr td:nth-child(2),
 #csp-analysis tr td:nth-child(3) {
     margin-right: 3em;
@@ -314,13 +314,17 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* explanations */
+/*
 #test-scores tr td:nth-child(4) {
     width: 100%;
 }
+*/
 
+/*
 #test-scores tr td {
     vertical-align: middle;
 }
+*/
 
 /* change how code looks inside the test scores */
 #test-scores code, #csp-analysis code {
@@ -341,11 +345,13 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* score modifier */
+/*
 #test-scores tr td:nth-child(3) {
     padding-right: 1.5em;
     text-align: right;
     white-space: nowrap;
 }
+*/
 
 /* site history */
 #host-history-table tbody tr td:nth-child(2),

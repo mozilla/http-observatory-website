@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { forEach, includes, last, size } from 'lodash';
 import moment from 'moment';
+import Tablesaw from '../../../node_modules/tablesaw/dist/tablesaw.jquery.js'
 
 import constants from '../constants.js';
 import utils from '../utils.js';
@@ -195,8 +196,9 @@ const insert = async (scan, results) => {
     var score = result.score_modifier; // score modifier
 
     if (score > 0) { score = '+' + score.toString(); }
+    console.log('here is an octicons', utils.getOcticon('x'));
 
-    $('#tests-' + result.name + '-pass').toggleClass(result.pass ? 'glyphicon-ok' : 'glyphicon-remove');
+    $('#tests-' + result.name + '-pass').append(result.pass ? utils.getOcticon('check') : utils.getOcticon('x'));
     $('#tests-' + result.name + '-score').text(score);
     $('#tests-' + result.name + '-score-description').text(result.score_description);
 
@@ -222,7 +224,7 @@ const insert = async (scan, results) => {
     'hpkp-invalid-cert'],
       results['public-key-pinning'].result)) {
     $('#tests-public-key-pinning-score-description').text($('#tests-public-key-pinning-score-description').text() + ' (optional)');
-    $('#tests-public-key-pinning-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+    $('#tests-public-key-pinning-pass').empty().append(utils.getOcticon('dash'));
   }
 
   // same for Referrer Policy
@@ -236,7 +238,7 @@ const insert = async (scan, results) => {
     if (includes(['referrer-policy-not-implemented',
       'referrer-policy-no-referrer-when-downgrade'],
         results['referrer-policy'].result)) {
-      $('#tests-referrer-policy-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+      $('#tests-referrer-policy-pass').empty().append(utils.getOcticon('dash'));
     }
   }
 
@@ -245,12 +247,12 @@ const insert = async (scan, results) => {
     'sri-not-implemented-but-no-scripts-loaded',
     'sri-not-implemented-but-all-scripts-loaded-from-secure-origin'],
       results['subresource-integrity'].result)) {
-    $('#tests-subresource-integrity-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+    $('#tests-subresource-integrity-pass').empty().append(utils.getOcticon('dash'));
   }
 
   // cookies gets the dash if they're not detected
   if (results.cookies.result === 'cookies-not-found') {
-    $('#tests-cookies-pass').removeClass('glyphicon-ok').addClass('glyphicon-minus');
+    $('#tests-cookies-pass').empty().append(utils.getOcticon('dash'));
   }
 
   // insert in all the cookie values
@@ -377,6 +379,9 @@ const insert = async (scan, results) => {
     $(this).attr('aria-label', glyphiconAriaLabels[glyphClass]);
   });
 
+  // initialize the tablesaws
+  Tablesaw.init($('#test-scores-table'));
+
   // show the scan results and remove the progress bar
   $('#scan-progress').remove();
   $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('d-none');
@@ -411,7 +416,7 @@ const insertHostHistory = async () => {
   utils.tableify(rows, 'host-history-table');
 
   // unhide the host history section
-  $('#host-history').removeClass('d-none');
+  $('#host-history').addClass('d-md-block');
 };
 
 

@@ -29,6 +29,16 @@ $theme-color-interval:     10% !default;
 $yiq-contrasted-threshold: 220 !default;
 
 
+// grid breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+
 // typography
 $font-family-sans-serif:  "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
@@ -45,6 +55,9 @@ $popover-font-size:       1rem !default;
   font-family: $font-family-sans-serif;
 }
 
+//
+// Components
+//
 
 // alerts
 $alert-bg-level: 0 !default;
@@ -72,5 +85,50 @@ $nav-tabs-link-active-color: $white !default;
   .nav-link.nav-item.active {
     border: 1px solid $blue;
     font-weight: 700;
+  }
+}
+
+// tables
+$table-border-color: $gray-200 !default;
+
+
+//
+// Utilities
+//
+@media (min-width: map-get($grid-breakpoints, 'xs')) {
+  .d-xs-none {
+    display: none !important;
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, 'lg')) {
+  .tablesaw-hideable {
+    display: table-cell !important;
+  }
+
+  .tablesaw-nowrap {
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, 'lg')) {
+  .tablesaw-hideable {
+    display: none !important;
+  }
+}
+
+
+//
+// Tablesaw
+//
+@media (min-width: 39.9375em) {
+  .tablesaw-center {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 39.9375em) {
+  .tablesaw tr:not(:last-child):not(:first-child) {
+    border-bottom: solid 2px $gray-600;
   }
 }
