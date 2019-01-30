@@ -196,7 +196,6 @@ const insert = async (scan, results) => {
     var score = result.score_modifier; // score modifier
 
     if (score > 0) { score = '+' + score.toString(); }
-    console.log('here is an octicons', utils.getOcticon('x'));
 
     $('#tests-' + result.name + '-pass').append(result.pass ? utils.getOcticon('check') : utils.getOcticon('x'));
     $('#tests-' + result.name + '-score').text(score);
@@ -361,11 +360,11 @@ const insert = async (scan, results) => {
       }
 
       if (value === true) {
-        $(id).addClass('glyphicon-ok');
+        $(id).empty().append(utils.getOcticon('check'));
       } else if (value === false && directive !== 'strictDynamic') {
-        $(id).addClass('glyphicon-remove');
+        $(id).empty().append(utils.getOcticon('x'));
       } else {
-        $(id).addClass('glyphicon-minus');
+        $(id).empty().append(utils.getOcticon('dash'));
       }
 
     });
@@ -379,12 +378,14 @@ const insert = async (scan, results) => {
     $(this).attr('aria-label', glyphiconAriaLabels[glyphClass]);
   });
 
-  // initialize the tablesaws
+  // initialize the tablesaws csp-analysis-table
+  Tablesaw.init($('#csp-analysis-table'));
+  Tablesaw.init($('#server-headers-table'));
   Tablesaw.init($('#test-scores-table'));
 
   // show the scan results and remove the progress bar
   $('#scan-progress').remove();
-  $('#scan-summary-row, #test-scores, #host-history, #server-headers').removeClass('d-none');
+  $('#http-results').removeClass('d-none');
   if (size(results['cookies']['output']['data']) > 0) {
     $('#cookies').removeClass('d-none');
   }

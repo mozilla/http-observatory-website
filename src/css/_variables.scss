@@ -128,7 +128,10 @@ $table-border-color: $gray-200 !default;
 }
 
 @media (max-width: 39.9375em) {
-  .tablesaw tr:not(:last-child):not(:first-child) {
+  .tablesaw tbody tr {
     border-bottom: solid 2px $gray-600;
+  }
+  .tablesaw tbody tr td span.tablesaw-cell-content {
+    font-weight: 400;
   }
 }

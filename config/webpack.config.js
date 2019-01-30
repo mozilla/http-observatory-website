@@ -1,7 +1,6 @@
 const BrowserSyncWebpackPlugin = require('browser-sync-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const LicenseWebpackPlugin = require('license-webpack-plugin').LicenseWebpackPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
@@ -90,12 +89,6 @@ module.exports = {
         flatten: true
       }
     ]),
-    new LicenseWebpackPlugin(
-      {
-        pattern: /.*/,
-        outputFilename: '[hash].[name].license.txt'
-      }
-    ),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
       $: 'jquery'   

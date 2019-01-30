@@ -1,12 +1,14 @@
 <!-- HTTP Observatory raw header test results -->
-<div class="card d-none mt-4" id="server-headers">
+<div class="card mt-4" id="server-headers">
     <div class="card-header bg-primary text-center text-md-left text-white">
         <span class="h3">Raw Server Headers</span>
     </div>
-    <div class="card-body" id="server-headers-card-body">
-        <div class="table-responsive">
-            <table class="table table-striped" id="server-headers-table">
-            </table>
-        </div>
+    <div class="card-body pb-0" id="server-headers-card-body">
+        <table class="table tablesaw table-striped" id="server-headers-table" data-tablesaw-mode="stack" data-tablesaw-hide-empty>
+            <thead>
+                <th>Header</th>
+                <th>Value</th>
+            </thead>
+        </table>
     </div>
 </div>
