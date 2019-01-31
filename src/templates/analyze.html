@@ -10,10 +10,10 @@
     </div>
 
     <nav>
-        <div id="nav-tab" class="nav nav-tabs flex-column flex-lg-row" role="tablist">
+        <div id="nav-tab" class="nav nav-tabs flex-column flex-md-row" role="tablist">
             <a class="nav-item nav-link active" id="nav-http-tab" data-toggle="tab" href="#http" role="tab" aria-controls="nav-http" aria-selected="true">HTTP Observatory</a>
             <a class="nav-item nav-link" id="nav-tls-tab" data-toggle="tab" href="#tls" role="tab" aria-controls="nav-tls">TLS Observatory</a>
-            <a class="nav-item nav-link" id="nav-ssh-tab" data-toggle="tab" href="#ssh" role="tab" aria-controls="nav-ssh">SSH Observatory (Beta)</a>
+            <a class="nav-item nav-link" id="nav-ssh-tab" data-toggle="tab" href="#ssh" role="tab" aria-controls="nav-ssh">SSH Observatory</a>
             <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#third-party" role="tab" aria-controls="nav-third">Third-party Tests</a>
         </div>
     </nav>
@@ -28,7 +28,7 @@
 
                     <div class="row">
                         <div class="col-xs-12 col-md-8 offset-md-2">
-                            <div id="scan-progress-bar" class="progress progress-lg mx-3">
+                            <div id="scan-progress-bar" class="progress progress-lg mx-xs-3 mx-md-0">
                                 <div id="scan-progress-bar-text" class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                                     Loading Results
                                 </div>
@@ -51,6 +51,9 @@
                         <%= require ('html-loader?interpolate!./analyze/http/recommended-changes.html') %>
                     </div>
                 </div>
+
+                <!-- this is a spacing div because recommendation uses h-100, which mucks up padding -->
+                <div class="d-lg-none pb-4"></div>
 
                 <!-- HTTP Observatory test results -->
                 <%= require ('html-loader?interpolate!./analyze/http/test-scores.html') %>
