@@ -1,0 +1,22 @@
+<!-- TLS Observatory protocol panel -->
+<div class="card card-primary mt-4" id="tls-ciphers">
+    <div class="card-header bg-primary text-center text-md-left text-white">
+        <span class="h3">Cipher Suites</span>
+    </div>
+    <div class="card-body pb-0 pt-1">
+        <div class="table-responsive">
+            <table class="table tablesaw table-striped" id="tls-ciphers-table" data-tablesaw-mode="stack" data-tablesaw-hide-empty>
+                <thead>
+                    <tr>
+                        <th><span class="d-none d-md-inline">Cipher Suite</span><span class="d-md-none">Cipher</span></th>
+                        <th><abbr title="Code Points" data-toggle="popover" data-content="Cipher suite names can vary between implementation. Code points are a standardized set of numbers that allow you to refer to a specific cipher suite regardless of implementation.">Code</abbr></th>
+                        <th><span class="d-none d-md-inline">Key size</span><span class="d-md-none">Size</span></th>
+                        <th><abbr title="Authenticated Encryption with Associated Data" data-toggle="popover" data-content="AEADs are a new way of using cryptographic ciphers that provide additional security guarantees while being less prone to implementation mistakes.">AEAD</abbr></th>
+                        <th><abbr title="Forward Secrecy" data-toggle="popover" data-content="Forward secrecy protects your past communications from being decrypted if the server's private key is ever compromised.">PFS</abbr></th>
+                        <th>Protocols</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

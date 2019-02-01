@@ -1,0 +1,18 @@
+.octicon {
+  &.octicon-check {
+    color: $green;
+  }
+
+  &.octicon-dash {
+    color: $gray-500;
+  }
+
+  &.octicon-info,
+  &.octicon-question {
+    color: $gray-600;
+  }
+
+  &.octicon-x {
+    color: $red;
+  }
+}

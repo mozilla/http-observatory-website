@@ -72,18 +72,19 @@ const insert = async () => {
 
   // insert the recommendations table if need be
   if (state.output.compliance_recommendations.length > 0) {
-    utils.tableify(state.output.compliance_recommendations, 'sshobservatory-recommendations-table');
+    utils.tableify(state.output.compliance_recommendations, 'ssh-recommendations-table');
   } else {
-    $('#sshobservatory-no-recommendations').removeClass('d-none');
+    $('#ssh-no-recommendations').removeClass('d-none');
   }
 
   // link to the JSON results
-  $('#sshobservatory-uuid').attr('href', constants.urls.ssh + 'scan/results?uuid=' + state.uuid);
+  $('#ssh-uuid').attr('href', constants.urls.ssh + 'scan/results?uuid=' + state.uuid);
 
-  utils.insertGrade(results.compliance.grade, 'sshobservatory');
-  utils.insertResults(state.output, 'sshobservatory');
-  utils.showResults('sshobservatory');
-  $('#sshobservatory-misc, #sshobservatory-recommendations, #sshobservatory-version').removeClass('d-none');
+  utils.insertGrade(results.compliance.grade, 'ssh');
+  utils.insertResults(state.output, 'ssh');
+  utils.showResults('ssh');
+  $('#ssh-progress-bar-container').remove();
+  $('#ssh-results').removeClass('d-none');
 };
 
 
@@ -93,21 +94,21 @@ export const load = async () => {
   const target = utils.getTarget();
 
   // remove the initiate scan button and show the status bar
-  $('#sshobservatory-scan-initiator').slideUp();
-  $('#sshobservatory-progress-bar').removeClass('d-none');
+  $('#ssh-scan-initiator').slideUp();
+  $('#ssh-progress-bar-container').removeClass('d-none');
 
   // if we haven't initiated a scan
   if (state.uuid === undefined) {
     $.ajax({
       method: 'POST',
-      error: function e() { utils.errorResults('Unable to connect', 'sshobservatory'); },
+      error: function e() { utils.errorResults('Unable to connect', 'ssh'); },
       success: loadSuccessCallbackInitialize,
       url: constants.urls.ssh + 'scan?target=' + target
     });
   } else {  // scan initiated, waiting on results
     $.ajax({
       method: 'GET',
-      error: function e() { utils.errorResults('Scan failed', 'sshobservatory'); },
+      error: function e() { utils.errorResults('Scan failed', 'ssh'); },
       success: loadSuccessCallbackAwaitingResults,
       url: constants.urls.ssh + 'scan/results?uuid=' + state.uuid
     });
@@ -117,7 +118,7 @@ export const load = async () => {
 
 const loadSuccessCallbackInitialize = async (data) => {
   if (data.uuid === undefined) {
-    utils.errorResults('Unknown error', 'sshobservatory');
+    utils.errorResults('Unknown error', 'ssh');
   } else {
     state.uuid = data.uuid;
     await utils.sleep(1500);
@@ -132,8 +133,8 @@ const loadSuccessCallbackAwaitingResults = async (data) => {
     state.results = data;
     insert();
   } else if (state.count >= 15 || state.status === 'ERRORED') { // if we haven't haven't gotten results for 30 seconds, let's give up
-    $('#sshobservatory-progress-bar').addClass('d-none');
-    $('#sshobservatory-scanner-alert').removeClass('d-none');
+    $('#ssh-progress-bar-container').remove();
+    $('#ssh-scanner-alert').removeClass('d-none');
   } else {
     state.count += 1;
     await utils.sleep(2000);

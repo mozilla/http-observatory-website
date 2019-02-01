@@ -1,0 +1,63 @@
+<!-- TLS Observatory certificate panel -->
+<div class="card card-primary mt-4" id="tls-certificate">
+    <div class="card-header bg-primary text-center text-md-left text-white">
+        <span class="h3 d-none d-md-inline">Certificate Information</span>
+        <span class="h3 d-md-none">Certificate</span>
+    </div>
+    <div class="card-body pb-0">
+        <div class="table-responsive">
+            <table class="table tablesaw table-striped scan-summary-table" id="tls-certificate-table" data-tablesaw-mode="stack" data-tablesaw-hide-empty data-tablesaw-no-labels>
+                <thead class="d-none">
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Common name:</td>
+                        <td id="tls-certificate-cn"></td>
+                    </tr>
+                    <tr>
+                        <td>Alternative Names:</td>
+                        <td id="tls-certificate-alt_names"></td>
+                    </tr>
+                    <tr class="tablesaw-hideable">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>First Observed:</td>
+                        <td><span id="tls-certificate-first_seen"></span><span class="deemphasize"> (certificate #<span id="tls-certificate-cert_id"></span>)</span></td>
+                    </tr>
+                    <tr class="tablesaw-hideable">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Valid From:</td>
+                        <td id="tls-certificate-valid_from"></td>
+                    </tr>
+                    <tr>
+                        <td>Valid To:</td>
+                        <td id="tls-certificate-valid_to"></td>
+                    </tr>
+                    <tr class="tablesaw-hideable">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Key:</td>
+                        <td id="tls-certificate-key"></td>
+                    </tr>
+                    <tr>
+                        <td>Issuer:</td>
+                        <td id="tls-certificate-issuer"></td>
+                    </tr>
+                    <tr>
+                        <td>Signature Algorithm:</td>
+                        <td id="tls-certificate-sig_alg"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

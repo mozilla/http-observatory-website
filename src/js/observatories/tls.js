@@ -1,4 +1,5 @@
 import { capitalize, forEach, includes, map, round, without } from 'lodash';
+import Tablesaw from '../../../node_modules/tablesaw/dist/tablesaw.jquery.js'
 
 import $ from 'jquery';
 import constants from '../constants.js';
@@ -128,7 +129,7 @@ const insert = async () => {
     // get the code point
     point = suite.code.toString(16).toUpperCase();
     point = '0'.repeat(4 - point.length) + point;  // padd with 0s
-    point = '0x' + point[1] + point[0] + ',0x' + point[2] + point[3];  // wtf endianness
+    point = '0x' + point[1] + point[0] + ' 0x' + point[2] + point[3];  // wtf endianness
 
     // for each supported protocol (TLS 1.0, etc.)
     forEach(suite.protocols, function protocols(protocol) {
@@ -146,7 +147,7 @@ const insert = async () => {
     protos = protos.join(', ');
 
     // protocol name, perfect forward secrecy, protocols
-    cipherTable.push([(i + 1).toString() + '.', cipher, point, keySize, aead, pfs, protos]);
+    cipherTable.push([cipher, point, keySize, aead, pfs, protos]);
   });
 
   // let's load up the misc object
@@ -159,7 +160,7 @@ const insert = async () => {
 
   // remove the oldest client row if it's undefined
   if (state.output.misc.oldest_clients === undefined) {
-    $('#tlsobservatory-misc-oldest_clients-row').remove();
+    $('#tls-misc-oldest_clients-row').remove();
   }
 
   // And then the suggestions object
@@ -170,25 +171,25 @@ const insert = async () => {
 
   // we only need the intermediate suggestions if it's not already intermediate
   if (mozillaConfigurationLevel === 'Intermediate') {
-    $('#tlsobservatory-suggestions-intermediate-row').remove();
+    $('#tls-suggestions-intermediate-row').remove();
   } else if (mozillaConfigurationLevel === 'Modern') {  // no need for suggestions at all {
-    $('#tlsobservatory-suggestions').remove();
+    $('#tls-suggestions').remove();
   }
 
   // insert all the results
-  utils.insertGrade(mozillaConfigurationLevel, 'tlsobservatory-summary');
-  utils.insertResults(state.output.summary, 'tlsobservatory-summary');
-  utils.insertResults(state.output.certificate, 'tlsobservatory-certificate');
-  utils.insertResults(state.output.misc, 'tlsobservatory-misc');
-  utils.insertResults(state.output.suggestions, 'tlsobservatory-suggestions');
-  utils.tableify(cipherTable, 'tlsobservatory-ciphers-table');
+  utils.insertGrade(mozillaConfigurationLevel, 'tls-summary');
+  utils.insertResults(state.output.summary, 'tls-summary');
+  utils.insertResults(state.output.certificate, 'tls-certificate');
+  utils.insertResults(state.output.misc, 'tls-misc');
+  utils.insertResults(state.output.suggestions, 'tls-suggestions');
+  utils.tableify(cipherTable, 'tls-ciphers-table');
 
   // clean up the protocol support table
-  $('#tlsobservatory-ciphers-table').find('td').each(function f() {
+  $('#tls-ciphers-table').find('td').each(function f() {
     if ($(this).text() === 'Yes') {
-      $(this).addClass('glyphicon glyphicon-ok').text('');
+      $(this).empty().append(utils.getOcticon('check'));
     } else if ($(this).text() === 'No') {
-      $(this).addClass('glyphicon glyphicon-remove').text('');
+      $(this).empty().append(utils.getOcticon('x'));
     }
   });
 
@@ -199,9 +200,9 @@ const insert = async () => {
          parseInt(cert.validity.notBefore.split('-')[0]) < 2016)
       )
   {
-    $('#tlsobservatory-symantec-distrust-warning-june-2016').removeClass('d-none');
+    $('#tls-symantec-distrust-warning-june-2016').removeClass('d-none');
   } else if (state.analyzers.symantecDistrust.isDistrusted) {
-    $('#tlsobservatory-symantec-distrust-warning').removeClass('d-none');
+    $('#tls-symantec-distrust-warning').removeClass('d-none');
   }
 
   // similarly, show the warning if the certificate isn't trusted
@@ -210,9 +211,15 @@ const insert = async () => {
     $('a[href="#tab-tlsobservatory"]').addClass('tabs-danger');
   }
 
+  // initialize the tablesaws
+  Tablesaw.init($('#tls-certificate-table'));
+  Tablesaw.init($('#tls-ciphers-table'));
+  Tablesaw.init($('#tls-misc'));
+
   // And display the TLS results table
-  utils.showResults('tlsobservatory-summary');
-  $('#tlsobservatory-certificate, #tlsobservatory-ciphers, #tlsobservatory-misc, #tlsobservatory-suggestions').removeClass('d-none');
+  // utils.showResults('tls-summary');
+  $('#tls-progress').remove();
+  $('#tls-results').removeClass('d-none');
 };
 
 
@@ -226,7 +233,7 @@ const load = async (rescan, initiateScanOnly) => {
   // Increment the connection count; if we've been trying too long
   state.count += 1;
   if (state.count >= constants.maxQueriesBeforeTimeout) {
-    utils.errorResults('Scanner unavailable', 'tlsobservatory-summary');
+    utils.errorResults('Scanner unavailable', 'tls-summary');
     return;
   }
 
@@ -241,7 +248,7 @@ const load = async (rescan, initiateScanOnly) => {
       initiateScanOnly: initiateScanOnly,
       dataType: 'json',
       method: 'POST',
-      error: () => { utils.errorResults('Scanner unavailable', 'tlsobservatory-summary'); },
+      error: () => { utils.errorResults('Scanner unavailable', 'tls-summary'); },
       success: function s(data) {
         state.scan_id = data.scan_id;
 
@@ -264,7 +271,7 @@ const load = async (rescan, initiateScanOnly) => {
       },
       dataType: 'json',
       method: 'GET',
-      error: () => { utils.errorResults('Scanner unavailable', 'tlsobservatory-summary'); },
+      error: () => { utils.errorResults('Scanner unavailable', 'tls-summary'); },
       success: async (data) => {
         // not yet completed
         if (data.completion_perc !== 100) {
@@ -281,13 +288,13 @@ const load = async (rescan, initiateScanOnly) => {
   } else {
     // stop here and error out if there is no TLS
     if (state.results.has_tls === false) {
-      utils.errorResults('Site does not support HTTPS', 'tlsobservatory-summary');
+      utils.errorResults('Site does not support HTTPS', 'tls-summary');
       return;
     }
 
     // set the certificate URL in the output summary
     state.certificate_url = utils.linkify(constants.urls.tls + 'certificate?id=' + state.results.cert_id);
-    state.explainer_url = utils.linkify(CERTIFICATE_EXPLAINER_URL + '?id=' + state.results.cert_id);
+    state.explainer_url = utils.linkify(CERTIFICATE_EXPLAINER_URL + '?id=' + state.results.cert_id, state.results.cert_id);
 
     $.ajax({
       data: {
@@ -295,7 +302,7 @@ const load = async (rescan, initiateScanOnly) => {
       },
       dataType: 'json',
       method: 'GET',
-      error: () => { utils.errorResults('Scanner unavailable', 'tlsobservatory-summary'); },
+      error: () => { utils.errorResults('Scanner unavailable', 'tls-summary'); },
       success: data => {
         state.certificate = data;
         insert();  // put things into the page

@@ -1,42 +1,28 @@
 <%= require ('html-loader?interpolate!./partials/header.html') %>
 
     <!-- Symantec certificate errors moved to the very top level -->
-    <div class="d-none alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning-june-2016">
+    <div class="d-none alert alert-danger text-center row" id="tls-symantec-distrust-warning-june-2016">
         This site uses a Symantec cert issued before June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 60</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 66</a>. Please replace its certificate immediately.
     </div>
 
-    <div class="d-none alert alert-danger text-center row" id="tlsobservatory-symantec-distrust-warning">
+    <div class="d-none alert alert-danger text-center row" id="tls-symantec-distrust-warning">
         This site uses a Symantec cert issued on or after June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 63</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 70</a>. Please replace its certificate immediately.
     </div>
 
     <nav>
         <div id="nav-tab" class="nav nav-tabs flex-column flex-md-row" role="tablist">
-            <a class="nav-item nav-link active" id="nav-http-tab" data-toggle="tab" href="#http" role="tab" aria-controls="nav-http" aria-selected="true">HTTP Observatory</a>
-            <a class="nav-item nav-link" id="nav-tls-tab" data-toggle="tab" href="#tls" role="tab" aria-controls="nav-tls">TLS Observatory</a>
-            <a class="nav-item nav-link" id="nav-ssh-tab" data-toggle="tab" href="#ssh" role="tab" aria-controls="nav-ssh">SSH Observatory</a>
-            <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#third-party" role="tab" aria-controls="nav-third">Third-party Tests</a>
+            <a class="nav-item nav-link active" id="nav-http-tab" href="#http" data-toggle="tab" data-target="#http-tab" role="tab" aria-controls="nav-http" aria-selected="true">HTTP Observatory</a>
+            <a class="nav-item nav-link" id="nav-tls-tab" href="#tls" data-toggle="tab" data-target="#tls-tab" role="tab" aria-controls="nav-tls">TLS Observatory</a>
+            <a class="nav-item nav-link" id="nav-ssh-tab" href="#ssh" data-toggle="tab" data-target="#ssh-tab" role="tab" aria-controls="nav-ssh">SSH Observatory</a>
+            <a class="nav-item nav-link" id="nav-third-tab" href="#third-party" data-toggle="tab" data-target="#third-party-tab" role="tab" aria-controls="nav-third">Third-party Tests</a>
         </div>
     </nav>
 
     <div class="tab-content">
-        <div class="tab-pane fade show active" id="nav-http" role="tabpanel" aria-labelledby="nav-http-tab">
-            <div id="scan-progress">
-                <div class="card card-primary">
-                    <div class="card-header bg-primary text-white">
-                        <span class="h3">Scan Summary</span>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-12 col-md-8 offset-md-2">
-                            <div id="scan-progress-bar" class="progress progress-lg mx-xs-3 mx-md-0">
-                                <div id="scan-progress-bar-text" class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                    Loading Results
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- HTTP Observatory -->
+        <div class="tab-pane active" id="http-tab" role="tabpanel" aria-labelledby="nav-http-tab">
+            <!-- progress bar -->
+            <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'http'}) %>
 
             <div class="d-none alert alert-danger text-center" id="http-status-code-alert">
                 This site returned an HTTP status code other than <strong>200 (OK)</strong>, which may cause its results to be inaccurate.
@@ -45,10 +31,10 @@
             <div class="d-none" id="http-results">
                 <div id="scan-summary-row" class="row">
                     <div class="col-xs-12 col-lg-6">
-                        <%= require ('html-loader?interpolate!./analyze/http/scan-summary.html') %>
+                        <%= require ('html-loader!./analyze/http/scan-summary.html') %>
                     </div>
                     <div class="col-xs-12 col-lg-6">
-                        <%= require ('html-loader?interpolate!./analyze/http/recommended-changes.html') %>
+                        <%= require ('html-loader!./analyze/http/recommended-changes.html') %>
                     </div>
                 </div>
 
@@ -56,678 +42,108 @@
                 <div class="d-lg-none pb-4"></div>
 
                 <!-- HTTP Observatory test results -->
-                <%= require ('html-loader?interpolate!./analyze/http/test-scores.html') %>
+                <%= require ('html-loader!./analyze/http/test-scores.html') %>
 
                 <!-- HTTP Observatory CSP analysis -->
-                <%= require ('html-loader?interpolate!./analyze/http/csp-analysis.html') %>
+                <%= require ('html-loader!./analyze/http/csp-analysis.html') %>
 
                 <!-- HTTP Observatory cookie results -->
-                <%= require ('html-loader?interpolate!./analyze/http/cookies.html') %>
+                <%= require ('html-loader!./analyze/http/cookies.html') %>
 
                 <!-- HTTP Observatory grade history results -->
-                <%= require ('html-loader?interpolate!./analyze/http/grade-history.html') %>
+                <%= require ('html-loader!./analyze/http/grade-history.html') %>
 
                 <!-- HTTP Observatory raw header test results -->
-                <%= require ('html-loader?interpolate!./analyze/http/raw-server-headers.html') %>
+                <%= require ('html-loader!./analyze/http/raw-server-headers.html') %>
             </div>
         </div>
-    </div>
-
-    <!-- HTTP Observatory Scan Results -->
-    <div class="row">
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab-http">
-
-
-            </div>
 
         <!-- TLS Observatory -->
-        <div role="tabpanel" class="tab-pane" id="tab-tls">
-            <div id="tlsobservatory">
+        <div class="tab-pane" id="tls-tab" role="tabpanel" aria-labelled-by="nav-tls-tab">
+            <!-- progress bar -->
+            <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'tls'}) %>
 
+            <div class="d-none" id="tls-results">
+                <!-- invalid cert warning panel -->
                 <div class="d-none alert alert-danger text-center" id="tls-observatory-invalid-cert-warning">
                     This site uses an <strong>untrusted</strong> or <strong>invalid certificate</strong>. The following results ignore this error.
                 </div>
 
-                <div class="panel panel-primary summary" id="tlsobservatory-summary">
-                    <div class="panel-heading">
-                        <span class="h3">Scan Summary</span>
-                    </div>
+                <!-- TLS Observatory scan summary -->
+                <%= require ('html-loader!./analyze/tls/scan-summary.html') %>
 
-                    <div class="panel-body">
-                        <div class="progress progress-lg" id="tlsobservatory-summary-progress-bar">
-                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="tlsobservatory-summary-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                PENDING (This may take several minutes)
-                            </div>
-                        </div>
+                <!-- TLS Observatory certificate information -->
+                <%= require ('html-loader!./analyze/tls/certificate-information.html') %>
 
-                        <div class="row">
-                            <div class="col-md-2">
-                                <span class="grade-container text-center" id="tlsobservatory-summary-grade-container">
-                                    <span class="grade-letter" id="tlsobservatory-summary-grade-letter"></span>
-                                    <sup class="grade-letter-modifier" id="tlsobservatory-summary-grade-modifier"></sup>
-                                </span>
-                            </div>
-                            <div class="col-md-10 table-responsive">
-                                <table class="table table-striped table-condensed pull-left tlsobservatory-summary-summary-table">
-                                    <tr>
-                                        <td>Host:</td>
-                                        <td><span id="tlsobservatory-summary-target"></span> <span class="deemphasize">(<span id="tlsobservatory-summary-ip"></span>)</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Scan ID #:</td>
-                                        <td id="tlsobservatory-summary-scan_id"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>End Time:</td>
-                                        <td id="tlsobservatory-summary-end_time_l"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Compatibility Level:</a></td>
-                                        <td id="tlsobservatory-summary-mozilla_configuration_level_description"></td>
-                                    </tr>
-                                    <!--
-                                    <tr>
-                                        <td>Score:</td>
-                                        <td><span id="tlsobservatory-summary-score"></span>/100</td>
-                                    </tr>
-                                    -->
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Certificate Explainer:</td>
-                                      <td id="tlsobservatory-summary-explainer_url"></td>
-                                    </tr>
-    <!--                            <tr>
-                                        <td>Certificate Results (JSON):</td>
-                                        <td id="tlsobservatory-summary-certificate_url"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Scan Results (JSON):</td>
-                                        <td id="tlsobservatory-summary-results_url"></td>
-                                    </tr> -->
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- TLS Observatory cipher suites -->
+                <%= require ('html-loader!./analyze/tls/cipher-suites.html') %>
 
-                <!-- TLS Observatory certificate panel -->
-                <div class="panel panel-primary d-none" id="tlsobservatory-certificate">
-                    <div class="panel-heading">
-                        <span class="h3">Certificate Information</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-certificate-table">
-                                <tr>
-                                    <td>Common name:</td>
-                                    <td id="tlsobservatory-certificate-cn"></td>
-                               </tr>
-                                <tr>
-                                    <td>Alternative Names:</td>
-                                    <td id="tlsobservatory-certificate-alt_names"></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>First Observed:</td>
-                                    <td><span id="tlsobservatory-certificate-first_seen"></span><span class="deemphasize"> (certificate #<span id="tlsobservatory-certificate-cert_id"></span>)</span></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>Valid From:</td>
-                                    <td id="tlsobservatory-certificate-valid_from"></td>
-                                </tr>
-                                <tr>
-                                    <td>Valid To:</td>
-                                    <td id="tlsobservatory-certificate-valid_to"></td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td>Key:</td>
-                                    <td id="tlsobservatory-certificate-key"></td>
-                                </tr>
-                                <tr>
-                                    <td>Issuer:</td>
-                                    <td id="tlsobservatory-certificate-issuer"></td>
-                                </tr>
-                                <tr>
-                                    <td>Signature Algorithm:</td>
-                                    <td id="tlsobservatory-certificate-sig_alg"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <!-- TLS Observatory miscellaneous -->
+                <%= require ('html-loader!./analyze/tls/miscellaneous.html') %>
 
-                <!-- TLS Observatory protocol panel -->
-                <div class="panel panel-primary d-none" id="tlsobservatory-ciphers">
-                    <div class="panel-heading">
-                        <span class="h3">Cipher Suites</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left" id="tlsobservatory-ciphers-table">
-                                <thead>
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th>Cipher&nbsp;suite</th>
-                                        <th><abbr title="Code Points" data-toggle="popover" data-content="Cipher suite names can vary between implementation. Code points are a standardized set of numbers that allow you to refer to a specific cipher suite regardless of implementation.">Code</abbr></th>
-                                        <th>Key&nbsp;size</th>
-                                        <th><abbr title="Authenticated Encryption with Associated Data" data-toggle="popover" data-content="AEADs are a new way of using cryptographic ciphers that provide additional security guarantees while being less prone to implementation mistakes.">AEAD</abbr></th>
-                                        <th><abbr title="Forward Secrecy" data-toggle="popover" data-content="Forward secrecy protects your past communications from being decrypted if the server's private key is ever compromised.">PFS</abbr></th>
-                                        <th>Protocols</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TLS Observatory misc panel -->
-                <div class="panel panel-primary d-none" id="tlsobservatory-misc">
-                    <div class="panel-heading">
-                        <span class="h3">Miscellaneous Information</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left scan-summary-table" id="tlsobservatory-misc-table">
-                                <tr>
-                                    <td>CAA Record:</td>
-                                    <td id="tlsobservatory-misc-caa"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Certification Authority Authorization" data-content="Certification Authority Authorization (CAA) records inform certificate authorities whether or not they are allowed to issue certificates for your domain."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Cipher Preference:</td>
-                                    <td><span id="tlsobservatory-misc-chooser"></span> selects preferred cipher</td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Cipher Preference" data-content="Configuring your server to choose the preferred cipher can force older clients to use more secure ciphers than they would by default."></span></td>
-                                </tr>
-                                <tr id="tlsobservatory-misc-oldest_clients-row">
-                                    <td>Compatible Clients:</td>
-                                    <td id="tlsobservatory-misc-oldest_clients"></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>OCSP Stapling:</td>
-                                    <td id="tlsobservatory-misc-ocsp_stapling"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="OCSP Stapling" data-content="OCSP Stapling allows clients to check for certificate revocation both quickly and privately."></span></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TLS Observatory suggestions panel -->
-                <div class="panel panel-primary d-none" id="tlsobservatory-suggestions">
-                    <div class="panel-heading">
-                        <span class="h3">Suggestions</span>
-                    </div>
-                    <div class="panel-body" id="tlsobservatory-suggestions-panel-body">
-                        <div class="row">
-                            <div id="tlsobservatory-suggestions-modern-row">
-                                <p><strong>Looking for improved security and have a user base of only modern clients?</strong></p>
-                                <p class="p-l-2 p-r-1" id="tlsobservatory-suggestions-modern-notes">Take a look at the <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility">Mozilla &ldquo;Modern&rdquo; TLS configuration</a>!  It provides an extremely high level of security and performance and is compatible with all clients released in the last couple years. It is not recommended for general purpose websites that may need to service older clients such as Android 4.x, Internet Explorer 10, or Java 6.x.</p>
-                                <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-modern" aria-expanded="false" aria-controls="tlsobservatory-suggestions-modern">Want the detailed technical nitty-gritty?</a></p>
-                                <p class="p-l-2 p-r-1 collapse" id="tlsobservatory-suggestions-modern"></p>
-                            </div>
-                            <div id="tlsobservatory-suggestions-intermediate-row">
-                                <hr>
-                                <p><strong>Still want secure website, but need compatibility with those older clients?</strong></p>
-                                <p class="p-l-2 p-r-1" id="tlsobservatory-suggestions-intermediate-notes">No problem! The <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28default.29">Mozilla &ldquo;Intermediate&rdquo; TLS configuration</a> may be just right for you!  It provides the similar level of security to the &ldquo;Modern&rdquo; configuration when used with current clients, but still supports older versions of web browsers and tools.</p>
-                                <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-intermediate" aria-expanded="false" aria-controls="tlsobservatory-suggestions-intermediate">Want the detailed technical nitty-gritty?</a></p>
-                                <p class="p-l-2 p-r-1 collapse" id="tlsobservatory-suggestions-intermediate"></p>
-                            </div>
-                            <hr>
-                            <div id="tlsobservatory-suggestions-disclaimer">
-                                <p>Please note that these suggestions may not be appropriate for your particular usage requirements!  If they do sound like something you'd like assistance with, then hop on board:</p>
-                                <p class="text-center"><a class="btn btn-primary" href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Teleport me to Mozilla's configuration generator!</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- TLS Observatory suggestions -->
+                <%= require ('html-loader!./analyze/tls/suggestions.html') %>
             </div>
         </div>
 
         <!-- SSH Observatory -->
-        <div role="tabpanel" class="tab-pane" id="tab-ssh">
-            <div id="sshobservatory">
+        <div class="tab-pane active" id="ssh-tab" role="tabpanel" aria-labelledby="nav-ssh-tab">
+            <div id="ssh-scan-initiator">
+                <button class="btn btn-default" id="ssh-scan-initiator-btn" type="button">
+                  <h5>SSH Observatory scans are not performed automatically. Click here to initiate a scan.</h5>
+                </button>
+            </div>
 
-                <div class="panel panel-primary summary" id="sshobservatory-summary">
-                    <div class="panel-heading">
-                        <span class="h3">Scan Summary</span>
-                    </div>
+            <!-- Notice about which system hosts the scans -->
+            <div class="alert alert-danger d-none m-b-0" id="ssh-scanner-alert" role="alert">
+              <p><strong>Scan Failed: </strong>The Mozilla SSH Observatory scans from <code>sshscan.rubidus.com</code> at <code>45.55.176.164</code>.</p>
 
-                    <div class="panel-body">
-                        <div id="sshobservatory-scan-initiator">
-                            <button class="btn btn-default width-100" id="sshobservatory-scan-initiator-btn" type="button">
-                              <h5>SSH Observatory scans are not performed automatically. Click here to initiate a scan.</h5>
-                            </button>
-                        </div>
+              <p>Many systems are configured with firewalls that block SSH access. To successfully scan with the SSH Observatory, access must be granted to Mozilla's scanning system.</p>
+            </div>
 
-                        <!-- Notice about which system hosts the scans -->
-                        <div class="alert alert-danger d-none m-b-0" id="sshobservatory-scanner-alert" role="alert">
-                          <p><strong>Scan Failed: </strong>The Mozilla SSH Observatory scans from <code>sshscan.rubidus.com</code> at <code>45.55.176.164</code>.</p>
+            <!-- progress bar -->
+            <span id="ssh-progress-bar-container" class="d-none">
+                <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'ssh'}) %>
+            </span>
 
-                          <p>Many systems are configured with firewalls that block SSH access. To successfully scan with the SSH Observatory, access must be granted to Mozilla's scanning system.</p>
-                        </div>
+            <div class="d-none" id="ssh-results">
+                <!-- SSH Observatory scan results -->
+                <%= require ('html-loader!./analyze/ssh/scan-summary.html') %>
 
-                        <div class="progress progress-lg d-none" id="sshobservatory-progress-bar">
-                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="sshobservatory-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                PENDING (This may take several minutes)
-                            </div>
-                        </div>
+                <!-- SSH Observatory recommendations -->
+                <%= require ('html-loader!./analyze/ssh/recommendations.html') %>
 
-                        <div class="row">
-                            <div class="col-md-2">
-                                <span class="grade-container text-center" id="sshobservatory-grade-container">
-                                    <span class="grade-letter" id="sshobservatory-grade-letter"></span>
-                                    <sup class="grade-letter-modifier" id="sshobservatory-grade-modifier"></sup>
-                                </span>
-                            </div>
-                            <div class="col-md-10 table-responsive">
-                                <table class="table table-striped table-condensed pull-left sshobservatory-summary-table">
-                                    <tr>
-                                        <td>Host:</td>
-                                        <td><span id="sshobservatory-hostname"></span> <span class="deemphasize">(<span id="sshobservatory-ip"></span>:<span id="sshobservatory-port"></span>)</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Scan ID #:</td>
-                                        <td><a id="sshobservatory-uuid"></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>End Time:</td>
-                                        <td id="sshobservatory-end_time_l"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="https://infosec.mozilla.org/guidelines/openssh">Mozilla SSH Standards Compliant:</a></td>
-                                        <td id="sshobservatory-compliant"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- SSH Observatory miscellaneous -->
+                <%= require ('html-loader!./analyze/ssh/miscellaneous.html') %>
 
-                <!-- SSH Observatory recommendations panel -->
-                <div class="panel panel-success d-none" id="sshobservatory-recommendations">
-                    <div class="panel-heading">
-                        <span class="h3">Recommendations</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left scan-summary-table" id="sshobservatory-recommendations-table">
-                            </table>
-                        </div>
-                        <div class="text-center d-none" id="sshobservatory-no-recommendations">
-                          🎉🎉🎉  <em>We don't have any! Keep up the good work!</em> 🎉🎉🎉
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SSH Observatory miscellaneous panel -->
-                <div class="panel panel-primary d-none" id="sshobservatory-misc">
-                    <div class="panel-heading">
-                        <span class="h3">Miscellaneous</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left summary" id="sshobservatory-misc-table">
-                                <tr>
-                                    <td>Authentication Methods:</td>
-                                    <td id="sshobservatory-auth_methods"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Authentication Methods" data-content="We recommend disabling authentication based solely upon passwords and instead using public key authentication alone or in combination with other authentication methods."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Compression:</td>
-                                    <td id="sshobservatory-compression"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Compression" data-content="Allowing compression can improve data transmission speeds over slow or high latency connections."></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Duplicate Host Keys:</td>
-                                    <td id="sshobservatory-duplicate_host_keys"></td>
-                                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Duplicate Host Keys" data-content="Using the same host key on multiple machines can be dangerous. If one machine gets compromised, it can impersonate other systems using the same key."></span></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SSH Observatory version information panel -->
-                <div class="panel panel-primary d-none" id="sshobservatory-version">
-                    <div class="panel-heading">
-                        <span class="h3">Version Information</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-condensed pull-left scan-summary-table" id="sshobservatory-version-table">
-                                <tr>
-                                    <td>Server Banner:</td>
-                                    <td id="sshobservatory-server_banner"></td>
-                                </tr>
-                                <tr>
-                                    <td>Operating System Identifier:</td>
-                                    <td id="sshobservatory-os_cpe"></td>
-                                </tr>
-                                <tr>
-                                    <td>SSH Library Identifier:</td>
-                                    <td id="sshobservatory-ssh_lib_cpe"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <!-- SSH Observatory version information -->
+                <%= require ('html-loader!./analyze/ssh/version-information.html') %>
             </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="tab-third">
-            <div id="third-party-tests">
-                <!-- SSL Labs -->
-                <div class="panel panel-primary summary" id="ssllabs-summary">
-                    <div class="panel-heading">
-                        <span class="h3">ssllabs.com</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="progress progress-lg" id="ssllabs-progress-bar">
-                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="ssllabs-progress-bar-text" role="progressbar" aria-valuenow="0" aria-valuemin="100" aria-valuemax="100">
-                                PENDING (This may take several minutes)
-                            </div>
-                        </div>
+        <!-- Third party stuff -->
+        <div class="tab-pane active" id="third-party-tab" role="tabpanel" aria-labelledby="nav-third-party-tab">
+            <h3>Transport Layer Security</h3>
+            <!-- Qualys SSL Labs -->
+            <%= require ('html-loader!./analyze/third-party/ssllabs.html') %>
 
-                        <div class="row">
-                            <div class="col-md-2">
-                                <span class="grade-container text-center" id="ssllabs-grade-container">
-                                    <span class="grade-letter" id="ssllabs-grade-letter"></span>
-                                    <sup class="grade-letter-modifier" id="ssllabs-grade-modifier"></sup>
-                                </span>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-condensed ssllabs-summary-table">
-                                        <tr>
-                                            <td>Host:</td>
-                                            <td id="ssllabs-hostname"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Complete Results:</td>
-                                            <td id="ssllabs-url"></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="row text-right">
-                                    <img id="qualys-logo" src="/images/qualys-ssl-labs-logo.svg" alt="Qualys Logo">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- htbridge.com -->
+            <%= require ('html-loader!./analyze/third-party/htbridge.html') %>
+
+            <!-- tls.imirhil.fr -->
+            <%= require ('html-loader!./analyze/third-party/tlsimirhilfr.html') %>
 
 
-                <!-- HT Bridge -->
-                <div class="panel panel-primary summary" id="htbridge-summary">
-                    <div class="panel-heading">
-                        <span class="h3">htbridge.com</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="progress progress-lg" id="htbridge-progress-bar">
-                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="htbridge-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                PENDING (This may take several minutes)
-                            </div>
-                        </div>
+            <h3>HTTP Headers &amp; Content Security</h3>
 
-                        <div class="row">
-                            <div class="col-md-2">
-                                <span class="grade-container text-center" id="htbridge-grade-container">
-                                    <span class="grade-letter" id="htbridge-grade-letter"></span>
-                                    <sup class="grade-letter-modifier" id="htbridge-grade-modifier"></sup>
-                                </span>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-condensed htbridge-summary-table">
-                                        <tbody>
-                                            <tr>
-                                                <td>Host:</td>
-                                                <td><span id="htbridge-hostname"></span> <span class="deemphasize">(<span id="htbridge-ip"></span>)</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td> </td>
-                                                <td> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Compliance:</td>
-                                                <td> </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3">PCI-DSS:</td>
-                                                <td id="htbridge-pci_dss_compliant"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3">HIPAA:</td>
-                                                <td id="htbridge-hipaa_compliant"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3">NIST:</td>
-                                                <td id="htbridge-nist_compliant"></td>
-                                            </tr>
-                                            <tr>
-                                                <td> </td>
-                                                <td> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Vulnerability Tests:</td>
-                                                <td> </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3"><a href="https://drownattack.com/">DROWN</a>:</td>
-                                                <td id="htbridge-drown"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3"><a href="http://heartbleed.com/">Heartbleed</a>:</td>
-                                                <td id="htbridge-heartbleed"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3">Insecure Renegotiation:</td>
-                                                <td id="htbridge-insecure_reneg"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3"><a href="https://blog.qualys.com/ssllabs/2014/06/13/ssl-pulse-49-vulnerable-to-cve-2014-0224-14-exploitable">OpenSSL ChangeCipherSpec</a>:</td>
-                                                <td id="htbridge-cve_2014_0224"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3"><a href="https://blog.cloudflare.com/yet-another-padding-oracle-in-openssl-cbc-ciphersuites/">OpenSSL Padding Oracle</a>:</td>
-                                                <td id="htbridge-cve_2016_2107"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/10/14/poodle.html">Poodle (SSLv3)</a>:</td>
-                                                <td id="htbridge-poodle_ssl"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/12/08/poodleagain.html">Poodle (TLS)</a>:</td>
-                                                <td id="htbridge-poodle_tls"></td>
-                                            </tr>
-                                            <tr>
-                                                <td> </td>
-                                                <td> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Complete Results:</td>
-                                                <td><span id="htbridge-url"></span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row text-right">
-                                    <img id="htbridge-logo" src="/images/htbridge-logo.svg" alt="High-Tech Bridge Logo">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- securityheaders.com -->
+            <%= require ('html-loader!./analyze/third-party/securityheaders.html') %>
 
+            <h3>Miscellaneous</h3>
 
-                <!-- tls.imirhil.fr -->
-                <div class="panel panel-primary summary" id="tlsimirhilfr-summary">
-                    <div class="panel-heading">
-                        <span class="h3">tls.imirhil.fr</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="progress progress-lg" id="tlsimirhilfr-progress-bar">
-                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated" id="tlsimirhilfr-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                PENDING (This may take several minutes)
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <span class="grade-container text-center" id="tlsimirhilfr-grade-container">
-                                    <span class="grade-letter" id="tlsimirhilfr-grade-letter"></span>
-                                    <sup class="grade-letter-modifier" id="tlsimirhilfr-grade-modifier"></sup>
-                                </span>
-                            </div>
-                            <div class="col-md-10 table-responsive">
-                                <table class="table table-striped table-condensed pull-left tlsimirhilfr-summary-table">
-                                    <tr>
-                                        <td>Host:</td>
-                                        <td id="tlsimirhilfr-hostname"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>IP addresses:</td>
-                                        <td id="tlsimirhilfr-addresses"></td>
-                                    </tr>
-                                    <tr id="tlsimirhilfr-failing_addresses-row">
-                                        <td>Failing addresses:</td>
-                                        <td id="tlsimirhilfr-failing_addresses"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Overall score:</td>
-                                        <td><span id="tlsimirhilfr-overall_score"></span>/100</td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Complete Results:</td>
-                                        <td id="tlsimirhilfr-url"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <h3>HTTP Headers &amp; Content Security</h3>
-
-                <!-- securityheaders.com -->
-                <div class="panel panel-primary summary" id="securityheaders-summary">
-                    <div class="panel-heading">
-                        <span class="h3">securityheaders.com</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="progress progress-lg" id="securityheaders-progress-bar">
-                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="securityheaders-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                PENDING
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <span class="grade-container text-center" id="securityheaders-grade-container">
-                                    <span class="grade-letter" id="securityheaders-grade-letter"></span>
-                                    <sup class="grade-letter-modifier" id="securityheaders-grade-modifier"></sup>
-                                </span>
-                            </div>
-                            <div class="col-md-10 table-responsive">
-                                <table class="table table-striped table-condensed pull-left securityheaders-summary-table">
-                                    <tr>
-                                        <td>Host:</td>
-                                        <td id="securityheaders-hostname"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Complete Results:</td>
-                                        <td id="securityheaders-url"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>Miscellaneous</h3>
-
-                <!-- hstspreload.org -->
-                <div class="panel panel-primary summary" id="hstspreload-summary">
-                    <div class="panel-heading">
-                        <span class="h3">hstspreload.org</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="progress progress-lg" id="hstspreload-progress-bar">
-                            <div class="progress-bar progress-bar-lg progress-bar-striped progress-bar-animated w-100" id="hstspreload-progress-bar-text" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                PENDING
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <span class="grade-container text-center" id="hstspreload-grade-container">
-                                    <span class="grade-letter" id="hstspreload-grade-letter"></span>
-                                    <sup class="grade-letter-modifier" id="hstspreload-grade-modifier"></sup>
-                                </span>
-                            </div>
-                            <div class="col-md-10 table-responsive">
-                                <table class="table table-striped table-condensed pull-left hstspreload-summary-table">
-                                    <tr>
-                                        <td>Host:</td>
-                                        <td id="hstspreload-hostname"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Preloaded:</td>
-                                        <td id="hstspreload-preloaded"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                    </tr>
-                                    <tr>
-                                        <td id="hstspreload-notes-label">Notes:</td>
-                                        <td id="hstspreload-notes"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Complete Results:</td>
-                                        <td id="hstspreload-url"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- hstspreload.org -->
+            <%= require ('html-loader!./analyze/third-party/hstspreload.html') %>
         </div>
     </div>
 
 <%= require ('html-loader?interpolate!./partials/footer.html') %>
-

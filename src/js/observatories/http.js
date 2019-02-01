@@ -255,21 +255,21 @@ const insert = async (scan, results) => {
   }
 
   // insert in all the cookie values
-  forEach(results['cookies']['output']['data'], function f(attributes, name) {
+  forEach(results['cookies']['output']['data'], (attributes, name) => {
     cookies.push([
       name,
       attributes.expires === null ? 'Session' : utils.toLocalTime(String(attributes.expires * 1000), 'x'),
       $('<code></code>').text(attributes.path)[0],
-      ['', attributes.secure ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-remove'],
-      ['', attributes.httponly ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-remove'],
+      attributes.secure ? utils.getOcticon('check') : utils.getOcticon('x'),
+      attributes.httponly ? utils.getOcticon('check') : utils.getOcticon('x'),
       attributes.samesite ? $('<code></code>').text(attributes.samesite)[0] : ['', 'glyphicon glyphicon-remove'],
-      ['', (name.startsWith('__Host') || name.startsWith('__Secure')) ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-remove'],
+      (name.startsWith('__Host') || name.startsWith('__Secure')) ? utils.getOcticon('check') : utils.getOcticon('x'),
     ]);
   });
   utils.tableify(cookies, 'cookies-table');
 
   // write the server headers into the page
-  forEach(scan.response_headers, function f(value, header) {
+  forEach(scan.response_headers, (value, header) => {
     responseHeaders.push([header, value]);
   });
   utils.tableify(responseHeaders, 'server-headers-table');
@@ -378,13 +378,14 @@ const insert = async (scan, results) => {
     $(this).attr('aria-label', glyphiconAriaLabels[glyphClass]);
   });
 
-  // initialize the tablesaws csp-analysis-table
+  // initialize the tablesaw tables
+  Tablesaw.init($('#cookies-table'));
   Tablesaw.init($('#csp-analysis-table'));
   Tablesaw.init($('#server-headers-table'));
   Tablesaw.init($('#test-scores-table'));
 
   // show the scan results and remove the progress bar
-  $('#scan-progress').remove();
+  $('#http-progress').remove();
   $('#http-results').removeClass('d-none');
   if (size(results['cookies']['output']['data']) > 0) {
     $('#cookies').removeClass('d-none');
@@ -415,19 +416,13 @@ const insertHostHistory = async () => {
   }
 
   utils.tableify(rows, 'host-history-table');
-
-  // unhide the host history section
-  $('#host-history').addClass('d-md-block');
+  Tablesaw.init($('#host-history-table'));
 };
 
 
 const loadHostHistory = async () => {
   const target = utils.getTarget();
   var API_URL = 'https://http-observatory.security.mozilla.org/api/v1/getHostHistory?host=' + target;
-
-  var successCallback = (data) => {
-
-  };
 
   $.ajax({
     method: 'GET',
@@ -475,7 +470,7 @@ const handle = async scan => {
       retry = true;
       break;
     case 'RUNNING':
-      if (Math.random() > 0.98 || $('#scan-text').text() === 'Reticulating splines') {
+      if (Math.random() > 0.98 || $('#http-progress-bar-text').text() === 'Reticulating splines') {
         text = 'Reticulating splines';
       } else {
         text = 'Scan in progress';
@@ -502,7 +497,7 @@ const handle = async scan => {
     }
 
 
-    $('#scan-progress-bar-text').text(text);
+    $('#http-progress-bar-text').text(text);
     await utils.sleep(1000);
     load();
     return false;

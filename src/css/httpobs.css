@@ -64,10 +64,10 @@ ul {
     }
 
     /* fix large gap between sections */
-    #recommended-change {
+/*    #recommended-change {
         min-width: 360px;
     }
-
+*/
 /*    #scan-summary {
         width: 95%;
     }
@@ -221,42 +221,6 @@ button.expandy-panel-button {
     white-space: normal;
 }
 
-.m-b-0 {
-    margin-bottom: 0;
-}
-
-.m-t-1 {
-    margin-top: 1em;
-}
-
-.p-l-3 {
-    padding-left: 3em !important;
-}
-
-.p-l-2 {
-    padding-left: 2em !important;
-}
-
-.p-r-1 {
-    padding-right: 1em !important;
-}
-
-.p-l-0 {
-    padding-left: 0 !important;
-}
-
-.width-100 {
-    width: 100%;
-}
-
-#server-headers {
-    margin-bottom: 5em;
-}
-
-.text-right {
-    text-align: right;
-}
-
 /* hide all results while the progress bar is in the DOM before it */
 div.large-progress-bar-condensed + div.row {
     display: none;
@@ -264,28 +228,24 @@ div.large-progress-bar-condensed + div.row {
 
 .summary tr td:nth-child(1) {
     font-weight: 600;
-    padding-right: 1.5em;
-    white-space: nowrap;
+/*    padding-right: 1.5em; */
 }
 
+/*
 .summary tr td:nth-child(2) {
     white-space: pre-wrap;
     width: 100%;
 }
-
-.summary-condensed tr td:nth-child(1) {
-    padding-right: 1em;
-}
-
-.glyphicon, #csp-analysis tr td:nth-child(2) {
+*/
+#csp-analysis tr td:nth-child(2) {
     display: table-cell;  /* override inline-block */
 }
 
 /* test name */
 /* #test-scores tr td:nth-child(1), */
 #server-headers-table tr td:nth-child(1),
-#tlsobservatory-certificate-table tr td:nth-child(1),
-#tlsobservatory-misc-table tr td:nth-child(1),
+#tls-certificate-table tr td:nth-child(1),
+#tls-misc-table tr td:nth-child(1),
 #sshobservatory-misc-table tr td:nth-child(1),
 #sshobservatory-version-table tr td:nth-child(1) {
     font-weight: 600;
@@ -307,11 +267,11 @@ div.large-progress-bar-condensed + div.row {
     line-height: 1.42857143;
 }
 
-/* cookies */
-#cookies tr td:nth-child(1) {
+/* cookies, when not a tablesaw */
+/*#cookies tr td:nth-child(1) {
     max-width: 8em;
     word-wrap: break-word;
-}
+}*/
 
 /* explanations */
 /*
@@ -332,18 +292,6 @@ div.large-progress-bar-condensed + div.row {
     font-size: 80%;
 }
 
-.glyphicon-ok {
-    color: #2d882d;
-}
-
-.glyphicon-remove {
-    color: #aa3939;
-}
-
-.glyphicon-minus, .deemphasize {
-    color: #888888;
-}
-
 /* score modifier */
 /*
 #test-scores tr td:nth-child(3) {
@@ -354,62 +302,33 @@ div.large-progress-bar-condensed + div.row {
 */
 
 /* site history */
-#host-history-table tbody tr td:nth-child(2),
+/*#host-history-table tbody tr td:nth-child(2),
 #host-history-table thead tr th:nth-child(2) {
     text-align: center;
-}
+}*/
 
-#host-history-table tbody tr td:nth-child(3) {
+/*#host-history-table tbody tr td:nth-child(3) {
     padding-left: 1.5em;
 }
-
+*/
 /* server header values, protocols */
-#server-headers tr td:last-child, #tlsobservatory-certificate-table tr td:last-child, #tlsobservatory-ciphers-table tr td:last-child {
+/*#server-headers tr td:last-child, #tls-certificate-table tr td:last-child, #tls-ciphers-table tr td:last-child {
     hyphens: auto;
-    white-space: pre-wrap;
     width: 100%;
     word-break: break-all;
-}
+}*/
 
 /* tls observatory protocols table is a big crowded */
-.bold-no-wrap, #tlsobservatory-ciphers-table tr td:nth-of-type(1) {
+.bold-no-wrap {
     font-weight: 600;
-    text-align: right;
     white-space: nowrap;
 }
 
-/* code point */
-#tlsobservatory-ciphers-table tr td:nth-of-type(3) {
-    color: #666;  /* the most evil color */
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    font-size: .85em;
-    padding: .15em 1em 0 1em;
-    vertical-align: inherit;
-    white-space: nowrap;
-}
-
-#tlsobservatory-ciphers-table tr th:nth-of-type(3) {
-    text-align: center;
-}
-
-#tlsobservatory-ciphers-table tr td:nth-of-type(2) {
-    border-right: solid 1px #dddddd;
-    padding-right: 1em;
-    white-space: nowrap;
-}
-
-#cookies-table tbody tr td:nth-child(n+4):nth-child(-n+7), /* secure, httponly, samesite, prefixed */
-#cookies-table thead tr th:nth-child(n+4):nth-child(-n+7),
-#tlsobservatory-ciphers-table tbody tr td:nth-child(n+4):nth-child(-n+6) { /* key size, AEAD, and PFS */
-    text-align: center;
-    white-space: nowrap;
-}
-
-#tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer {
+#tls-suggestions #tls-suggestions-disclaimer {
     padding: 0 .75em;
 }
 
-#tlsobservatory-suggestions #tlsobservatory-suggestions-disclaimer p:last-child {
+#tls-suggestions #tls-suggestions-disclaimer p:last-child {
     margin-bottom: 0;
 }
 
@@ -488,8 +407,8 @@ sup, sub {
 }
 
 #redirect-banner a, #survey-banner a,
-#tlsobservatory-symantec-distrust-warning a,
-#tlsobservatory-symantec-distrust-warning-june-2016 a {
+#tls-symantec-distrust-warning a,
+#tls-symantec-distrust-warning-june-2016 a {
     border-bottom: 2px dotted #ffffff;
     text-decoration: none;
 }
@@ -503,6 +422,10 @@ header {
     margin-bottom: 22px;
 }
 
-.nowrap {
-    white-space: nowrap;
+.text-prewrap {
+    white-space: pre-wrap;
+}
+
+.text-breakall {
+    word-break: break-all;
 }

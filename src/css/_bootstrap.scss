@@ -90,7 +90,12 @@ $nav-tabs-link-active-color: $white !default;
 
 // tables
 $table-border-color: $gray-200 !default;
-
+.table th {
+  border-top: 0 !important;
+}
+.table td {
+  vertical-align: inherit !important;
+}
 
 //
 // Utilities
@@ -102,8 +107,8 @@ $table-border-color: $gray-200 !default;
 }
 
 @media (min-width: map-get($grid-breakpoints, 'lg')) {
-  .tablesaw-hideable {
-    display: table-cell !important;
+  td.tablesaw-hideable {
+     display: table-cell !important; 
   }
 
   .tablesaw-nowrap {
@@ -114,24 +119,5 @@ $table-border-color: $gray-200 !default;
 @media (max-width: map-get($grid-breakpoints, 'lg')) {
   .tablesaw-hideable {
     display: none !important;
-  }
-}
-
-
-//
-// Tablesaw
-//
-@media (min-width: 39.9375em) {
-  .tablesaw-center {
-    text-align: center !important;
-  }
-}
-
-@media (max-width: 39.9375em) {
-  .tablesaw tbody tr {
-    border-bottom: solid 2px $gray-600;
-  }
-  .tablesaw tbody tr td span.tablesaw-cell-content {
-    font-weight: 400;
   }
 }

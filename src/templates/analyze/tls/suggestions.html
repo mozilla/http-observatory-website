@@ -1,0 +1,26 @@
+<!-- TLS Observatory suggestions panel -->
+<div class="card card-primary mt-4" id="tls-suggestions">
+    <div class="card-header bg-primary text-center text-md-left text-white">
+        <span class="h3">Suggestions</span>
+    </div>
+    <div class="card-body" id="tls-suggestions-panel-body">
+        <div id="tls-suggestions-modern-row">
+            <p><strong>Looking for improved security and have a user base of only modern clients?</strong></p>
+            <p class="pl-2 pr-1" id="tls-suggestions-modern-notes">Take a look at the <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility">Mozilla &ldquo;Modern&rdquo; TLS configuration</a>!  It provides an extremely high level of security and performance and is compatible with all clients released in the last couple years. It is not recommended for general purpose websites that may need to service older clients such as Android 4.x, Internet Explorer 10, or Java 6.x.</p>
+            <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-modern" aria-expanded="false" aria-controls="tls-suggestions-modern">Want the detailed technical nitty-gritty?</a></p>
+            <p class="pl-2 pr-1 collapse" id="tls-suggestions-modern"></p>
+        </div>
+        <div id="tls-suggestions-intermediate-row">
+            <hr>
+            <p><strong>Still want secure website, but need compatibility with those older clients?</strong></p>
+            <p class="pl-2 pr-1" id="tls-suggestions-intermediate-notes">No problem! The <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Intermediate_compatibility_.28default.29">Mozilla &ldquo;Intermediate&rdquo; TLS configuration</a> may be just right for you!  It provides the similar level of security to the &ldquo;Modern&rdquo; configuration when used with current clients, but still supports older versions of web browsers and tools.</p>
+            <p class="text-right"><a role="button" data-toggle="collapse" href="#tlsobservatory-suggestions-intermediate" aria-expanded="false" aria-controls="tls-suggestions-intermediate">Want the detailed technical nitty-gritty?</a></p>
+            <p class="pl-2 pr-1 collapse" id="tls-suggestions-intermediate"></p>
+        </div>
+        <hr>
+        <div id="tls-suggestions-disclaimer">
+            <p>Please note that these suggestions may not be appropriate for your particular usage requirements!  If they do sound like something you'd like assistance with, then hop on board:</p>
+            <p class="text-center"><a class="btn btn-primary" href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Teleport me to Mozilla's configuration generator!</a></p>
+        </div>
+    </div>
+</div>

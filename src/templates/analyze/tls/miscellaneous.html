@@ -1,0 +1,40 @@
+<!-- TLS Observatory misc panel -->
+<div class="card card-primary mt-4" id="tls-misc">
+    <div class="card-header bg-primary text-center text-md-left text-white">
+        <span class="h3 d-none d-md-inline">Miscellaneous Information</span>
+        <span class="h3 d-md-none">Miscellaneous</span>
+    </div>
+    <div class="card-body pb-0">
+        <div class="table-responsive">
+            <table class="table tablesaw table-striped scan-summary-table" id="tls-misc-table" data-tablesaw-mode="stack" data-tablesaw-hide-empty data-tablesaw-no-labels>
+                <thead class="d-none">
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CAA Record:</td>
+                        <td id="tls-misc-caa"></td>
+                        <td class="tablesaw-hideable" data-octicon="info" data-toggle="popover" title="Certification Authority Authorization" data-content="Certification Authority Authorization (CAA) records inform certificate authorities whether or not they are allowed to issue certificates for your domain."></td>
+                    </tr>
+                    <tr>
+                        <td>Cipher Preference:</td>
+                        <td><span id="tls-misc-chooser"></span> selects preferred cipher</td>
+                        <td class="tablesaw-hideable" data-octicon="info" data-toggle="popover" title="Cipher Preference" data-content="Configuring your server to choose the preferred cipher can force older clients to use more secure ciphers than they would by default."></td>
+                    </tr>
+                    <tr id="tls-misc-oldest_clients-row">
+                        <td>Compatible Clients:</td>
+                        <td id="tls-misc-oldest_clients"></td>
+                        <td class="tablesaw-hideable"></td>
+                    </tr>
+                    <tr>
+                        <td>OCSP Stapling:</td>
+                        <td id="tls-misc-ocsp_stapling"></td>
+                        <td class="tablesaw-hideable" data-octicon="info" data-toggle="popover" title="OCSP Stapling" data-content="OCSP Stapling allows clients to check for certificate revocation both quickly and privately."></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

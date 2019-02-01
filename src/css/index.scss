@@ -1,7 +1,11 @@
-@import '_variables.scss';
+@import '_bootstrap.scss';
+@import '_octicons.scss';
+@import '_tablesaw.scss';
+
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 @import '~bootstrap/scss/bootstrap';
 @import '~octicons/index.scss';
-@import 'httpobs.scss';
 @import '../../node_modules/tablesaw/dist/tablesaw.css';
+
+@import 'httpobs.scss';
 @import 'httpobs.css';

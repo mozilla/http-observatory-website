@@ -142,7 +142,11 @@ const tableify = (list, tableId) => {
       if (typeof col === 'string') {
         td.textContent = col;
       } else if (Array.isArray(col)) {
-        td.textContent = col[0];
+        if (typeof col[0] == 'string') {
+          td.textContent = col[0];
+        } else {
+          td.appendChild(col[0]);
+        }
         td.classList = col[1];
       } else {
         td.appendChild(col);

@@ -1,6 +1,6 @@
+import $ from 'jquery';
 import 'bootstrap';
 import Chart from 'chart.js';
-import $ from 'jquery';
 import moment from 'moment';
 
 import { forEach, includes, last, size, sum } from 'lodash';
@@ -12,6 +12,7 @@ import statistics from './statistics.js';
 import thirdParty from './third-party/third-party.js';
 import utils from './utils.js';
 
+window.$ = $;
 
 // TODO: make this a heck of a ton smaller
 const Observatory = {
@@ -62,23 +63,15 @@ const Observatory = {
     // on page load, set the tab correctly
     if (hash !== '') {  // HTTP Observatory (default)
       hash = hash.split('#')[1];
-      if (includes(['ssh', 'tls'], hash)) {
-        tab = 'tab-' + hash + 'observatory';
-      } else {
-        tab = 'tab-third-party-tests';
-      }
-
-      // switch to the correct tab
-      $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+      $(`#nav-${hash}-tab`).tab('show');
     }
 
     // set a handler to change the fragment whenever the tab is changed, ignoring HTTP Observatory
-    $('.nav-tabs li').on('shown.bs.tab', function updateFragment(e) {
-      hash = e.target.hash.split('-')[1].split('observatory')[0];
-      if (hash === 'http') {
+    $('.nav-tabs a').on('shown.bs.tab', e => {
+      if (e.target.hash === '#http') {
         history.pushState(null, null, window.location.pathname + window.location.search);
       } else {
-        history.pushState(null, null, '#' + hash);
+        history.pushState(null, null, e.target.hash);
       }
     });
 
@@ -151,7 +144,7 @@ const Observatory = {
       }
     }
 
-    // initialize all the octicons, ie, data-octicon="question" inserts an SVG for the question octicon
+    // initialize all the octicons, ie, data-octicon="info" inserts an SVG for the question octicon
     $('[data-octicon').each((i, node) => {
       node.append(utils.getOcticon(node.dataset['octicon']));
     });
@@ -187,9 +180,11 @@ const Observatory = {
 
       // enable auto scans from the non-Observatory domain
       if ((window.location.hostname !== constants.domain) || (window.location.hash === '#ssh')) {
-        Observatories.SSH.load();
+        // TODO remove the next line and replace with this: undo Observatories.SSH.load();
+        $('#ssh-scan-initiator-btn').on('click', Observatories.SSH.load);
       } else {
-        $('#sshobservatory-scan-initiator-btn').on('click', Observatories.SSH.load)
+        $('#ssh-scan-initiator-btn').on('click', Observatories.SSH.load);
+
       }
 
       // let's check the third parties if requested
