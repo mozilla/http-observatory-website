@@ -1,4 +1,6 @@
 import $ from 'jquery';
+import Tablesaw from '../../../node_modules/tablesaw/dist/tablesaw.jquery.js'
+
 import constants from '../constants.js';
 import utils from '../utils.js';
 
@@ -83,6 +85,11 @@ const insert = async () => {
   utils.insertGrade(results.compliance.grade, 'ssh');
   utils.insertResults(state.output, 'ssh');
   utils.showResults('ssh');
+
+ // initialize the tablesaws
+ Tablesaw.init($('#ssh-misc-table'));
+ Tablesaw.init($('#ssh-version-table'));
+
   $('#ssh-progress-bar-container').remove();
   $('#ssh-results').removeClass('d-none');
 };

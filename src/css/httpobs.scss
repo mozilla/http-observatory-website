@@ -5,7 +5,7 @@
     word-wrap: break-word;
   }
 
-  #server-headers tbody tr td:first-child::after {
+  .colon-ized tbody tr td:first-child::after {
       content: ":";
   }
 

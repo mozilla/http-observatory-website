@@ -270,7 +270,7 @@ const insert = async (scan, results) => {
 
   // write the server headers into the page
   forEach(scan.response_headers, (value, header) => {
-    responseHeaders.push([header, value]);
+    responseHeaders.push([header, [value, 'text-break']]);
   });
   utils.tableify(responseHeaders, 'server-headers-table');
 

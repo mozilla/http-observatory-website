@@ -5,22 +5,29 @@
     </div>
     <div class="card-body pb-0">
         <div class="table-responsive">
-            <table class="table table-striped table-condensed pull-left summary" id="ssh-misc-table">
-                <tr>
-                    <td>Authentication Methods:</td>
-                    <td id="ssh-auth_methods"></td>
-                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Authentication Methods" data-content="We recommend disabling authentication based solely upon passwords and instead using public key authentication alone or in combination with other authentication methods."></span></td>
-                </tr>
-                <tr>
-                    <td>Compression:</td>
-                    <td id="ssh-compression"></td>
-                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Compression" data-content="Allowing compression can improve data transmission speeds over slow or high latency connections."></span></td>
-                </tr>
-                <tr>
-                    <td>Duplicate Host Keys:</td>
-                    <td id="ssh-duplicate_host_keys"></td>
-                    <td><span class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Duplicate Host Keys" data-content="Using the same host key on multiple machines can be dangerous. If one machine gets compromised, it can impersonate other systems using the same key."></span></td>
-                </tr>
+            <table class="table tablesaw table-striped summary" id="ssh-misc-table" data-tablesaw-mode="stack" data-tablesaw-hide-empty data-tablesaw-no-labels>
+                <thead class="d-none">
+                    <th scope="column"></th>
+                    <th scope="column"></th>
+                    <th scope="column" class="tablesaw-hideable"></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Authentication Methods:</td>
+                        <td id="ssh-auth_methods"></td>
+                        <td class="tablesaw-hideable tablesaw-center"><span class="octicon" data-octicon="info" data-toggle="popover" title="Authentication Methods" data-content="We recommend disabling authentication based solely upon passwords and instead using public key authentication alone or in combination with other authentication methods."></span></td>
+                    </tr>
+                    <tr>
+                        <td>Compression:</td>
+                        <td id="ssh-compression"></td>
+                        <td class="tablesaw-hideable tablesaw-center"><span class="octicon" data-octicon="info" data-toggle="popover" title="Compression" data-content="Allowing compression can improve data transmission speeds over slow or high latency connections."></span></td>
+                    </tr>
+                    <tr>
+                        <td>Duplicate Host Keys:</td>
+                        <td id="ssh-duplicate_host_keys"></td>
+                        <td class="tablesaw-hideable tablesaw-center"><span class="octicon" data-octicon="info" data-toggle="popover" title="Duplicate Host Keys" data-content="Using the same host key on multiple machines can be dangerous. If one machine gets compromised, it can impersonate other systems using the same key."></span></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>

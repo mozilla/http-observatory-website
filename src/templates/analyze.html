@@ -14,7 +14,7 @@
             <a class="nav-item nav-link active" id="nav-http-tab" href="#http" data-toggle="tab" data-target="#http-tab" role="tab" aria-controls="nav-http" aria-selected="true">HTTP Observatory</a>
             <a class="nav-item nav-link" id="nav-tls-tab" href="#tls" data-toggle="tab" data-target="#tls-tab" role="tab" aria-controls="nav-tls">TLS Observatory</a>
             <a class="nav-item nav-link" id="nav-ssh-tab" href="#ssh" data-toggle="tab" data-target="#ssh-tab" role="tab" aria-controls="nav-ssh">SSH Observatory</a>
-            <a class="nav-item nav-link" id="nav-third-tab" href="#third-party" data-toggle="tab" data-target="#third-party-tab" role="tab" aria-controls="nav-third">Third-party Tests</a>
+            <a class="nav-item nav-link" id="nav-third-party-tab" href="#third-party" data-toggle="tab" data-target="#third-party-tab" role="tab" aria-controls="nav-third">Third-party Tests</a>
         </div>
     </nav>
 
@@ -34,7 +34,7 @@
                         <%= require ('html-loader!./analyze/http/scan-summary.html') %>
                     </div>
                     <div class="col-xs-12 col-lg-6">
-                        <%= require ('html-loader!./analyze/http/recommended-changes.html') %>
+                        <%= require ('html-loader!./analyze/http/recommendations.html') %>
                     </div>
                 </div>
 
@@ -87,18 +87,18 @@
         </div>
 
         <!-- SSH Observatory -->
-        <div class="tab-pane active" id="ssh-tab" role="tabpanel" aria-labelledby="nav-ssh-tab">
-            <div id="ssh-scan-initiator">
-                <button class="btn btn-default" id="ssh-scan-initiator-btn" type="button">
-                  <h5>SSH Observatory scans are not performed automatically. Click here to initiate a scan.</h5>
+        <div class="tab-pane" id="ssh-tab" role="tabpanel" aria-labelledby="nav-ssh-tab">
+            <div id="ssh-scan-initiator" class="mt-3">
+                <button class="btn btn-light expandy-panel-button align-middle py-3 w-100" id="ssh-scan-initiator-btn" type="button">
+                  SSH Observatory scans are not performed automatically. Click here to initiate a scan.
                 </button>
             </div>
 
             <!-- Notice about which system hosts the scans -->
-            <div class="alert alert-danger d-none m-b-0" id="ssh-scanner-alert" role="alert">
-              <p><strong>Scan Failed: </strong>The Mozilla SSH Observatory scans from <code>sshscan.rubidus.com</code> at <code>45.55.176.164</code>.</p>
+            <div class="alert alert-danger d-none mt-3 mx-3 px-3 py-3 rounded" id="ssh-scanner-alert" role="alert">
+              <div class="pb-3"><strong>Scan Failed: </strong>The Mozilla SSH Observatory scans from <code class="bg-light mb-3 px-1 py-1 rounded">sshscan.rubidus.com</code> at <code class="bg-light px-1 py-1 rounded">45.55.176.164</code>.</div>
 
-              <p>Many systems are configured with firewalls that block SSH access. To successfully scan with the SSH Observatory, access must be granted to Mozilla's scanning system.</p>
+              <div>Many systems are configured with firewalls that block SSH access. To successfully scan with the SSH Observatory, access must be granted to Mozilla's scanning system.</div>
             </div>
 
             <!-- progress bar -->
@@ -122,27 +122,30 @@
         </div>
 
         <!-- Third party stuff -->
-        <div class="tab-pane active" id="third-party-tab" role="tabpanel" aria-labelledby="nav-third-party-tab">
-            <h3>Transport Layer Security</h3>
+        <div class="tab-pane" id="third-party-tab" role="tabpanel" aria-labelledby="nav-third-party-tab">
+            <h3 class="mt-4">Transport Layer Security</h3>
+            <hr />
             <!-- Qualys SSL Labs -->
-            <%= require ('html-loader!./analyze/third-party/ssllabs.html') %>
+            <%= require ('html-loader?interpolate!./analyze/third-party/ssllabs.html') %>
 
             <!-- htbridge.com -->
-            <%= require ('html-loader!./analyze/third-party/htbridge.html') %>
+            <%= require ('html-loader?interpolate!./analyze/third-party/htbridge.html') %>
 
             <!-- tls.imirhil.fr -->
-            <%= require ('html-loader!./analyze/third-party/tlsimirhilfr.html') %>
+            <%= require ('html-loader?interpolate!./analyze/third-party/tlsimirhilfr.html') %>
 
 
             <h3>HTTP Headers &amp; Content Security</h3>
+            <hr />
 
             <!-- securityheaders.com -->
-            <%= require ('html-loader!./analyze/third-party/securityheaders.html') %>
+            <%= require ('html-loader?interpolate!./analyze/third-party/securityheaders.html') %>
 
             <h3>Miscellaneous</h3>
+            <hr />
 
             <!-- hstspreload.org -->
-            <%= require ('html-loader!./analyze/third-party/hstspreload.html') %>
+            <%= require ('html-loader?interpolate!./analyze/third-party/hstspreload.html') %>
         </div>
     </div>
 

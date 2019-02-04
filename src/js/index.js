@@ -51,7 +51,7 @@ const Observatory = {
   },
 
 
-  handleTabFragments: function handleTabFragments() {
+  handleTabFragments: async function handleTabFragments() {
     var hash = window.location.hash;
     var tab;
 
@@ -180,8 +180,7 @@ const Observatory = {
 
       // enable auto scans from the non-Observatory domain
       if ((window.location.hostname !== constants.domain) || (window.location.hash === '#ssh')) {
-        // TODO remove the next line and replace with this: undo Observatories.SSH.load();
-        $('#ssh-scan-initiator-btn').on('click', Observatories.SSH.load);
+        Observatories.SSH.load();
       } else {
         $('#ssh-scan-initiator-btn').on('click', Observatories.SSH.load);
 

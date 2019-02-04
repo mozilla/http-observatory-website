@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import utils from '../utils.js';
 
+import Tablesaw from '../../../node_modules/tablesaw/dist/tablesaw.jquery.js'
 
 export const state = {
   nonce: Date.now().toString()
@@ -45,6 +46,8 @@ export const insert = async () => {
 
   // store it in the global object
   state.output = output;
+
+  Tablesaw.init($('#htbridge-summary-table'));
 
   utils.insertGrade(results.results.grade, 'htbridge');
   utils.insertResults(output, 'htbridge');

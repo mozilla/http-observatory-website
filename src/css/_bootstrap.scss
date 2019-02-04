@@ -24,6 +24,7 @@ $success:  $green !default;
 $info:     $teal !default;
 $warning:  $orange !default;
 $danger:   $red !default;
+$light:    $gray-50 !default;
 
 $theme-color-interval:     10% !default;
 $yiq-contrasted-threshold: 220 !default;
@@ -65,6 +66,13 @@ $alert-border-radius: 0 !default;
 $alert-border-width: 0 !default;
 $alert-color-level: -10 !default;
 
+// buttons
+button {
+  &.btn-light {
+    border: solid 1px $gray-300;
+  }
+}
+
 // cards
 $card-spacer-y: .575rem !default;
 $card-spacer-x: 1.25rem !default;
@@ -100,9 +108,18 @@ $table-border-color: $gray-200 !default;
 //
 // Utilities
 //
+.text-break {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
 @media (min-width: map-get($grid-breakpoints, 'xs')) {
   .d-xs-none {
     display: none !important;
+  }
+  .mx-xs-3 {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
   }
 }
 
