@@ -99,20 +99,17 @@ export const insert = async () => {
 
 
 export const load = async () => {
-  'use strict';
-
-  console.log('in hsts load');
-  var DOMAIN = 'hstspreload.org';
-  var API_URL = 'https://' + DOMAIN + '/api/v2/';
+  var API_URL = 'https://hstspreload.org/api/v2/';
   const target = utils.getTarget();
+  const url = `https://hstspreload.org?domain?${target}`;
 
   // Store the host and url
   state.target = target;
-  state.url = utils.linkify('https://' + DOMAIN + '/?domain=' + target);
+  state.url = utils.linkify(url, target);
 
   $.when(
-    $.getJSON(API_URL + 'status?domain=' + target.toLowerCase()),
-    $.getJSON(API_URL + 'preloadable?domain=' + target.toLowerCase())
+    $.getJSON(`${API_URL}status?domain=${target.toLowerCase()}`),
+    $.getJSON(`${API_URL}preloadable?domain=${target.toLowerCase()}`)
   ).then(function f(status, preloadable) {
     state.status = status[0];
     state.preloadable = preloadable[0];

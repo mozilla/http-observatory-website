@@ -222,7 +222,7 @@ button.expandy-panel-button {
 }
 
 /* hide all results while the progress bar is in the DOM before it */
-div.large-progress-bar-condensed + div.row {
+div.progress-lg + div.row {
     display: none;
 }
 
@@ -242,7 +242,6 @@ div.large-progress-bar-condensed + div.row {
 }
 
 /* test name */
-/* #test-scores tr td:nth-child(1), */
 #server-headers-table tr td:nth-child(1),
 #tls-certificate-table tr td:nth-child(1),
 #tls-misc-table tr td:nth-child(1),
@@ -250,7 +249,6 @@ div.large-progress-bar-condensed + div.row {
 #ssh-version-table tr td:nth-child(1) {
     font-weight: 600;
     padding-right: 1em;
-    white-space: nowrap;
 }
 
 /* pass fail */

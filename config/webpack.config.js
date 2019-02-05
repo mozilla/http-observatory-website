@@ -13,7 +13,7 @@ module.exports = {
     crossOriginLoading: 'anonymous',
     library: 'Observatory',
     libraryTarget: 'var',
-    path: path.resolve(__dirname, '..', 'build'),
+    path: production ? path.resolve(__dirname, '..', 'build') : path.resolve(__dirname, '..', 'production'),
     filename: '[hash].[name]'
   },
   entry: {
@@ -36,7 +36,8 @@ module.exports = {
             presets: [
               ['@babel/preset-env', {
                 'targets': {
-                  'firefox': 57
+                  'firefox': 52,
+                  'ie': 11
                 },
                 'shippedProposals': true
               }]

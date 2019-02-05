@@ -8,7 +8,6 @@ import * as TLSImirhil from './tls-imirhil.js';
 
 
 const load = async () => {
-  console.log('in third party load');
   await Promise.all([
     HSTSPreload.load(),
     SecurityHeaders.load(),

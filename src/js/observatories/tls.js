@@ -92,8 +92,8 @@ const insert = async () => {
 
   // now let's handle the certificate stuff
   state.output.certificate = {
-    alt_names: without(cert.x509v3Extensions.subjectAlternativeName, cert.subject.cn).join(', '),
-    cert_id: utils.linkify(state.explainer_url, cert.id.toString()),
+    alt_names: without(cert.x509v3Extensions.subjectAlternativeName, [cert.subject.cn]).join(', '),
+    cert_id: utils.linkify(state.explainer_url, cert.id.toString(), cert.id.toString()),
     cn: cert.subject.cn,
     first_seen: cert.firstSeenTimestamp.split('T')[0],
     issuer: cert.issuer.cn,
@@ -293,8 +293,8 @@ const load = async (rescan, initiateScanOnly) => {
     }
 
     // set the certificate URL in the output summary
-    state.certificate_url = utils.linkify(constants.urls.tls + 'certificate?id=' + state.results.cert_id);
-    state.explainer_url = utils.linkify(CERTIFICATE_EXPLAINER_URL + '?id=' + state.results.cert_id, state.results.cert_id);
+    state.certificate_url = utils.linkify(constants.urls.tls + 'certificate?id=' + state.results.cert_id, state.results.cert_id);
+    state.explainer_url = utils.linkify(CERTIFICATE_EXPLAINER_URL + '?id=' + state.results.cert_id, state.results.cert_id, state.results.cert_id);
 
     $.ajax({
       data: {

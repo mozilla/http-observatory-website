@@ -7,6 +7,14 @@ $tablesaw-width: 39.9375em;
   .tablesaw-center {
     text-align: center !important;
   }
+
+  #server-headers-table tr td:nth-child(1),
+  #tls-certificate-table tr td:nth-child(1),
+  #tls-misc-table tr td:nth-child(1),
+  #ssh-misc-table tr td:nth-child(1),
+  #ssh-version-table tr td:nth-child(1) {
+    white-space: nowrap; 
+  }
 }
 
 @media (max-width: $tablesaw-width) {

@@ -15,9 +15,9 @@ export const load = () => {
   let successCallback;
 
   if (state.scanHTTPSOnly === true) {
-    API_URL = 'https://securityheaders.com/?followRedirects=on&hide=on&q=https://' + target;
+    API_URL = `https://securityheaders.com/?followRedirects=on&hide=on&q=https://${target}`;
   } else {
-    API_URL = 'https://securityheaders.com/?followRedirects=on&hide=on&q=' + target;
+    API_URL = `https://securityheaders.com/?followRedirects=on&hide=on&q=${target}`;
   }
 
   successCallback = (data, textStatus, jqXHR) => {
@@ -29,7 +29,7 @@ export const load = () => {
 
     // also store the hostname and url in the object
     state.hostname = target;
-    state.url = utils.linkify(API_URL);
+    state.url = utils.linkify(API_URL, target);
 
     if (grade === undefined) {  // securityheaders.io didn't respond properly
       utils.errorResults('Unknown error', 'securityheaders');

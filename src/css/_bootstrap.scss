@@ -36,7 +36,10 @@ $grid-breakpoints: (
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1200px
+  xl: 1200px,
+  xxl: 1480px,
+  xxxl: 1700px,
+  xxxxl: 2000px,
 ) !default;
 
 
@@ -96,6 +99,27 @@ $nav-tabs-link-active-color: $white !default;
   }
 }
 
+// responsive font scaling for progress bars
+$progress-bar-font-sizes: (
+  xs: 4vw,
+  sm: 3.25vw,
+  md: 2.9vw,
+  lg: 2.5vw,
+  xl: 2.25vw,
+  xxl: 2vw,
+  xxxl: 1.7vw,
+  xxxxl: 1.4vw,
+);
+
+@each $key in map-keys($grid-breakpoints) {
+  @media (min-width: map-get($grid-breakpoints, $key)) {
+    .progress-bar {
+      font-size: map-get($progress-bar-font-sizes, $key) !important;
+    }
+  }
+}
+
+
 // tables
 $table-border-color: $gray-200 !default;
 .table th {
@@ -113,6 +137,9 @@ $table-border-color: $gray-200 !default;
   word-break: break-all;
 }
 
+//
+// Responsive nonsense
+//
 @media (min-width: map-get($grid-breakpoints, 'xs')) {
   .d-xs-none {
     display: none !important;
@@ -124,6 +151,7 @@ $table-border-color: $gray-200 !default;
 }
 
 @media (min-width: map-get($grid-breakpoints, 'lg')) {
+
   td.tablesaw-hideable {
      display: table-cell !important; 
   }

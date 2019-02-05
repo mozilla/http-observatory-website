@@ -16,38 +16,34 @@ window.$ = $;
 
 // TODO: make this a heck of a ton smaller
 const Observatory = {
-  state: {
-    count: 0
-  },
+  observatories: Observatories,
   statistics: statistics,
   thirdParty: thirdParty,
   utils: utils,
 
-  insertSurveyBanner: function insertSurveyBanner() {
-    'use strict';
-
-    var surveyName = 'OBSERVATORY_SURVEY_2018_01';
+  insertSurveyBanner: async function insertSurveyBanner() {
+    // var surveyName = 'OBSERVATORY_SURVEY_2018_01';
 
     // if they've taken the survey before, let's not show them the banner
-    if (utils.readCookie(surveyName) !== null) {
-      return;
-    }
+    // if (utils.readCookie(surveyName) !== null) {
+    //   return;
+    // }
 
     // bind a function such that when somebody clicks the close button on the survey banner,
     // it hides it forever. Same with when the click the link to take the survey.
-    $('#survey-banner a').on('click', function() {
-      utils.setCookie(surveyName, 'True', 60);
-    });
+    // $('#survey-banner a').on('click', function() {
+    //   utils.setCookie(surveyName, 'True', 60);
+    // });
 
     // change the URL for survey link
-    $('#survey-banner-url').attr('href',
-      'https://qsurvey.mozilla.com/s3/Observatory-survey?grade=' +
-        encodeURIComponent(Observatory.state.scan.grade) +
-        '&ScanID=' +
-        Observatory.state.scan.scan_id.toString().split(' ')[0]);
+    // $('#survey-banner-url').attr('href',
+    //   'https://qsurvey.mozilla.com/s3/Observatory-survey?grade=' +
+    //     encodeURIComponent(Observatory.state.scan.grade) +
+    //     '&ScanID=' +
+    //     Observatory.state.scan.scan_id.toString().split(' ')[0]);
 
     // unhide the banner
-    $('#survey-banner').removeClass('d-none');
+    // $('#survey-banner').removeClass('d-none');
   },
 
 
@@ -208,5 +204,5 @@ $(document).ready(() => {
   Observatory.onPageLoad();
 });
 
-
+window.Observatory = Observatory;
 export default Observatory;

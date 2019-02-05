@@ -10,6 +10,7 @@ export const insert = async () => {
   // Convenience variables
   var results = state.results;
   const target = utils.getTarget();
+  const url = `https://www.ssllabs.com/ssltest/analyze?d=${target}`;
 
   if (!_.has(results.endpoints[0], 'grade')) {
     utils.errorResults('Site does not support HTTPS', 'ssllabs');
@@ -19,7 +20,7 @@ export const insert = async () => {
   state.output = {
     grade: results.endpoints[0].grade,
     hostname: target,
-    url: utils.linkify('https://www.ssllabs.com/ssltest/analyze?d=' + target)
+    url: utils.linkify(url, target)
   };
 
   utils.insertGrade(state.output.grade, 'ssllabs');

@@ -65,7 +65,7 @@
 
             <div class="d-none" id="tls-results">
                 <!-- invalid cert warning panel -->
-                <div class="d-none alert alert-danger text-center" id="tls-observatory-invalid-cert-warning">
+                <div class="d-none alert alert-danger text-md-center" id="tls-observatory-invalid-cert-warning">
                     This site uses an <strong>untrusted</strong> or <strong>invalid certificate</strong>. The following results ignore this error.
                 </div>
 
@@ -123,7 +123,10 @@
 
         <!-- Third party stuff -->
         <div class="tab-pane" id="third-party-tab" role="tabpanel" aria-labelledby="nav-third-party-tab">
-            <h3 class="mt-4">Transport Layer Security</h3>
+            <h3 class="mt-4 mt-sm-3">
+              <span class="d-none d-md-inline">Transport Layer Security</span>
+              <span class="d-md-none">TLS &amp; SSL</span>
+            </h3>
             <hr />
             <!-- Qualys SSL Labs -->
             <%= require ('html-loader?interpolate!./analyze/third-party/ssllabs.html') %>
@@ -134,14 +137,16 @@
             <!-- tls.imirhil.fr -->
             <%= require ('html-loader?interpolate!./analyze/third-party/tlsimirhilfr.html') %>
 
-
-            <h3>HTTP Headers &amp; Content Security</h3>
+            <h3 class="mt-4 mt-sm-3">
+              <span class="d-none d-md-inline">HTTP Headers &amp; Content Security</span>
+              <span class="d-md-none">HTTP Headers</span>
+            </h3>
             <hr />
 
             <!-- securityheaders.com -->
             <%= require ('html-loader?interpolate!./analyze/third-party/securityheaders.html') %>
 
-            <h3>Miscellaneous</h3>
+            <h3 class="mt-5">Miscellaneous</h3>
             <hr />
 
             <!-- hstspreload.org -->

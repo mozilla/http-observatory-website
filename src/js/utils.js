@@ -34,14 +34,30 @@ const getTarget = () => {
 
 
 // take a link and return an a href
-const linkify = (url, text) => {
-  const a = document.createElement('a');
-
+const linkify = (url, shortText, longText) => {
   // if they don't include any text, the text is the url
-  text = typeof text !== 'undefined' ? text : url;
+  shortText = typeof shortText === 'undefined' ? url : shortText;
+  longText = typeof longText === 'undefined' ? url : longText;
 
+  // create the link
+  const a = document.createElement('a');
   a.href = url;
-  a.appendChild(document.createTextNode(text));
+
+  // create the two spans it contains
+  const shortSpan = document.createElement('span');
+  const longSpan = document.createElement('span');
+
+  // assign them responsive classes
+  shortSpan.classList.add('d-lg-none');
+  longSpan.classList.add('d-none', 'd-lg-inline-block');
+
+  // assign their text contents
+  shortSpan.textContent = shortText;
+  longSpan.textContent = longText;
+
+  // append to the link
+  a.appendChild(shortSpan);
+  a.appendChild(longSpan);
 
   return a;
 };
@@ -200,7 +216,6 @@ const getQueryParameter = param => {
     .omit(isEmpty)
     .toJSON();
 
-  console.log('here are parameters', params);
   return params[param];
 };
 
@@ -209,7 +224,7 @@ const getQueryParameter = param => {
 
 const errorResults = (error, id) => {
   // Set the error text and make it a red bar and remove the stripes and swirlies
-  $('#' + id + '-progress-bar-text').text(error).removeClass('active progress-bar-striped').addClass('progress-bar-danger');
+  $('#' + id + '-progress-bar-text').text(error).removeClass('progress-bar-striped').addClass('bg-danger');
 };
 
 

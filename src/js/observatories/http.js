@@ -15,7 +15,6 @@ const state = {
 
 
 const load = async () => {
-  console.log('inside http observatory load');
   const target = utils.getTarget();
 
   submit(

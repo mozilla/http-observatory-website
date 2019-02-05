@@ -6,8 +6,6 @@ import utils from '../utils.js';
 export const state = {};
 
 export const insert = async () => {
-  'use strict';
-
   var grade;
   var host;
   var i;
@@ -100,23 +98,15 @@ export const insert = async () => {
 
 
 export const load = async () => {
-  'use strict';
-
   const target = utils.getTarget();
-  var API_URL = 'https://tls.imirhil.fr/https/' + target + '.json';
-  var WEB_URL = 'https://tls.imirhil.fr/https/' + target;
+  var API_URL = `https://tls.imirhil.fr/https/${target}.json`;
+  var WEB_URL = `https://tls.imirhil.fr/https/${target}`;
   var a;
 
   state.results = {
     hostname: target,
-    url: utils.linkify(WEB_URL)
+    url: utils.linkify(WEB_URL, target)
   };
-
-  // create a link to the actual results
-  a = document.createElement('a');
-  a.href = WEB_URL;
-  a.appendChild(document.createTextNode('tls.imirhil.fr'));
-  $('#third-party-test-scores-tlsimirhilfr').html(a);
 
   $.ajax({
     dataType: 'json',
