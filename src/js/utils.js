@@ -1,6 +1,11 @@
-import { chain, forEach, includes, isEmpty, startsWith } from 'lodash';
-import moment from 'moment';
+import { forEach, includes, isEmpty, startsWith } from 'lodash';
 import octicons from 'octicons';
+
+// the things to do to not use moment
+import dayjs from 'dayjs';
+import CustomParseFormat from 'dayjs/plugin/customParseFormat';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+dayjs.extend(LocalizedFormat);
 
 import constants from './constants.js';
 
@@ -175,9 +180,11 @@ const tableify = (list, tableId) => {
 
 
 const toLocalTime = (timeString, format)=>  {
-  var localtime = moment.utc(timeString, format).toDate();
-
-  return moment(localtime).format('LLL');
+  if (format === undefined) {
+    return dayjs(timeString).format('LLL');
+  } else {
+    return dayjs(timeString, format).format('LLL');
+  }
 };
 
 
@@ -207,16 +214,7 @@ const urlParse = url => {
 
 
 const getQueryParameter = param => {
-  var params = chain(location.search ? location.search.slice(1).split('&') : '')
-    .map(function map(p) {
-      var kp = p.split('=');
-      return [decodeURI(kp[0]), decodeURI(kp[1])];
-    })
-    .fromPairs()
-    .omit(isEmpty)
-    .toJSON();
-
-  return params[param];
+  return new URLSearchParams(window.location.search).get(param);
 };
 
 

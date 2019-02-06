@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { forEach, without } from 'lodash';
 import Tablesaw from '../../../node_modules/tablesaw/dist/tablesaw.jquery.js'
 
 import constants from '../constants.js';
@@ -32,7 +33,7 @@ const insert = async () => {
     auth_methods: authMethods,
     compliance_recommendations: [],
     compliant: results.compliance.compliant ? 'Yes' : 'No',
-    compression: _.without(compression, ['none']).length > 0 ? 'Available' : 'Unavailable',
+    compression: without(compression, ['none']).length > 0 ? 'Available' : 'Unavailable',
     duplicate_host_keys: results.duplicate_host_key_ips.length > 0 ? duplicateHostKeyIpMsg : 'No',
     end_time_l: utils.toLocalTime(results.end_time, 'YYYY-MM-DD HH:mm:ss Z'),
     grade: results.compliance.grade,
@@ -47,7 +48,7 @@ const insert = async () => {
 
   // Grade is either pass or fail in this case
   // grade = results.compliance.compliant ? 'check-mark' : 'x-mark';
-  _.forEach(results.compliance.recommendations, function f(recommendation) {
+  forEach(results.compliance.recommendations, function f(recommendation) {
     // convert it to HTML
     var parsedRecommendation = recommendation.split(': ');
 

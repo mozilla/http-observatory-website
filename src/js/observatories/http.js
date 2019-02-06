@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { forEach, includes, last, size } from 'lodash';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import Tablesaw from '../../../node_modules/tablesaw/dist/tablesaw.jquery.js'
 
 import constants from '../constants.js';
@@ -92,13 +92,11 @@ const insert = async (scan, results) => {
   }
 
   // add a test duration
-  scan.test_duration = (
-    moment.utc(scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz') -
-    moment.utc(scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz')) / 1000;
+  scan.test_duration = dayjs(scan.end_time) - dayjs(scan.start_time) / 1000;
 
   // convert things to local time
-  scan.start_time_l = utils.toLocalTime(scan.start_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
-  scan.end_time_l = utils.toLocalTime(scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
+  scan.start_time_l = utils.toLocalTime(scan.start_time);
+  scan.end_time_l = utils.toLocalTime(scan.end_time);
 
   // store whether or not they have HTTPS, in the scan object
   if (includes([
@@ -113,7 +111,7 @@ const insert = async (scan, results) => {
 
   // enable the rescan button if the test was over 315 seconds ago,
   // otherwise enable it at that point
-  lastScanDelta = moment() - moment.utc(scan.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz');
+  lastScanDelta = dayjs() - dayjs(scan.end_time);
   if (lastScanDelta > 315000) {
     enableInitiateRescanButton();
   } else {

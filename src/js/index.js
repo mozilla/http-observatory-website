@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import 'bootstrap';
 import Chart from 'chart.js';
-import moment from 'moment';
 
 import { forEach, includes, last, size, sum } from 'lodash';
 

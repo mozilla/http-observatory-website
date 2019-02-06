@@ -1,4 +1,6 @@
 import $ from 'jquery';
+import { forEach } from 'lodash';
+
 import utils from '../utils.js';
 
 // HSTS Preload, courtesy of @lgarron
@@ -70,7 +72,7 @@ export const insert = async () => {
     if (errors) {
       text = [];
 
-      _.forEach(errors, function f(error) {
+      forEach(errors, function f(error) {
         if (error.code in errcodes) {
           text.push(errcodes[error.code]);
         } else {

@@ -1,18 +1,18 @@
 import $ from 'jquery';
+import { has } from 'lodash';
+
 import utils from '../utils.js';
 
 
 export const state = {};
 
 export const insert = async () => {
-  'use strict';
-
   // Convenience variables
   var results = state.results;
   const target = utils.getTarget();
   const url = `https://www.ssllabs.com/ssltest/analyze?d=${target}`;
 
-  if (!_.has(results.endpoints[0], 'grade')) {
+  if (has(results.endpoints[0], 'grade')) {
     utils.errorResults('Site does not support HTTPS', 'ssllabs');
     return;
   }
@@ -43,7 +43,7 @@ export const load = async () => {
         break;
       case 'IN_PROGRESS':
         // We only need one endpoint to complete
-        if (_.has(data.endpoints[0], 'grade')) {
+        if (has(data.endpoints[0], 'grade')) {
           state.results = data;
           insert();
         } else {
