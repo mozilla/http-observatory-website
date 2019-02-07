@@ -12,7 +12,8 @@ export const insert = async () => {
   const target = utils.getTarget();
   const url = `https://www.ssllabs.com/ssltest/analyze?d=${target}`;
 
-  if (has(results.endpoints[0], 'grade')) {
+  if (!has(results.endpoints[0], 'grade')) {
+    console.log('ssllabs error', results);
     utils.errorResults('Site does not support HTTPS', 'ssllabs');
     return;
   }

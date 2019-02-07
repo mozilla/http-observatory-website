@@ -30,6 +30,13 @@ plugins = [
       flatten: true
     }
   ]),
+  new CopyWebpackPlugin([
+    {
+      from: 'src/fonts',
+      to: 'fonts/',
+      flatten: true
+    }
+  ]),
   new webpack.ProvidePlugin({
     jQuery: 'jquery',
     jquery: 'jquery',

@@ -69,12 +69,10 @@ const linkify = (url, shortText, longText) => {
 
 
 // take an array and turn it into an unordered list, if it's > 1 item
-const listify = (list, force) => {
+const listify = (list, force = false, classes = []) => {
   var li;
   var ul;
   var text;
-
-  force = typeof force !== 'undefined' ? force : false;
 
   // an empty list simple returns an empty string
   if (list.length === 0) {
@@ -87,6 +85,7 @@ const listify = (list, force) => {
   }
 
   ul = document.createElement('ul');
+  ul.classList.add(...classes);
 
   forEach(list, function f(i) {
     li = document.createElement('li');

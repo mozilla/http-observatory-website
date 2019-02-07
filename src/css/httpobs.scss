@@ -1,3 +1,7 @@
+.deemphasize {
+  color: $gray-500;
+}
+
 // eventually httpobs.css should go away, but let's start by moving things over slowly
 @media (min-width: $tablesaw-width) {
   #cookies tr td:nth-child(1) {

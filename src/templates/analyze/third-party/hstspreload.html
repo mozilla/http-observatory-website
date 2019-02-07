@@ -2,7 +2,7 @@
     <div class="card-header bg-primary text-center text-md-left text-white">
         <span class="h3">hstspreload.org</span>
     </div>
-    <div class="card-body">
+    <div class="card-body pb-0">
         ${require ('mustache-loader!html-loader?interpolate!../../partials/cardless-progress-bar.html')({id: 'hstspreload'}) }
 
         <div class="row">
@@ -16,7 +16,7 @@
                 <table class="table table-striped table-condensed pull-left hstspreload-summary-table">
                     <tr>
                         <td>Host:</td>
-                        <td class="text-break" id="hstspreload-hostname"></td>
+                        <td class="text-break" id="hstspreload-target"></td>
                     </tr>
                     <tr>
                         <td>Preloaded:</td>
@@ -28,7 +28,7 @@
                     </tr>
                     <tr>
                         <td id="hstspreload-notes-label">Notes:</td>
-                        <td id="hstspreload-notes"></td>
+                        <td id="hstspreload-notes" class="text-break"></td>
                     </tr>
                     <tr>
                         <td>Complete Results:</td>

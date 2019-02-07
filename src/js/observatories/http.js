@@ -92,7 +92,7 @@ const insert = async (scan, results) => {
   }
 
   // add a test duration
-  scan.test_duration = dayjs(scan.end_time) - dayjs(scan.start_time) / 1000;
+  scan.test_duration = (dayjs(scan.end_time).unix() - dayjs(scan.start_time).unix());
 
   // convert things to local time
   scan.start_time_l = utils.toLocalTime(scan.start_time);

@@ -133,8 +133,7 @@ $table-border-color: $gray-200 !default;
 // Utilities
 //
 .text-break {
-  overflow-wrap: break-word;
-  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 //

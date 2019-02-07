@@ -1,4 +1,4 @@
-<div class="card card-primary mt-4 d-none" id="htbridge-summary">
+<div class="card card-primary mt-4" id="htbridge-summary">
     <div class="card-header bg-primary text-center text-md-left text-white">
         <span class="h3">htbridge.com</span>
     </div>
@@ -15,7 +15,7 @@
             </div>
             <div class="col-xs-12 col-md-9 col-lg-10">
                 <div class="table-responsive">
-                    <table class="table tablesaw table-striped htbridge-summary-table" data-tablesaw-mode="stack" data-tablesaw-hide-empty data-tablesaw-no-labels>
+                    <table class="table tablesaw table-striped tbridge-summary-table summary" data-tablesaw-mode="stack" data-tablesaw-hide-empty data-tablesaw-no-labels>
                         <thead class="d-none">
                             <th scope="column"></th>
                             <th scope="column"></th>
@@ -24,14 +24,14 @@
                         <tbody>
                             <tr>
                                 <td>Host:</td>
-                                <td class="text-break"><span id="htbridge-hostname"></span> <span class="deemphasize">(<span id="htbridge-ip"></span>)</span></td>
+                                <td class="text-break"><span id="htbridge-hostname""></span> <span class="deemphasize">(<span id="htbridge-ip"></span>)</span></td>
+                            </tr>
+                            <tr>
+                                <td>Score:</td>
+                                <td><span id="htbridge-score"></span>/100</td>
                             </tr>
                             <tr>
                                 <td> </td>
-                                <td> </td>
-                            </tr>
-                            <tr>
-                                <td>Compliance:</td>
                                 <td> </td>
                             </tr>
                             <tr>
@@ -51,35 +51,38 @@
                                 <td> </td>
                             </tr>
                             <tr>
-                                <td>Vulnerability Tests:</td>
-                                <td> </td>
-                            </tr>
-                            <tr>
-                                <td class="p-l-3"><a href="https://drownattack.com/">DROWN</a>:</td>
+                                <td class="p-l-3"><a href="https://drownattack.com/">DROWN:</a></td>
                                 <td id="htbridge-drown"></td>
                             </tr>
                             <tr>
-                                <td class="p-l-3"><a href="http://heartbleed.com/">Heartbleed</a>:</td>
+                                <td class="p-l-3"><a href="http://heartbleed.com/">Heartbleed:</a></td>
                                 <td id="htbridge-heartbleed"></td>
                             </tr>
                             <tr>
-                                <td class="p-l-3">Insecure Renegotiation:</td>
+                                <td class="p-l-3">
+                                    Insecure Renego&shy;tiation:
+                                </td>
                                 <td id="htbridge-insecure_reneg"></td>
                             </tr>
                             <tr>
-                                <td class="p-l-3"><a href="https://blog.qualys.com/ssllabs/2014/06/13/ssl-pulse-49-vulnerable-to-cve-2014-0224-14-exploitable">OpenSSL ChangeCipherSpec</a>:</td>
+                                <td class="p-l-3">
+                                    <a href="https://blog.qualys.com/ssllabs/2014/06/13/ssl-pulse-49-vulnerable-to-cve-2014-0224-14-exploitable">
+                                        <span class="d-none d-md-inline">OpenSSL ChangeCipherSpec:</span>
+                                        <span class="d-md-none">OpenSSL CCS:</span>
+                                    </a>
+                                </td>
                                 <td id="htbridge-cve_2014_0224"></td>
                             </tr>
                             <tr>
-                                <td class="p-l-3"><a href="https://blog.cloudflare.com/yet-another-padding-oracle-in-openssl-cbc-ciphersuites/">OpenSSL Padding Oracle</a>:</td>
+                                <td class="p-l-3"><a href="https://blog.cloudflare.com/yet-another-padding-oracle-in-openssl-cbc-ciphersuites/">OpenSSL Padding Oracle:</a></td>
                                 <td id="htbridge-cve_2016_2107"></td>
                             </tr>
                             <tr>
-                                <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/10/14/poodle.html">Poodle (SSLv3)</a>:</td>
+                                <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/10/14/poodle.html">Poodle (SSLv3):</a></td>
                                 <td id="htbridge-poodle_ssl"></td>
                             </tr>
                             <tr>
-                                <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/12/08/poodleagain.html">Poodle (TLS)</a>:</td>
+                                <td class="p-l-3"><a href="https://www.imperialviolet.org/2014/12/08/poodleagain.html">Poodle (TLS):</a></td>
                                 <td id="htbridge-poodle_tls"></td>
                             </tr>
                             <tr>
@@ -88,7 +91,7 @@
                             </tr>
                             <tr>
                                 <td>Complete Results:</td>
-                                <td><span id="htbridge-url"></span></td>
+                                <td class="text-break"><span id="htbridge-url"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -97,8 +100,8 @@
         </div>
 
         <div class="row text-right">
-            <div class="col-xs-0 col-sm-4 col-md-6 col-lg-8 col-xl-9"></div>
-            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-xl-3">
+            <div class="col-xs-0 col-sm-5 col-md-8 col-lg-9 col-xl-9"></div>
+            <div class="col-xs-12 col-sm-7 col-md-4 col-lg-3 col-xl-3">
                 <img id="htbridge-logo" class="w-100" src="/images/htbridge-logo.svg" alt="High-Tech Bridge Logo">
             </div>
         </div>

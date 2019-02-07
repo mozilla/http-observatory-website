@@ -4,14 +4,17 @@ import utils from '../utils.js';
 import Tablesaw from '../../../node_modules/tablesaw/dist/tablesaw.jquery.js'
 
 export const state = {
-  nonce: Date.now().toString()
+  count: 0,
+  nonce: Date.now().toString(),
+  results: {},
 };
 
 
 export const insert = async () => {
-  var htbridgeErrorMapping = ['Unknown', 'No', 'Yes', 'Possibly vulnerable'];
+  var htbridgeErrorMapping = ['Unknown', 'Not vulnerable', 'Vulnerable', 'Possibly vulnerable'];
   var output;
   var results = state.results;
+  console.log('htbridge results are', results);
 
   // error out if the scan fails
   if (results.error || results.results === undefined) {
@@ -29,18 +32,19 @@ export const insert = async () => {
   output = {
     hostname: results.server_info.hostname.value,
     ip: results.server_info.ip.value,
-    hipaa_compliant: results.hipaa.compliant.value ? 'Yes' : 'No',
-    nist_compliant: results.nist.compliant.value ? 'Yes' : 'No',
-    pci_dss_compliant: results.pci_dss.compliant.value ? 'Yes' : 'No',
-    url: utils.linkify('https://www.htbridge.com/ssl/?id=' + results.internals.id),
+    hipaa_compliant: results.hipaa.compliant.value ? 'Compliant' : 'Non-compliant',
+    nist_compliant: results.nist.compliant.value ? 'Compliant' : 'Non-compliant',
+    pci_dss_compliant: results.pci_dss.compliant.value ? 'Compliant' : 'Non-compliant',
+    score: results.results.score.toString(),
+    url: utils.linkify(`https://www.htbridge.com/ssl/?id=${results.internals.id}`, results.internals.id.substring(0, 12), results.internals.id.substring(0, 12)),
     vulnerabilities: {
       cve_2014_0224: htbridgeErrorMapping[results.pci_dss.cve_2014_0224.value + 1],
       cve_2016_2107: htbridgeErrorMapping[results.pci_dss.cve_2016_2107.value + 1],
-      drown: results.pci_dss.drown.value ? 'Yes' : 'No',
-      heartbleed: results.pci_dss.heartbleed.value ? 'Yes' : 'No',
-      insecure_reneg: results.pci_dss.supports_insecure_reneg.value ? 'Yes' : 'No',
-      poodle_ssl: results.pci_dss.poodle_ssl.value ? 'Yes' : 'No',
-      poodle_tls: results.pci_dss.poodle_tls.value ? 'Yes' : 'No'
+      drown: results.pci_dss.drown.value ? 'Vulnerable' : 'Not vulnerable',
+      heartbleed: results.pci_dss.heartbleed.value ? 'Vulnerable' : 'Not vulnerable',
+      insecure_reneg: results.pci_dss.supports_insecure_reneg.value ? 'Vulnerable' : 'Not vulnerable',
+      poodle_ssl: results.pci_dss.poodle_ssl.value ? 'Vulnerable' : 'Not vulnerable',
+      poodle_tls: results.pci_dss.poodle_tls.value ? 'Vulnerable' : 'Not vulnerable'
     }
   };
 
@@ -56,34 +60,62 @@ export const insert = async () => {
 };
 
 
-export const load = async () => {
-  var API_URL = 'https://www.htbridge.com/ssl/api/v1/check/' + state.nonce + '.html';
+export const load = async (test_id) => {
+  var API_URL = 'https://www.htbridge.com/ssl/api/v1/';
+  state.count += 1;
+
+  // limit the number of API calls that can be made
+  if (state.count === 30) {
+    return;
+  }
+
   const target = utils.getTarget();
 
-  var postData = {
-    choosen_ip: 'any',
-    domain: target + ':443',
-    recheck: 'false',
-    show_test_results: 'false'
-  };
-
-  $.ajax({
-    data: postData,
-    method: 'POST',
-    error: errorCallback,
-    success: successCallback,
-    url: API_URL
-  });
+  if (test_id === undefined) {
+    $.ajax({
+      data: {
+        choosen_ip: 'any',
+        domain: target + ':443',
+        recheck: 'false',
+        show_test_results: 'false'
+      },
+      method: 'POST',
+      error: errorCallback,
+      success: checkCallback,
+      url: `${API_URL}check/${state.nonce}.html`
+    });    
+  } else {
+    $.ajax({
+      data: {
+        id: test_id,
+      },
+      method: 'POST',
+      error: errorCallback,
+      success: async (data) => {
+        state.results = data;
+        insert();
+      },
+      url: `${API_URL}get_result/${state.nonce}.html`
+    });    
+  }
 };
 
 
-const successCallback = async data => {
+const checkCallback = async data => {
   // if everything works, save the data and lets throw it into the page
-  state.results = data;
-  insert();  
+  if (data.status_id === 3) {
+    console.log('got check status from htbridge', data);
+    load(data.test_id);
+  } else {
+    await utils.sleep(5000);
+    load();
+  }
+
+//  insert();  
 }
 
 
 const errorCallback = async () => {
+  console.log('got an error from htbridge')
   utils.errorResults('Error', 'htbridge');
 };

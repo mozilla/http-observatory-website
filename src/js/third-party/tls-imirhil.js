@@ -58,7 +58,7 @@ export const insert = async () => {
 
   // if we don't get any successful scans, mark the error and bail
   if (addresses.length === 0) {
-    utils.errorResults(errors[0], 'tlsimirhilfr');
+    utils.errorResults(errors[0].split('(')[0], 'tlsimirhilfr');
     return;
   }
 

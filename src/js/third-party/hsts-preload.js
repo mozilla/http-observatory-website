@@ -83,7 +83,7 @@ export const insert = async () => {
 
     // join all the errors together
     text.sort();
-    text = utils.listify(text);
+    text = utils.listify(text, false, ['pl-0']);
   } else {
     text = 'Unknown error';
   }
@@ -96,6 +96,8 @@ export const insert = async () => {
   // insert in the status of the site
   utils.insertGrade(grade, 'hstspreload');
   utils.insertResults(state, 'hstspreload');
+  console.log('here is the state for hsts', state);
+
   utils.showResults('hstspreload');
 };
 
