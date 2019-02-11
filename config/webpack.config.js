@@ -10,6 +10,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 const production = process.env.NODE_ENV === 'production';
+const outputDirectory = production ? 'dist' : 'build';
 
 
 //
@@ -17,7 +18,7 @@ const production = process.env.NODE_ENV === 'production';
 //
 plugins = [
   new CleanWebpackPlugin(
-    ['build/*/*/*', 'build/*/*', 'build/*'],
+    [`${outputDirectory}/*/*/*`, `${outputDirectory}/*/*`, `${outputDirectory}/*`],
     {
       root: path.resolve(__dirname, '..'),
       verbose: true
@@ -34,6 +35,13 @@ plugins = [
     {
       from: 'src/fonts',
       to: 'fonts/',
+      flatten: true
+    }
+  ]),
+  new CopyWebpackPlugin([
+    {
+      from: 'src/misc/robots.txt',
+      to: 'robots.txt',
       flatten: true
     }
   ]),
@@ -109,7 +117,7 @@ module.exports = {
     crossOriginLoading: 'anonymous',
     library: 'Observatory',
     libraryTarget: 'var',
-    path: production ? path.resolve(__dirname, '..', 'production') : path.resolve(__dirname, '..', 'build'),
+    path: production ? path.resolve(__dirname, '..', 'dist') : path.resolve(__dirname, '..', 'build'),
     filename: '[hash].[name]'
   },
   mode: production ? 'production' : 'development',
