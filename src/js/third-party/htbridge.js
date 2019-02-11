@@ -104,7 +104,6 @@ export const load = async (test_id) => {
 const checkCallback = async data => {
   // if everything works, save the data and lets throw it into the page
   if (data.status_id === 3) {
-    console.log('got check status from htbridge', data);
     load(data.test_id);
   } else {
     await utils.sleep(5000);
@@ -116,6 +115,5 @@ const checkCallback = async data => {
 
 
 const errorCallback = async () => {
-  console.log('got an error from htbridge')
   utils.errorResults('Error', 'htbridge');
 };

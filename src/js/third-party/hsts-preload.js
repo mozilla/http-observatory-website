@@ -96,7 +96,6 @@ export const insert = async () => {
   // insert in the status of the site
   utils.insertGrade(grade, 'hstspreload');
   utils.insertResults(state, 'hstspreload');
-  console.log('here is the state for hsts', state);
 
   utils.showResults('hstspreload');
 };
