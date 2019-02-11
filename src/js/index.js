@@ -144,16 +144,6 @@ const Observatory = {
       node.append(utils.getOcticon(node.dataset['octicon']));
     });
 
-    // Show the redirection banner, if you're not on the production site
-    if (document.domain !== constants.domain) {
-      $('#redirect-banner').removeClass('hidden');
-      $('#redirect-banner-url').attr('href', 'https://' +
-        constants.domain +
-        window.location.pathname.replace('http-observatory-website/', '') +
-        window.location.search +
-        window.location.hash);
-    }
-
     if (window.location.pathname.indexOf('/analyze') !== -1) {
       const target = utils.getTarget();
 
