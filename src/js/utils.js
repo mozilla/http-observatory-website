@@ -10,6 +10,8 @@ dayjs.extend(LocalizedFormat);
 import constants from './constants.js';
 
 
+const noQueryServer = constants.noQueryParameterServers.includes(window.location.hostname);
+
 const average = (list) => {
   var sum = 0;
 
@@ -27,16 +29,13 @@ const average = (list) => {
 
 
 const getTarget = () => {
-  if (window.location.pathname.indexOf('/analyze') !== -1) {
-    // Get the hostname in the GET parameters, with backwards compatibility
-    if (window.location.pathname.indexOf('/analyze.html') !== -1) {
-      return utils.getQueryParameter('host');
-    } else {
-      return window.location.pathname.split('/').slice(-1)[0];
-    }
+  // domains that support /analyze/mozilla.com
+  if (noQueryServer) {
+    return window.location.pathname.split('/').slice(-1)[0];
   }
-};
 
+  return getQueryParameter('host');
+};
 
 // take a link and return an a href
 const linkify = (url, shortText, longText) => {
@@ -178,7 +177,7 @@ const tableify = (list, tableId) => {
 };
 
 
-const toLocalTime = (timeString, format)=>  {
+const toLocalTime = (timeString, format) => {
   if (format === undefined) {
     return dayjs(timeString).format('LLL');
   } else {
@@ -371,13 +370,14 @@ export default {
   getTarget,
   insertGrade,
   insertResults,
-  readCookie,
-  showResults,
-  setCookie,
+  noQueryServer,
   linkify,
   listify,
   monospaceify,
   prettyNumberify,
+  readCookie,
+  setCookie,
+  showResults,
   sleep,
   tableify,
   toLocalTime,
