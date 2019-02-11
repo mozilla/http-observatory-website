@@ -40,8 +40,7 @@ plugins = [
   ]),
   new CopyWebpackPlugin([
     {
-      from: 'src/misc/robots.txt',
-      to: 'robots.txt',
+      from: 'src/misc',
       flatten: true
     }
   ]),
