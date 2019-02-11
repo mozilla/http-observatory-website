@@ -2,5 +2,4 @@
 .idea
 conf/nginx.pid
 build
-dist
 node_modules

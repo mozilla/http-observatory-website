@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="{{ AUTHOR }}">
+    <meta name="description" content="Observatory by Mozilla is a project designed to help developers, system administrators, and security professionals configure their sites safely and securely.">
+    <meta property="og:title" content="Observatory by Mozilla">
+
+    <!-- favicon stuff -->
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="196x196" href="/images/favicons/favicon-196x196.png">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+
+    <title>Mozilla Observatory</title>
+<link href="../06b997a2601c30fbccee.index.css" rel="stylesheet" integrity="sha256-k2RImxJlnF5T51kxwmhBFbR+tg9XjM3vxoZczAW/KAc=" crossorigin="anonymous"></head>
+<body>
+    <header>
+        <div class="d-none alert alert-dismissible alert-success bg-success text-center" id="redirect-banner" role="alert">
+            You've found the Observatory development site. Were you looking for <a id="redirect-banner-url" href="https://observatory.mozilla.org">the official website</a>?
+        </div>
+
+        <!-- ex-survey, saved for future uses
+        <div class="d-none alert alert-success alert-dismissable text-center" id="survey-banner">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Thank you for using the Mozilla Observatory! Would be interested in taking a <a id="survey-banner-url" href="#">short survey</a> to help us improve?
+        </div>
+        -->
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-primary bg-white">
+              <a class="navbar-brand" href="/"><img id="observatory-wordmark" src="/images/observatory-wordmark.svg" alt="Observatory by Mozilla"></a>
+              <button class="navbar-toggler" type="button" data-octicon="grabber" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item text-right">
+                    <a class="nav-link" href="/">Home</a>
+                  </li>
+                  <li class="nav-item text-right">
+                    <a class="nav-link" href="/faq/">FAQ</a>
+                  </li>
+                  <li class="nav-item text-right">
+                    <a class="nav-link" href="/statistics/">Statistics</a>
+                  </li>
+                  <li class="nav-item text-right dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      About
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="https://github.com/mozilla/http-observatory/blob/master/httpobs/docs/api.md">API Documentation</a>
+                      <a class="dropdown-item" href="https://github.com/mozilla/http-observatory-website/">Contribute at GitHub</a>
+                      <a class="dropdown-item" href="/faq/">Frequently Asked Questions</a>
+                      <a class="dropdown-item" href="/terms/">Legal &amp; Privacy</a>
+                      <a class="dropdown-item" href="https://github.com/mozilla/http-observatory/blob/master/httpobs/docs/scoring.md">Scoring Methodology</a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- main content -->
+    <div class="container mb-3">
+
+    <div>
+        <h1 class="mb-4">Frequently Asked Questions</h1>
+    </div>
+
+    <div id="faq">
+        <h2 class="h3 border-bottom border-light mb-3 pb-2" id="faq-general">General</h2>
+
+        <div class="question">
+            <h3 class="h4">Why would I need to implement (CSP, HTTPS, etc.) on my personal blog?</h3>
+
+            <p>Unfortunately, there is no way to tell the risk level of any given site programmatically. While your site may not be at a high level of risk, the Observatory grades sites equally in an attempt to get site developers and operators familiar with these defensive security standards.</p>
+            <p>Note that while it may appear that some things &mdash; such as HTTPS or Subresource Integrity for sites that use CDNs &mdash; appear unnecessary, not including them puts users and the <a href="http://arstechnica.com/security/2015/04/ddos-attacks-that-crippled-github-linked-to-great-firewall-of-china/">internet at large</a> at risk.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">If I get an A+ on the Observatory, does that mean my site is secure?</h3>
+
+            <p>While we'd love to say that any site that scores an A+ on the Observatory is perfectly secure, there's a lot more that goes making a website secure than what we can test. The Observatory tests for preventative measure against <a href="https://wikipedia.org/wiki/Cross-site_scripting">cross-site scripting attacks</a>, <a href="https://wikipedia.org/wiki/Man-in-the-middle_attack">man-in-the-middle attacks</a>, cross-domain information leakage, cookie compromise, <a href="https://wikipedia.org/wiki/Content_delivery_network">content delivery network compromise</a>, and improperly issued certificates.</p>
+            <p>However, it does not test for outdated software versions, <a href="https://wikipedia.org/wiki/SQL_injection">SQL injection</a> vulnerabilities, vulnerable content management system plugins, improper password creation policies or storage procedures, and more. These are just as important as what the Observatory tests for, and site operators should not be neglectful of them simply because they score well on the Observatory.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">Is the Mozilla Observatory useful for scanning non-websites, such as API endpoints?</h3>
+
+            <p>The HTTP Observatory is designed around scanning websites, not API endpoints. This is not to say that it <em>can't</em> be used for API endpoints, just that the results may not reflect the actual security posture of the API.</p>
+            <p>Nevertheless, the various security headers expected by the HTTP Observatory shouldn't cause any negative impact for APIs that return exclusively data, such as JSON or XML. The recommended configuration for API endpoints is:</p>
+            <pre>Content-Security-Policy: default-src 'none'; frame-ancestors 'none'
+Strict-Transport-Security: max-age=31536000
+X-Content-Type-Options: nosniff</pre>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">If my scan is marked &ldquo;hidden&rdquo;, does that mean nobody can see it?</h3>
+
+            <p>Hidden scans are simply marked as being hidden from home page lists such as the &ldquo;Hall of Fame.&rdquo; For users and organizations that need truly confidential results, it is recommended to download the <a href="https://github.com/mozilla/http-observatory/">Observatory scanner</a> and run a private installation.</p>
+        </div>
+
+
+        <h2 class="h3 border-bottom border-light mb-3 pb-2" id="faq-scoring">Scoring</h2>
+
+        <div class="question">
+            <h3 class="h4">What is the scoring methodology based on?</h3>
+
+            <p>It is extremely difficult to assign an objective value to a subjective question such as &ldquo;How bad is not implementing HTTP Strict Transport Security?&rdquo; This is complicated by the fact that what may be unnecessary for one site &mdash; such as implementing Content Security Policy &mdash; might mitigate important risks for a different site.</p>
+            <p>The scores and grades offered by the Mozilla Observatory are designed to alert developers when they're not taking advantage of the latest web security features, as recommended in Mozilla's <a href="https://wiki.mozilla.org/Security/Guidelines/Web_Security">web security guidelines</a> and <a href="https://wiki.mozilla.org/Security/Server_Side_TLS">server side TLS guidelines</a>. Individual developers will need to determine which of these security technologies is right for their sites.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">What is the minimum and maximum possible score?</h3>
+
+            <p>The current maximum possible score is 135 out of 100.  The minimum score is always 0, regardless of how badly a site does.</p>
+            <p>For technical details, please see <a href="https://github.com/mozilla/http-observatory/blob/master/httpobs/scanner/grader/grade.py">grade.py</a>, and to see a list of the most recent &ldquo;perfect&rdquo; scoring websites, you can use the <a href="https://http-observatory.security.mozilla.org/api/v1/getRecentScans?min=135&num=25">getRecentScans API</a>.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">Err, I can score greater than 100? How is that possible?</h3>
+
+            <p>Some tests award positive scores, such as +5 or +10 points. Why? Think of it as getting extra credit for going above and beyond the call of duty in defending your website.</p>
+            <p>These positive bonuses are specifically designed to encourage people to adopt new security technologies or tackle difficult implementation challenges. Over time, these bonuses may go away as baselines shift or new bonuses may appear as cutting-edge defensive security technologies are created. As these points are extra credit, they are only awarded if your site already achieves an A grade or better.</p>
+        </div>
+
+        <h2 class="page-header h3">Test-specific Questions</h2>
+
+        <div class="question">
+            <h3 class="h4">(HTTP Public Key Pinning) I passed this test, but I didn't implement HPKP!</h3>
+
+            <p>HTTP Public Key Pinning is targeted specifically towards large and/or sensitive websites and implementing it is considered optional. The only way to fail this test is to return an invalid header, such as one that doesn't contain a sufficient number of pins. Sites that do HPKP will get a small bonus on their final grade.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">(Redirection) What is the redirection test assessing?</h3>
+
+            <p>This test is checking whether your web server is making its initial redirection is from HTTP to HTTPS <em>and on the same hostname</em> before doing any further redirections. This allows the HTTP Strict Transport Security (HSTS) header to be applied properly.</p>
+            <p>For example, this redirection order is correct:<br><code>http://example.com</code> &rarr; <code>https://example.com</code> &rarr; <code>https://www.example.com</code>.</p>
+            <p>An incorrect (and penalized) redirection looks like this:<br><code>http://example.com</code> &rarr; <code>https://www.example.com</code>.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">(X-Frame-Options) What if I want to allow my site to be framed?</h3>
+
+            <p>No problem! As long as you are explicit about your preference by using Content Security Policy's <code>frame-ancestors</code> directive, you will pass the X-Frame-Options test. For example, to allow your site to be framed by any https site, the following policy should pass the X-Frame-Options test:</p>
+            <pre>Content-Security-Policy: frame-ancestors https:</pre>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">(X-XSS-Protection) Isn't this header unnecessary in a world with CSP?</h3>
+
+            <p>A properly designed CSP policy that blocks the execution of inline JavaScript can accomplish everything that <tt>X-XSS-Protection</tt> can do and more. Sites with strong CSP policies that block inline JavaScript are therefore automatically opted out of the X-XSS-Protection test.</p>
+            <p>Note that <tt>X-XSS-Protection</tt> still provides some protection for older browsers &mdash; such as Internet Explorer &mdash; that do not support CSP. However, these protections should only be considered a weak defense against cross-site scripting attacks.</p>
+        </div>
+
+        <h2 class="h3 border-bottom border-light mb-3 pb-2">Third-party Integration</h2>
+
+        <div class="question">
+            <h3 class="h4">When I initiated a rescan, the third-party results didn't update. What happened?</h3>
+
+            <p>To reduce load on our third-party providers, the Mozilla Observatory always returns cached results from them. However, if you follow a link to your results for a third-party, most of them will offer the option to scan again. Their updated results will then be reflected in the Observatory.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">What is ssllabs.com?</h3>
+
+            <p><a href="https://www.ssllabs.com/ssltest/">ssllabs.com</a> is a TLS/SSL scanner by <a href="https://www.qualys.com/">Qualys</a> that analyzes your combination of cipher suites, handshake methods, supported protocols, and resistance against a variety of TLS attacks and produces a grade that reflects how secure those choices are.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">What is htbridge.com?</h3>
+
+            <p><a href="https://www.htbridge.com/ssl/">htbridge.com</a> is a TLS/SSL scanner by <a href="https://www.htbridge.com/">High-Tech Bridge</a> that analyzes your combination of cipher suites, handshake methods, supported protocols, and resistance against a variety of TLS attacks and produces a grade that reflects how secure those choices are. For sites that need it, it also tests your configuration against requirements set by HIPAA, NIST, and PCI-DSS.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">What is tls.imirhil.fr?</h3>
+
+            <p><a href="https://tls.imirhil.fr">tls.imirhil.fr</a> is a TLS/SSL scanner by <a href="https://twitter.com/aeris22">@aeris22</a>. It is strongly forward-focused and tests for configurations that are not necessarily appropriate for general-purpose websites.</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">What is securityheaders.com?</h3>
+
+            <p><a href="https://securityheaders.com/">securityheaders.com</a> is an HTTP header analyzer run by <a href="https://twitter.com/Scott_Helme">@Scott_Helme</a> that performs scans similar to those done by the <a href="https://github.com/mozilla/http-observatory">Mozilla HTTP Observatory</a>, by testing HTTP headers. Why two sites that do the same thing? Well, when it comes to security, a second opinion can sure be handy!</p>
+        </div>
+
+        <div class="question">
+            <h3 class="h4">What is hstspreload.org?</h3>
+
+            <p><a href="https://hstspreload.org/">hstspreload.org</a> is the site run by <a href="https://twitter.com/lgarron">@lgarron</a> that manages the HTTP Strict Transport Security (HSTS) preload list. The preload list is a directory of sites that have opted into having browsers connect to their website only over HTTPS, even before they have ever seen an Strict-Transport-Security HTTP header. This helps solve the trust-on-first-use issue, where a man-in-the-middle could prevent a user from ever upgrading to HTTPS and seeing the HSTS header.</p>
+        </div>
+
+
+    </div>
+
+    <!-- main content -->
+    </div>
+<script type="text/javascript" src="../06b997a2601c30fbccee.index.js" integrity="sha256-1nPtUPzjlrCTwwsHeP0kfrYayrMO2nYHBqEVXuYbvMM=" crossorigin="anonymous"></script></body>
+</html>
+
+
