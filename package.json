@@ -4,7 +4,7 @@
   "description": "The front-end for the Mozilla Observatory",
   "license": "MPL-2.0",
   "scripts": {
-    "push": "npm run compile && git add dist && git commit -m 'Automated push' && git push && git subtree push --prefix dist origin gh-pages",
+    "push": "git subtree push --prefix dist origin gh-pages",
     "analyze": "NODE_ENV=production NODE_MODE=analyze webpack --config=config/webpack.config.js --display-error-details --progress --colors",
     "compile": "NODE_ENV=production webpack --config=config/webpack.config.js --display-error-details --progress --colors",
     "watch": "NODE_ENV=development webpack --config=config/webpack.config.js --watch --display-error-details --progress --colors"
