@@ -1,12 +1,12 @@
 <%= require ('html-loader?interpolate!./partials/header.html') %>
 
 <div class="row">
-    <div class="col-md-8 offset-md-2 margin-bottom">
+    <div class="col-12 col-md-10 offset-md-1 col-xl-8 offset-xl-2">
         <h1 id="whatami" class="h6 margin-bottom">
             The ${require('../js/constants.js').title} has helped <span id="stats-numImprovedSites">over <%= require('../js/constants.js').numImprovedSites %></span> websites by teaching developers, system administrators, and security professionals how to configure their sites safely and securely.
         </h1>
 
-        <div class="card">
+        <div class="card mt-3">
             <div class="card-header bg-primary text-white"><span class="h3">Scan your site</span></div>
             <div class="card-body no-popover-mobile pb-4">
                 <div class="alert alert-danger alert-hidden" id="scan-alert" role="alert">
