@@ -2,6 +2,21 @@
   color: $gray-500;
 }
 
+// nav tabs
+@media (max-width: map-get($grid-breakpoints, 'md')) {
+  .nav-tabs {
+    line-height: 1.15;
+
+    .nav-link.nav-item.active {
+      svg {
+        display: inherit;
+        height: 1.2rem;
+        margin-left: -.6rem;
+      }
+    }
+  }
+}
+
 // eventually httpobs.css should go away, but let's start by moving things over slowly
 @media (min-width: $tablesaw-width) {
   #cookies tr td:nth-child(1) {
