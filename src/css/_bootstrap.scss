@@ -1,10 +1,27 @@
+// are we using mozilla's color theme?
+$is-moz: true !default;
+
 // colors
+$black:    #000000 !default;
 $blue:     #4582ec !default;
 $green:    #3fad46 !default;
 $teal:     #5bc0de !default;
 $orange:   #f0ad4e !default;
 $red:      #d9534f !default;
 $white:    #fff    !default;
+
+// mozilla colors
+$moz-neon-blue: #00ffff;
+$moz-lemon-yellow: #fff44f;
+$moz-warm-red: #ff4f5e;
+$moz-neon-green: #54ffbd;
+$moz-dark-purple: #6e008b;
+
+// mozilla secondary colors
+$moz-dark-green: #005e5e;
+$moz-dark-blue: #00458b;
+$moz-dark-gray: #959595;
+$moz-light-gray: #e7e5e2;
 
 $gray-base:     #000 !default;
 $gray-25: lighten($gray-base, 97.5%) !default;
@@ -19,12 +36,13 @@ $gray-700: lighten($gray-base, 30%) !default;
 $gray-800: lighten($gray-base, 20%) !default;
 $gray-900: lighten($gray-base, 10%) !default;
 
-$primary:  $blue !default;
-$success:  $green !default;
-$info:     $teal !default;
-$warning:  $orange !default;
-$danger:   $red !default;
-$light:    $gray-50 !default;
+// this can be configured later by some design expert
+$primary:  if($is-moz, $blue, $blue) !default;
+$success:  if($is-moz, $green, $green) !default;
+$info:     if($is-moz, $teal, $teal) !default;
+$warning:  if($is-moz, $orange, $orange) !default;
+$danger:   if($is-moz, $red, $red) !default;
+$light:    if($is-moz, $gray-50, $gray-50) !default;  
 
 $theme-color-interval:     10% !default;
 $yiq-contrasted-threshold: 220 !default;
@@ -44,20 +62,46 @@ $grid-breakpoints: (
 
 
 // typography
-$font-family-sans-serif:  "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-size-base:          1rem !default;  // 16px
+$font-family-sans-serif:  if($is-moz,
+                             unquote('"Zilla Slab", "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif'),
+                             unquote('"Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif')) !default;
 $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+$font-family-navigation:  if($is-moz,
+                             unquote('"Open Sans", #{$font-family-serif}'),
+                             $font-family-serif) !default;
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-serif !default;
 
+// Zilla Slab is a bit smaller than Raleway
+$btn-font-size:           if($is-moz, $font-size-base * 1.0625, $font-size-base) !default;
+$h1-font-size:            if($is-moz, $font-size-base * 3, $font-size-base * 2.5) !default;
+$h2-font-size:            if($is-moz, $font-size-base * 2.4, $font-size-base * 2) !default;
+$h3-font-size:            if($is-moz, $font-size-base * 2, $font-size-base * 1.75) !default;
+$h4-font-size:            if($is-moz, $font-size-base * 1.75, $font-size-base * 1.5) !default;
+$h5-font-size:            if($is-moz, $font-size-base * 1.5, $font-size-base * 1.25) !default;
+$h6-font-size:            if($is-moz, $font-size-base * 1.25, $font-size-base) !default;
 $headings-font-family:    $font-family-sans-serif !default;
 $headings-font-weight:    700 !default;
+$headings-line-height:    if($is-moz, 1.0, 1.2) !default;
+$input-height-inner:      2.4375rem;  // (1.125 button font size * 1.5 line height) + (.375rem inner padding * 2)
 
+// make popovers a bit more legible
 $popover-font-size:       1rem !default;
 
 .btn,
-.navbar {
+.progress-bar {
   font-family: $font-family-sans-serif;
 }
+
+.navbar {
+  font-family: $font-family-navigation;
+}
+
+nav {
+  font-family: $font-family-serif;
+}
+
 
 //
 // Components
@@ -87,11 +131,16 @@ $input-placeholder-color: $gray-300 !default;
 $nav-tabs-border-color: $gray-200 !default;
 $nav-tabs-link-active-bg: $blue !default;
 $nav-tabs-link-active-color: $white !default;
+
 .nav-tabs {
   .nav-link.nav-item {
     background: $gray-25;
     border: 1px solid $gray-200;
     margin-right: 2px;
+
+    svg {
+      display: none;
+    }
   }
   .nav-link.nav-item.active {
     border: 1px solid $blue;
@@ -99,12 +148,13 @@ $nav-tabs-link-active-color: $white !default;
   }
 }
 
+
 // responsive font scaling for progress bars
 $progress-bar-font-sizes: (
-  xs: 4vw,
-  sm: 3.25vw,
-  md: 2.9vw,
-  lg: 2.5vw,
+  xs: if($is-moz, 4.8vw, 4vw),
+  sm: if($is-moz, 4vw, 3.4vw),
+  md: if($is-moz, 3.35vw, 2.9vw),
+  lg: if($is-moz, 2.75vw, 2.5vw),
   xl: 2.25vw,
   xxl: 2vw,
   xxxl: 1.7vw,
@@ -133,6 +183,7 @@ $table-border-color: $gray-200 !default;
 // Utilities
 //
 .text-break {
+  word-break: break-word;
   overflow-wrap: anywhere;
 }
 
