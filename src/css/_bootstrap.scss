@@ -149,9 +149,7 @@ $nav-tabs-link-active-color: $white !default;
 }
 
 // navbars
-.navbar {
-  padding: 0 1rem .5rem;
-}
+$navbar-padding-x: 0 !default;
 
 
 // responsive font scaling for progress bars
