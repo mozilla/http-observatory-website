@@ -78,10 +78,6 @@ ul {
     margin-bottom: 1em;
 }
 
-#scantron-form fieldset {
-    margin: .75rem 0 -.25rem 1rem;
-}
-
 #scantron-form fieldset div {
     margin: .25rem 0;
 }
