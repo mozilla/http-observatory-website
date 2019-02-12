@@ -14,7 +14,6 @@ export const insert = async () => {
   var htbridgeErrorMapping = ['Unknown', 'Not vulnerable', 'Vulnerable', 'Possibly vulnerable'];
   var output;
   var results = state.results;
-  console.log('htbridge results are', results);
 
   // error out if the scan fails
   if (results.error || results.results === undefined) {
