@@ -147,7 +147,7 @@ const Observatory = {
     }
 
     // initialize all the octicons, ie, data-octicon="info" inserts an SVG for the question octicon
-    $('[data-octicon').each((i, node) => {
+    $('[data-octicon]').each((i, node) => {
       node.append(utils.getOcticon(node.dataset['octicon']));
     });
 
