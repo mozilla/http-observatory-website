@@ -43,20 +43,16 @@
         <div>
             <h2 class="h4">Recent Scans</h2>
 
-            <div class="row" id="results-reveal-container">
-                <div class="col-xs-12 col-md-8">
-                    <div class="panel panel-primary collapse in m-b-0" id="c-button-container">
-                        <div class="panel-heading">
-                            <button class="btn btn-default btn-block expandy-panel-button" type="button" data-toggle="collapse" data-target="#results-container,#c-button-container" aria-expanded="false" aria-controls="results-container">This list is hidden by default, as it may<br>contain sites considered offensive to some.</button>
-                        </div>
-                    </div>
+            <div class="row collapse show" id="results-reveal-container">
+                <div class="col-12 col-md-10 offset-md-1">
+                    <button class="btn btn-light btn-block expandy-panel-button mt-2" type="button" data-toggle="collapse" data-target="#results-container,#results-reveal-container" aria-expanded="false" aria-controls="results-container results-reveal-container">This list is hidden by default, as it may<br>contain sites considered offensive to some.</button>
                 </div>
             </div>
 
             <div class="row collapse" id="results-container">
-                <div class="col-md-4" id="results-recent"></div>
-                <div class="col-md-4" id="results-good"></div>
-                <div class="col-md-4" id="results-bad"></div>
+                <div class="col-12 col-md-4" id="results-recent"></div>
+                <div class="col-12 col-md-4" id="results-good"></div>
+                <div class="col-12 col-md-4" id="results-bad"></div>
             </div>
         </div>
 

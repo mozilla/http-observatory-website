@@ -22,21 +22,22 @@ const insertHTTP = async stats => {
   var table;
   var tbody;
 
-  function createTable(title, alert) {
+  const createTable = (title, alert) => {
     // create the table and table header
-    var table = $('<table></table>').addClass('table table-bordered table-striped table-condensed table-recent-results')
+    var table = $('<table></table>').addClass('table table-bordered table-striped table-recent-results')
       .append('<thead><tr><th class="alert-' + alert + ' h5" colspan="2">' + title + '</th></tr></thead>');
     var tbody = table.append('<tbody></tbody>');
     return [table, tbody];
   }
 
   // insert in the recent best/worst/overall
+  // TODO: make this less garbage
   forEach([
-      {name: 'Recently Scanned', alert: 'warning', data: stats.recent.scans.recent, id: 'results-recent'},
+      {name: 'Recently Scanned', alert: 'primary', data: stats.recent.scans.recent, id: 'results-recent'},
       {name: 'High Achievers', alert: 'success', data: stats.recent.scans.best, id: 'results-good'},
-      {name: 'Failing Grade', alert: 'danger', data: stats.recent.scans.worst, id: 'results-bad'}], function(t) {
+      {name: 'Failing Grade', alert: 'danger', data: stats.recent.scans.worst, id: 'results-bad'}], t => {
     [table, tbody] = createTable(t.name, t.alert);
-    forEach(t.data, function (grade, site) {
+    forEach(t.data, (grade, site) => {
       tbody.append('<tr><td class="hostname">' +
         '<a href="/analyze/' + site + '">' + site + '</a>' +
         '</td><td class="grade">' + grade + '</td>');
@@ -58,7 +59,7 @@ const insertHTTP = async stats => {
       labels: nonFailingGrades,
       datasets: [{
         label: ' ',
-        data: nonFailingGrades.map(function (k) { return stats.gradeDistribution.latest[k]; }),
+        data: nonFailingGrades.map(k => { return stats.gradeDistribution.latest[k]; }),
         backgroundColor: [colors.A, colors.A, colors.A, colors.B, colors.B, colors.B,
           colors.C, colors.C, colors.C, colors.D, colors.D, colors.D]
       }]
@@ -69,10 +70,10 @@ const insertHTTP = async stats => {
       },
       tooltips: {
         callbacks: {
-          label: function(tooltip, data) {
+          label: (tooltip, data) => {
             return ' ' + tooltip.yLabel.toLocaleString();
           },
-          title: function() { return; }
+          title: () => { return; }
         },
         enabled: true
       }
@@ -96,10 +97,10 @@ const insertHTTP = async stats => {
       },
       tooltips: {
         callbacks: {
-          label: function(tooltip, data) {
+          label: (tooltip, data) => {
             return ' ' + tooltip.yLabel.toLocaleString() + ' unique websites';
           },
-          title: function() { return; }
+          title: () => { return; }
         },
         enabled: true
       }
