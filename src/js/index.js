@@ -104,11 +104,12 @@ const Observatory = {
       }
 
       // check to see if the third party button was clicked
-      const thirdPartyOpt = $('#scan-btn-third-party').prop('checked') ? 'third-party=false' : '';
+      let thirdPartyOpt = $('#scan-btn-third-party').prop('checked') ? 'third-party=false' : '';
 
       // if it succeeds, redirect to the analyze page
       if (utils.noQueryServer) {
-        window.location.href = `/analyze/${url.host}?${thirdPartyOpt}`;
+        thirdPartyOpt = thirdPartyOpt === '' ? '' : `?${thirdPartyOpt}`;
+        window.location.href = `/analyze/${url.host}${thirdPartyOpt}`;
       } else {
         window.location.href = `/analyze/index.html?host=${url.host}&${thirdPartyOpt}`;
       }
