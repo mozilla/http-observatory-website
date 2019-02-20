@@ -89,8 +89,7 @@ $input-height-inner:      2.4375rem;  // (1.125 button font size * 1.5 line heig
 // make popovers a bit more legible
 $popover-font-size:       1rem !default;
 
-.btn,
-.progress-bar {
+.btn {
   font-family: $font-family-sans-serif;
 }
 
