@@ -64,7 +64,7 @@ const insert = async (scan, results) => {
   var lastScanDelta;
   var monospacedKeywords;
   var nextStep = 'congratulations';
-  var importantGlyphs = '\ud83c\udf89\ud83c\udf89\ud83c\udf89';
+  var importantGlyphs = '\ud83e\udd70';
   var responseHeaders = [];
   const target = utils.getTarget();
 
