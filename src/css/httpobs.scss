@@ -34,10 +34,6 @@
       white-space: nowrap;
     }
 
-    tbody tr td:nth-child(n+2):nth-child(-n+5) { /* code point, key size, AEAD, and PFS */
-      text-align: center;
-    }
-
     tr th:nth-of-type(2) {
         text-align: center;
     }

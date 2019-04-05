@@ -259,11 +259,12 @@ const insert = async (scan, results) => {
       $('<code></code>').text(attributes.path)[0],
       attributes.secure ? utils.getOcticon('check') : utils.getOcticon('x'),
       attributes.httponly ? utils.getOcticon('check') : utils.getOcticon('x'),
-      attributes.samesite ? $('<code></code>').text(attributes.samesite)[0] : ['', 'glyphicon glyphicon-remove'],
+      attributes.samesite ? $('<code></code>').text(attributes.samesite)[0] : utils.getOcticon('x'),
       (name.startsWith('__Host') || name.startsWith('__Secure')) ? utils.getOcticon('check') : utils.getOcticon('x'),
     ]);
   });
-  utils.tableify(cookies, 'cookies-table');
+
+  utils.tableify(cookies, 'cookies-table', [2, 3, 4, 5, 6]);
 
   // write the server headers into the page
   forEach(scan.response_headers, (value, header) => {
@@ -399,7 +400,7 @@ const insertHostHistory = async () => {
   // insert the table into the page
   forEach(state.history, function f(entry) {
     rows.push([utils.toLocalTime(entry.end_time, 'ddd, DD MMM YYYY HH:mm:ss zz'),
-      entry.score.toString() + '/100',
+      entry.score.toString(),
       entry.grade]);
   });
 
@@ -412,7 +413,7 @@ const insertHostHistory = async () => {
     $('#host-history button')[0].remove();
   }
 
-  utils.tableify(rows, 'host-history-table');
+  utils.tableify(rows, 'host-history-table', [1, 2]);
   Tablesaw.init($('#host-history-table'));
 };
 

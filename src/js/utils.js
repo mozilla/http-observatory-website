@@ -142,7 +142,7 @@ const sleep = (milliseconds) => {
 
 
 // take a list of lists and push it into an existing table
-const tableify = (list, tableId) => {
+const tableify = (list, tableId, centeredRows = []) => {
   var table = document.getElementById(tableId);
   var tbody = document.createElement('tbody');
   table.appendChild(tbody);
@@ -150,8 +150,17 @@ const tableify = (list, tableId) => {
   forEach(list, row => {
     var tr = document.createElement('tr');
 
-    forEach(row, col => {
+    forEach(row, (col, index) => {
       var td = document.createElement('td');
+
+      // center the row if necessary
+      if (centeredRows.includes(index)) {
+        if (typeof col === 'string' || typeof col === 'object') {
+          col = [col, 'tablesaw-center'];
+        } else if (Array.isArray(col)) {
+          col[1] = `${col[1]} tablesaw-center`;
+        }
+      }
 
       // TODO: make this more elegant
       // columns can be of three types:
@@ -170,7 +179,10 @@ const tableify = (list, tableId) => {
       } else {
         td.appendChild(col);
       }
+
+
       tr.appendChild(td);
+
     });
     tbody.appendChild(tr);
   });

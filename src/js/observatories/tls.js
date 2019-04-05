@@ -182,7 +182,7 @@ const insert = async () => {
   utils.insertResults(state.output.certificate, 'tls-certificate');
   utils.insertResults(state.output.misc, 'tls-misc');
   utils.insertResults(state.output.suggestions, 'tls-suggestions');
-  utils.tableify(cipherTable, 'tls-ciphers-table');
+  utils.tableify(cipherTable, 'tls-ciphers-table', [1, 2, 3, 4]);
 
   // clean up the protocol support table
   $('#tls-ciphers-table').find('td').each(function f() {
