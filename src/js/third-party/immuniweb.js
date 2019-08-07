@@ -11,7 +11,7 @@ export const state = {
 
 
 export const insert = async () => {
-  var htbridgeErrorMapping = ['Unknown', 'Not vulnerable', 'Vulnerable', 'Possibly vulnerable'];
+  var immuniwebErrorMapping = ['Unknown', 'Not vulnerable', 'Vulnerable', 'Possibly vulnerable'];
   var output;
   var results = state.results;
 
@@ -23,7 +23,7 @@ export const insert = async () => {
 
   // error out if the site doesn't support https
   if (!results.results.has_ssl_tls) {
-    utils.errorResults('Site does not support HTTPS', 'htbridge');
+    utils.errorResults('Site does not support HTTPS', 'immuniweb');
     return;
   }
 
@@ -35,10 +35,10 @@ export const insert = async () => {
     nist_compliant: results.nist.compliant.value ? 'Compliant' : 'Non-compliant',
     pci_dss_compliant: results.pci_dss.compliant.value ? 'Compliant' : 'Non-compliant',
     score: results.results.score.toString(),
-    url: utils.linkify(`https://www.htbridge.com/ssl/?id=${results.internals.id}`, results.internals.id.substring(0, 12), results.internals.id.substring(0, 12)),
+    url: utils.linkify(`https://www.immuniweb.com/ssl/?id=${results.internals.id}`, results.internals.id.substring(0, 12), results.internals.id.substring(0, 12)),
     vulnerabilities: {
-      cve_2014_0224: htbridgeErrorMapping[results.pci_dss.cve_2014_0224.value + 1],
-      cve_2016_2107: htbridgeErrorMapping[results.pci_dss.cve_2016_2107.value + 1],
+      cve_2014_0224: immuniwebErrorMapping[results.pci_dss.cve_2014_0224.value + 1],
+      cve_2016_2107: immuniwebErrorMapping[results.pci_dss.cve_2016_2107.value + 1],
       drown: results.pci_dss.drown.value ? 'Vulnerable' : 'Not vulnerable',
       heartbleed: results.pci_dss.heartbleed.value ? 'Vulnerable' : 'Not vulnerable',
       insecure_reneg: results.pci_dss.supports_insecure_reneg.value ? 'Vulnerable' : 'Not vulnerable',
@@ -50,17 +50,17 @@ export const insert = async () => {
   // store it in the global object
   state.output = output;
 
-  Tablesaw.init($('#htbridge-summary-table'));
+  Tablesaw.init($('#immuniweb-summary-table'));
 
-  utils.insertGrade(results.results.grade, 'htbridge');
-  utils.insertResults(output, 'htbridge');
-  utils.insertResults(output.vulnerabilities, 'htbridge');
-  utils.showResults('htbridge');
+  utils.insertGrade(results.results.grade, 'immuniweb');
+  utils.insertResults(output, 'immuniweb');
+  utils.insertResults(output.vulnerabilities, 'immuniweb');
+  utils.showResults('immuniweb');
 };
 
 
 export const load = async (test_id) => {
-  var API_URL = 'https://www.htbridge.com/ssl/api/v1/';
+  var API_URL = 'https://www.immuniweb.com/ssl/api/v1/';
   state.count += 1;
 
   // limit the number of API calls that can be made
@@ -109,10 +109,9 @@ const checkCallback = async data => {
     load();
   }
 
-//  insert();  
 }
 
 
 const errorCallback = async () => {
-  utils.errorResults('Error', 'htbridge');
+  utils.errorResults('Error', 'immuniweb');
 };
