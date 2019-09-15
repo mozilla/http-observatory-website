@@ -11,7 +11,7 @@ export const insert = async () => {
   var i;
 
   // we'll maybe look at more hosts later, but for now let's just look at one
-  var jsonHosts = state.json.hosts;
+  var jsonHosts = state.json.result.hosts;
 
   // loop through every host
   var addresses = [];
@@ -121,8 +121,7 @@ const loadSuccessCallback = async (data) => {
   // store the response headers for debugging
   state.json = data;
 
-  // it returns "pending", which is invalid JSON, if it's pending
-  if (data === 'pending') {
+  if (data.pending) {
     await utils.sleep(5000);
     load();
   } else {
