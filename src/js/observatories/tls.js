@@ -193,18 +193,6 @@ const insert = async () => {
     }
   });
 
-  // show the Symantec trust warning, if the site is using a bad certificate
-  if (state.analyzers.symantecDistrust.isDistrusted &&
-      (
-        (parseInt(cert.validity.notBefore.split('-')[0]) == 2016 && parseInt(cert.validity.notBefore.split('-')[1]) <= 5) ||
-         parseInt(cert.validity.notBefore.split('-')[0]) < 2016)
-      )
-  {
-    $('#tls-symantec-distrust-warning-june-2016').removeClass('d-none');
-  } else if (state.analyzers.symantecDistrust.isDistrusted) {
-    $('#tls-symantec-distrust-warning').removeClass('d-none');
-  }
-
   // similarly, show the warning if the certificate isn't trusted
   if (results.is_valid === false) {
     $('#tls-observatory-invalid-cert-warning').removeClass('d-none');

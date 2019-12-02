@@ -1,14 +1,5 @@
 <%= require ('html-loader?interpolate!./partials/header.html') %>
 
-    <!-- Symantec certificate errors moved to the very top level -->
-    <div class="d-none alert alert-danger text-center row" id="tls-symantec-distrust-warning-june-2016">
-        This site uses a Symantec cert issued before June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 60</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 66</a>. Please replace its certificate immediately.
-    </div>
-
-    <div class="d-none alert alert-danger text-center row" id="tls-symantec-distrust-warning">
-        This site uses a Symantec cert issued on or after June 1, 2016, and will be distrusted by <a href="https://blog.mozilla.org/security/2018/03/12/distrust-symantec-tls-certificates/">Firefox 63</a> and <a href="https://security.googleblog.com/2018/03/distrust-of-symantec-pki-immediate.html">Chrome 70</a>. Please replace its certificate immediately.
-    </div>
-
     <nav>
         <div id="nav-tab" class="nav nav-tabs flex-column flex-md-row" role="tablist">
             <a class="nav-item nav-link active" id="nav-http-tab" href="#http" data-toggle="tab" data-target="#http-tab" role="tab" aria-controls="nav-http" aria-selected="true"><span data-octicon="chevron-right"> </span>HTTP Observatory</a>
