@@ -81,7 +81,7 @@ const insert = async () => {
   }
 
   // link to the JSON results
-  state.output.uuid = utils.linkify(`${constants.urls.ssh}scan/results=uuid=${state.uuid}`, state.output.uuid, state.output.uuid)
+  state.output.uuid = utils.linkify(`${constants.urls.ssh}scan/results?uuid=${state.uuid}`, state.output.uuid, state.output.uuid)
 
   utils.insertGrade(results.compliance.grade, 'ssh');
   utils.insertResults(state.output, 'ssh');
