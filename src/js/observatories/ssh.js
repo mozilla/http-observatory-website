@@ -35,7 +35,7 @@ const insert = async () => {
     compliant: results.compliance.compliant ? 'Yes' : 'No',
     compression: without(compression, ['none']).length > 0 ? 'Available' : 'Unavailable',
     duplicate_host_keys: results.duplicate_host_key_ips.length > 0 ? duplicateHostKeyIpMsg : 'No',
-    end_time_l: utils.toLocalTime(results.end_time),
+    end_time_l: utils.toLocalTime(results.end_time.replace(" +0000", "+0000"), "YYYY-MM-DD HH:mm:ssZ"),
     grade: results.compliance.grade,
     hostname: results.hostname,
     ip: results.ip,
