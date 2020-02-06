@@ -11,7 +11,7 @@ export const insert = async () => {
   var i;
 
   // we'll maybe look at more hosts later, but for now let's just look at one
-  var jsonHosts = state.json.hosts;
+  var jsonHosts = state.json.result.hosts;
 
   // loop through every host
   var addresses = [];
