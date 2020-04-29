@@ -29,7 +29,6 @@
         "dev": "https://mozilla.github.io/http-observatory-website/"
     },
     "keywords": [
-        "python",
         "html5",
         "jquery",
         "bootstrap",
