@@ -21,7 +21,7 @@
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "dayjs": "^1.8.15",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "octicons": "^8.5.0",
     "popper.js": "^1.15.0",
     "tablesaw": "^3.1.2"
