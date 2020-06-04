@@ -104,7 +104,7 @@ export const insert = async () => {
 export const load = async () => {
   var API_URL = 'https://hstspreload.org/api/v2/';
   const target = utils.getTarget();
-  const url = `https://hstspreload.org?domain?${target}`;
+  const url = `https://hstspreload.org?domain=${target}`;
 
   // Store the host and url
   state.target = target;

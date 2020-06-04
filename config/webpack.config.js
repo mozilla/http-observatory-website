@@ -27,21 +27,14 @@ plugins = [
   new CopyWebpackPlugin([
     {
       from: 'src/images',
-      to: 'images/',
-      flatten: true
-    }
-  ]),
-  new CopyWebpackPlugin([
+      to: 'images/'
+    },
     {
       from: 'src/fonts',
-      to: 'fonts/',
-      flatten: true
-    }
-  ]),
-  new CopyWebpackPlugin([
+      to: 'fonts/'
+    },
     {
-      from: 'src/misc',
-      flatten: true
+      from: 'src/misc'
     }
   ]),
   new webpack.ProvidePlugin({
