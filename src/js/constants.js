@@ -17,7 +17,7 @@ module.exports = {
   grades: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
   maxQueriesBeforeTimeout: 300,
   noQueryParameterServers: ['localhost', 'observatory.mozilla.org'],
-  numImprovedSites: '170,000',
+  numImprovedSites: '240,000',
   title: 'Mozilla Observatory',
   urls: {
     api: 'https://http-observatory.security.mozilla.org/api/v1/',
