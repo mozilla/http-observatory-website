@@ -21,7 +21,6 @@ module.exports = {
   title: 'Mozilla Observatory',
   urls: {
     api: 'https://http-observatory.security.mozilla.org/api/v1/',
-    ssh: 'https://sshscan.rubidus.com/api/v1/',
     tls: 'https://tls-observatory.services.mozilla.com/api/v1/',
   },
 }

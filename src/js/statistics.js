@@ -112,48 +112,6 @@ const insertHTTP = async stats => {
 };
 
 
-const insertSSH = async data => {
-  // saving these for reference
-  state.ssh = data;
-
-  var colors = constants.colors;
-  var grades = data.GRADE_REPORT;
-  var stats = {
-    numScans: sum(Object.values(data.SCAN_STATES)),
-    numSuccessfulScans: data.SCAN_STATES.COMPLETED
-  }
-
-  new Chart($('#ssh-observatory-chart-grade-distribution'), {
-    type: 'bar',
-    data: {
-      labels: ['A', 'B', 'C', 'D', 'F'],
-      datasets: [{
-        label: ' ',
-        data: [grades.A, grades.B, grades.C, grades.D, grades.F],
-        backgroundColor: [colors.A, colors.B, colors.C, colors.D, colors.F]
-      }]
-    },
-    options: {
-      legend: {
-        display: false
-      },
-      tooltips: {
-        callbacks: {
-          label: function(tooltip, data) {
-            return ' ' + tooltip.yLabel.toLocaleString();
-          },
-          title: function() { return; }
-        },
-        enabled: true
-      }
-    }
-  });
-
-  // insert in the miscellaneous statistics
-  utils.insertResults(utils.prettyNumberify(stats), 'ssh-observatory-stats');
-};
-
-
 const insertTLS = async stats => {
   // saving these for data
   state.tls = stats;
@@ -172,15 +130,6 @@ export const load = async () => {
     },
     success: function s(data) { insertHTTP(data); },
     url: constants.urls.api + '__stats__'
-  });
-
-  // SSH Observatory
-  $.ajax({
-    error: function e() {
-      // remove stats section
-    },
-    success: function s(data) { insertSSH(data); },
-    url: constants.urls.ssh + 'stats'
   });
 
   $.ajax({

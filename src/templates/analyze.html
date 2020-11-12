@@ -4,7 +4,6 @@
         <div id="nav-tab" class="nav nav-tabs flex-column flex-md-row" role="tablist">
             <a class="nav-item nav-link active" id="nav-http-tab" href="#http" data-toggle="tab" data-target="#http-tab" role="tab" aria-controls="nav-http" aria-selected="true"><span data-octicon="chevron-right"> </span>HTTP Observatory</a>
             <a class="nav-item nav-link" id="nav-tls-tab" href="#tls" data-toggle="tab" data-target="#tls-tab" role="tab" aria-controls="nav-tls"><span data-octicon="chevron-right"> </span>TLS Observatory</a>
-            <a class="nav-item nav-link" id="nav-ssh-tab" href="#ssh" data-toggle="tab" data-target="#ssh-tab" role="tab" aria-controls="nav-ssh"><span data-octicon="chevron-right"> </span>SSH Observatory</a>
             <a class="nav-item nav-link" id="nav-third-party-tab" href="#third-party" data-toggle="tab" data-target="#third-party-tab" role="tab" aria-controls="nav-third"><span data-octicon="chevron-right"> </span>Third-party Tests</a>
         </div>
     </nav>
@@ -74,41 +73,6 @@
 
                 <!-- TLS Observatory suggestions -->
                 <%= require ('html-loader!./analyze/tls/suggestions.html') %>
-            </div>
-        </div>
-
-        <!-- SSH Observatory -->
-        <div class="tab-pane" id="ssh-tab" role="tabpanel" aria-labelledby="nav-ssh-tab">
-            <div id="ssh-scan-initiator" class="mt-3">
-                <button class="btn btn-light expandy-panel-button align-middle py-3 w-100" id="ssh-scan-initiator-btn" type="button">
-                  SSH Observatory scans are not performed automatically. Click here to initiate a scan.
-                </button>
-            </div>
-
-            <!-- Notice about which system hosts the scans -->
-            <div class="alert alert-danger d-none mt-3 mx-3 px-3 py-3 rounded" id="ssh-scanner-alert" role="alert">
-              <div class="pb-3"><strong>Scan Failed: </strong>The Mozilla SSH Observatory scans from <code class="bg-light mb-3 px-1 py-1 rounded">sshscan.rubidus.com</code> at <code class="bg-light px-1 py-1 rounded">45.55.176.164</code>.</div>
-
-              <div>Many systems are configured with firewalls that block SSH access. To successfully scan with the SSH Observatory, access must be granted to Mozilla's scanning system.</div>
-            </div>
-
-            <!-- progress bar -->
-            <span id="ssh-progress-bar-container" class="d-none">
-                <%= require ('mustache-loader!html-loader?interpolate!./partials/progress-bar.html')({id: 'ssh'}) %>
-            </span>
-
-            <div class="d-none" id="ssh-results">
-                <!-- SSH Observatory scan results -->
-                <%= require ('html-loader!./analyze/ssh/scan-summary.html') %>
-
-                <!-- SSH Observatory recommendations -->
-                <%= require ('html-loader!./analyze/ssh/recommendations.html') %>
-
-                <!-- SSH Observatory miscellaneous -->
-                <%= require ('html-loader!./analyze/ssh/miscellaneous.html') %>
-
-                <!-- SSH Observatory version information -->
-                <%= require ('html-loader!./analyze/ssh/version-information.html') %>
             </div>
         </div>
 
