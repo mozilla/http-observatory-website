@@ -7,7 +7,7 @@ import * as ImmuniWeb from './immuniweb.js';
 import * as SecurityHeaders from './security-headers.js';
 import * as SSLLabs from './ssl-labs.js';
 import * as TLSImirhil from './tls-imirhil.js';
-
+import * as CspEvaluator from "./cspevaluator.js";
 
 const load = async () => {
   await Promise.all([
@@ -15,10 +15,10 @@ const load = async () => {
     HSTSPreload.load(),
     ImmuniWeb.load(),
     SecurityHeaders.load(),
+    CspEvaluator.load(),
     SSLLabs.load(),
     TLSImirhil.load(),
   ]);
-}
+};
 
-
-export default { load, GCA, HSTSPreload, ImmuniWeb, SecurityHeaders, SSLLabs, TLSImirhil };
+export default { load, GCA, HSTSPreload, ImmuniWeb, SecurityHeaders, CspEvaluator, SSLLabs, TLSImirhil };
