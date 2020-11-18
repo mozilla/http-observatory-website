@@ -1,6 +1,7 @@
 import $ from "jquery";
-import utils from "../utils.js";
+import { forEach } from "lodash";
 
+import utils from "../utils.js";
 import Tablesaw from "../../../node_modules/tablesaw/dist/tablesaw.jquery.js";
 
 export const state = {
@@ -30,12 +31,12 @@ export const insert = () => {
     score,
     grade,
     url: utils.linkify(results.fullResults || ""),
-    findingNames: findings.reduce((acc, { name, key }) => {
+    findingNames: findings.reduce((acc, { name, key, infoLink }) => {
       key = `${key}-name`;
       if (key in acc) {
         return acc;
       }
-      return { ...acc, [key]: name };
+      return { ...acc, [key]: infoLink ? `<a href="${infoLink}">${name}</a>` : name };
     }, {}),
     findingValues: findings.reduce((acc, { value, key }) => {
       key = `${key}-value`;
@@ -53,7 +54,9 @@ export const insert = () => {
   console.log(output);
   utils.insertGrade(results.grade, "cspevaluator");
   utils.insertResults(output, "cspevaluator");
-  utils.insertResults(output.findingNames, "cspevaluator");
+  forEach(output.findingNames, function f(v, k) {
+    $("#cspevaluator" + "-" + k).html(v);
+  });
   utils.insertResults(output.findingValues, "cspevaluator");
   utils.showResults("cspevaluator");
 };
