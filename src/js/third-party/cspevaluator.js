@@ -36,7 +36,12 @@ export const insert = () => {
       if (key in acc) {
         return acc;
       }
-      return { ...acc, [key]: infoLink ? `<a href="${infoLink}">${name}</a>` : name };
+      return {
+        ...acc,
+        [key]: infoLink
+          ? `<a target="_blank" rel="noreferrer noopener" href="${infoLink}">${name}</a>`
+          : name,
+      };
     }, {}),
     findingValues: findings.reduce((acc, { value, key }) => {
       key = `${key}-value`;
