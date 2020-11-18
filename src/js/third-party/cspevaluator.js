@@ -7,7 +7,7 @@ export const state = {
   count: 0,
   results: {},
 };
-const API_URL = "https://cspevaluator.org/api/moz";
+const API_URL = "https://cspevaluator.org/api/v1/moz";
 const RATELIMIT = 50;
 
 export const insert = () => {
@@ -18,7 +18,7 @@ export const insert = () => {
     return;
   }
 
-  const { score = 0, grade = "F", metadata = {}, findings = [] } = results;
+  const { score = 0, grade = "F", summary = [], findings = [] } = results;
 
   if (findings.length === 0) {
     utils.errorResults("No results");
@@ -30,30 +30,31 @@ export const insert = () => {
     score,
     grade,
     url: utils.linkify(results.fullResults || ""),
-    findings: findings.reduce((acc, { name, value }) => {
-      name = name.toLowerCase();
-      if (name in acc) {
+    findingNames: findings.reduce((acc, { name, key }) => {
+      key = `${key}-name`;
+      if (key in acc) {
         return acc;
       }
-      return { ...acc, [name]: value };
+      return { ...acc, [key]: name };
     }, {}),
-    metadata: utils.listify(
-      Object.keys(metadata).map((key) => {
-        const count = metadata[key];
-        return `${count} ${key}${count > 1 ? "'s" : ""}`;
-      }),
-      false,
-      ["pl-0"]
-    ),
+    findingValues: findings.reduce((acc, { value, key }) => {
+      key = `${key}-value`;
+      if (key in acc) {
+        return acc;
+      }
+      return { ...acc, [key]: value };
+    }, {}),
+    metadata: utils.listify(summary, false, ["pl-0"]),
   };
   // store it in the global object
   state.output = output;
 
   Tablesaw.init($("#cspevaluator-summary-table"));
-
+  console.log(output);
   utils.insertGrade(results.grade, "cspevaluator");
   utils.insertResults(output, "cspevaluator");
-  utils.insertResults(output.findings, "cspevaluator");
+  utils.insertResults(output.findingNames, "cspevaluator");
+  utils.insertResults(output.findingValues, "cspevaluator");
   utils.showResults("cspevaluator");
 };
 
