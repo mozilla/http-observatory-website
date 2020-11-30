@@ -56,7 +56,6 @@ export const insert = () => {
   state.output = output;
 
   Tablesaw.init($("#cspevaluator-summary-table"));
-  console.log(output);
   utils.insertGrade(results.grade, "cspevaluator");
   utils.insertResults(output, "cspevaluator");
   forEach(output.findingNames, function f(v, k) {
