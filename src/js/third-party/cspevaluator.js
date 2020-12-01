@@ -8,7 +8,7 @@ export const state = {
   count: 0,
   results: {},
 };
-const API_URL = "https://cspevaluator.org/api/v1/moz";
+const API_URL = "https://cspevaluator.com/api/v1/moz";
 const RATELIMIT = 50;
 
 export const insert = () => {
