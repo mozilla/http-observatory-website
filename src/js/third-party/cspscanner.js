@@ -2,13 +2,13 @@ import $ from "jquery";
 import { forEach } from "lodash";
 
 import utils from "../utils.js";
-import Tablesaw from "../../../node_modules/tablesaw/dist/tablesaw.jquery.js";
+import Tablesaw from "tablesaw/dist/tablesaw.jquery";
 
 export const state = {
   count: 0,
   results: {},
 };
-const API_URL = "https://cspevaluator.com/api/v1/moz";
+const API_URL = "https://cspscanner.com/api/v1/moz";
 const RATELIMIT = 50;
 
 export const insert = () => {
@@ -55,14 +55,14 @@ export const insert = () => {
   // store it in the global object
   state.output = output;
 
-  Tablesaw.init($("#cspevaluator-summary-table"));
-  utils.insertGrade(results.grade, "cspevaluator");
-  utils.insertResults(output, "cspevaluator");
+  Tablesaw.init($("#cspscanner-summary-table"));
+  utils.insertGrade(results.grade, "cspscanner");
+  utils.insertResults(output, "cspscanner");
   forEach(output.findingNames, function f(v, k) {
-    $("#cspevaluator" + "-" + k).html(v);
+    $("#cspscanner" + "-" + k).html(v);
   });
-  utils.insertResults(output.findingValues, "cspevaluator");
-  utils.showResults("cspevaluator");
+  utils.insertResults(output.findingValues, "cspscanner");
+  utils.showResults("cspscanner");
 };
 
 export const load = async () => {
@@ -90,5 +90,5 @@ export const load = async () => {
 };
 
 const errorCallback = async () => {
-  utils.errorResults("Error", "cspevaluator");
+  utils.errorResults("Error", "cspscanner");
 };
