@@ -231,7 +231,7 @@ const getQueryParameter = param => {
 /* result handling */
 
 const updateProgress = (text, id) => {
-  // Set new the progressbar text
+  // Update progressbar text
   $('#' + id + '-progress-bar-text').text(text);
 };
 
