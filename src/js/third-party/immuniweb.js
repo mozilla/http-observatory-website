@@ -12,7 +12,7 @@ export const state = {
 };
 
 
-export const insert = async () => {
+export const insert = () => {
   var immuniwebErrorMapping = ['Unknown', 'Not vulnerable', 'Vulnerable', 'Possibly vulnerable'];
   var output;
   var results = state.results;
@@ -61,7 +61,7 @@ export const insert = async () => {
 };
 
 
-export const load = async () => {
+export const load = () => {
   const target = utils.getTarget();
   const rescan = utils.getQueryParameter('rescan') === 'true';
   const hidden = utils.getQueryParameter('hidden') === 'true';
@@ -84,14 +84,14 @@ export const load = async () => {
 };
 
 
-const fetchResult = async (test_id) => {
+const fetchResult = (test_id) => {
   $.ajax({
     data: {
       id: test_id,
     },
     method: 'POST',
     error: errorCallback,
-    success: async (data) => {
+    success: (data) => {
       state.results = data;
       insert();
     },
@@ -121,7 +121,7 @@ const waitResult = (job_id) => {
 };
 
 
-const checkCallback = async data => {
+const checkCallback = async (data) => {
   if (data.error) {
     if (data.error_id && data.error_id < 5) {
       utils.errorResults('Free tests limit exceeded', 'immuniweb');
