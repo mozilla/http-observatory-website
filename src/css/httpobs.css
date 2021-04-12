@@ -362,6 +362,11 @@ sup, sub {
     margin-top: 1.5em;
 }
 
+/* wrap long dkim records */
+#gca-dkim_record {
+    word-break: break-all;
+}
+
 /* faq and terms and statistics pages */
 #faq, #terms {
     max-width: 53em;
