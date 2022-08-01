@@ -336,20 +336,6 @@ div.progress-lg + div.row {
     width: 300px;
 }
 
-/* htbridge third party result */
-#htbridge-logo {
-    margin: 1.5em .75em -1em 0;
-    width: 220px;
-}
-
-#htbridge-url {
-    display: inline-block;
-    max-width: 30em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 sup, sub {
   vertical-align: baseline;
   position: relative;
