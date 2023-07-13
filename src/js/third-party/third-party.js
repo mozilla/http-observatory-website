@@ -6,7 +6,7 @@ import * as HSTSPreload from './hsts-preload.js';
 import * as ImmuniWeb from './immuniweb.js';
 import * as SecurityHeaders from './security-headers.js';
 import * as SSLLabs from './ssl-labs.js';
-import * as TLSImirhil from './tls-imirhil.js';
+import * as CryptCheck from './cryptcheck.js';
 
 
 const load = async () => {
@@ -16,9 +16,9 @@ const load = async () => {
     ImmuniWeb.load(),
     SecurityHeaders.load(),
     SSLLabs.load(),
-    TLSImirhil.load(),
+    CryptCheck.load(),
   ]);
 }
 
 
-export default { load, GCA, HSTSPreload, ImmuniWeb, SecurityHeaders, SSLLabs, TLSImirhil };
+export default { load, GCA, HSTSPreload, ImmuniWeb, SecurityHeaders, SSLLabs, CryptCheck };
