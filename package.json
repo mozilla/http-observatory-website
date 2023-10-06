@@ -5,9 +5,9 @@
   "license": "MPL-2.0",
   "scripts": {
     "push": "git subtree push --prefix dist origin gh-pages",
-    "analyze": "NODE_ENV=production NODE_MODE=analyze webpack --config=config/webpack.config.js --display-error-details --progress --colors",
-    "compile": "NODE_ENV=production webpack --config=config/webpack.config.js --display-error-details --progress --colors",
-    "watch": "NODE_ENV=development webpack --config=config/webpack.config.js --watch --display-error-details --progress --colors"
+    "analyze": "NODE_ENV=production NODE_MODE=analyze NODE_OPTIONS=--openssl-legacy-provider webpack --config=config/webpack.config.js --display-error-details --progress --colors",
+    "compile": "NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider webpack --config=config/webpack.config.js --display-error-details --progress --colors",
+    "watch": "NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider webpack --config=config/webpack.config.js --watch --display-error-details --progress --colors"
   },
   "repository": {
     "type": "git",
