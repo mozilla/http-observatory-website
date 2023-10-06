@@ -91,15 +91,7 @@ const Observatory = {
 
     const successCallback = function f(data) {
       if (data.error !== undefined && data.error !== 'site down') {
-        // if it's an IP address error, let them click through
-        if (data.error === 'invalid-hostname-ip') {
-          $('#scan-alert-ip-link').attr('href', window.location.href + 'analyze/' + url.host + '#ssh');
-          $('#scan-alert-ip-address').text(url.host);
-          $('#scan-alert-ip').removeClass('alert-hidden');
-        } else {
-          Observatories.HTTP.displayError(data.text);
-        }
-
+        Observatories.HTTP.displayError(data.text);
         return false;
       }
 
@@ -170,14 +162,6 @@ const Observatory = {
 
       Observatories.HTTP.load();
       Observatories.TLS.load();
-
-      // enable auto scans from the non-Observatory domain
-      if ((window.location.hostname !== constants.domain) || (window.location.hash === '#ssh')) {
-        Observatories.SSH.load();
-      } else {
-        $('#ssh-scan-initiator-btn').on('click', Observatories.SSH.load);
-
-      }
 
       // let's check the third parties if requested
       if (utils.getQueryParameter('third-party') !== 'false') {

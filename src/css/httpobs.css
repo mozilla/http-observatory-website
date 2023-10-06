@@ -240,9 +240,7 @@ div.progress-lg + div.row {
 /* test name */
 #server-headers-table tr td:nth-child(1),
 #tls-certificate-table tr td:nth-child(1),
-#tls-misc-table tr td:nth-child(1),
-#ssh-misc-table tr td:nth-child(1),
-#ssh-version-table tr td:nth-child(1) {
+#tls-misc-table tr td:nth-child(1) {
     font-weight: 600;
     padding-right: 1em;
 }
@@ -326,10 +324,6 @@ div.progress-lg + div.row {
     margin-bottom: 0;
 }
 
-#ssh-recommendations-table ul {
-    margin-bottom: 0;
-}
-
 /* qualys third party test */
 #qualys-logo {
     margin: 1.5em .75em -1em 0;
@@ -390,7 +384,7 @@ sup, sub {
     font-weight: bold;
 }
 
-#next-steps a, #test-scores a, #ssh-summary a {
+#next-steps a, #test-scores a {
     border-bottom: 1px dotted #4582ec;
     text-decoration: none;
 }
