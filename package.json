@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mozilla/http-observatory-website#readme",
   "dependencies": {
+    "@mozmeao/dnt-helper": "^1.0.0",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "dayjs": "^1.8.15",

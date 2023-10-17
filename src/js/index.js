@@ -10,6 +10,7 @@ import constants from './constants.js';
 import statistics from './statistics.js';
 import thirdParty from './third-party/third-party.js';
 import utils from './utils.js';
+import './ga.js';
 
 window.$ = $;
 
