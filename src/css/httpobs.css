@@ -381,11 +381,12 @@ sup, sub {
 }
 
 /* redirection and next steps banners */
-#redirect-banner, #survey-banner {
+#scoring-banner {
+    font-family: sans-serif;
     font-weight: bold;
 }
 
-.alert-danger a, #redirect-banner a, #survey-banner a {
+.alert-danger a, #scoring-banner a {
     color: white;
     font-weight: bold;
 }
@@ -395,7 +396,7 @@ sup, sub {
     text-decoration: none;
 }
 
-#redirect-banner a, #survey-banner a {
+#scoring-banner a {
     border-bottom: 2px dotted #ffffff;
     text-decoration: none;
 }
