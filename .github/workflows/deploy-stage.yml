@@ -3,7 +3,7 @@ name: Deploy static content to GCP Stage
 on:
   # Runs on pushes targeting these branches
   push:
-    branches: ["master", "next", "gcp"]
+    branches: ["master", "stage"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
