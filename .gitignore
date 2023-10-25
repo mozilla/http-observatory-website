@@ -3,3 +3,4 @@
 conf/nginx.pid
 build
 node_modules
+dist
