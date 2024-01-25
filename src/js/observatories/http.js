@@ -214,15 +214,6 @@ const insert = async (scan, results) => {
     $('#tests-' + result.name + '-score-description').html(scoreDescription);
   });
 
-  // note that HPKP is optional
-  if (includes(['hpkp-not-implemented',
-    'hpkp-not-implemented-no-https',
-    'hpkp-invalid-cert'],
-      results['public-key-pinning'].result)) {
-    $('#tests-public-key-pinning-score-description').text($('#tests-public-key-pinning-score-description').text() + ' (optional)');
-    $('#tests-public-key-pinning-pass').empty().append(utils.getOcticon('dash'));
-  }
-
   // same for Referrer Policy
   if ('referrer-policy' in results) {
     if (includes(['referrer-policy-not-implemented'],
@@ -420,7 +411,7 @@ const insertHostHistory = async () => {
 
 const loadHostHistory = async () => {
   const target = utils.getTarget();
-  var API_URL = 'https://http-observatory.security.mozilla.org/api/v1/getHostHistory?host=' + target;
+  var API_URL = constants.urls.api + 'getHostHistory?host=' + target;
 
   $.ajax({
     method: 'GET',

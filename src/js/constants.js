@@ -20,7 +20,10 @@ module.exports = {
   numImprovedSites: '240,000',
   title: 'Mozilla Observatory',
   urls: {
-    api: 'https://http-observatory.security.mozilla.org/api/v1/',
+    // api: 'https://http-observatory.security.mozilla.org/api/v1/',
+    api: 'https://prod.observatory.mdn.prod.webservices.mozgcp.net/api/v1/',
+    // api: 'https://stage.observatory.mdn.nonprod.webservices.mozgcp.net/api/v1/',
+    // api: 'http://localhost:57001/api/v1/',
     ssh: 'https://sshscan.rubidus.com/api/v1/',
     tls: 'https://tls-observatory.services.mozilla.com/api/v1/',
   },
