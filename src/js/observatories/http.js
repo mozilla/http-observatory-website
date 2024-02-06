@@ -128,13 +128,6 @@ const insert = async (scan, results) => {
     $('#scan-target-container').removeClass('d-none');
   }
 
-  // don't show the contribute.json line to non-mozilla sites
-  if (results.contribute.result === 'contribute-json-only-required-on-mozilla-properties') {
-    $('#tests-contribute-row').remove();
-    scan.tests_passed -= 1;
-    scan.tests_quantity -= 1;
-  }
-
   // if the HTTP status code wasn't 200, show the banner for it
   if (scan.status_code !== 200) {
     $('#http-status-code-alert').removeClass('d-none');
