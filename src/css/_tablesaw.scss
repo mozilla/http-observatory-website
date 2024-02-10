@@ -24,7 +24,16 @@ $tablesaw-width: 39.9375em;
   .tablesaw tbody tr:nth-of-type(1) {
     border: 0;
   }
+  .tablesaw-stack td .tablesaw-cell-label, .tablesaw-stack th .tablesaw-cell-label {
+    padding: 0;
+    width: 5em;
+  }
+  #cookies-table.tablesaw-stack td .tablesaw-cell-label, #cookies-table.tablesaw-stack th .tablesaw-cell-label {
+    width: 6em;
+  }
   .tablesaw tbody tr td span.tablesaw-cell-content {
+    max-width: none;
+    padding-left: 0.5em;
     font-weight: 400;
   }
   .tablesaw-cell-label::after {
