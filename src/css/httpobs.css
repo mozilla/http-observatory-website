@@ -413,3 +413,7 @@ header {
 .text-prewrap {
     white-space: pre-wrap;
 }
+
+#scan-progress {
+    display: none;
+}
