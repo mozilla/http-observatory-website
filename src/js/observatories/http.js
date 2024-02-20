@@ -38,6 +38,9 @@ const displayError = async (text, statusText) => {
     }
   }
 
+  $('#scan-box').css('display', 'block');
+  $('#scan-progress').css('display', 'none');
+
   $('#scan-alert-text').text(error);
   $('#scan-alert').removeClass('alert-hidden');
   utils.errorResults(error, 'scan');
