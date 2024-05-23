@@ -12,5 +12,9 @@ if (!dntEnabled()) {
   }
   gtag("js", new Date());
 
+  gtag("consent", "default", {
+    analytics_storage: "denied",
+  });
+
   gtag("config", "G-0YL01S2FDK");
 }
