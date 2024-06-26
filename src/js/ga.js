@@ -7,7 +7,7 @@ if (!dntEnabled()) {
   document.head.appendChild(gaScript);
 
   window.dataLayer = window.dataLayer || [];
-  function gtag() {
+  window.gtag = function() {
     dataLayer.push(arguments);
   }
   gtag("js", new Date());
