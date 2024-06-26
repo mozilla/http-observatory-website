@@ -64,6 +64,12 @@ const Observatory = {
 
     // set a handler to change the fragment whenever the tab is changed, ignoring HTTP Observatory
     $('.nav-tabs a').on('shown.bs.tab', e => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'tab_view', {
+            event_category: 'tab',
+            event_label: e.target.hash,
+        });
+      }
       if (e.target.hash === '#http') {
         history.pushState(null, null, window.location.pathname + window.location.search);
       } else {
