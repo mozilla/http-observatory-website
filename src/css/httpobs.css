@@ -386,6 +386,10 @@ sup, sub {
     font-weight: bold;
 }
 
+#scoring-banner:before {
+    content: '📣\FE0E';
+}
+
 .alert-danger a, #scoring-banner a {
     color: white;
     font-weight: bold;
