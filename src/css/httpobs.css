@@ -387,7 +387,7 @@ sup, sub {
 }
 
 #scoring-banner:before {
-    content: '🎉';
+    content: '📣\FE0E';
 }
 
 .alert-danger a, #scoring-banner a {
