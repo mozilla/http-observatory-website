@@ -172,7 +172,7 @@ export const load = async () => {
     },
     success: function s(data) { insertHTTP(data); },
     headers: {
-      'Deprecation-Override': 'yes'
+      'X-Deprecation-Override': 'yes'
     },
     url: constants.urls.api + '__stats__'
   });
@@ -184,7 +184,7 @@ export const load = async () => {
     },
     success: function s(data) { insertSSH(data); },
     headers: {
-      'Deprecation-Override': 'yes'
+      'X-Deprecation-Override': 'yes'
     },
     url: constants.urls.ssh + 'stats'
   });
@@ -195,7 +195,7 @@ export const load = async () => {
     },
     success: data => insertTLS(data),
     headers: {
-      'Deprecation-Override': 'yes'
+      'X-Deprecation-Override': 'yes'
     },
     url: constants.urls.tls + '__stats__?format=json'
   });

@@ -413,7 +413,7 @@ const loadHostHistory = async () => {
       insertHostHistory();
     },
     headers: {
-      'Deprecation-Override': 'yes'
+      'X-Deprecation-Override': 'yes'
     },
     url: API_URL
   });
@@ -500,7 +500,7 @@ const handle = async scan => {
         insert(this.scan, data);
       },
       headers: {
-        'Deprecation-Override': 'yes'
+        'X-Deprecation-Override': 'yes'
       },
       url: constants.urls.api + 'getScanResults?scan=' + scan.scan_id.toString()
     });
@@ -528,7 +528,7 @@ const submit = async (hostname, successCallback, errorCallback, method, rescan, 
     method: method,
     success: successCallback,
     headers: {
-      'Deprecation-Override': 'yes'
+      'X-Deprecation-Override': 'yes'
     },
     url: constants.urls.api + 'analyze?host=' + hostname
   };
