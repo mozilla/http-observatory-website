@@ -171,6 +171,9 @@ export const load = async () => {
       $('#results-reveal-container').remove();
     },
     success: function s(data) { insertHTTP(data); },
+    headers: {
+      'X-Deprecation-Override': 'yes'
+    },
     url: constants.urls.api + '__stats__'
   });
 
@@ -180,6 +183,9 @@ export const load = async () => {
       // remove stats section
     },
     success: function s(data) { insertSSH(data); },
+    headers: {
+      'X-Deprecation-Override': 'yes'
+    },
     url: constants.urls.ssh + 'stats'
   });
 
@@ -188,6 +194,9 @@ export const load = async () => {
       // remove stats section
     },
     success: data => insertTLS(data),
+    headers: {
+      'X-Deprecation-Override': 'yes'
+    },
     url: constants.urls.tls + '__stats__?format=json'
   });
 };
