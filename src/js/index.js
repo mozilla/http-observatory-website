@@ -98,6 +98,9 @@ const Observatory = {
 
     const successCallback = function f(data) {
       if (data.error !== undefined && data.error !== 'site down') {
+        $('#scan-box').css('display', 'block');
+        $('#scan-progress').css('display', 'none');
+
         // if it's an IP address error, let them click through
         if (data.error === 'invalid-hostname-ip') {
           $('#scan-alert-ip-link').attr('href', window.location.href + 'analyze/' + url.host + '#ssh');
@@ -120,7 +123,7 @@ const Observatory = {
       } else {
         window.location.href = `/analyze/index.html?host=${url.host}&${thirdPartyOpt}`;
       }
-      
+
       return true;
     };
 
@@ -131,6 +134,10 @@ const Observatory = {
     if (rescan) {  // if they've set rescan, we'll poke the TLS Observatory now
       Observatories.TLS.load(rescan, true);
     }
+
+    $('#scan-box').css('display', 'none');
+    $('#scan-progress-bar-text').text('Scan in progress');
+    $('#scan-progress').css('display', 'block');
 
     Observatories.HTTP.submit(url.host, successCallback, Observatories.HTTP.displayError, 'POST', rescan, hidden);
 
