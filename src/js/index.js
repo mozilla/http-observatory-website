@@ -110,15 +110,25 @@ const Observatory = {
         return false;
       }
 
-      // check to see if the third party button was clicked
-      let thirdPartyOpt = $('#scan-btn-third-party').prop('checked') ? 'third-party=false' : '';
+      let queryOptions = [];
+
+      // pass checked options to query string
+      if ($('#scan-btn-third-party').prop('checked')) {
+        queryOptions.push('third-party=false');
+      }
+      if ($('#scan-btn-rescan').prop('checked')) {
+        queryOptions.push('rescan=true');
+      }
+      if ($('#scan-btn-hidden').prop('checked')) {
+        queryOptions.push('hidden=true');
+      }
 
       // if it succeeds, redirect to the analyze page
       if (utils.noQueryServer) {
-        thirdPartyOpt = thirdPartyOpt === '' ? '' : `?${thirdPartyOpt}`;
-        window.location.href = `/analyze/${url.host}${thirdPartyOpt}`;
+        queryOptions = queryOptions.length === 0 ? '' : `${queryOptions.join('&')}`;
+        window.location.href = `/analyze/${url.host}?${queryOptions}`;
       } else {
-        window.location.href = `/analyze/index.html?host=${url.host}&${thirdPartyOpt}`;
+        window.location.href = `/analyze/index.html?host=${url.host}&${queryOptions}`;
       }
       
       return true;

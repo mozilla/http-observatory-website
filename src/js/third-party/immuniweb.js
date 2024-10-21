@@ -4,13 +4,15 @@ import utils from '../utils.js';
 import Tablesaw from '../../../node_modules/tablesaw/dist/tablesaw.jquery.js'
 
 export const state = {
+  // API Documentation https://www.immuniweb.com/ssl/#api
+  API_URL: 'https://www.immuniweb.com/ssl/api/v1/',
   count: 0,
   nonce: Date.now().toString(),
   results: {},
 };
 
 
-export const insert = async () => {
+export const insert = () => {
   var immuniwebErrorMapping = ['Unknown', 'Not vulnerable', 'Vulnerable', 'Possibly vulnerable'];
   var output;
   var results = state.results;
@@ -59,59 +61,103 @@ export const insert = async () => {
 };
 
 
-export const load = async (test_id) => {
-  var API_URL = 'https://www.immuniweb.com/ssl/api/v1/';
-  state.count += 1;
-
-  // limit the number of API calls that can be made
-  if (state.count === 30) {
-    return;
-  }
-
+export const load = () => {
   const target = utils.getTarget();
+  const rescan = utils.getQueryParameter('rescan') === 'true';
+  const hidden = utils.getQueryParameter('hidden') === 'true';
 
-  if (test_id === undefined) {
-    $.ajax({
-      data: {
-        choosen_ip: 'any',
-        domain: target + ':443',
-        recheck: 'false',
-        show_test_results: 'false'
-      },
-      method: 'POST',
-      error: errorCallback,
-      success: checkCallback,
-      url: `${API_URL}check/${state.nonce}.html`
-    });    
-  } else {
-    $.ajax({
-      data: {
-        id: test_id,
-      },
-      method: 'POST',
-      error: errorCallback,
-      success: async (data) => {
-        state.results = data;
-        insert();
-      },
-      url: `${API_URL}get_result/${state.nonce}.html`
-    });    
-  }
+  utils.updateProgress('Checking Results', 'immuniweb');
+
+  // Check target
+  $.ajax({
+    data: {
+      choosen_ip: 'any',
+      domain: target + ':443',
+      recheck: rescan ? 'true' : 'false',
+      show_test_results: hidden ? 'false' : 'true'
+    },
+    method: 'POST',
+    error: errorCallback,
+    success: checkCallback,
+    url: `${state.API_URL}check/${state.nonce}.html`
+  });
 };
 
 
-const checkCallback = async data => {
-  // if everything works, save the data and lets throw it into the page
-  if (data.status_id === 3) {
-    load(data.test_id);
-  } else {
-    await utils.sleep(5000);
-    load();
+const fetchResult = (test_id) => {
+  $.ajax({
+    data: {
+      id: test_id,
+    },
+    method: 'POST',
+    error: errorCallback,
+    success: (data) => {
+      state.results = data;
+      insert();
+    },
+    url: `${state.API_URL}get_result/${state.nonce}.html`
+  });
+};
+
+
+const waitResult = (job_id) => {
+  state.count += 1;
+
+  //limit the number of API calls that can be made
+  if (state.count === 120) {
+    utils.errorResults('Timeout', 'immuniweb');
+    return;
   }
 
+  $.ajax({
+    data: {
+      job_id: job_id,
+    },
+    method: 'POST',
+    error: errorCallback,
+    success: checkCallback,
+    url: `${state.API_URL}get_result/${state.nonce}.html`
+  });
+};
+
+
+const checkCallback = async (data) => {
+  if (data.error) {
+    if (data.error_id && data.error_id < 5) {
+      utils.errorResults('Free tests limit exceeded', 'immuniweb');
+    }
+
+    utils.errorResults('Error', 'immuniweb');
+    return;
+  }
+
+  if (data.results) {
+    // Test finished
+    state.results = data;
+    insert();
+    return;
+  }
+
+  if (data.status_id === 3) {
+    // Test found in cache
+    utils.updateProgress('Loading Results', 'immuniweb');
+    fetchResult(data.test_id);
+    return;
+  }
+
+  if (data.status_id === 1 || data.status_id === 2) {
+    // Test in progress or just started
+    utils.updateProgress('Scanning', 'immuniweb');
+    await utils.sleep(10000);
+    waitResult(data.job_id);
+    return;
+  }
+
+  // Unexpected response
+  utils.errorResults('Error', 'immuniweb');
 }
 
 
-const errorCallback = async () => {
+const errorCallback = () => {
   utils.errorResults('Error', 'immuniweb');
 };

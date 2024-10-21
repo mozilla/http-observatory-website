@@ -230,6 +230,11 @@ const getQueryParameter = param => {
 
 /* result handling */
 
+const updateProgress = (text, id) => {
+  // Update progressbar text
+  $('#' + id + '-progress-bar-text').text(text);
+};
+
 const errorResults = (error, id) => {
   // Set the error text and make it a red bar and remove the stripes and swirlies
   $('#' + id + '-progress-bar-text').text(error).removeClass('progress-bar-striped').addClass('bg-danger');
@@ -376,6 +381,7 @@ const getOcticon = (icon, width = 24, height = 24) => {
 export default {
   average,
   deleteCookie,
+  updateProgress,
   errorResults,
   getQueryParameter,
   getOcticon,
